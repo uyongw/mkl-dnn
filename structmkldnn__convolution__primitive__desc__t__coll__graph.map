@@ -1,0 +1,9 @@
+<map id="mkldnn_convolution_primitive_desc_t" name="mkldnn_convolution_primitive_desc_t">
+<area shape="rect" id="node2" href="$structmkldnn__memory__primitive__desc__t.html" title="Descriptor of a memory primitive. " alt="" coords="593,90,768,131"/>
+<area shape="rect" id="node3" href="$structmkldnn__primitive__base__desc__t.html" title="Basic primitive descriptor. " alt="" coords="299,29,454,70"/>
+<area shape="rect" id="node4" href="$structmkldnn__engine.html" title="An opaque structure describing an engine. " alt="" coords="33,36,143,63"/>
+<area shape="rect" id="node5" href="$structmkldnn__memory__desc__t.html" title="Memory descriptor. " alt="" coords="295,151,459,177"/>
+<area shape="rect" id="node8" href="$structmkldnn__convolution__desc__t.html" title="A descriptor of a convolution operation. " alt="" coords="612,167,749,209"/>
+<area shape="rect" id="node6" href="$structmkldnn__blocking__desc__t.html" title="Generic description of blocked data layout for most memory formats. " alt="" coords="5,125,171,152"/>
+<area shape="rect" id="node7" href="$structmkldnn__tensor__desc__t.html" title="A tensor descriptor. " alt="" coords="11,176,165,203"/>
+</map>

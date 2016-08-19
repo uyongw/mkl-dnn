@@ -1,0 +1,9 @@
+<map id="mkldnn_relu_primitive_desc_t" name="mkldnn_relu_primitive_desc_t">
+<area shape="rect" id="node2" href="$structmkldnn__memory__primitive__desc__t.html" title="Descriptor of a memory primitive. " alt="" coords="105,213,279,255"/>
+<area shape="rect" id="node3" href="$structmkldnn__primitive__base__desc__t.html" title="Basic primitive descriptor. " alt="" coords="5,95,160,136"/>
+<area shape="rect" id="node4" href="$structmkldnn__engine.html" title="An opaque structure describing an engine. " alt="" coords="28,5,137,32"/>
+<area shape="rect" id="node5" href="$structmkldnn__memory__desc__t.html" title="Memory descriptor. " alt="" coords="203,102,367,129"/>
+<area shape="rect" id="node8" href="$structmkldnn__relu__desc__t.html" title="A descriptor of a rectifier linear unit (ReLU) operation. " alt="" coords="304,221,443,247"/>
+<area shape="rect" id="node6" href="$structmkldnn__blocking__desc__t.html" title="Generic description of blocked data layout for most memory formats. " alt="" coords="181,5,347,32"/>
+<area shape="rect" id="node7" href="$structmkldnn__tensor__desc__t.html" title="A tensor descriptor. " alt="" coords="371,5,525,32"/>
+</map>

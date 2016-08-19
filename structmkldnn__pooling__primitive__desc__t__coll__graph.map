@@ -1,0 +1,9 @@
+<map id="mkldnn_pooling_primitive_desc_t" name="mkldnn_pooling_primitive_desc_t">
+<area shape="rect" id="node2" href="$structmkldnn__memory__primitive__desc__t.html" title="Descriptor of a memory primitive. " alt="" coords="103,213,278,255"/>
+<area shape="rect" id="node3" href="$structmkldnn__primitive__base__desc__t.html" title="Basic primitive descriptor. " alt="" coords="5,95,160,136"/>
+<area shape="rect" id="node4" href="$structmkldnn__engine.html" title="An opaque structure describing an engine. " alt="" coords="28,5,137,32"/>
+<area shape="rect" id="node5" href="$structmkldnn__memory__desc__t.html" title="Memory descriptor. " alt="" coords="205,102,369,129"/>
+<area shape="rect" id="node8" href="$structmkldnn__pooling__desc__t.html" title="A descriptor of a pooling operation. " alt="" coords="302,221,461,247"/>
+<area shape="rect" id="node6" href="$structmkldnn__blocking__desc__t.html" title="Generic description of blocked data layout for most memory formats. " alt="" coords="183,5,348,32"/>
+<area shape="rect" id="node7" href="$structmkldnn__tensor__desc__t.html" title="A tensor descriptor. " alt="" coords="373,5,526,32"/>
+</map>
