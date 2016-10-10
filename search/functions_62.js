@@ -1,0 +1,5 @@
+var searchData=
+[
+  ['batch_5fnormalization_5fforward',['batch_normalization_forward',['../group__cpp__api__memory.html#gaf17bc8947ee664635958adc6cb20e1d2',1,'mkldnn::batch_normalization_forward::batch_normalization_forward(const primitive_desc &amp;aprimitive_desc, const primitive::at &amp;src, const primitive::at &amp;weights, const memory &amp;workspace, const memory &amp;dst)'],['../group__cpp__api__memory.html#ga6b109082a6a2419acc9cdacb4a7db47d',1,'mkldnn::batch_normalization_forward::batch_normalization_forward(const primitive_desc &amp;aprimitive_desc, const primitive::at &amp;src, const primitive::at &amp;weights, const memory &amp;dst)']]],
+  ['bias_5fprimitive_5fdesc',['bias_primitive_desc',['../group__cpp__api__memory.html#ga856c325079715173852a56a614380a2a',1,'mkldnn::convolution_forward::primitive_desc::bias_primitive_desc()'],['../group__cpp__api__memory.html#gacb30e88fd32c41161dd5a1592f640961',1,'mkldnn::inner_product_forward::primitive_desc::bias_primitive_desc()']]]
+];

@@ -1,7 +1,4 @@
 <map id="mkldnn::error" name="mkldnn::error">
-<area shape="rect" id="node2" title="STL class. " alt="" coords="5,96,109,123"/>
-<area shape="rect" id="node3" href="$classmkldnn_1_1primitive.html" title="Base class for all computational primitives. " alt="" coords="134,96,255,123"/>
-<area shape="rect" id="node4" href="$classmkldnn_1_1handle.html" title="mkldnn::handle\&lt; c_api\l::mkldnn_primitive_t \&gt;" alt="" coords="107,5,261,47"/>
-<area shape="rect" id="node5" title="STL class. " alt="" coords="299,96,379,123"/>
-<area shape="rect" id="node6" title="STL class. " alt="" coords="285,5,411,47"/>
+<area shape="rect" id="node3" href="$classmkldnn_1_1primitive.html" title="Base class for all computational primitives. " alt="" coords="134,99,255,125"/>
+<area shape="rect" id="node4" href="$classmkldnn_1_1handle.html" title="mkldnn::handle\&lt; c_api\l::mkldnn_primitive_t \&gt;" alt="" coords="118,6,271,47"/>
 </map>

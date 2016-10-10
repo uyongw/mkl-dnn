@@ -1,0 +1,10 @@
+var searchData=
+[
+  ['concat',['concat',['../group__cpp__api__memory.html#ga06f1dbb81a1ce8d0bc564ab69d426c64',1,'mkldnn::concat']]],
+  ['convert_5fto_5fc',['convert_to_c',['../group__cpp__api__memory.html#ga47bcab007bb018c9444da5b356906b1d',1,'mkldnn::memory::convert_to_c(data_type adata_type)'],['../group__cpp__api__memory.html#ga57f0d8fdf40ecf8505a9ea803a66923d',1,'mkldnn::memory::convert_to_c(format aformat)'],['../group__cpp__api__memory.html#gaa5459ccbd27fb0399515ad6f872cdd90',1,'mkldnn::stream::convert_to_c()'],['../group__cpp__api__memory.html#gaf91d39c671143894e831dae17c0e1323',1,'mkldnn::convert_to_c(query aquery)'],['../group__cpp__api__memory.html#gabf8ad6de3ceb0bb51786656d240544d7',1,'mkldnn::convert_to_c(padding_kind kind)'],['../group__cpp__api__memory.html#gadf3df4cb7ff424c24982ba0c3c84d086',1,'mkldnn::convert_to_c(prop_kind kind)']]],
+  ['convolution_5fbackward_5fbias',['convolution_backward_bias',['../group__cpp__api__memory.html#gaac2a6d431f6ab4fb13913dea646e2181',1,'mkldnn::convolution_backward_bias']]],
+  ['convolution_5fbackward_5fdata',['convolution_backward_data',['../group__cpp__api__memory.html#gad4657437c3c9e1ea9fc1b3b8baf919c0',1,'mkldnn::convolution_backward_data']]],
+  ['convolution_5fbackward_5fweights',['convolution_backward_weights',['../group__cpp__api__memory.html#ga7f722d4123ca3713730a27f90ed82fb6',1,'mkldnn::convolution_backward_weights']]],
+  ['convolution_5fforward',['convolution_forward',['../group__cpp__api__memory.html#gada34888c95159b701c16c00af95bda01',1,'mkldnn::convolution_forward::convolution_forward(const primitive_desc &amp;aprimitive_desc, const primitive::at &amp;src, const primitive::at &amp;weights, const primitive::at &amp;bias, const memory &amp;dst)'],['../group__cpp__api__memory.html#ga63c5cf5f767124069ddd815b142efe8c',1,'mkldnn::convolution_forward::convolution_forward(const primitive_desc &amp;aprimitive_desc, const primitive::at &amp;src, const primitive::at &amp;weights, const memory &amp;dst)']]],
+  ['cpp_5fto_5fc',['cpp_to_c',['../group__cpp__api__memory.html#gac14e94a4adb714a09354540a6ad20f16',1,'mkldnn::concat::primitive_desc']]]
+];

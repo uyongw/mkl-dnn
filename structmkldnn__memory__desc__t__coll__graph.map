@@ -1,4 +1,3 @@
 <map id="mkldnn_memory_desc_t" name="mkldnn_memory_desc_t">
 <area shape="rect" id="node2" href="$structmkldnn__blocking__desc__t.html" title="Generic description of blocked data layout for most memory formats. " alt="" coords="5,5,171,32"/>
-<area shape="rect" id="node3" href="$structmkldnn__tensor__desc__t.html" title="A tensor descriptor. " alt="" coords="195,5,349,32"/>
 </map>

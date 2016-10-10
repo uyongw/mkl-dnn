@@ -1,3 +1,4 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$classmkldnn_1_1handle.html" title="A class for wrapping an Intel(R) MKL&#45;DNN handle. It is used as the base class for primitive (mkldnn_p..." alt="" coords="5,5,140,47"/>
+<area shape="rect" id="node1" href="$classmkldnn_1_1handle.html" title="mkldnn::handle\&lt; c_api\l::mkldnn_engine_t \&gt;" alt="" coords="6,5,159,46"/>
+<area shape="rect" id="node2" href="$structmkldnn_1_1engine.html" title="An execution engine. " alt="" coords="209,12,319,39"/>
 </map>
