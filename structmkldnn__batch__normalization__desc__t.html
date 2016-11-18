@@ -118,9 +118,11 @@ Public Attributes</h2></td></tr>
 <tr class="memitem:a2742f10a03b069e58cf2a2368976d18c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structmkldnn__memory__desc__t.html">mkldnn_memory_desc_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmkldnn__batch__normalization__desc__t.html#a2742f10a03b069e58cf2a2368976d18c">diff_data_desc</a></td></tr>
 <tr class="memdesc:a2742f10a03b069e58cf2a2368976d18c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Source and destination gradient memory descriptor.  <a href="#a2742f10a03b069e58cf2a2368976d18c">More...</a><br/></td></tr>
 <tr class="separator:a2742f10a03b069e58cf2a2368976d18c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab69d00b9b5bdb46880395d5062376f97"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structmkldnn__memory__desc__t.html">mkldnn_memory_desc_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmkldnn__batch__normalization__desc__t.html#ab69d00b9b5bdb46880395d5062376f97">data_diff_scaleshift_desc</a></td></tr>
-<tr class="memdesc:ab69d00b9b5bdb46880395d5062376f97"><td class="mdescLeft">&#160;</td><td class="mdescRight">Scale and shift data and gradient memory descriptors.  <a href="#ab69d00b9b5bdb46880395d5062376f97">More...</a><br/></td></tr>
-<tr class="separator:ab69d00b9b5bdb46880395d5062376f97"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2992500f60f04446c165f874b778be3f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structmkldnn__memory__desc__t.html">mkldnn_memory_desc_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmkldnn__batch__normalization__desc__t.html#a2992500f60f04446c165f874b778be3f">data_scaleshift_desc</a></td></tr>
+<tr class="memdesc:a2992500f60f04446c165f874b778be3f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Scale and shift data and gradient memory descriptors.  <a href="#a2992500f60f04446c165f874b778be3f">More...</a><br/></td></tr>
+<tr class="separator:a2992500f60f04446c165f874b778be3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5a30d268c38384b4f9af1ca1598d9251"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structmkldnn__memory__desc__t.html">mkldnn_memory_desc_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmkldnn__batch__normalization__desc__t.html#a5a30d268c38384b4f9af1ca1598d9251">diff_data_scaleshift_desc</a></td></tr>
+<tr class="separator:a5a30d268c38384b4f9af1ca1598d9251"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1ee08c32447adbaacecb2fb658ed31b5"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmkldnn__batch__normalization__desc__t.html#a1ee08c32447adbaacecb2fb658ed31b5">batch_norm_epsilon</a></td></tr>
 <tr class="memdesc:a1ee08c32447adbaacecb2fb658ed31b5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Batch normalization epsilon parameter.  <a href="#a1ee08c32447adbaacecb2fb658ed31b5">More...</a><br/></td></tr>
 <tr class="separator:a1ee08c32447adbaacecb2fb658ed31b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -156,12 +158,12 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ab69d00b9b5bdb46880395d5062376f97"></a>
+<a class="anchor" id="a2992500f60f04446c165f874b778be3f"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="structmkldnn__memory__desc__t.html">mkldnn_memory_desc_t</a> mkldnn_batch_normalization_desc_t::data_diff_scaleshift_desc</td>
+          <td class="memname"><a class="el" href="structmkldnn__memory__desc__t.html">mkldnn_memory_desc_t</a> mkldnn_batch_normalization_desc_t::data_scaleshift_desc</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -182,6 +184,18 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Source and destination gradient memory descriptor. </p>
+
+</div>
+</div>
+<a class="anchor" id="a5a30d268c38384b4f9af1ca1598d9251"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structmkldnn__memory__desc__t.html">mkldnn_memory_desc_t</a> mkldnn_batch_normalization_desc_t::diff_data_scaleshift_desc</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
 
 </div>
 </div>
@@ -216,7 +230,7 @@ Public Attributes</h2></td></tr>
 </div>
 </div>
 <hr/>The documentation for this struct was generated from the following file:<ul>
-<li>/localdisk/commander/mkl-dnn/master/update_doc_mkl-dnn_201610101236/internal_repo/include/<a class="el" href="mkldnn__types_8h_source.html">mkldnn_types.h</a></li>
+<li>/localdisk/commander/mkl-dnn/master/update_doc_mkl-dnn_201611180827/internal_repo/include/<a class="el" href="mkldnn__types_8h_source.html">mkldnn_types.h</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->

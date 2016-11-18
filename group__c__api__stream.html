@@ -94,6 +94,9 @@ Functions</h2></td></tr>
 <tr class="memitem:ga5a2f0317471eade8d025cbc2e5794fcf"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__c__api__types__generic.html#ga31866789b66acfb1c28b2f9bdd7bdfdd">mkldnn_status_t</a> MKLDNN_API&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__c__api__stream.html#ga5a2f0317471eade8d025cbc2e5794fcf">mkldnn_stream_wait</a> (<a class="el" href="group__c__api__types__stream.html#ga45075c5015f9a5ef3b0365af92fa1529">mkldnn_stream_t</a> stream, int block, <a class="el" href="group__c__api__types__primitive.html#gac7821f6b4a4fa0d58fe5279a1ff2fda3">mkldnn_primitive_t</a> *error_primitive)</td></tr>
 <tr class="memdesc:ga5a2f0317471eade8d025cbc2e5794fcf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Waits for all primitives in the execution <code>stream</code> to finish.  <a href="#ga5a2f0317471eade8d025cbc2e5794fcf">More...</a><br/></td></tr>
 <tr class="separator:ga5a2f0317471eade8d025cbc2e5794fcf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae4fd3fc8674a031db606ad674c57a014"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__c__api__types__generic.html#ga31866789b66acfb1c28b2f9bdd7bdfdd">mkldnn_status_t</a> MKLDNN_API&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__c__api__stream.html#gae4fd3fc8674a031db606ad674c57a014">mkldnn_stream_rerun</a> (<a class="el" href="group__c__api__types__stream.html#ga45075c5015f9a5ef3b0365af92fa1529">mkldnn_stream_t</a> stream, <a class="el" href="group__c__api__types__primitive.html#gac7821f6b4a4fa0d58fe5279a1ff2fda3">mkldnn_primitive_t</a> *error_primitive)</td></tr>
+<tr class="memdesc:gae4fd3fc8674a031db606ad674c57a014"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reruns all the primitives within the <code>stream</code>.  <a href="#gae4fd3fc8674a031db606ad674c57a014">More...</a><br/></td></tr>
+<tr class="separator:gae4fd3fc8674a031db606ad674c57a014"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gae10ec69089229b220a8123faa8ed1c99"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__c__api__types__generic.html#ga31866789b66acfb1c28b2f9bdd7bdfdd">mkldnn_status_t</a> MKLDNN_API&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__c__api__stream.html#gae10ec69089229b220a8123faa8ed1c99">mkldnn_stream_destroy</a> (<a class="el" href="group__c__api__types__stream.html#ga45075c5015f9a5ef3b0365af92fa1529">mkldnn_stream_t</a> stream)</td></tr>
 <tr class="memdesc:gae10ec69089229b220a8123faa8ed1c99"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destroys an execution <code>stream</code>.  <a href="#gae10ec69089229b220a8123faa8ed1c99">More...</a><br/></td></tr>
 <tr class="separator:gae10ec69089229b220a8123faa8ed1c99"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -143,6 +146,35 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Destroys an execution <code>stream</code>. </p>
+
+</div>
+</div>
+<a class="anchor" id="gae4fd3fc8674a031db606ad674c57a014"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group__c__api__types__generic.html#ga31866789b66acfb1c28b2f9bdd7bdfdd">mkldnn_status_t</a> MKLDNN_API mkldnn_stream_rerun </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__c__api__types__stream.html#ga45075c5015f9a5ef3b0365af92fa1529">mkldnn_stream_t</a>&#160;</td>
+          <td class="paramname"><em>stream</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__c__api__types__primitive.html#gac7821f6b4a4fa0d58fe5279a1ff2fda3">mkldnn_primitive_t</a> *&#160;</td>
+          <td class="paramname"><em>error_primitive</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Reruns all the primitives within the <code>stream</code>. </p>
+<p>In case of an error, returns the offending <code>error_primitive</code> if it is not <code>NULL</code>. </p>
 
 </div>
 </div>

@@ -83,6 +83,7 @@ var searchData=
   ['mkldnn_5fruntime_5ferror',['mkldnn_runtime_error',['../group__c__api__types__generic.html#gga31866789b66acfb1c28b2f9bdd7bdfdda005b67c7d1d8e90a5c68f82f08931b29',1,'mkldnn_types.h']]],
   ['mkldnn_5fs32',['mkldnn_s32',['../group__c__api__types__generic.html#gga826b2a9be4d94ac17f99bacac6d0cb29a4ceccb30ecf3a259a933028cd234701f',1,'mkldnn_types.h']]],
   ['mkldnn_5fsuccess',['mkldnn_success',['../group__c__api__types__generic.html#gga31866789b66acfb1c28b2f9bdd7bdfddab50eb3f75584f0495802ffb5e0a9884f',1,'mkldnn_types.h']]],
+  ['mkldnn_5fsum',['mkldnn_sum',['../group__c__api__types__generic.html#gga4f5c189c2ba9ef6444250299f1f8e973a1d5a4ac349734074b150188851be19c8',1,'mkldnn_types.h']]],
   ['mkldnn_5ftry_5fagain',['mkldnn_try_again',['../group__c__api__types__generic.html#gga31866789b66acfb1c28b2f9bdd7bdfdda2142ba130acda7b81aa7c60e2ca5eff3',1,'mkldnn_types.h']]],
   ['mkldnn_5fundefined_5fprimitive',['mkldnn_undefined_primitive',['../group__c__api__types__generic.html#gga4f5c189c2ba9ef6444250299f1f8e973a1ff42641253f71e6a16f23cc5334bc2d',1,'mkldnn_types.h']]],
   ['mkldnn_5funimplemented',['mkldnn_unimplemented',['../group__c__api__types__generic.html#gga31866789b66acfb1c28b2f9bdd7bdfdda253b1d7923a77456485a19734788b220',1,'mkldnn_types.h']]],
