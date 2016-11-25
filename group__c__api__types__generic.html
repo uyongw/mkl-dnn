@@ -121,11 +121,14 @@ Enumerations</h2></td></tr>
 &#160;&#160;<a class="el" href="group__c__api__types__generic.html#gga30a390f87ef74bf03dfa48a7b3f2fb74ae5344fffd9e1e8c46ced6403c21310b1">mkldnn_oi</a>, 
 <a class="el" href="group__c__api__types__generic.html#gga30a390f87ef74bf03dfa48a7b3f2fb74acc2eeaa304a91dc0d8ec301a8a13fa4a">mkldnn_oihw</a>, 
 <a class="el" href="group__c__api__types__generic.html#gga30a390f87ef74bf03dfa48a7b3f2fb74a986b2f7b25d9a0c577c3e7d0957125be">mkldnn_OIhw8i8o</a>, 
-<a class="el" href="group__c__api__types__generic.html#gga30a390f87ef74bf03dfa48a7b3f2fb74a91421ad55f30d74a6b66e98d77b7bf3a">mkldnn_Ohwi8o</a>, 
+<a class="el" href="group__c__api__types__generic.html#gga30a390f87ef74bf03dfa48a7b3f2fb74a67fc35385723533fd549ed9a838d03d3">mkldnn_OIhw8o8i</a>, 
 <br/>
-&#160;&#160;<a class="el" href="group__c__api__types__generic.html#gga30a390f87ef74bf03dfa48a7b3f2fb74af55cbade6e10b15037abaa67e6933833">mkldnn_goihw</a>, 
+&#160;&#160;<a class="el" href="group__c__api__types__generic.html#gga30a390f87ef74bf03dfa48a7b3f2fb74a91421ad55f30d74a6b66e98d77b7bf3a">mkldnn_Ohwi8o</a>, 
+<a class="el" href="group__c__api__types__generic.html#gga30a390f87ef74bf03dfa48a7b3f2fb74af55cbade6e10b15037abaa67e6933833">mkldnn_goihw</a>, 
 <a class="el" href="group__c__api__types__generic.html#gga30a390f87ef74bf03dfa48a7b3f2fb74a5a46036083ebae85118209e8f56c79ad">mkldnn_gOIhw8i8o</a>, 
-<a class="el" href="group__c__api__types__generic.html#gga30a390f87ef74bf03dfa48a7b3f2fb74a70523c4d4800ba448e10b801d84a2314">mkldnn_oIhw8i</a> = mkldnn_nChw8c
+<a class="el" href="group__c__api__types__generic.html#gga30a390f87ef74bf03dfa48a7b3f2fb74a004491243f1a48c8192b641469593c2e">mkldnn_gOIhw8o8i</a>, 
+<br/>
+&#160;&#160;<a class="el" href="group__c__api__types__generic.html#gga30a390f87ef74bf03dfa48a7b3f2fb74a70523c4d4800ba448e10b801d84a2314">mkldnn_oIhw8i</a> = mkldnn_nChw8c
 <br/>
  }</td></tr>
 <tr class="memdesc:ga30a390f87ef74bf03dfa48a7b3f2fb74"><td class="mdescLeft">&#160;</td><td class="mdescRight">Memory format specification.  <a href="group__c__api__types__generic.html#ga30a390f87ef74bf03dfa48a7b3f2fb74">More...</a><br/></td></tr>
@@ -298,6 +301,9 @@ Enumerations</h2></td></tr>
 <tr><td class="fieldname"><em><a class="anchor" id="gga30a390f87ef74bf03dfa48a7b3f2fb74a986b2f7b25d9a0c577c3e7d0957125be"></a>mkldnn_OIhw8i8o</em>&nbsp;</td><td class="fielddoc">
 <p>4D weights tensor in the <code>oihw</code> format with both input and output channels data laid out in memory in 8-element blocks. </p>
 </td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga30a390f87ef74bf03dfa48a7b3f2fb74a67fc35385723533fd549ed9a838d03d3"></a>mkldnn_OIhw8o8i</em>&nbsp;</td><td class="fielddoc">
+<p>4D weights tensor in the <code>oihw</code> format with both input and output channels data laid out in memory in 8-element blocks. </p>
+</td></tr>
 <tr><td class="fieldname"><em><a class="anchor" id="gga30a390f87ef74bf03dfa48a7b3f2fb74a91421ad55f30d74a6b66e98d77b7bf3a"></a>mkldnn_Ohwi8o</em>&nbsp;</td><td class="fielddoc">
 <p>4D weights tensor in the format (output channels, width, height, input channels) with output channels data laid out in memory in 8-element blocks. </p>
 </td></tr>
@@ -305,6 +311,9 @@ Enumerations</h2></td></tr>
 <p>5D weights tensor in the <code>oihw</code> format with extra outer dimension for groups. </p>
 </td></tr>
 <tr><td class="fieldname"><em><a class="anchor" id="gga30a390f87ef74bf03dfa48a7b3f2fb74a5a46036083ebae85118209e8f56c79ad"></a>mkldnn_gOIhw8i8o</em>&nbsp;</td><td class="fielddoc">
+<p>5D weights tensor in the blocked version of <code>goihw</code> format with both input and output channels data laid out in memory in 8-element blocks. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga30a390f87ef74bf03dfa48a7b3f2fb74a004491243f1a48c8192b641469593c2e"></a>mkldnn_gOIhw8o8i</em>&nbsp;</td><td class="fielddoc">
 <p>5D weights tensor in the blocked version of <code>goihw</code> format with both input and output channels data laid out in memory in 8-element blocks. </p>
 </td></tr>
 <tr><td class="fieldname"><em><a class="anchor" id="gga30a390f87ef74bf03dfa48a7b3f2fb74a70523c4d4800ba448e10b801d84a2314"></a>mkldnn_oIhw8i</em>&nbsp;</td><td class="fielddoc">
