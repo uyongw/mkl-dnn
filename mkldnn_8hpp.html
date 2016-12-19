@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>Intel(R) MKL-DNN: /localdisk/commander/mkl-dnn/master/update_doc_mkl-dnn_201611251332/internal_repo/include/mkldnn.hpp File Reference</title>
+<title>Intel(R) MKL-DNN: /localdisk/commander/mkl-dnn/master/update_doc_mkl-dnn_201612200132/internal_repo/include/mkldnn.hpp File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -209,6 +209,12 @@ Classes</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmkldnn_1_1relu__backward_1_1primitive__desc.html">mkldnn::relu_backward::primitive_desc</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmkldnn_1_1softmax__forward.html">mkldnn::softmax_forward</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmkldnn_1_1softmax__forward_1_1desc.html">mkldnn::softmax_forward::desc</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmkldnn_1_1softmax__forward_1_1primitive__desc.html">mkldnn::softmax_forward::primitive_desc</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmkldnn_1_1batch__normalization__forward.html">mkldnn::batch_normalization_forward</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmkldnn_1_1batch__normalization__forward_1_1desc.html">mkldnn::batch_normalization_forward::desc</a></td></tr>
@@ -260,23 +266,25 @@ Enumerations</h2></td></tr>
 <br/>
 &#160;&#160;<a class="el" href="group__cpp__api__memory.html#gga6d88ff11a07bae09a5c348d314c5d1d9a13f5d72b1e5ec568b24c930e3b87641b">mkldnn::convolution_d</a> = c_api::mkldnn_query_convolution_d, 
 <a class="el" href="group__cpp__api__memory.html#gga6d88ff11a07bae09a5c348d314c5d1d9a20f677933e74a40096d45a51664c5ee4">mkldnn::relu_d</a> = c_api::mkldnn_query_relu_d, 
+<a class="el" href="group__cpp__api__memory.html#gga6d88ff11a07bae09a5c348d314c5d1d9abdb39a5fa96f35b51571bb5481ed2cc2">mkldnn::softmax_d</a> = c_api::mkldnn_query_softmax_d, 
 <a class="el" href="group__cpp__api__memory.html#gga6d88ff11a07bae09a5c348d314c5d1d9a3be3f1011debd2ee2df16b6b04a0bf77">mkldnn::pooling_d</a> = c_api::mkldnn_query_pooling_d, 
-<a class="el" href="group__cpp__api__memory.html#gga6d88ff11a07bae09a5c348d314c5d1d9a76add43bb6bee4f897e668e2d54476a2">mkldnn::lrn_d</a> = c_api::mkldnn_query_lrn_d, 
 <br/>
-&#160;&#160;<a class="el" href="group__cpp__api__memory.html#gga6d88ff11a07bae09a5c348d314c5d1d9a98ae1af5a25e62ffebc0ee054e0fd7c7">mkldnn::batch_normalization_d</a> = c_api::mkldnn_query_batch_normalization_d, 
+&#160;&#160;<a class="el" href="group__cpp__api__memory.html#gga6d88ff11a07bae09a5c348d314c5d1d9a76add43bb6bee4f897e668e2d54476a2">mkldnn::lrn_d</a> = c_api::mkldnn_query_lrn_d, 
+<a class="el" href="group__cpp__api__memory.html#gga6d88ff11a07bae09a5c348d314c5d1d9a98ae1af5a25e62ffebc0ee054e0fd7c7">mkldnn::batch_normalization_d</a> = c_api::mkldnn_query_batch_normalization_d, 
 <a class="el" href="group__cpp__api__memory.html#gga6d88ff11a07bae09a5c348d314c5d1d9a4036c4c9cc32dd0f22a8903cfceeaa41">mkldnn::inner_product_d</a> = c_api::mkldnn_query_inner_product_d, 
 <a class="el" href="group__cpp__api__memory.html#gga6d88ff11a07bae09a5c348d314c5d1d9a83453c3a1e6a6dad19d5928ae9b9b0ee">mkldnn::convolution_relu_d</a> = c_api::mkldnn_query_convolution_relu_d, 
-<a class="el" href="group__cpp__api__memory.html#gga6d88ff11a07bae09a5c348d314c5d1d9a508fa6b849113ef2100177d2991129fe">mkldnn::input_pd</a> = c_api::mkldnn_query_input_pd, 
 <br/>
-&#160;&#160;<a class="el" href="group__cpp__api__memory.html#gga6d88ff11a07bae09a5c348d314c5d1d9abab2d1abc2d37f4a1358daeb7f9a32b1">mkldnn::output_pd</a> = c_api::mkldnn_query_output_pd, 
+&#160;&#160;<a class="el" href="group__cpp__api__memory.html#gga6d88ff11a07bae09a5c348d314c5d1d9a508fa6b849113ef2100177d2991129fe">mkldnn::input_pd</a> = c_api::mkldnn_query_input_pd, 
+<a class="el" href="group__cpp__api__memory.html#gga6d88ff11a07bae09a5c348d314c5d1d9abab2d1abc2d37f4a1358daeb7f9a32b1">mkldnn::output_pd</a> = c_api::mkldnn_query_output_pd, 
 <a class="el" href="group__cpp__api__memory.html#gga6d88ff11a07bae09a5c348d314c5d1d9a486100f73904f2beae1418a57cc6e0b1">mkldnn::src_pd</a> = c_api::mkldnn_query_src_pd, 
 <a class="el" href="group__cpp__api__memory.html#gga6d88ff11a07bae09a5c348d314c5d1d9a255f93a5ef35321792effc4f5d23e1e3">mkldnn::diff_src_pd</a> = c_api::mkldnn_query_diff_src_pd, 
-<a class="el" href="group__cpp__api__memory.html#gga6d88ff11a07bae09a5c348d314c5d1d9a38a475450bc885f2a0fad13bf87f44b9">mkldnn::weights_pd</a> = c_api::mkldnn_query_weights_pd, 
 <br/>
-&#160;&#160;<a class="el" href="group__cpp__api__memory.html#gga6d88ff11a07bae09a5c348d314c5d1d9a7b14a983b2e690abcf176dd41da50ae1">mkldnn::diff_weights_pd</a> = c_api::mkldnn_query_diff_weights_pd, 
+&#160;&#160;<a class="el" href="group__cpp__api__memory.html#gga6d88ff11a07bae09a5c348d314c5d1d9a38a475450bc885f2a0fad13bf87f44b9">mkldnn::weights_pd</a> = c_api::mkldnn_query_weights_pd, 
+<a class="el" href="group__cpp__api__memory.html#gga6d88ff11a07bae09a5c348d314c5d1d9a7b14a983b2e690abcf176dd41da50ae1">mkldnn::diff_weights_pd</a> = c_api::mkldnn_query_diff_weights_pd, 
 <a class="el" href="group__cpp__api__memory.html#gga6d88ff11a07bae09a5c348d314c5d1d9a5e602b7cc44ad7373ab7212f73b3d7d4">mkldnn::dst_pd</a> = c_api::mkldnn_query_dst_pd, 
 <a class="el" href="group__cpp__api__memory.html#gga6d88ff11a07bae09a5c348d314c5d1d9adb9fd0a330dc402a36de022ce82bff07">mkldnn::diff_dst_pd</a> = c_api::mkldnn_query_diff_dst_pd, 
-<a class="el" href="group__cpp__api__memory.html#gga6d88ff11a07bae09a5c348d314c5d1d9a41d00a7019d406614ebaa00195d179bd">mkldnn::workspace_pd</a> = c_api::mkldnn_query_workspace_pd
+<br/>
+&#160;&#160;<a class="el" href="group__cpp__api__memory.html#gga6d88ff11a07bae09a5c348d314c5d1d9a41d00a7019d406614ebaa00195d179bd">mkldnn::workspace_pd</a> = c_api::mkldnn_query_workspace_pd
 <br/>
  }</td></tr>
 <tr class="separator:ga6d88ff11a07bae09a5c348d314c5d1d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -306,6 +314,11 @@ Enumerations</h2></td></tr>
 <br/>
  }</td></tr>
 <tr class="separator:gae45a07d6121fdd33e310782753178076"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga344b5c240a7392585aba615ff4d0d7f1"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga344b5c240a7392585aba615ff4d0d7f1">mkldnn::batch_normalization_flag</a> { <a class="el" href="group__cpp__api__memory.html#gga344b5c240a7392585aba615ff4d0d7f1a97fcd7beeed54e37e2718124d0051d5c">mkldnn::use_global_stats</a> = c_api::mkldnn_use_global_stats, 
+<a class="el" href="group__cpp__api__memory.html#gga344b5c240a7392585aba615ff4d0d7f1a67734f09ab5b5b5282855d52c3e62486">mkldnn::use_scale_shift</a> = c_api::mkldnn_use_scaleshift, 
+<a class="el" href="group__cpp__api__memory.html#gga344b5c240a7392585aba615ff4d0d7f1a030cc07467d878652fddc39b5290f2a9">mkldnn::omit_stats</a> = c_api::mkldnn_omit_stats
+ }</td></tr>
+<tr class="separator:ga344b5c240a7392585aba615ff4d0d7f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>

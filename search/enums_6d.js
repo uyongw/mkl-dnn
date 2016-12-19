@@ -1,6 +1,7 @@
 var searchData=
 [
   ['mkldnn_5falg_5fkind_5ft',['mkldnn_alg_kind_t',['../group__c__api__types__generic.html#gaa27d43cdd1e439cc41a9580d23ce3e97',1,'mkldnn_types.h']]],
+  ['mkldnn_5fbatch_5fnormalization_5fflag_5ft',['mkldnn_batch_normalization_flag_t',['../group__c__api__types__generic.html#ga5b1f166df8eea3a306f9226baf6ca3a3',1,'mkldnn_types.h']]],
   ['mkldnn_5fdata_5ftype_5ft',['mkldnn_data_type_t',['../group__c__api__types__generic.html#ga826b2a9be4d94ac17f99bacac6d0cb29',1,'mkldnn_types.h']]],
   ['mkldnn_5fengine_5fkind_5ft',['mkldnn_engine_kind_t',['../group__c__api__engine__types.html#gaec8e96cbc2f19125c9def11efa98aa7e',1,'mkldnn_types.h']]],
   ['mkldnn_5fmemory_5fformat_5ft',['mkldnn_memory_format_t',['../group__c__api__types__generic.html#ga30a390f87ef74bf03dfa48a7b3f2fb74',1,'mkldnn_types.h']]],

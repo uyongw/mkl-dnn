@@ -9,6 +9,7 @@ var searchData=
   ['oihw8i',['oIhw8i',['../group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87eaabeb598d814c8420a22243d26e6ed3c9',1,'mkldnn::memory']]],
   ['oihw8i8o',['OIhw8i8o',['../group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87eab1ff88a5571cab5c4495acfb07669762',1,'mkldnn::memory']]],
   ['oihw8o8i',['OIhw8o8i',['../group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87ea511ae11a284c9108eeb61664ff163aea',1,'mkldnn::memory']]],
+  ['omit_5fstats',['omit_stats',['../group__cpp__api__memory.html#gga344b5c240a7392585aba615ff4d0d7f1a030cc07467d878652fddc39b5290f2a9',1,'mkldnn']]],
   ['operator_20primitive',['operator primitive',['../group__cpp__api__memory.html#gae11efc467d645e02364da19a7d859fc9',1,'mkldnn::primitive::at']]],
   ['operator_21_3d',['operator!=',['../group__cpp__api__memory.html#gaf25c0061b4f7372601556f571cb2b5e2',1,'mkldnn::handle::operator!=(const T other) const '],['../group__cpp__api__memory.html#ga2d3fcf26103f636321e4522a4fbeecd5',1,'mkldnn::handle::operator!=(const handle &amp;other) const '],['../group__cpp__api__memory.html#ga36f92d5707eeccf08646e4bf49b7e49b',1,'mkldnn::memory::primitive_desc::operator!=()']]],
   ['operator_3d',['operator=',['../group__cpp__api__memory.html#ga09e6a786752e89ba4a7a2c4b566b1f74',1,'mkldnn::handle']]],

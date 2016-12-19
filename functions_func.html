@@ -126,10 +126,10 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <h3><a class="anchor" id="index_b"></a>- b -</h3><ul>
 <li>batch_normalization_backward()
-: <a class="el" href="group__cpp__api__memory.html#ga37590552c98533f719d1381382711ad0">mkldnn::batch_normalization_backward</a>
+: <a class="el" href="group__cpp__api__memory.html#ga55c76342f57053d995afcb429c8b8846">mkldnn::batch_normalization_backward</a>
 </li>
 <li>batch_normalization_forward()
-: <a class="el" href="group__cpp__api__memory.html#ga6b109082a6a2419acc9cdacb4a7db47d">mkldnn::batch_normalization_forward</a>
+: <a class="el" href="group__cpp__api__memory.html#ga9705c9b9851160e978f22b8cc978e747">mkldnn::batch_normalization_forward</a>
 </li>
 <li>bias_primitive_desc()
 : <a class="el" href="group__cpp__api__memory.html#gacb30e88fd32c41161dd5a1592f640961">mkldnn::inner_product_forward::primitive_desc</a>
@@ -171,15 +171,17 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 : <a class="el" href="group__cpp__api__memory.html#gad369b767c09b54cf8e7bc2bc62d59f2a">mkldnn::memory::desc</a>
 , <a class="el" href="group__cpp__api__memory.html#ga5041094061648331ad89daa35400115d">mkldnn::convolution_forward::desc</a>
 , <a class="el" href="group__cpp__api__memory.html#ga2c07bfad08b5afd4260278479e24b1f2">mkldnn::convolution_backward_weights::desc</a>
-, <a class="el" href="group__cpp__api__memory.html#ga23ed55452321b607627e715b89006e3b">mkldnn::batch_normalization_forward::desc</a>
-, <a class="el" href="group__cpp__api__memory.html#ga524c74d5b9534eece72f7ffb1a7b4cb5">mkldnn::batch_normalization_backward::desc</a>
+, <a class="el" href="group__cpp__api__memory.html#ga86f3b6079fd48f2b8a289ed7b8419c99">mkldnn::softmax_forward::desc</a>
+, <a class="el" href="group__cpp__api__memory.html#gaac8dc676e445e93676dffac6ef4390a8">mkldnn::batch_normalization_forward::desc</a>
 , <a class="el" href="group__cpp__api__memory.html#ga3ec78c88bffc2391c0d6eaa558a246ce">mkldnn::convolution_relu_forward::desc</a>
+, <a class="el" href="group__cpp__api__memory.html#ga5ae63790025c19594ee778f8837984b0">mkldnn::batch_normalization_backward::desc</a>
 , <a class="el" href="group__cpp__api__memory.html#ga20b51c45cf4c44e975fb6f2a6dd4e465">mkldnn::inner_product_forward::desc</a>
 , <a class="el" href="group__cpp__api__memory.html#gae6bcbfb347abaf06075ffb36bdf589ac">mkldnn::convolution_forward::desc</a>
 , <a class="el" href="group__cpp__api__memory.html#ga4f9973617c92aa35983174f3c66ef47c">mkldnn::lrn_forward::desc</a>
+, <a class="el" href="group__cpp__api__memory.html#ga3b30be56209816e08951b3e73022e19a">mkldnn::inner_product_forward::desc</a>
 , <a class="el" href="group__cpp__api__memory.html#ga8c98863d7eb06dd91c082881feb4f4fc">mkldnn::inner_product_backward_data::desc</a>
+, <a class="el" href="group__cpp__api__memory.html#ga2a2b71ef52d4017400636e8657ef91cf">mkldnn::lrn_backward::desc</a>
 , <a class="el" href="group__cpp__api__memory.html#ga3ef5dad0931fc196056b5cabaf53c33c">mkldnn::inner_product_backward_weights::desc</a>
-, <a class="el" href="group__cpp__api__memory.html#gae1199bec78c4fe53707d6f57b0fdf649">mkldnn::lrn_backward::desc</a>
 , <a class="el" href="group__cpp__api__memory.html#ga2fdb74c95905f6c14c5e82bfa7e9e1e2">mkldnn::memory::primitive_desc</a>
 , <a class="el" href="group__cpp__api__memory.html#ga8a0adb7ef1a51b39f7a67982b9f71eb1">mkldnn::convolution_backward_data::desc</a>
 , <a class="el" href="group__cpp__api__memory.html#gacc5bfb6e905eaea24be53182b8f15eca">mkldnn::pooling_forward::desc</a>
@@ -189,27 +191,36 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 , <a class="el" href="group__cpp__api__memory.html#ga292763b9dd646f9e1222eb9684193b9b">mkldnn::relu_backward::desc</a>
 </li>
 <li>diff_bias_primitive_desc()
-: <a class="el" href="group__cpp__api__memory.html#ga6a7d128e1acdb9ae1976b33bc1b5e061">mkldnn::inner_product_backward_weights::primitive_desc</a>
+: <a class="el" href="group__cpp__api__memory.html#ga6bf93d6da26250ad3a25a92c17bb8b8b">mkldnn::convolution_backward_weights::primitive_desc</a>
+, <a class="el" href="group__cpp__api__memory.html#ga6a7d128e1acdb9ae1976b33bc1b5e061">mkldnn::inner_product_backward_weights::primitive_desc</a>
 </li>
 <li>diff_dst_primitive_desc()
-: <a class="el" href="group__cpp__api__memory.html#gadf7c9333597d61fd3f3f81bd6b650405">mkldnn::inner_product_backward_weights::primitive_desc</a>
-, <a class="el" href="group__cpp__api__memory.html#ga33024c211711e88945c87e11cffcdd09">mkldnn::inner_product_backward_data::primitive_desc</a>
+: <a class="el" href="group__cpp__api__memory.html#ga33024c211711e88945c87e11cffcdd09">mkldnn::inner_product_backward_data::primitive_desc</a>
+, <a class="el" href="group__cpp__api__memory.html#gadf7c9333597d61fd3f3f81bd6b650405">mkldnn::inner_product_backward_weights::primitive_desc</a>
+, <a class="el" href="group__cpp__api__memory.html#ga38789cbf4c65316757641d179849194f">mkldnn::convolution_backward_data::primitive_desc</a>
+, <a class="el" href="group__cpp__api__memory.html#gaecbe473e6f1e12354f38824924b6429d">mkldnn::lrn_backward::primitive_desc</a>
+, <a class="el" href="group__cpp__api__memory.html#gae5b4c22268758c7848dac3ee26cea098">mkldnn::convolution_backward_weights::primitive_desc</a>
 </li>
 <li>diff_src_primitive_desc()
 : <a class="el" href="group__cpp__api__memory.html#ga204b44bd34a4a9c511102551fc287c99">mkldnn::inner_product_backward_data::primitive_desc</a>
+, <a class="el" href="group__cpp__api__memory.html#ga9b5367511aa123c79c9f28339eba4bf0">mkldnn::lrn_backward::primitive_desc</a>
+, <a class="el" href="group__cpp__api__memory.html#ga47929f7011563b59d5f8bd45e3c6269c">mkldnn::convolution_backward_data::primitive_desc</a>
 </li>
 <li>diff_weights_primitive_desc()
-: <a class="el" href="group__cpp__api__memory.html#ga5e8aad30f07605fa8c155953165b6d9a">mkldnn::inner_product_backward_weights::primitive_desc</a>
+: <a class="el" href="group__cpp__api__memory.html#ga4831b67a6fc9115d65e88f7aa7a28bcb">mkldnn::convolution_backward_weights::primitive_desc</a>
+, <a class="el" href="group__cpp__api__memory.html#ga90addfd67b859bc8206cd9e8368fc154">mkldnn::batch_normalization_backward::primitive_desc</a>
+, <a class="el" href="group__cpp__api__memory.html#ga5e8aad30f07605fa8c155953165b6d9a">mkldnn::inner_product_backward_weights::primitive_desc</a>
 </li>
 <li>dst_primitive_desc()
 : <a class="el" href="group__cpp__api__memory.html#ga0d688ef5445de8791c88a0b8d24c6dd3">mkldnn::convolution_forward::primitive_desc</a>
-, <a class="el" href="group__cpp__api__memory.html#ga5a48934f2c240e3b9a1a21a219865765">mkldnn::relu_forward::primitive_desc</a>
-, <a class="el" href="group__cpp__api__memory.html#gabecbf8696d073a2dae6d10107f758d93">mkldnn::inner_product_forward::primitive_desc</a>
-, <a class="el" href="group__cpp__api__memory.html#gab08351536545991395314653fecf53c3">mkldnn::batch_normalization_forward::primitive_desc</a>
 , <a class="el" href="group__cpp__api__memory.html#ga65e5b0e80054faee6b84a66d360a4ef7">mkldnn::lrn_forward::primitive_desc</a>
-, <a class="el" href="group__cpp__api__memory.html#ga7ec177ab4a5539cc9dc0ed3c36a73b72">mkldnn::sum::primitive_desc</a>
-, <a class="el" href="group__cpp__api__memory.html#ga3c5daa99eb3baf8d236b573cd21199fd">mkldnn::concat::primitive_desc</a>
 , <a class="el" href="group__cpp__api__memory.html#gac6848df000d86a1d9bc104a600be135b">mkldnn::pooling_forward::primitive_desc</a>
+, <a class="el" href="group__cpp__api__memory.html#ga5a48934f2c240e3b9a1a21a219865765">mkldnn::relu_forward::primitive_desc</a>
+, <a class="el" href="group__cpp__api__memory.html#gab08351536545991395314653fecf53c3">mkldnn::batch_normalization_forward::primitive_desc</a>
+, <a class="el" href="group__cpp__api__memory.html#ga3c5daa99eb3baf8d236b573cd21199fd">mkldnn::concat::primitive_desc</a>
+, <a class="el" href="group__cpp__api__memory.html#ga24a5e657642389303ae524ba4e1d2a0a">mkldnn::batch_normalization_backward::primitive_desc</a>
+, <a class="el" href="group__cpp__api__memory.html#ga7ec177ab4a5539cc9dc0ed3c36a73b72">mkldnn::sum::primitive_desc</a>
+, <a class="el" href="group__cpp__api__memory.html#gabecbf8696d073a2dae6d10107f758d93">mkldnn::inner_product_forward::primitive_desc</a>
 </li>
 </ul>
 
@@ -275,8 +286,12 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 
 <h3><a class="anchor" id="index_m"></a>- m -</h3><ul>
+<li>mean_primitive_desc()
+: <a class="el" href="group__cpp__api__memory.html#ga58aaff6bdf25cf515824b49d47e651a0">mkldnn::batch_normalization_forward::primitive_desc</a>
+, <a class="el" href="group__cpp__api__memory.html#ga24e4e52023a016f2e3b4384923e06ebc">mkldnn::batch_normalization_backward::primitive_desc</a>
+</li>
 <li>memory()
-: <a class="el" href="group__cpp__api__memory.html#ga08ca6a1023e0f7a15b830ef21377ee2e">mkldnn::memory</a>
+: <a class="el" href="group__cpp__api__memory.html#gaeafa876cafdfe9e90afbfdfc4385fc71">mkldnn::memory</a>
 </li>
 </ul>
 
@@ -310,11 +325,12 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <li>primitive_desc()
 : <a class="el" href="group__cpp__api__memory.html#ga9a46a38feba31b4cb4b51f3fcb468a02">mkldnn::batch_normalization_backward::primitive_desc</a>
 , <a class="el" href="group__cpp__api__memory.html#ga035c56a6128f9cfd373a09e9291a54f7">mkldnn::batch_normalization_forward::primitive_desc</a>
+, <a class="el" href="group__cpp__api__memory.html#gae52ba21c1b9f86b0f7104ee3218fdc2b">mkldnn::softmax_forward::primitive_desc</a>
 , <a class="el" href="group__cpp__api__memory.html#ga4cdb3c927156e3d4bb5b4b5b59f68e5e">mkldnn::relu_backward::primitive_desc</a>
 , <a class="el" href="group__cpp__api__memory.html#ga1fea877aaf0ee9418ea0a81023a53e2d">mkldnn::relu_forward::primitive_desc</a>
 , <a class="el" href="group__cpp__api__memory.html#ga910d3cbfb17409b76ac297b77ff0382f">mkldnn::pooling_backward::primitive_desc</a>
 , <a class="el" href="group__cpp__api__memory.html#ga9463ec047f2b6d7106abf0d4abe7b087">mkldnn::pooling_forward::primitive_desc</a>
-, <a class="el" href="group__cpp__api__memory.html#ga72957d167ed66d0c1b8ff2f09b81484c">mkldnn::lrn_backward::primitive_desc</a>
+, <a class="el" href="group__cpp__api__memory.html#ga16cfeddc9f31ef5bf78b812985dc1b20">mkldnn::lrn_backward::primitive_desc</a>
 , <a class="el" href="group__cpp__api__memory.html#ga32139b3bfd84badbb318e12a70f5394d">mkldnn::lrn_forward::primitive_desc</a>
 , <a class="el" href="group__cpp__api__memory.html#ga1c549d4ae15bc5a41bfa63e222ccd222">mkldnn::convolution_relu_forward::primitive_desc</a>
 , <a class="el" href="group__cpp__api__memory.html#gabda8e2b320a0065cc2cdaebf9a9b080d">mkldnn::convolution_backward_weights::primitive_desc</a>
@@ -355,10 +371,15 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <li>set_data_handle()
 : <a class="el" href="group__cpp__api__memory.html#gab40a643171be4f413ca4cfae8c672f5d">mkldnn::memory</a>
 </li>
+<li>softmax_forward()
+: <a class="el" href="group__cpp__api__memory.html#ga0c2c19e0566480132d975aa0904eadf3">mkldnn::softmax_forward</a>
+</li>
 <li>src_primitive_desc()
-: <a class="el" href="group__cpp__api__memory.html#ga2063aea85966d8d393d79801dd8d8afd">mkldnn::convolution_forward::primitive_desc</a>
+: <a class="el" href="group__cpp__api__memory.html#ga675b8844743f7d8e372fe8d49a4596b5">mkldnn::convolution_backward_weights::primitive_desc</a>
+, <a class="el" href="group__cpp__api__memory.html#gaf679dc40289870da41169066af36e4cc">mkldnn::lrn_forward::primitive_desc</a>
 , <a class="el" href="group__cpp__api__memory.html#ga889000101e06690c7a3e799018c7014d">mkldnn::inner_product_backward_weights::primitive_desc</a>
 , <a class="el" href="group__cpp__api__memory.html#ga234e766069f895884d641a735c292539">mkldnn::inner_product_forward::primitive_desc</a>
+, <a class="el" href="group__cpp__api__memory.html#ga2063aea85966d8d393d79801dd8d8afd">mkldnn::convolution_forward::primitive_desc</a>
 </li>
 <li>stream()
 : <a class="el" href="group__cpp__api__memory.html#ga22daa1004aa81953f5d27b24b1893cc7">mkldnn::stream</a>
@@ -376,8 +397,12 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <li>validate_dims()
 : <a class="el" href="group__cpp__api__memory.html#ga2b5aee608f913a4fcbfef41b63f48650">mkldnn::memory</a>
 </li>
+<li>variance_primitive_desc()
+: <a class="el" href="group__cpp__api__memory.html#ga99e37cecab1835075cd1f4587c535af9">mkldnn::batch_normalization_forward::primitive_desc</a>
+, <a class="el" href="group__cpp__api__memory.html#ga9da80aa840c523e837e9728bb689745b">mkldnn::batch_normalization_backward::primitive_desc</a>
+</li>
 <li>view()
-: <a class="el" href="group__cpp__api__memory.html#gadd84c97a1d70e7135a9d35719247b761">mkldnn::view</a>
+: <a class="el" href="group__cpp__api__memory.html#ga28b4a6dd02a91f4286f3d5e865f64e12">mkldnn::view</a>
 </li>
 </ul>
 
@@ -388,16 +413,16 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </li>
 <li>weights_primitive_desc()
 : <a class="el" href="group__cpp__api__memory.html#ga4db0ad8184f275dc5399dd92ba5ca273">mkldnn::convolution_forward::primitive_desc</a>
-, <a class="el" href="group__cpp__api__memory.html#gab2e95955930d28eef5d364fc1479aeec">mkldnn::batch_normalization_backward::primitive_desc</a>
-, <a class="el" href="group__cpp__api__memory.html#ga27d9576a431ef71144e5df8bc572b335">mkldnn::inner_product_forward::primitive_desc</a>
 , <a class="el" href="group__cpp__api__memory.html#ga17def286fa82dab19e97e71ca399e371">mkldnn::batch_normalization_forward::primitive_desc</a>
+, <a class="el" href="group__cpp__api__memory.html#gab2e95955930d28eef5d364fc1479aeec">mkldnn::batch_normalization_backward::primitive_desc</a>
+, <a class="el" href="group__cpp__api__memory.html#gaf27aa82dce4e432fc322d170eccde79f">mkldnn::convolution_backward_data::primitive_desc</a>
 , <a class="el" href="group__cpp__api__memory.html#gad53b804b4763195e39a0bd97d869fc9c">mkldnn::inner_product_backward_data::primitive_desc</a>
+, <a class="el" href="group__cpp__api__memory.html#ga27d9576a431ef71144e5df8bc572b335">mkldnn::inner_product_forward::primitive_desc</a>
 </li>
 <li>workspace_primitive_desc()
-: <a class="el" href="group__cpp__api__memory.html#ga32b84dd984e9188809c0ee49d52dca1c">mkldnn::batch_normalization_forward::primitive_desc</a>
-, <a class="el" href="group__cpp__api__memory.html#ga519fb4b235b0bdc11e5162de13f1ef31">mkldnn::batch_normalization_backward::primitive_desc</a>
-, <a class="el" href="group__cpp__api__memory.html#gacf2f297c819138ec4dc77179b8820f63">mkldnn::pooling_forward::primitive_desc</a>
+: <a class="el" href="group__cpp__api__memory.html#gacf2f297c819138ec4dc77179b8820f63">mkldnn::pooling_forward::primitive_desc</a>
 , <a class="el" href="group__cpp__api__memory.html#ga37f958457072fb439e812ea4c368970b">mkldnn::lrn_forward::primitive_desc</a>
+, <a class="el" href="group__cpp__api__memory.html#gae12aeae20ba1445e8118f4c24471c81d">mkldnn::lrn_backward::primitive_desc</a>
 </li>
 <li>wrap_c_api()
 : <a class="el" href="group__cpp__api__memory.html#ga9217132bf07620e239523c921c51e36d">mkldnn::error</a>

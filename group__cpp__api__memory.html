@@ -135,6 +135,8 @@ Classes</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmkldnn_1_1relu__backward.html">mkldnn::relu_backward</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmkldnn_1_1softmax__forward.html">mkldnn::softmax_forward</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmkldnn_1_1batch__normalization__forward.html">mkldnn::batch_normalization_forward</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmkldnn_1_1batch__normalization__backward.html">mkldnn::batch_normalization_backward</a></td></tr>
@@ -175,19 +177,21 @@ Enumerations</h2></td></tr>
 &#160;&#160;<a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87ea4ff01f91c212576306e693c1a1ac4c12">mkldnn::memory::nc</a> = c_api::mkldnn_nc, 
 <a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87eafc4fd623cc6ff8ed099be6d52743200a">mkldnn::memory::nchw</a> = c_api::mkldnn_nchw, 
 <a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87ea5ec50071376483f7364de8b1b85d685d">mkldnn::memory::nhwc</a> = c_api::mkldnn_nhwc, 
-<a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87ea248862baad8f48e384015ffd20327223">mkldnn::memory::nChw8c</a> = c_api::mkldnn_nChw8c, 
+<a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87eaeab9b02510aacc27bd0043473caa6a8e">mkldnn::memory::chwn</a> = c_api::mkldnn_chwn, 
 <br/>
-&#160;&#160;<a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87ea4c8c6b41aae08b78d95bb5b76d28d22b">mkldnn::memory::oi</a> = c_api::mkldnn_oi, 
+&#160;&#160;<a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87ea248862baad8f48e384015ffd20327223">mkldnn::memory::nChw8c</a> = c_api::mkldnn_nChw8c, 
+<a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87ea4c8c6b41aae08b78d95bb5b76d28d22b">mkldnn::memory::oi</a> = c_api::mkldnn_oi, 
 <a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87ead5691debf8e19e13d09e15d7d99a7ee3">mkldnn::memory::oihw</a> = c_api::mkldnn_oihw, 
-<a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87eaabeb598d814c8420a22243d26e6ed3c9">mkldnn::memory::oIhw8i</a> = c_api::mkldnn_oIhw8i, 
+<a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87ea7fe3459cd6d4a96ee1b7374a829339d5">mkldnn::memory::ihwo</a> = c_api::mkldnn_ihwo, 
+<br/>
+&#160;&#160;<a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87eaabeb598d814c8420a22243d26e6ed3c9">mkldnn::memory::oIhw8i</a> = c_api::mkldnn_oIhw8i, 
 <a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87eab1ff88a5571cab5c4495acfb07669762">mkldnn::memory::OIhw8i8o</a> = c_api::mkldnn_OIhw8i8o, 
-<br/>
-&#160;&#160;<a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87ea511ae11a284c9108eeb61664ff163aea">mkldnn::memory::OIhw8o8i</a> = c_api::mkldnn_OIhw8o8i, 
+<a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87ea511ae11a284c9108eeb61664ff163aea">mkldnn::memory::OIhw8o8i</a> = c_api::mkldnn_OIhw8o8i, 
 <a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87ea2f135b7d8ff60dcce96a4919722b0fad">mkldnn::memory::Ohwi8o</a> = c_api::mkldnn_Ohwi8o, 
-<a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87ea19f8852dc26c175f22aed771f3f9614a">mkldnn::memory::goihw</a> = c_api::mkldnn_goihw, 
-<a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87ea11eda3436ae582b8a28cc85adc8433c1">mkldnn::memory::gOIhw8i8o</a> = c_api::mkldnn_gOIhw8i8o, 
 <br/>
-&#160;&#160;<a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87eacaf364857cd0309c67bb6dff621ee71e">mkldnn::memory::gOIhw8o8i</a> = c_api::mkldnn_gOIhw8o8i
+&#160;&#160;<a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87ea19f8852dc26c175f22aed771f3f9614a">mkldnn::memory::goihw</a> = c_api::mkldnn_goihw, 
+<a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87ea11eda3436ae582b8a28cc85adc8433c1">mkldnn::memory::gOIhw8i8o</a> = c_api::mkldnn_gOIhw8i8o, 
+<a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87eacaf364857cd0309c67bb6dff621ee71e">mkldnn::memory::gOIhw8o8i</a> = c_api::mkldnn_gOIhw8o8i
 <br/>
  }</td></tr>
 <tr class="memdesc:ga563b90355ae4fbfed12f6db8ab25a87e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Memory format specification. See <a class="el" href="group__c__api__types__generic.html#ga30a390f87ef74bf03dfa48a7b3f2fb74" title="Memory format specification. ">mkldnn_memory_format_t</a> for a detailed description.  <a href="group__cpp__api__memory.html#ga563b90355ae4fbfed12f6db8ab25a87e">More...</a><br/></td></tr>
@@ -205,23 +209,25 @@ Enumerations</h2></td></tr>
 <br/>
 &#160;&#160;<a class="el" href="group__cpp__api__memory.html#gga6d88ff11a07bae09a5c348d314c5d1d9a13f5d72b1e5ec568b24c930e3b87641b">mkldnn::convolution_d</a> = c_api::mkldnn_query_convolution_d, 
 <a class="el" href="group__cpp__api__memory.html#gga6d88ff11a07bae09a5c348d314c5d1d9a20f677933e74a40096d45a51664c5ee4">mkldnn::relu_d</a> = c_api::mkldnn_query_relu_d, 
+<a class="el" href="group__cpp__api__memory.html#gga6d88ff11a07bae09a5c348d314c5d1d9abdb39a5fa96f35b51571bb5481ed2cc2">mkldnn::softmax_d</a> = c_api::mkldnn_query_softmax_d, 
 <a class="el" href="group__cpp__api__memory.html#gga6d88ff11a07bae09a5c348d314c5d1d9a3be3f1011debd2ee2df16b6b04a0bf77">mkldnn::pooling_d</a> = c_api::mkldnn_query_pooling_d, 
-<a class="el" href="group__cpp__api__memory.html#gga6d88ff11a07bae09a5c348d314c5d1d9a76add43bb6bee4f897e668e2d54476a2">mkldnn::lrn_d</a> = c_api::mkldnn_query_lrn_d, 
 <br/>
-&#160;&#160;<a class="el" href="group__cpp__api__memory.html#gga6d88ff11a07bae09a5c348d314c5d1d9a98ae1af5a25e62ffebc0ee054e0fd7c7">mkldnn::batch_normalization_d</a> = c_api::mkldnn_query_batch_normalization_d, 
+&#160;&#160;<a class="el" href="group__cpp__api__memory.html#gga6d88ff11a07bae09a5c348d314c5d1d9a76add43bb6bee4f897e668e2d54476a2">mkldnn::lrn_d</a> = c_api::mkldnn_query_lrn_d, 
+<a class="el" href="group__cpp__api__memory.html#gga6d88ff11a07bae09a5c348d314c5d1d9a98ae1af5a25e62ffebc0ee054e0fd7c7">mkldnn::batch_normalization_d</a> = c_api::mkldnn_query_batch_normalization_d, 
 <a class="el" href="group__cpp__api__memory.html#gga6d88ff11a07bae09a5c348d314c5d1d9a4036c4c9cc32dd0f22a8903cfceeaa41">mkldnn::inner_product_d</a> = c_api::mkldnn_query_inner_product_d, 
 <a class="el" href="group__cpp__api__memory.html#gga6d88ff11a07bae09a5c348d314c5d1d9a83453c3a1e6a6dad19d5928ae9b9b0ee">mkldnn::convolution_relu_d</a> = c_api::mkldnn_query_convolution_relu_d, 
-<a class="el" href="group__cpp__api__memory.html#gga6d88ff11a07bae09a5c348d314c5d1d9a508fa6b849113ef2100177d2991129fe">mkldnn::input_pd</a> = c_api::mkldnn_query_input_pd, 
 <br/>
-&#160;&#160;<a class="el" href="group__cpp__api__memory.html#gga6d88ff11a07bae09a5c348d314c5d1d9abab2d1abc2d37f4a1358daeb7f9a32b1">mkldnn::output_pd</a> = c_api::mkldnn_query_output_pd, 
+&#160;&#160;<a class="el" href="group__cpp__api__memory.html#gga6d88ff11a07bae09a5c348d314c5d1d9a508fa6b849113ef2100177d2991129fe">mkldnn::input_pd</a> = c_api::mkldnn_query_input_pd, 
+<a class="el" href="group__cpp__api__memory.html#gga6d88ff11a07bae09a5c348d314c5d1d9abab2d1abc2d37f4a1358daeb7f9a32b1">mkldnn::output_pd</a> = c_api::mkldnn_query_output_pd, 
 <a class="el" href="group__cpp__api__memory.html#gga6d88ff11a07bae09a5c348d314c5d1d9a486100f73904f2beae1418a57cc6e0b1">mkldnn::src_pd</a> = c_api::mkldnn_query_src_pd, 
 <a class="el" href="group__cpp__api__memory.html#gga6d88ff11a07bae09a5c348d314c5d1d9a255f93a5ef35321792effc4f5d23e1e3">mkldnn::diff_src_pd</a> = c_api::mkldnn_query_diff_src_pd, 
-<a class="el" href="group__cpp__api__memory.html#gga6d88ff11a07bae09a5c348d314c5d1d9a38a475450bc885f2a0fad13bf87f44b9">mkldnn::weights_pd</a> = c_api::mkldnn_query_weights_pd, 
 <br/>
-&#160;&#160;<a class="el" href="group__cpp__api__memory.html#gga6d88ff11a07bae09a5c348d314c5d1d9a7b14a983b2e690abcf176dd41da50ae1">mkldnn::diff_weights_pd</a> = c_api::mkldnn_query_diff_weights_pd, 
+&#160;&#160;<a class="el" href="group__cpp__api__memory.html#gga6d88ff11a07bae09a5c348d314c5d1d9a38a475450bc885f2a0fad13bf87f44b9">mkldnn::weights_pd</a> = c_api::mkldnn_query_weights_pd, 
+<a class="el" href="group__cpp__api__memory.html#gga6d88ff11a07bae09a5c348d314c5d1d9a7b14a983b2e690abcf176dd41da50ae1">mkldnn::diff_weights_pd</a> = c_api::mkldnn_query_diff_weights_pd, 
 <a class="el" href="group__cpp__api__memory.html#gga6d88ff11a07bae09a5c348d314c5d1d9a5e602b7cc44ad7373ab7212f73b3d7d4">mkldnn::dst_pd</a> = c_api::mkldnn_query_dst_pd, 
 <a class="el" href="group__cpp__api__memory.html#gga6d88ff11a07bae09a5c348d314c5d1d9adb9fd0a330dc402a36de022ce82bff07">mkldnn::diff_dst_pd</a> = c_api::mkldnn_query_diff_dst_pd, 
-<a class="el" href="group__cpp__api__memory.html#gga6d88ff11a07bae09a5c348d314c5d1d9a41d00a7019d406614ebaa00195d179bd">mkldnn::workspace_pd</a> = c_api::mkldnn_query_workspace_pd
+<br/>
+&#160;&#160;<a class="el" href="group__cpp__api__memory.html#gga6d88ff11a07bae09a5c348d314c5d1d9a41d00a7019d406614ebaa00195d179bd">mkldnn::workspace_pd</a> = c_api::mkldnn_query_workspace_pd
 <br/>
  }</td></tr>
 <tr class="separator:ga6d88ff11a07bae09a5c348d314c5d1d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -251,6 +257,11 @@ Enumerations</h2></td></tr>
 <br/>
  }</td></tr>
 <tr class="separator:gae45a07d6121fdd33e310782753178076"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga344b5c240a7392585aba615ff4d0d7f1"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga344b5c240a7392585aba615ff4d0d7f1">mkldnn::batch_normalization_flag</a> { <a class="el" href="group__cpp__api__memory.html#gga344b5c240a7392585aba615ff4d0d7f1a97fcd7beeed54e37e2718124d0051d5c">mkldnn::use_global_stats</a> = c_api::mkldnn_use_global_stats, 
+<a class="el" href="group__cpp__api__memory.html#gga344b5c240a7392585aba615ff4d0d7f1a67734f09ab5b5b5282855d52c3e62486">mkldnn::use_scale_shift</a> = c_api::mkldnn_use_scaleshift, 
+<a class="el" href="group__cpp__api__memory.html#gga344b5c240a7392585aba615ff4d0d7f1a030cc07467d878652fddc39b5290f2a9">mkldnn::omit_stats</a> = c_api::mkldnn_omit_stats
+ }</td></tr>
+<tr class="separator:ga344b5c240a7392585aba615ff4d0d7f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga7b46a4cd837ea0ccf835d7fa4fc37cff"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga7b46a4cd837ea0ccf835d7fa4fc37cff">mkldnn::stream::kind</a> { <a class="el" href="group__cpp__api__memory.html#gga7b46a4cd837ea0ccf835d7fa4fc37cffa488e6cebf53697050c0b2cc3829aeb94">mkldnn::stream::any</a> = c_api::mkldnn_stream_kind_t::mkldnn_any_stream, 
 <a class="el" href="group__cpp__api__memory.html#gga7b46a4cd837ea0ccf835d7fa4fc37cffa6be8d548cd5645db2b66fb4eca81c854">mkldnn::stream::eager</a> = c_api::mkldnn_stream_kind_t::mkldnn_eager, 
 <a class="el" href="group__cpp__api__memory.html#gga7b46a4cd837ea0ccf835d7fa4fc37cffa02b04eb4c732cc0525e409b7e7e60498">mkldnn::stream::lazy</a> = c_api::mkldnn_stream_kind_t::mkldnn_lazy
@@ -423,6 +434,12 @@ Functions</h2></td></tr>
 <tr class="separator:ga8a0adb7ef1a51b39f7a67982b9f71eb1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga0fcb4679c5de445bf9e32335b3e3c49f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga0fcb4679c5de445bf9e32335b3e3c49f">mkldnn::convolution_backward_data::primitive_desc::primitive_desc</a> (const desc &amp;adesc, const engine &amp;aengine, const convolution_forward::primitive_desc &amp;hint_fwd_primitive_desc)</td></tr>
 <tr class="separator:ga0fcb4679c5de445bf9e32335b3e3c49f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga47929f7011563b59d5f8bd45e3c6269c"><td class="memItemLeft" align="right" valign="top">memory::primitive_desc&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga47929f7011563b59d5f8bd45e3c6269c">mkldnn::convolution_backward_data::primitive_desc::diff_src_primitive_desc</a> () const </td></tr>
+<tr class="separator:ga47929f7011563b59d5f8bd45e3c6269c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf27aa82dce4e432fc322d170eccde79f"><td class="memItemLeft" align="right" valign="top">memory::primitive_desc&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#gaf27aa82dce4e432fc322d170eccde79f">mkldnn::convolution_backward_data::primitive_desc::weights_primitive_desc</a> () const </td></tr>
+<tr class="separator:gaf27aa82dce4e432fc322d170eccde79f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga38789cbf4c65316757641d179849194f"><td class="memItemLeft" align="right" valign="top">memory::primitive_desc&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga38789cbf4c65316757641d179849194f">mkldnn::convolution_backward_data::primitive_desc::diff_dst_primitive_desc</a> () const </td></tr>
+<tr class="separator:ga38789cbf4c65316757641d179849194f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga1718f5d44f0b7d9b1d07a51aa4938689"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga1718f5d44f0b7d9b1d07a51aa4938689">mkldnn::convolution_backward_data::convolution_backward_data</a> (const primitive_desc &amp;aprimitive_desc, const primitive::at &amp;diff_dst, const primitive::at &amp;weights, const memory &amp;diff_src)</td></tr>
 <tr class="separator:ga1718f5d44f0b7d9b1d07a51aa4938689"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gabea7ad74752b830aff0a803760556756"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#gabea7ad74752b830aff0a803760556756">mkldnn::convolution_backward_weights::desc::desc</a> (algorithm aalgorithm, const memory::desc &amp;src_desc, const memory::desc &amp;diff_weights_desc, const memory::desc &amp;diff_bias_desc, const memory::desc &amp;diff_dst_desc, const memory::dims strides, const memory::dims padding_l, const memory::dims padding_r, const padding_kind apadding_kind)</td></tr>
@@ -431,6 +448,14 @@ Functions</h2></td></tr>
 <tr class="separator:ga2c07bfad08b5afd4260278479e24b1f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gabda8e2b320a0065cc2cdaebf9a9b080d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#gabda8e2b320a0065cc2cdaebf9a9b080d">mkldnn::convolution_backward_weights::primitive_desc::primitive_desc</a> (const desc &amp;adesc, const engine &amp;aengine, const convolution_forward::primitive_desc &amp;hint_fwd_primitive_desc)</td></tr>
 <tr class="separator:gabda8e2b320a0065cc2cdaebf9a9b080d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga675b8844743f7d8e372fe8d49a4596b5"><td class="memItemLeft" align="right" valign="top">memory::primitive_desc&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga675b8844743f7d8e372fe8d49a4596b5">mkldnn::convolution_backward_weights::primitive_desc::src_primitive_desc</a> () const </td></tr>
+<tr class="separator:ga675b8844743f7d8e372fe8d49a4596b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4831b67a6fc9115d65e88f7aa7a28bcb"><td class="memItemLeft" align="right" valign="top">memory::primitive_desc&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga4831b67a6fc9115d65e88f7aa7a28bcb">mkldnn::convolution_backward_weights::primitive_desc::diff_weights_primitive_desc</a> () const </td></tr>
+<tr class="separator:ga4831b67a6fc9115d65e88f7aa7a28bcb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6bf93d6da26250ad3a25a92c17bb8b8b"><td class="memItemLeft" align="right" valign="top">memory::primitive_desc&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga6bf93d6da26250ad3a25a92c17bb8b8b">mkldnn::convolution_backward_weights::primitive_desc::diff_bias_primitive_desc</a> () const </td></tr>
+<tr class="separator:ga6bf93d6da26250ad3a25a92c17bb8b8b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae5b4c22268758c7848dac3ee26cea098"><td class="memItemLeft" align="right" valign="top">memory::primitive_desc&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#gae5b4c22268758c7848dac3ee26cea098">mkldnn::convolution_backward_weights::primitive_desc::diff_dst_primitive_desc</a> () const </td></tr>
+<tr class="separator:gae5b4c22268758c7848dac3ee26cea098"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga28ce42837036bb2147c5b2155bc82916"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga28ce42837036bb2147c5b2155bc82916">mkldnn::convolution_backward_weights::convolution_backward_weights</a> (const primitive_desc &amp;aprimitive_desc, const primitive::at &amp;src, const primitive::at &amp;diff_dst, const memory &amp;diff_weights, const memory &amp;diff_bias)</td></tr>
 <tr class="separator:ga28ce42837036bb2147c5b2155bc82916"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga7bfa169b1b205f22844a143e2a89c891"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga7bfa169b1b205f22844a143e2a89c891">mkldnn::convolution_backward_weights::convolution_backward_weights</a> (const primitive_desc &amp;aprimitive_desc, const primitive::at &amp;src, const primitive::at &amp;diff_dst, const memory &amp;diff_weights)</td></tr>
@@ -447,6 +472,8 @@ Functions</h2></td></tr>
 <tr class="separator:ga4f9973617c92aa35983174f3c66ef47c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga32139b3bfd84badbb318e12a70f5394d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga32139b3bfd84badbb318e12a70f5394d">mkldnn::lrn_forward::primitive_desc::primitive_desc</a> (const desc &amp;adesc, const engine &amp;aengine)</td></tr>
 <tr class="separator:ga32139b3bfd84badbb318e12a70f5394d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf679dc40289870da41169066af36e4cc"><td class="memItemLeft" align="right" valign="top">memory::primitive_desc&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#gaf679dc40289870da41169066af36e4cc">mkldnn::lrn_forward::primitive_desc::src_primitive_desc</a> () const </td></tr>
+<tr class="separator:gaf679dc40289870da41169066af36e4cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga37f958457072fb439e812ea4c368970b"><td class="memItemLeft" align="right" valign="top">memory::primitive_desc&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga37f958457072fb439e812ea4c368970b">mkldnn::lrn_forward::primitive_desc::workspace_primitive_desc</a> () const </td></tr>
 <tr class="separator:ga37f958457072fb439e812ea4c368970b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga65e5b0e80054faee6b84a66d360a4ef7"><td class="memItemLeft" align="right" valign="top">memory::primitive_desc&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga65e5b0e80054faee6b84a66d360a4ef7">mkldnn::lrn_forward::primitive_desc::dst_primitive_desc</a> () const </td></tr>
@@ -455,10 +482,16 @@ Functions</h2></td></tr>
 <tr class="separator:ga452b11f3734755695cdf6eb4d4556a84"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gacbd49285d69e89a49bab508d096b27c2"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#gacbd49285d69e89a49bab508d096b27c2">mkldnn::lrn_forward::lrn_forward</a> (const primitive_desc &amp;aprimitive_desc, const primitive::at &amp;src, const memory &amp;dst)</td></tr>
 <tr class="separator:gacbd49285d69e89a49bab508d096b27c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae1199bec78c4fe53707d6f57b0fdf649"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#gae1199bec78c4fe53707d6f57b0fdf649">mkldnn::lrn_backward::desc::desc</a> (algorithm aalgorithm, const memory::desc &amp;src_desc, const memory::desc &amp;diff_dst_desc, int local_size, double alpha, double beta)</td></tr>
-<tr class="separator:gae1199bec78c4fe53707d6f57b0fdf649"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga72957d167ed66d0c1b8ff2f09b81484c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga72957d167ed66d0c1b8ff2f09b81484c">mkldnn::lrn_backward::primitive_desc::primitive_desc</a> (const desc &amp;adesc, const engine &amp;aengine)</td></tr>
-<tr class="separator:ga72957d167ed66d0c1b8ff2f09b81484c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2a2b71ef52d4017400636e8657ef91cf"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga2a2b71ef52d4017400636e8657ef91cf">mkldnn::lrn_backward::desc::desc</a> (algorithm aalgorithm, const memory::desc &amp;data_desc, const memory::desc &amp;diff_data_desc, int local_size, double alpha, double beta)</td></tr>
+<tr class="separator:ga2a2b71ef52d4017400636e8657ef91cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga16cfeddc9f31ef5bf78b812985dc1b20"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga16cfeddc9f31ef5bf78b812985dc1b20">mkldnn::lrn_backward::primitive_desc::primitive_desc</a> (const desc &amp;adesc, const engine &amp;aengine, const lrn_forward::primitive_desc &amp;hint_fwd_primitive_desc)</td></tr>
+<tr class="separator:ga16cfeddc9f31ef5bf78b812985dc1b20"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9b5367511aa123c79c9f28339eba4bf0"><td class="memItemLeft" align="right" valign="top">memory::primitive_desc&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga9b5367511aa123c79c9f28339eba4bf0">mkldnn::lrn_backward::primitive_desc::diff_src_primitive_desc</a> () const </td></tr>
+<tr class="separator:ga9b5367511aa123c79c9f28339eba4bf0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae12aeae20ba1445e8118f4c24471c81d"><td class="memItemLeft" align="right" valign="top">memory::primitive_desc&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#gae12aeae20ba1445e8118f4c24471c81d">mkldnn::lrn_backward::primitive_desc::workspace_primitive_desc</a> () const </td></tr>
+<tr class="separator:gae12aeae20ba1445e8118f4c24471c81d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaecbe473e6f1e12354f38824924b6429d"><td class="memItemLeft" align="right" valign="top">memory::primitive_desc&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#gaecbe473e6f1e12354f38824924b6429d">mkldnn::lrn_backward::primitive_desc::diff_dst_primitive_desc</a> () const </td></tr>
+<tr class="separator:gaecbe473e6f1e12354f38824924b6429d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaa8a5aca14c604d2a1fb70801cd8cca56"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#gaa8a5aca14c604d2a1fb70801cd8cca56">mkldnn::lrn_backward::lrn_backward</a> (const primitive_desc &amp;aprimitive_desc, const primitive::at &amp;src, const primitive::at &amp;diff_dst, const primitive::at &amp;workspace, const memory &amp;diff_src)</td></tr>
 <tr class="separator:gaa8a5aca14c604d2a1fb70801cd8cca56"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaf23cbd8f53aca23a80df1ba0cd135567"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#gaf23cbd8f53aca23a80df1ba0cd135567">mkldnn::lrn_backward::lrn_backward</a> (const primitive_desc &amp;aprimitive_desc, const primitive::at &amp;src, const primitive::at &amp;diff_dst, const memory &amp;diff_src)</td></tr>
@@ -499,33 +532,58 @@ Functions</h2></td></tr>
 <tr class="separator:ga4cdb3c927156e3d4bb5b4b5b59f68e5e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaa9c009ebe7fa7e946fcceb9b9c5a4ad6"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#gaa9c009ebe7fa7e946fcceb9b9c5a4ad6">mkldnn::relu_backward::relu_backward</a> (const primitive_desc &amp;aprimitive_desc, const primitive::at &amp;src, const primitive::at &amp;diff_dst, const memory &amp;diff_src)</td></tr>
 <tr class="separator:gaa9c009ebe7fa7e946fcceb9b9c5a4ad6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga23ed55452321b607627e715b89006e3b"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
-<tr class="memitem:ga23ed55452321b607627e715b89006e3b"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga23ed55452321b607627e715b89006e3b">mkldnn::batch_normalization_forward::desc::desc</a> (prop_kind aprop_kind, const memory::desc &amp;src_desc, T epsilon)</td></tr>
-<tr class="separator:ga23ed55452321b607627e715b89006e3b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga86f3b6079fd48f2b8a289ed7b8419c99"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga86f3b6079fd48f2b8a289ed7b8419c99">mkldnn::softmax_forward::desc::desc</a> (prop_kind aprop_kind, const memory::desc &amp;data_desc, int softmax_axis)</td></tr>
+<tr class="separator:ga86f3b6079fd48f2b8a289ed7b8419c99"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae52ba21c1b9f86b0f7104ee3218fdc2b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#gae52ba21c1b9f86b0f7104ee3218fdc2b">mkldnn::softmax_forward::primitive_desc::primitive_desc</a> (const desc &amp;adesc, const engine &amp;aengine)</td></tr>
+<tr class="separator:gae52ba21c1b9f86b0f7104ee3218fdc2b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0c2c19e0566480132d975aa0904eadf3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga0c2c19e0566480132d975aa0904eadf3">mkldnn::softmax_forward::softmax_forward</a> (const primitive_desc &amp;aprimitive_desc, const primitive::at &amp;src, const memory &amp;dst)</td></tr>
+<tr class="separator:ga0c2c19e0566480132d975aa0904eadf3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaac8dc676e445e93676dffac6ef4390a8"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:gaac8dc676e445e93676dffac6ef4390a8"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#gaac8dc676e445e93676dffac6ef4390a8">mkldnn::batch_normalization_forward::desc::desc</a> (prop_kind aprop_kind, const memory::desc &amp;src_desc, T epsilon, unsigned flags)</td></tr>
+<tr class="separator:gaac8dc676e445e93676dffac6ef4390a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga035c56a6128f9cfd373a09e9291a54f7"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga035c56a6128f9cfd373a09e9291a54f7">mkldnn::batch_normalization_forward::primitive_desc::primitive_desc</a> (const desc &amp;adesc, const engine &amp;aengine)</td></tr>
 <tr class="separator:ga035c56a6128f9cfd373a09e9291a54f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga17def286fa82dab19e97e71ca399e371"><td class="memItemLeft" align="right" valign="top">memory::primitive_desc&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga17def286fa82dab19e97e71ca399e371">mkldnn::batch_normalization_forward::primitive_desc::weights_primitive_desc</a> () const </td></tr>
 <tr class="separator:ga17def286fa82dab19e97e71ca399e371"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga32b84dd984e9188809c0ee49d52dca1c"><td class="memItemLeft" align="right" valign="top">memory::primitive_desc&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga32b84dd984e9188809c0ee49d52dca1c">mkldnn::batch_normalization_forward::primitive_desc::workspace_primitive_desc</a> () const </td></tr>
-<tr class="separator:ga32b84dd984e9188809c0ee49d52dca1c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga58aaff6bdf25cf515824b49d47e651a0"><td class="memItemLeft" align="right" valign="top">memory::primitive_desc&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga58aaff6bdf25cf515824b49d47e651a0">mkldnn::batch_normalization_forward::primitive_desc::mean_primitive_desc</a> () const </td></tr>
+<tr class="separator:ga58aaff6bdf25cf515824b49d47e651a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga99e37cecab1835075cd1f4587c535af9"><td class="memItemLeft" align="right" valign="top">memory::primitive_desc&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga99e37cecab1835075cd1f4587c535af9">mkldnn::batch_normalization_forward::primitive_desc::variance_primitive_desc</a> () const </td></tr>
+<tr class="separator:ga99e37cecab1835075cd1f4587c535af9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gab08351536545991395314653fecf53c3"><td class="memItemLeft" align="right" valign="top">memory::primitive_desc&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#gab08351536545991395314653fecf53c3">mkldnn::batch_normalization_forward::primitive_desc::dst_primitive_desc</a> () const </td></tr>
 <tr class="separator:gab08351536545991395314653fecf53c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf17bc8947ee664635958adc6cb20e1d2"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#gaf17bc8947ee664635958adc6cb20e1d2">mkldnn::batch_normalization_forward::batch_normalization_forward</a> (const primitive_desc &amp;aprimitive_desc, const primitive::at &amp;src, const primitive::at &amp;weights, const memory &amp;workspace, const memory &amp;dst)</td></tr>
-<tr class="separator:gaf17bc8947ee664635958adc6cb20e1d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga45baa13a4d88945a14b38e2c731c64a3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga45baa13a4d88945a14b38e2c731c64a3">mkldnn::batch_normalization_forward::batch_normalization_forward</a> (const primitive_desc &amp;aprimitive_desc, const primitive::at &amp;src, const primitive::at &amp;mean, const primitive::at &amp;variance, const primitive::at &amp;weights, const memory &amp;dst)</td></tr>
+<tr class="separator:ga45baa13a4d88945a14b38e2c731c64a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga895efcf4f5bcf36957f468879a8a2143"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga895efcf4f5bcf36957f468879a8a2143">mkldnn::batch_normalization_forward::batch_normalization_forward</a> (const primitive_desc &amp;aprimitive_desc, const primitive::at &amp;src, const primitive::at &amp;mean, const primitive::at &amp;variance, const memory &amp;dst)</td></tr>
+<tr class="separator:ga895efcf4f5bcf36957f468879a8a2143"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga489a72f2a9fac12aa6ef08a0205ae7b4"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga489a72f2a9fac12aa6ef08a0205ae7b4">mkldnn::batch_normalization_forward::batch_normalization_forward</a> (const primitive_desc &amp;aprimitive_desc, const primitive::at &amp;src, const primitive::at &amp;weights, const memory &amp;dst, const memory &amp;mean, const memory &amp;variance)</td></tr>
+<tr class="separator:ga489a72f2a9fac12aa6ef08a0205ae7b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2444e602eacb05fe62728393f290a5da"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga2444e602eacb05fe62728393f290a5da">mkldnn::batch_normalization_forward::batch_normalization_forward</a> (const primitive_desc &amp;aprimitive_desc, const primitive::at &amp;src, const memory &amp;dst, const memory &amp;mean, const memory &amp;variance)</td></tr>
+<tr class="separator:ga2444e602eacb05fe62728393f290a5da"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga6b109082a6a2419acc9cdacb4a7db47d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga6b109082a6a2419acc9cdacb4a7db47d">mkldnn::batch_normalization_forward::batch_normalization_forward</a> (const primitive_desc &amp;aprimitive_desc, const primitive::at &amp;src, const primitive::at &amp;weights, const memory &amp;dst)</td></tr>
 <tr class="separator:ga6b109082a6a2419acc9cdacb4a7db47d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga524c74d5b9534eece72f7ffb1a7b4cb5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga524c74d5b9534eece72f7ffb1a7b4cb5">mkldnn::batch_normalization_backward::desc::desc</a> (prop_kind aprop_kind, const memory::desc &amp;diff_data_desc, const memory::desc &amp;data_desc)</td></tr>
-<tr class="separator:ga524c74d5b9534eece72f7ffb1a7b4cb5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9705c9b9851160e978f22b8cc978e747"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga9705c9b9851160e978f22b8cc978e747">mkldnn::batch_normalization_forward::batch_normalization_forward</a> (const primitive_desc &amp;aprimitive_desc, const primitive::at &amp;src, const memory &amp;dst)</td></tr>
+<tr class="separator:ga9705c9b9851160e978f22b8cc978e747"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5ae63790025c19594ee778f8837984b0"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:ga5ae63790025c19594ee778f8837984b0"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga5ae63790025c19594ee778f8837984b0">mkldnn::batch_normalization_backward::desc::desc</a> (prop_kind aprop_kind, const memory::desc &amp;diff_data_desc, const memory::desc &amp;data_desc, T epsilon, unsigned flags)</td></tr>
+<tr class="separator:ga5ae63790025c19594ee778f8837984b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga9a46a38feba31b4cb4b51f3fcb468a02"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga9a46a38feba31b4cb4b51f3fcb468a02">mkldnn::batch_normalization_backward::primitive_desc::primitive_desc</a> (const desc &amp;adesc, const engine &amp;aengine, const batch_normalization_forward::primitive_desc &amp;hint_fwd_primitive_desc)</td></tr>
 <tr class="separator:ga9a46a38feba31b4cb4b51f3fcb468a02"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gab2e95955930d28eef5d364fc1479aeec"><td class="memItemLeft" align="right" valign="top">memory::primitive_desc&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#gab2e95955930d28eef5d364fc1479aeec">mkldnn::batch_normalization_backward::primitive_desc::weights_primitive_desc</a> () const </td></tr>
 <tr class="separator:gab2e95955930d28eef5d364fc1479aeec"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga519fb4b235b0bdc11e5162de13f1ef31"><td class="memItemLeft" align="right" valign="top">memory::primitive_desc&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga519fb4b235b0bdc11e5162de13f1ef31">mkldnn::batch_normalization_backward::primitive_desc::workspace_primitive_desc</a> () const </td></tr>
-<tr class="separator:ga519fb4b235b0bdc11e5162de13f1ef31"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga37590552c98533f719d1381382711ad0"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga37590552c98533f719d1381382711ad0">mkldnn::batch_normalization_backward::batch_normalization_backward</a> (const primitive_desc &amp;aprimitive_desc, const primitive::at &amp;src, const primitive::at &amp;diff_dst, const primitive::at &amp;weights, const primitive::at &amp;workspace, const memory &amp;diff_src, const memory &amp;diff_weights)</td></tr>
-<tr class="separator:ga37590552c98533f719d1381382711ad0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga72a9241c90367366740e55fd8841cedd"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga72a9241c90367366740e55fd8841cedd">mkldnn::batch_normalization_backward::batch_normalization_backward</a> (const primitive_desc &amp;aprimitive_desc, const primitive::at &amp;src, const primitive::at &amp;diff_dst, const primitive::at &amp;weights, const primitive::at &amp;workspace, const memory &amp;diff_src)</td></tr>
-<tr class="separator:ga72a9241c90367366740e55fd8841cedd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga90addfd67b859bc8206cd9e8368fc154"><td class="memItemLeft" align="right" valign="top">memory::primitive_desc&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga90addfd67b859bc8206cd9e8368fc154">mkldnn::batch_normalization_backward::primitive_desc::diff_weights_primitive_desc</a> () const </td></tr>
+<tr class="separator:ga90addfd67b859bc8206cd9e8368fc154"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga24e4e52023a016f2e3b4384923e06ebc"><td class="memItemLeft" align="right" valign="top">memory::primitive_desc&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga24e4e52023a016f2e3b4384923e06ebc">mkldnn::batch_normalization_backward::primitive_desc::mean_primitive_desc</a> () const </td></tr>
+<tr class="separator:ga24e4e52023a016f2e3b4384923e06ebc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9da80aa840c523e837e9728bb689745b"><td class="memItemLeft" align="right" valign="top">memory::primitive_desc&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga9da80aa840c523e837e9728bb689745b">mkldnn::batch_normalization_backward::primitive_desc::variance_primitive_desc</a> () const </td></tr>
+<tr class="separator:ga9da80aa840c523e837e9728bb689745b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga24a5e657642389303ae524ba4e1d2a0a"><td class="memItemLeft" align="right" valign="top">memory::primitive_desc&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga24a5e657642389303ae524ba4e1d2a0a">mkldnn::batch_normalization_backward::primitive_desc::dst_primitive_desc</a> () const </td></tr>
+<tr class="separator:ga24a5e657642389303ae524ba4e1d2a0a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga55c76342f57053d995afcb429c8b8846"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga55c76342f57053d995afcb429c8b8846">mkldnn::batch_normalization_backward::batch_normalization_backward</a> (const primitive_desc &amp;aprimitive_desc, const primitive::at &amp;src, const primitive::at &amp;mean, const primitive::at &amp;variance, const primitive::at &amp;diff_dst, const primitive::at &amp;weights, const memory &amp;diff_src, const memory &amp;diff_weights)</td></tr>
+<tr class="separator:ga55c76342f57053d995afcb429c8b8846"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4333b9ee0aae4971353130a1cdefa793"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga4333b9ee0aae4971353130a1cdefa793">mkldnn::batch_normalization_backward::batch_normalization_backward</a> (const primitive_desc &amp;aprimitive_desc, const primitive::at &amp;src, const primitive::at &amp;mean, const primitive::at &amp;variance, const primitive::at &amp;diff_dst, const primitive::at &amp;weights, const memory &amp;diff_src)</td></tr>
+<tr class="separator:ga4333b9ee0aae4971353130a1cdefa793"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaca9a2fba368c34b570f876c7c6e2c8a2"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#gaca9a2fba368c34b570f876c7c6e2c8a2">mkldnn::batch_normalization_backward::batch_normalization_backward</a> (const primitive_desc &amp;aprimitive_desc, const primitive::at &amp;src, const primitive::at &amp;mean, const primitive::at &amp;variance, const primitive::at &amp;diff_dst, const memory &amp;diff_src)</td></tr>
+<tr class="separator:gaca9a2fba368c34b570f876c7c6e2c8a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga20b51c45cf4c44e975fb6f2a6dd4e465"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga20b51c45cf4c44e975fb6f2a6dd4e465">mkldnn::inner_product_forward::desc::desc</a> (prop_kind aprop_kind, const memory::desc &amp;src_desc, const memory::desc &amp;weights_desc, const memory::desc &amp;bias_desc, const memory::desc &amp;dst_desc)</td></tr>
 <tr class="separator:ga20b51c45cf4c44e975fb6f2a6dd4e465"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga3b30be56209816e08951b3e73022e19a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga3b30be56209816e08951b3e73022e19a">mkldnn::inner_product_forward::desc::desc</a> (prop_kind aprop_kind, const memory::desc &amp;src_desc, const memory::desc &amp;weights_desc, const memory::desc &amp;dst_desc)</td></tr>
@@ -611,6 +669,8 @@ Variables</h2></td></tr>
 <tr class="separator:ga88b9e6fa4df3c25e74be75d3fce90fce"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga80ac5440680577cd41846914b6201ffc"><td class="memItemLeft" align="right" valign="top">c_api::mkldnn_relu_desc_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga80ac5440680577cd41846914b6201ffc">mkldnn::relu_backward::desc::data</a></td></tr>
 <tr class="separator:ga80ac5440680577cd41846914b6201ffc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6b85a96ce413ecae79a19f27aba46b21"><td class="memItemLeft" align="right" valign="top">c_api::mkldnn_softmax_desc_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga6b85a96ce413ecae79a19f27aba46b21">mkldnn::softmax_forward::desc::data</a></td></tr>
+<tr class="separator:ga6b85a96ce413ecae79a19f27aba46b21"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaad37b03adb44296ae611aad4eeeec57b"><td class="memItemLeft" align="right" valign="top">c_api::mkldnn_batch_normalization_desc_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#gaad37b03adb44296ae611aad4eeeec57b">mkldnn::batch_normalization_forward::desc::data</a></td></tr>
 <tr class="separator:gaad37b03adb44296ae611aad4eeeec57b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gafb972c68a8fc85bf273da76c3b01e5a4"><td class="memItemLeft" align="right" valign="top">c_api::mkldnn_batch_normalization_desc_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#gafb972c68a8fc85bf273da76c3b01e5a4">mkldnn::batch_normalization_backward::desc::data</a></td></tr>
@@ -676,6 +736,26 @@ Friends</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="ga344b5c240a7392585aba615ff4d0d7f1"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group__cpp__api__memory.html#ga344b5c240a7392585aba615ff4d0d7f1">mkldnn::batch_normalization_flag</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga344b5c240a7392585aba615ff4d0d7f1a97fcd7beeed54e37e2718124d0051d5c"></a>use_global_stats</em>&nbsp;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga344b5c240a7392585aba615ff4d0d7f1a67734f09ab5b5b5282855d52c3e62486"></a>use_scale_shift</em>&nbsp;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga344b5c240a7392585aba615ff4d0d7f1a030cc07467d878652fddc39b5290f2a9"></a>omit_stats</em>&nbsp;</td><td class="fielddoc">
+</td></tr>
+</table>
+
+</div>
+</div>
 <a class="anchor" id="gaa8a0d49cc7faaceef9d8f55d66bff57b"></a>
 <div class="memitem">
 <div class="memproto">
@@ -724,11 +804,15 @@ Friends</h2></td></tr>
 </td></tr>
 <tr><td class="fieldname"><em><a class="anchor" id="gga563b90355ae4fbfed12f6db8ab25a87ea5ec50071376483f7364de8b1b85d685d"></a>nhwc</em>&nbsp;</td><td class="fielddoc">
 </td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga563b90355ae4fbfed12f6db8ab25a87eaeab9b02510aacc27bd0043473caa6a8e"></a>chwn</em>&nbsp;</td><td class="fielddoc">
+</td></tr>
 <tr><td class="fieldname"><em><a class="anchor" id="gga563b90355ae4fbfed12f6db8ab25a87ea248862baad8f48e384015ffd20327223"></a>nChw8c</em>&nbsp;</td><td class="fielddoc">
 </td></tr>
 <tr><td class="fieldname"><em><a class="anchor" id="gga563b90355ae4fbfed12f6db8ab25a87ea4c8c6b41aae08b78d95bb5b76d28d22b"></a>oi</em>&nbsp;</td><td class="fielddoc">
 </td></tr>
 <tr><td class="fieldname"><em><a class="anchor" id="gga563b90355ae4fbfed12f6db8ab25a87ead5691debf8e19e13d09e15d7d99a7ee3"></a>oihw</em>&nbsp;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga563b90355ae4fbfed12f6db8ab25a87ea7fe3459cd6d4a96ee1b7374a829339d5"></a>ihwo</em>&nbsp;</td><td class="fielddoc">
 </td></tr>
 <tr><td class="fieldname"><em><a class="anchor" id="gga563b90355ae4fbfed12f6db8ab25a87eaabeb598d814c8420a22243d26e6ed3c9"></a>oIhw8i</em>&nbsp;</td><td class="fielddoc">
 </td></tr>
@@ -866,6 +950,8 @@ Friends</h2></td></tr>
 </td></tr>
 <tr><td class="fieldname"><em><a class="anchor" id="gga6d88ff11a07bae09a5c348d314c5d1d9a20f677933e74a40096d45a51664c5ee4"></a>relu_d</em>&nbsp;</td><td class="fielddoc">
 </td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga6d88ff11a07bae09a5c348d314c5d1d9abdb39a5fa96f35b51571bb5481ed2cc2"></a>softmax_d</em>&nbsp;</td><td class="fielddoc">
+</td></tr>
 <tr><td class="fieldname"><em><a class="anchor" id="gga6d88ff11a07bae09a5c348d314c5d1d9a3be3f1011debd2ee2df16b6b04a0bf77"></a>pooling_d</em>&nbsp;</td><td class="fielddoc">
 </td></tr>
 <tr><td class="fieldname"><em><a class="anchor" id="gga6d88ff11a07bae09a5c348d314c5d1d9a76add43bb6bee4f897e668e2d54476a2"></a>lrn_d</em>&nbsp;</td><td class="fielddoc">
@@ -942,7 +1028,7 @@ Friends</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ga37590552c98533f719d1381382711ad0"></a>
+<a class="anchor" id="ga55c76342f57053d995afcb429c8b8846"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -965,6 +1051,18 @@ Friends</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">const <a class="el" href="structmkldnn_1_1primitive_1_1at.html">primitive::at</a> &amp;&#160;</td>
+          <td class="paramname"><em>mean</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="structmkldnn_1_1primitive_1_1at.html">primitive::at</a> &amp;&#160;</td>
+          <td class="paramname"><em>variance</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="structmkldnn_1_1primitive_1_1at.html">primitive::at</a> &amp;&#160;</td>
           <td class="paramname"><em>diff_dst</em>, </td>
         </tr>
         <tr>
@@ -972,12 +1070,6 @@ Friends</h2></td></tr>
           <td></td>
           <td class="paramtype">const <a class="el" href="structmkldnn_1_1primitive_1_1at.html">primitive::at</a> &amp;&#160;</td>
           <td class="paramname"><em>weights</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const <a class="el" href="structmkldnn_1_1primitive_1_1at.html">primitive::at</a> &amp;&#160;</td>
-          <td class="paramname"><em>workspace</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -1006,7 +1098,7 @@ Friends</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ga72a9241c90367366740e55fd8841cedd"></a>
+<a class="anchor" id="ga4333b9ee0aae4971353130a1cdefa793"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -1029,6 +1121,18 @@ Friends</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">const <a class="el" href="structmkldnn_1_1primitive_1_1at.html">primitive::at</a> &amp;&#160;</td>
+          <td class="paramname"><em>mean</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="structmkldnn_1_1primitive_1_1at.html">primitive::at</a> &amp;&#160;</td>
+          <td class="paramname"><em>variance</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="structmkldnn_1_1primitive_1_1at.html">primitive::at</a> &amp;&#160;</td>
           <td class="paramname"><em>diff_dst</em>, </td>
         </tr>
         <tr>
@@ -1036,12 +1140,6 @@ Friends</h2></td></tr>
           <td></td>
           <td class="paramtype">const <a class="el" href="structmkldnn_1_1primitive_1_1at.html">primitive::at</a> &amp;&#160;</td>
           <td class="paramname"><em>weights</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const <a class="el" href="structmkldnn_1_1primitive_1_1at.html">primitive::at</a> &amp;&#160;</td>
-          <td class="paramname"><em>workspace</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -1064,7 +1162,175 @@ Friends</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="gaf17bc8947ee664635958adc6cb20e1d2"></a>
+<a class="anchor" id="gaca9a2fba368c34b570f876c7c6e2c8a2"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">mkldnn::batch_normalization_backward::batch_normalization_backward </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="structmkldnn_1_1batch__normalization__backward_1_1primitive__desc.html">primitive_desc</a> &amp;&#160;</td>
+          <td class="paramname"><em>aprimitive_desc</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="structmkldnn_1_1primitive_1_1at.html">primitive::at</a> &amp;&#160;</td>
+          <td class="paramname"><em>src</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="structmkldnn_1_1primitive_1_1at.html">primitive::at</a> &amp;&#160;</td>
+          <td class="paramname"><em>mean</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="structmkldnn_1_1primitive_1_1at.html">primitive::at</a> &amp;&#160;</td>
+          <td class="paramname"><em>variance</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="structmkldnn_1_1primitive_1_1at.html">primitive::at</a> &amp;&#160;</td>
+          <td class="paramname"><em>diff_dst</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="structmkldnn_1_1memory.html">memory</a> &amp;&#160;</td>
+          <td class="paramname"><em>diff_src</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ga45baa13a4d88945a14b38e2c731c64a3"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">mkldnn::batch_normalization_forward::batch_normalization_forward </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="structmkldnn_1_1batch__normalization__forward_1_1primitive__desc.html">primitive_desc</a> &amp;&#160;</td>
+          <td class="paramname"><em>aprimitive_desc</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="structmkldnn_1_1primitive_1_1at.html">primitive::at</a> &amp;&#160;</td>
+          <td class="paramname"><em>src</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="structmkldnn_1_1primitive_1_1at.html">primitive::at</a> &amp;&#160;</td>
+          <td class="paramname"><em>mean</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="structmkldnn_1_1primitive_1_1at.html">primitive::at</a> &amp;&#160;</td>
+          <td class="paramname"><em>variance</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="structmkldnn_1_1primitive_1_1at.html">primitive::at</a> &amp;&#160;</td>
+          <td class="paramname"><em>weights</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="structmkldnn_1_1memory.html">memory</a> &amp;&#160;</td>
+          <td class="paramname"><em>dst</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ga895efcf4f5bcf36957f468879a8a2143"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">mkldnn::batch_normalization_forward::batch_normalization_forward </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="structmkldnn_1_1batch__normalization__forward_1_1primitive__desc.html">primitive_desc</a> &amp;&#160;</td>
+          <td class="paramname"><em>aprimitive_desc</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="structmkldnn_1_1primitive_1_1at.html">primitive::at</a> &amp;&#160;</td>
+          <td class="paramname"><em>src</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="structmkldnn_1_1primitive_1_1at.html">primitive::at</a> &amp;&#160;</td>
+          <td class="paramname"><em>mean</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="structmkldnn_1_1primitive_1_1at.html">primitive::at</a> &amp;&#160;</td>
+          <td class="paramname"><em>variance</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="structmkldnn_1_1memory.html">memory</a> &amp;&#160;</td>
+          <td class="paramname"><em>dst</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ga489a72f2a9fac12aa6ef08a0205ae7b4"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -1093,13 +1359,71 @@ Friends</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">const <a class="el" href="structmkldnn_1_1memory.html">memory</a> &amp;&#160;</td>
-          <td class="paramname"><em>workspace</em>, </td>
+          <td class="paramname"><em>dst</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">const <a class="el" href="structmkldnn_1_1memory.html">memory</a> &amp;&#160;</td>
-          <td class="paramname"><em>dst</em>&#160;</td>
+          <td class="paramname"><em>mean</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="structmkldnn_1_1memory.html">memory</a> &amp;&#160;</td>
+          <td class="paramname"><em>variance</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ga2444e602eacb05fe62728393f290a5da"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">mkldnn::batch_normalization_forward::batch_normalization_forward </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="structmkldnn_1_1batch__normalization__forward_1_1primitive__desc.html">primitive_desc</a> &amp;&#160;</td>
+          <td class="paramname"><em>aprimitive_desc</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="structmkldnn_1_1primitive_1_1at.html">primitive::at</a> &amp;&#160;</td>
+          <td class="paramname"><em>src</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="structmkldnn_1_1memory.html">memory</a> &amp;&#160;</td>
+          <td class="paramname"><em>dst</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="structmkldnn_1_1memory.html">memory</a> &amp;&#160;</td>
+          <td class="paramname"><em>mean</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="structmkldnn_1_1memory.html">memory</a> &amp;&#160;</td>
+          <td class="paramname"><em>variance</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -1140,6 +1464,46 @@ Friends</h2></td></tr>
           <td></td>
           <td class="paramtype">const <a class="el" href="structmkldnn_1_1primitive_1_1at.html">primitive::at</a> &amp;&#160;</td>
           <td class="paramname"><em>weights</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="structmkldnn_1_1memory.html">memory</a> &amp;&#160;</td>
+          <td class="paramname"><em>dst</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ga9705c9b9851160e978f22b8cc978e747"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">mkldnn::batch_normalization_forward::batch_normalization_forward </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="structmkldnn_1_1batch__normalization__forward_1_1primitive__desc.html">primitive_desc</a> &amp;&#160;</td>
+          <td class="paramname"><em>aprimitive_desc</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="structmkldnn_1_1primitive_1_1at.html">primitive::at</a> &amp;&#160;</td>
+          <td class="paramname"><em>src</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -2353,7 +2717,7 @@ Friends</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="gae1199bec78c4fe53707d6f57b0fdf649"></a>
+<a class="anchor" id="ga2a2b71ef52d4017400636e8657ef91cf"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -2370,13 +2734,13 @@ Friends</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">const <a class="el" href="structmkldnn_1_1memory_1_1desc.html">memory::desc</a> &amp;&#160;</td>
-          <td class="paramname"><em>src_desc</em>, </td>
+          <td class="paramname"><em>data_desc</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">const <a class="el" href="structmkldnn_1_1memory_1_1desc.html">memory::desc</a> &amp;&#160;</td>
-          <td class="paramname"><em>diff_dst_desc</em>, </td>
+          <td class="paramname"><em>diff_data_desc</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -2641,7 +3005,47 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
-<a class="anchor" id="ga23ed55452321b607627e715b89006e3b"></a>
+<a class="anchor" id="ga86f3b6079fd48f2b8a289ed7b8419c99"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">mkldnn::softmax_forward::desc::desc </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__cpp__api__memory.html#gaeb087eae78f70a4d249a90aefa165cf8">prop_kind</a>&#160;</td>
+          <td class="paramname"><em>aprop_kind</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="structmkldnn_1_1memory_1_1desc.html">memory::desc</a> &amp;&#160;</td>
+          <td class="paramname"><em>data_desc</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>softmax_axis</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="gaac8dc676e445e93676dffac6ef4390a8"></a>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
@@ -2666,7 +3070,13 @@ template&lt;typename T &gt; </div>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">T&#160;</td>
-          <td class="paramname"><em>epsilon</em>&#160;</td>
+          <td class="paramname"><em>epsilon</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned&#160;</td>
+          <td class="paramname"><em>flags</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -2683,9 +3093,11 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
-<a class="anchor" id="ga524c74d5b9534eece72f7ffb1a7b4cb5"></a>
+<a class="anchor" id="ga5ae63790025c19594ee778f8837984b0"></a>
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -2706,7 +3118,19 @@ template&lt;typename T &gt; </div>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">const <a class="el" href="structmkldnn_1_1memory_1_1desc.html">memory::desc</a> &amp;&#160;</td>
-          <td class="paramname"><em>data_desc</em>&#160;</td>
+          <td class="paramname"><em>data_desc</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">T&#160;</td>
+          <td class="paramname"><em>epsilon</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned&#160;</td>
+          <td class="paramname"><em>flags</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -2907,6 +3331,29 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
+<a class="anchor" id="ga6bf93d6da26250ad3a25a92c17bb8b8b"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">memory::primitive_desc mkldnn::convolution_backward_weights::primitive_desc::diff_bias_primitive_desc </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a class="anchor" id="ga6a7d128e1acdb9ae1976b33bc1b5e061"></a>
 <div class="memitem">
 <div class="memproto">
@@ -2916,6 +3363,75 @@ template&lt;typename T &gt; </div>
       <table class="memname">
         <tr>
           <td class="memname">memory::primitive_desc mkldnn::inner_product_backward_weights::primitive_desc::diff_bias_primitive_desc </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ga38789cbf4c65316757641d179849194f"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">memory::primitive_desc mkldnn::convolution_backward_data::primitive_desc::diff_dst_primitive_desc </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="gae5b4c22268758c7848dac3ee26cea098"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">memory::primitive_desc mkldnn::convolution_backward_weights::primitive_desc::diff_dst_primitive_desc </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="gaecbe473e6f1e12354f38824924b6429d"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">memory::primitive_desc mkldnn::lrn_backward::primitive_desc::diff_dst_primitive_desc </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -2976,6 +3492,52 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
+<a class="anchor" id="ga47929f7011563b59d5f8bd45e3c6269c"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">memory::primitive_desc mkldnn::convolution_backward_data::primitive_desc::diff_src_primitive_desc </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ga9b5367511aa123c79c9f28339eba4bf0"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">memory::primitive_desc mkldnn::lrn_backward::primitive_desc::diff_src_primitive_desc </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a class="anchor" id="ga204b44bd34a4a9c511102551fc287c99"></a>
 <div class="memitem">
 <div class="memproto">
@@ -2985,6 +3547,52 @@ template&lt;typename T &gt; </div>
       <table class="memname">
         <tr>
           <td class="memname">memory::primitive_desc mkldnn::inner_product_backward_data::primitive_desc::diff_src_primitive_desc </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ga4831b67a6fc9115d65e88f7aa7a28bcb"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">memory::primitive_desc mkldnn::convolution_backward_weights::primitive_desc::diff_weights_primitive_desc </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ga90addfd67b859bc8206cd9e8368fc154"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">memory::primitive_desc mkldnn::batch_normalization_backward::primitive_desc::diff_weights_primitive_desc </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -3169,6 +3777,29 @@ template&lt;typename T &gt; </div>
       <table class="memname">
         <tr>
           <td class="memname">memory::primitive_desc mkldnn::batch_normalization_forward::primitive_desc::dst_primitive_desc </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ga24a5e657642389303ae524ba4e1d2a0a"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">memory::primitive_desc mkldnn::batch_normalization_backward::primitive_desc::dst_primitive_desc </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -3974,6 +4605,52 @@ template&lt;typename T, typename traits = handle_traits&lt;T&gt;&gt; </div>
           <td></td>
           <td>)</td>
           <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ga58aaff6bdf25cf515824b49d47e651a0"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">memory::primitive_desc mkldnn::batch_normalization_forward::primitive_desc::mean_primitive_desc </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ga24e4e52023a016f2e3b4384923e06ebc"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">memory::primitive_desc mkldnn::batch_normalization_backward::primitive_desc::mean_primitive_desc </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
         </tr>
       </table>
   </td>
@@ -4922,7 +5599,7 @@ template&lt;typename T, typename traits = handle_traits&lt;T&gt;&gt; </div>
 
 </div>
 </div>
-<a class="anchor" id="ga72957d167ed66d0c1b8ff2f09b81484c"></a>
+<a class="anchor" id="ga16cfeddc9f31ef5bf78b812985dc1b20"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -4939,7 +5616,13 @@ template&lt;typename T, typename traits = handle_traits&lt;T&gt;&gt; </div>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">const <a class="el" href="structmkldnn_1_1engine.html">engine</a> &amp;&#160;</td>
-          <td class="paramname"><em>aengine</em>&#160;</td>
+          <td class="paramname"><em>aengine</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="structmkldnn_1_1lrn__forward_1_1primitive__desc.html">lrn_forward::primitive_desc</a> &amp;&#160;</td>
+          <td class="paramname"><em>hint_fwd_primitive_desc</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -5088,6 +5771,40 @@ template&lt;typename T, typename traits = handle_traits&lt;T&gt;&gt; </div>
           <td></td>
           <td class="paramtype">const <a class="el" href="structmkldnn_1_1relu__forward_1_1primitive__desc.html">relu_forward::primitive_desc</a> &amp;&#160;</td>
           <td class="paramname"><em>hint_fwd_primitive_desc</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="gae52ba21c1b9f86b0f7104ee3218fdc2b"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">mkldnn::softmax_forward::primitive_desc::primitive_desc </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="structmkldnn_1_1softmax__forward_1_1desc.html">desc</a> &amp;&#160;</td>
+          <td class="paramname"><em>adesc</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="structmkldnn_1_1engine.html">engine</a> &amp;&#160;</td>
+          <td class="paramname"><em>aengine</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -5544,6 +6261,46 @@ template&lt;typename T, typename traits = handle_traits&lt;T&gt;&gt; </div>
 
 </div>
 </div>
+<a class="anchor" id="ga0c2c19e0566480132d975aa0904eadf3"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">mkldnn::softmax_forward::softmax_forward </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="structmkldnn_1_1softmax__forward_1_1primitive__desc.html">primitive_desc</a> &amp;&#160;</td>
+          <td class="paramname"><em>aprimitive_desc</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="structmkldnn_1_1primitive_1_1at.html">primitive::at</a> &amp;&#160;</td>
+          <td class="paramname"><em>src</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="structmkldnn_1_1memory.html">memory</a> &amp;&#160;</td>
+          <td class="paramname"><em>dst</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a class="anchor" id="ga2063aea85966d8d393d79801dd8d8afd"></a>
 <div class="memitem">
 <div class="memproto">
@@ -5553,6 +6310,52 @@ template&lt;typename T, typename traits = handle_traits&lt;T&gt;&gt; </div>
       <table class="memname">
         <tr>
           <td class="memname">memory::primitive_desc mkldnn::convolution_forward::primitive_desc::src_primitive_desc </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ga675b8844743f7d8e372fe8d49a4596b5"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">memory::primitive_desc mkldnn::convolution_backward_weights::primitive_desc::src_primitive_desc </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="gaf679dc40289870da41169066af36e4cc"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">memory::primitive_desc mkldnn::lrn_forward::primitive_desc::src_primitive_desc </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -5738,6 +6541,52 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
+<a class="anchor" id="ga99e37cecab1835075cd1f4587c535af9"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">memory::primitive_desc mkldnn::batch_normalization_forward::primitive_desc::variance_primitive_desc </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ga9da80aa840c523e837e9728bb689745b"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">memory::primitive_desc mkldnn::batch_normalization_backward::primitive_desc::variance_primitive_desc </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a class="anchor" id="ga28b4a6dd02a91f4286f3d5e865f64e12"></a>
 <div class="memitem">
 <div class="memproto">
@@ -5870,6 +6719,29 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
+<a class="anchor" id="gaf27aa82dce4e432fc322d170eccde79f"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">memory::primitive_desc mkldnn::convolution_backward_data::primitive_desc::weights_primitive_desc </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a class="anchor" id="ga17def286fa82dab19e97e71ca399e371"></a>
 <div class="memitem">
 <div class="memproto">
@@ -5985,6 +6857,29 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
+<a class="anchor" id="gae12aeae20ba1445e8118f4c24471c81d"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">memory::primitive_desc mkldnn::lrn_backward::primitive_desc::workspace_primitive_desc </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a class="anchor" id="gacf2f297c819138ec4dc77179b8820f63"></a>
 <div class="memitem">
 <div class="memproto">
@@ -5994,52 +6889,6 @@ template&lt;typename T &gt; </div>
       <table class="memname">
         <tr>
           <td class="memname">memory::primitive_desc mkldnn::pooling_forward::primitive_desc::workspace_primitive_desc </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="ga32b84dd984e9188809c0ee49d52dca1c"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">memory::primitive_desc mkldnn::batch_normalization_forward::primitive_desc::workspace_primitive_desc </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="ga519fb4b235b0bdc11e5162de13f1ef31"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">memory::primitive_desc mkldnn::batch_normalization_backward::primitive_desc::workspace_primitive_desc </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -6247,6 +7096,18 @@ template&lt;typename T &gt; </div>
       <table class="memname">
         <tr>
           <td class="memname">c_api::mkldnn_relu_desc_t mkldnn::relu_backward::desc::data</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ga6b85a96ce413ecae79a19f27aba46b21"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">c_api::mkldnn_softmax_desc_t mkldnn::softmax_forward::desc::data</td>
         </tr>
       </table>
 </div><div class="memdoc">

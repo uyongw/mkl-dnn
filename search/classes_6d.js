@@ -15,5 +15,6 @@ var searchData=
   ['mkldnn_5fprimitive_5fdesc',['mkldnn_primitive_desc',['../structmkldnn__primitive__desc.html',1,'']]],
   ['mkldnn_5fprimitive_5fdesc_5fiterator',['mkldnn_primitive_desc_iterator',['../structmkldnn__primitive__desc__iterator.html',1,'']]],
   ['mkldnn_5frelu_5fdesc_5ft',['mkldnn_relu_desc_t',['../structmkldnn__relu__desc__t.html',1,'']]],
+  ['mkldnn_5fsoftmax_5fdesc_5ft',['mkldnn_softmax_desc_t',['../structmkldnn__softmax__desc__t.html',1,'']]],
   ['mkldnn_5fstream',['mkldnn_stream',['../structmkldnn__stream.html',1,'']]]
 ];
