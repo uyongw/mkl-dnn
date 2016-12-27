@@ -69,6 +69,7 @@ var searchData=
   ['mkldnn_5finner_5fproduct_5fdesc_5ft',['mkldnn_inner_product_desc_t',['../structmkldnn__inner__product__desc__t.html',1,'']]],
   ['mkldnn_5finner_5fproduct_5fforward_5fdesc_5finit',['mkldnn_inner_product_forward_desc_init',['../group__c__api__inner__product.html#ga1e67b4062caeb799487a0a5db4750e4c',1,'mkldnn.h']]],
   ['mkldnn_5finvalid_5farguments',['mkldnn_invalid_arguments',['../group__c__api__types__generic.html#gga31866789b66acfb1c28b2f9bdd7bdfdda0bb104c159fe24faa65ba1ce52bb272d',1,'mkldnn_types.h']]],
+  ['mkldnn_5fio',['mkldnn_io',['../group__c__api__types__generic.html#gga30a390f87ef74bf03dfa48a7b3f2fb74a433ebc123e9f80c292c0e6e82715c118',1,'mkldnn_types.h']]],
   ['mkldnn_5fiterator_5fends',['mkldnn_iterator_ends',['../group__c__api__types__generic.html#gga31866789b66acfb1c28b2f9bdd7bdfdda30c47def85dc1bbf8a9dda24f16c9add',1,'mkldnn_types.h']]],
   ['mkldnn_5flazy',['mkldnn_lazy',['../group__c__api__types__stream.html#ggadd66574e231fe36721cdbe02ea47aa18aa7a8014b794eead2d6ce7d9fe0c35241',1,'mkldnn_types.h']]],
   ['mkldnn_5flrn',['mkldnn_lrn',['../group__c__api__types__generic.html#gga4f5c189c2ba9ef6444250299f1f8e973ac9dbe1aea35cb16f509ad407695cb8b7',1,'mkldnn_types.h']]],
