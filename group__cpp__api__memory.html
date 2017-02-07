@@ -162,7 +162,7 @@ Enumerations</h2></td></tr>
  }</td></tr>
 <tr class="memdesc:ga81bcf1ea92d7f98852a2c3e187825de6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Kinds of engines.  <a href="group__cpp__api__memory.html#ga81bcf1ea92d7f98852a2c3e187825de6">More...</a><br/></td></tr>
 <tr class="separator:ga81bcf1ea92d7f98852a2c3e187825de6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa8a0d49cc7faaceef9d8f55d66bff57b"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#gaa8a0d49cc7faaceef9d8f55d66bff57b">mkldnn::memory::data_type</a> { <a class="el" href="group__cpp__api__memory.html#ggaa8a0d49cc7faaceef9d8f55d66bff57ba56eed4b80e88f17e46218bbe740f9d55">mkldnn::memory::data__undef</a> = c_api::mkldnn_data_type_undef, 
+<tr class="memitem:gaa8a0d49cc7faaceef9d8f55d66bff57b"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#gaa8a0d49cc7faaceef9d8f55d66bff57b">mkldnn::memory::data_type</a> { <a class="el" href="group__cpp__api__memory.html#ggaa8a0d49cc7faaceef9d8f55d66bff57bafe36f365f50e0317a2fa5142881dc73e">mkldnn::memory::data_undef</a> = c_api::mkldnn_data_type_undef, 
 <a class="el" href="group__cpp__api__memory.html#ggaa8a0d49cc7faaceef9d8f55d66bff57baaf36765775c9522f12bc84c72ea8355d">mkldnn::memory::f32</a> = c_api::mkldnn_f32, 
 <a class="el" href="group__cpp__api__memory.html#ggaa8a0d49cc7faaceef9d8f55d66bff57baafd6316d6d009465fd42d0effc8cdac1">mkldnn::memory::s32</a> = c_api::mkldnn_s32
  }</td></tr>
@@ -180,19 +180,28 @@ Enumerations</h2></td></tr>
 <a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87eaeab9b02510aacc27bd0043473caa6a8e">mkldnn::memory::chwn</a> = c_api::mkldnn_chwn, 
 <br/>
 &#160;&#160;<a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87ea248862baad8f48e384015ffd20327223">mkldnn::memory::nChw8c</a> = c_api::mkldnn_nChw8c, 
+<a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87ea7ee460916f5c04b7f46e103474c543b7">mkldnn::memory::nChw16c</a> = c_api::mkldnn_nChw16c, 
 <a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87ea4c8c6b41aae08b78d95bb5b76d28d22b">mkldnn::memory::oi</a> = c_api::mkldnn_oi, 
 <a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87eabdc33953230281d5e6413d2fb78b06ce">mkldnn::memory::io</a> = c_api::mkldnn_io, 
-<a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87ead5691debf8e19e13d09e15d7d99a7ee3">mkldnn::memory::oihw</a> = c_api::mkldnn_oihw, 
 <br/>
-&#160;&#160;<a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87ea7fe3459cd6d4a96ee1b7374a829339d5">mkldnn::memory::ihwo</a> = c_api::mkldnn_ihwo, 
+&#160;&#160;<a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87ead5691debf8e19e13d09e15d7d99a7ee3">mkldnn::memory::oihw</a> = c_api::mkldnn_oihw, 
+<a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87ea7fe3459cd6d4a96ee1b7374a829339d5">mkldnn::memory::ihwo</a> = c_api::mkldnn_ihwo, 
 <a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87eaabeb598d814c8420a22243d26e6ed3c9">mkldnn::memory::oIhw8i</a> = c_api::mkldnn_oIhw8i, 
-<a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87eab1ff88a5571cab5c4495acfb07669762">mkldnn::memory::OIhw8i8o</a> = c_api::mkldnn_OIhw8i8o, 
+<a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87eadfb8daccb2a4b9ef406c1dfc929e2a83">mkldnn::memory::oIhw16i</a> = c_api::mkldnn_oIhw16i, 
+<br/>
+&#160;&#160;<a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87eab1ff88a5571cab5c4495acfb07669762">mkldnn::memory::OIhw8i8o</a> = c_api::mkldnn_OIhw8i8o, 
+<a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87ea2f7490bd350bc8d194f2e4b67213adf7">mkldnn::memory::OIhw16i16o</a> = c_api::mkldnn_OIhw16i16o, 
 <a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87ea511ae11a284c9108eeb61664ff163aea">mkldnn::memory::OIhw8o8i</a> = c_api::mkldnn_OIhw8o8i, 
+<a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87ea82c279649f9f84c2ef9a046e7777cac0">mkldnn::memory::OIhw16o16i</a> = c_api::mkldnn_OIhw16o16i, 
 <br/>
 &#160;&#160;<a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87ea2f135b7d8ff60dcce96a4919722b0fad">mkldnn::memory::Ohwi8o</a> = c_api::mkldnn_Ohwi8o, 
+<a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87eae01c9f565ec8b7a69ad2432df340dcf0">mkldnn::memory::Ohwi16o</a> = c_api::mkldnn_Ohwi16o, 
 <a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87ea19f8852dc26c175f22aed771f3f9614a">mkldnn::memory::goihw</a> = c_api::mkldnn_goihw, 
 <a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87ea11eda3436ae582b8a28cc85adc8433c1">mkldnn::memory::gOIhw8i8o</a> = c_api::mkldnn_gOIhw8i8o, 
-<a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87eacaf364857cd0309c67bb6dff621ee71e">mkldnn::memory::gOIhw8o8i</a> = c_api::mkldnn_gOIhw8o8i
+<br/>
+&#160;&#160;<a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87eab47a53954142e271e59e8b0b036c7797">mkldnn::memory::gOIhw16i16o</a> = c_api::mkldnn_gOIhw16i16o, 
+<a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87eacaf364857cd0309c67bb6dff621ee71e">mkldnn::memory::gOIhw8o8i</a> = c_api::mkldnn_gOIhw8o8i, 
+<a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87eaa1cc9ef7726a93eaf88e6556bca94f64">mkldnn::memory::gOIhw16o16i</a> = c_api::mkldnn_gOIhw16o16i
 <br/>
  }</td></tr>
 <tr class="memdesc:ga563b90355ae4fbfed12f6db8ab25a87e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Memory format specification. See <a class="el" href="group__c__api__types__generic.html#ga30a390f87ef74bf03dfa48a7b3f2fb74" title="Memory format specification. ">mkldnn_memory_format_t</a> for a detailed description.  <a href="group__cpp__api__memory.html#ga563b90355ae4fbfed12f6db8ab25a87e">More...</a><br/></td></tr>
@@ -374,6 +383,8 @@ Functions</h2></td></tr>
 <tr class="separator:ga7dc314cf0c42202b8504f423a721a587"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga6ecd4ece66381c74a444a0a85ad2cf29"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga6ecd4ece66381c74a444a0a85ad2cf29">mkldnn::view::primitive_desc::primitive_desc</a> (const memory::primitive_desc &amp;input, memory::dims dims, memory::dims offsets)</td></tr>
 <tr class="separator:ga6ecd4ece66381c74a444a0a85ad2cf29"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa9039e82ed8648c7f30109f4787fd4f0"><td class="memItemLeft" align="right" valign="top">memory::primitive_desc&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#gaa9039e82ed8648c7f30109f4787fd4f0">mkldnn::view::primitive_desc::dst_primitive_desc</a> () const </td></tr>
+<tr class="separator:gaa9039e82ed8648c7f30109f4787fd4f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga28b4a6dd02a91f4286f3d5e865f64e12"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga28b4a6dd02a91f4286f3d5e865f64e12">mkldnn::view::view</a> (const primitive_desc &amp;view_pd, primitive::at input)</td></tr>
 <tr class="separator:ga28b4a6dd02a91f4286f3d5e865f64e12"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gadd84c97a1d70e7135a9d35719247b761"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#gadd84c97a1d70e7135a9d35719247b761">mkldnn::view::view</a> (memory input, memory::dims dims, memory::dims offsets)</td></tr>
@@ -769,7 +780,7 @@ Friends</h2></td></tr>
 
 <p>Data type specification. See #mkldnn_precision_t for a detailed description. </p>
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggaa8a0d49cc7faaceef9d8f55d66bff57ba56eed4b80e88f17e46218bbe740f9d55"></a>data__undef</em>&nbsp;</td><td class="fielddoc">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggaa8a0d49cc7faaceef9d8f55d66bff57bafe36f365f50e0317a2fa5142881dc73e"></a>data_undef</em>&nbsp;</td><td class="fielddoc">
 </td></tr>
 <tr><td class="fieldname"><em><a class="anchor" id="ggaa8a0d49cc7faaceef9d8f55d66bff57baaf36765775c9522f12bc84c72ea8355d"></a>f32</em>&nbsp;</td><td class="fielddoc">
 </td></tr>
@@ -809,6 +820,8 @@ Friends</h2></td></tr>
 </td></tr>
 <tr><td class="fieldname"><em><a class="anchor" id="gga563b90355ae4fbfed12f6db8ab25a87ea248862baad8f48e384015ffd20327223"></a>nChw8c</em>&nbsp;</td><td class="fielddoc">
 </td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga563b90355ae4fbfed12f6db8ab25a87ea7ee460916f5c04b7f46e103474c543b7"></a>nChw16c</em>&nbsp;</td><td class="fielddoc">
+</td></tr>
 <tr><td class="fieldname"><em><a class="anchor" id="gga563b90355ae4fbfed12f6db8ab25a87ea4c8c6b41aae08b78d95bb5b76d28d22b"></a>oi</em>&nbsp;</td><td class="fielddoc">
 </td></tr>
 <tr><td class="fieldname"><em><a class="anchor" id="gga563b90355ae4fbfed12f6db8ab25a87eabdc33953230281d5e6413d2fb78b06ce"></a>io</em>&nbsp;</td><td class="fielddoc">
@@ -819,17 +832,29 @@ Friends</h2></td></tr>
 </td></tr>
 <tr><td class="fieldname"><em><a class="anchor" id="gga563b90355ae4fbfed12f6db8ab25a87eaabeb598d814c8420a22243d26e6ed3c9"></a>oIhw8i</em>&nbsp;</td><td class="fielddoc">
 </td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga563b90355ae4fbfed12f6db8ab25a87eadfb8daccb2a4b9ef406c1dfc929e2a83"></a>oIhw16i</em>&nbsp;</td><td class="fielddoc">
+</td></tr>
 <tr><td class="fieldname"><em><a class="anchor" id="gga563b90355ae4fbfed12f6db8ab25a87eab1ff88a5571cab5c4495acfb07669762"></a>OIhw8i8o</em>&nbsp;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga563b90355ae4fbfed12f6db8ab25a87ea2f7490bd350bc8d194f2e4b67213adf7"></a>OIhw16i16o</em>&nbsp;</td><td class="fielddoc">
 </td></tr>
 <tr><td class="fieldname"><em><a class="anchor" id="gga563b90355ae4fbfed12f6db8ab25a87ea511ae11a284c9108eeb61664ff163aea"></a>OIhw8o8i</em>&nbsp;</td><td class="fielddoc">
 </td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga563b90355ae4fbfed12f6db8ab25a87ea82c279649f9f84c2ef9a046e7777cac0"></a>OIhw16o16i</em>&nbsp;</td><td class="fielddoc">
+</td></tr>
 <tr><td class="fieldname"><em><a class="anchor" id="gga563b90355ae4fbfed12f6db8ab25a87ea2f135b7d8ff60dcce96a4919722b0fad"></a>Ohwi8o</em>&nbsp;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga563b90355ae4fbfed12f6db8ab25a87eae01c9f565ec8b7a69ad2432df340dcf0"></a>Ohwi16o</em>&nbsp;</td><td class="fielddoc">
 </td></tr>
 <tr><td class="fieldname"><em><a class="anchor" id="gga563b90355ae4fbfed12f6db8ab25a87ea19f8852dc26c175f22aed771f3f9614a"></a>goihw</em>&nbsp;</td><td class="fielddoc">
 </td></tr>
 <tr><td class="fieldname"><em><a class="anchor" id="gga563b90355ae4fbfed12f6db8ab25a87ea11eda3436ae582b8a28cc85adc8433c1"></a>gOIhw8i8o</em>&nbsp;</td><td class="fielddoc">
 </td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga563b90355ae4fbfed12f6db8ab25a87eab47a53954142e271e59e8b0b036c7797"></a>gOIhw16i16o</em>&nbsp;</td><td class="fielddoc">
+</td></tr>
 <tr><td class="fieldname"><em><a class="anchor" id="gga563b90355ae4fbfed12f6db8ab25a87eacaf364857cd0309c67bb6dff621ee71e"></a>gOIhw8o8i</em>&nbsp;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga563b90355ae4fbfed12f6db8ab25a87eaa1cc9ef7726a93eaf88e6556bca94f64"></a>gOIhw16o16i</em>&nbsp;</td><td class="fielddoc">
 </td></tr>
 </table>
 
@@ -3633,6 +3658,29 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
+<a class="anchor" id="gaa9039e82ed8648c7f30109f4787fd4f0"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">memory::primitive_desc mkldnn::view::primitive_desc::dst_primitive_desc </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a class="anchor" id="ga3c5daa99eb3baf8d236b573cd21199fd"></a>
 <div class="memitem">
 <div class="memproto">
@@ -4723,7 +4771,6 @@ template&lt;typename T, typename traits = handle_traits&lt;T&gt;&gt; </div>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">adesc</td><td>Memory primitive descriptor. </td></tr>
-    <tr><td class="paramname">input</td><td>Pointer to previously allocated data. If <code>NULL</code>, the library allocates the memory. </td></tr>
   </table>
   </dd>
 </dl>

@@ -129,7 +129,7 @@ Classes</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
-<tr class="memitem:gaa8a0d49cc7faaceef9d8f55d66bff57b"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#gaa8a0d49cc7faaceef9d8f55d66bff57b">data_type</a> { <a class="el" href="group__cpp__api__memory.html#ggaa8a0d49cc7faaceef9d8f55d66bff57ba56eed4b80e88f17e46218bbe740f9d55">data__undef</a> = c_api::mkldnn_data_type_undef, 
+<tr class="memitem:gaa8a0d49cc7faaceef9d8f55d66bff57b"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#gaa8a0d49cc7faaceef9d8f55d66bff57b">data_type</a> { <a class="el" href="group__cpp__api__memory.html#ggaa8a0d49cc7faaceef9d8f55d66bff57bafe36f365f50e0317a2fa5142881dc73e">data_undef</a> = c_api::mkldnn_data_type_undef, 
 <a class="el" href="group__cpp__api__memory.html#ggaa8a0d49cc7faaceef9d8f55d66bff57baaf36765775c9522f12bc84c72ea8355d">f32</a> = c_api::mkldnn_f32, 
 <a class="el" href="group__cpp__api__memory.html#ggaa8a0d49cc7faaceef9d8f55d66bff57baafd6316d6d009465fd42d0effc8cdac1">s32</a> = c_api::mkldnn_s32
  }</td></tr>
@@ -147,19 +147,28 @@ Public Types</h2></td></tr>
 <a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87eaeab9b02510aacc27bd0043473caa6a8e">chwn</a> = c_api::mkldnn_chwn, 
 <br/>
 &#160;&#160;<a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87ea248862baad8f48e384015ffd20327223">nChw8c</a> = c_api::mkldnn_nChw8c, 
+<a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87ea7ee460916f5c04b7f46e103474c543b7">nChw16c</a> = c_api::mkldnn_nChw16c, 
 <a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87ea4c8c6b41aae08b78d95bb5b76d28d22b">oi</a> = c_api::mkldnn_oi, 
 <a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87eabdc33953230281d5e6413d2fb78b06ce">io</a> = c_api::mkldnn_io, 
-<a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87ead5691debf8e19e13d09e15d7d99a7ee3">oihw</a> = c_api::mkldnn_oihw, 
 <br/>
-&#160;&#160;<a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87ea7fe3459cd6d4a96ee1b7374a829339d5">ihwo</a> = c_api::mkldnn_ihwo, 
+&#160;&#160;<a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87ead5691debf8e19e13d09e15d7d99a7ee3">oihw</a> = c_api::mkldnn_oihw, 
+<a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87ea7fe3459cd6d4a96ee1b7374a829339d5">ihwo</a> = c_api::mkldnn_ihwo, 
 <a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87eaabeb598d814c8420a22243d26e6ed3c9">oIhw8i</a> = c_api::mkldnn_oIhw8i, 
-<a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87eab1ff88a5571cab5c4495acfb07669762">OIhw8i8o</a> = c_api::mkldnn_OIhw8i8o, 
+<a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87eadfb8daccb2a4b9ef406c1dfc929e2a83">oIhw16i</a> = c_api::mkldnn_oIhw16i, 
+<br/>
+&#160;&#160;<a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87eab1ff88a5571cab5c4495acfb07669762">OIhw8i8o</a> = c_api::mkldnn_OIhw8i8o, 
+<a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87ea2f7490bd350bc8d194f2e4b67213adf7">OIhw16i16o</a> = c_api::mkldnn_OIhw16i16o, 
 <a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87ea511ae11a284c9108eeb61664ff163aea">OIhw8o8i</a> = c_api::mkldnn_OIhw8o8i, 
+<a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87ea82c279649f9f84c2ef9a046e7777cac0">OIhw16o16i</a> = c_api::mkldnn_OIhw16o16i, 
 <br/>
 &#160;&#160;<a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87ea2f135b7d8ff60dcce96a4919722b0fad">Ohwi8o</a> = c_api::mkldnn_Ohwi8o, 
+<a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87eae01c9f565ec8b7a69ad2432df340dcf0">Ohwi16o</a> = c_api::mkldnn_Ohwi16o, 
 <a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87ea19f8852dc26c175f22aed771f3f9614a">goihw</a> = c_api::mkldnn_goihw, 
 <a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87ea11eda3436ae582b8a28cc85adc8433c1">gOIhw8i8o</a> = c_api::mkldnn_gOIhw8i8o, 
-<a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87eacaf364857cd0309c67bb6dff621ee71e">gOIhw8o8i</a> = c_api::mkldnn_gOIhw8o8i
+<br/>
+&#160;&#160;<a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87eab47a53954142e271e59e8b0b036c7797">gOIhw16i16o</a> = c_api::mkldnn_gOIhw16i16o, 
+<a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87eacaf364857cd0309c67bb6dff621ee71e">gOIhw8o8i</a> = c_api::mkldnn_gOIhw8o8i, 
+<a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87eaa1cc9ef7726a93eaf88e6556bca94f64">gOIhw16o16i</a> = c_api::mkldnn_gOIhw16o16i
 <br/>
  }</td></tr>
 <tr class="memdesc:ga563b90355ae4fbfed12f6db8ab25a87e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Memory format specification. See <a class="el" href="group__c__api__types__generic.html#ga30a390f87ef74bf03dfa48a7b3f2fb74" title="Memory format specification. ">mkldnn_memory_format_t</a> for a detailed description.  <a href="group__cpp__api__memory.html#ga563b90355ae4fbfed12f6db8ab25a87e">More...</a><br/></td></tr>
@@ -232,7 +241,7 @@ Additional Inherited Members</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Memory primitive that describes the data. </p>
 </div><hr/>The documentation for this struct was generated from the following file:<ul>
-<li>/localdisk/commander/mkl-dnn/master/update_doc_mkl-dnn_201701130441/internal_repo/include/<a class="el" href="mkldnn_8hpp_source.html">mkldnn.hpp</a></li>
+<li>/localdisk/commander/mkl-dnn/master/update_doc_mkl-dnn_201702080030/internal_repo/include/<a class="el" href="mkldnn_8hpp_source.html">mkldnn.hpp</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->
