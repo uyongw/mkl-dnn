@@ -100,6 +100,11 @@ Functions</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>A primitive to compute convolution using different algorithms. </p>
+<p class="formulaDsp">
+<img class="formulaDsp" alt="\[dst[n][oc][oh][ow] = \sum_{kw=0}^{KW}\sum_{kh=0}^{KH}\sum_{ic=0}^{IC} src[n][ic][oh \cdot s_h - p_l[0] + kh][ow \cdot s_w - p_r[1] + kw] \cdot weights[g][oc][ic][kh][kw] + bias[g][oc],\]" src="form_0.png"/>
+</p>
+<p>where size of output spatial domain is given by <img class="formulaInl" alt="$ OH = \left\lfloor{\frac{IH - KH + p_l[0] + p_r[0]}{s_h}} \right\rfloor + 1$" src="form_1.png"/>, <img class="formulaInl" alt="$ OW = \left\lfloor{\frac{IW - KW + p_l[1] + p_r[1]}{s_w}} \right\rfloor + 1$" src="form_2.png"/>,</p>
+<p>and summation is carried over input channels <img class="formulaInl" alt="$ic$" src="form_3.png"/> in group <img class="formulaInl" alt="$g$" src="form_4.png"/>, and <img class="formulaInl" alt="$s_h, s_w$" src="form_5.png"/> are <code>strides</code> and <img class="formulaInl" alt="$p_l, p_r$" src="form_6.png"/> are <code>padding_l</code> and <code>padding_r</code>. </p>
 <h2 class="groupheader">Function Documentation</h2>
 <a class="anchor" id="gade351141b8907f6a2996734f65b42072"></a>
 <div class="memitem">

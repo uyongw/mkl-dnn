@@ -1,0 +1,20 @@
+\form#0:\[dst[n][oc][oh][ow] = \sum_{kw=0}^{KW}\sum_{kh=0}^{KH}\sum_{ic=0}^{IC} src[n][ic][oh \cdot s_h - p_l[0] + kh][ow \cdot s_w - p_r[1] + kw] \cdot weights[g][oc][ic][kh][kw] + bias[g][oc],\]
+\form#1:$ OH = \left\lfloor{\frac{IH - KH + p_l[0] + p_r[0]}{s_h}} \right\rfloor + 1$
+\form#2:$ OW = \left\lfloor{\frac{IW - KW + p_l[1] + p_r[1]}{s_w}} \right\rfloor + 1$
+\form#3:$ic$
+\form#4:$g$
+\form#5:$s_h, s_w$
+\form#6:$p_l, p_r$
+\form#7:\[dst[n][c][h][w] = \max(src[n][c][h][w], 0) + \min(src[n][c][h][w], 0) \cdot negative\_slope\]
+\form#8:\[dst[u][c][in] = \frac{\exp(src[ou][c][in]) - \max\limits_{c}(src[ou][c][in])} {\sum\limits_{c}\{\exp(src[ou][c][in]) - \max\limits_{c}(src[ou][c][in])\}},\]
+\form#9:$ou, iu$
+\form#10:\[dst[n][oc][oh][ow] = \max\limits_{kw,kh} (src[n][ic][oh \cdot s_h - p_l[0] + kh][ow \cdot s_w - p_r[1] + kw]),\]
+\form#11:\[dst[n][oc][oh][ow] = \frac{1}{KW \cdot KH}\sum\limits_{kw,kh} src[n][ic][oh \cdot s_h - p_l[0] + kh][ow \cdot s_w - p_r[1] + kw],\]
+\form#12:\[dst[n][c][h][w] = \left\{k + \frac{\alpha}{n_{l}} \sum\limits_{i=-(n_{l}-1)/2}^{(n_{l}+1)/2} (src[n][c+i][h][w])^2\right\}^{-\beta} src[n][c][h][w],\]
+\form#13:\[dst[n][c][h][w] = \left\{k + \frac{\alpha}{n_{l}} \sum\limits_{i=-(n_{l}-1)/2}^{(n_{l}+1)/2} (src[n][c][h+i][w+i])^2\right\}^{-\beta} src[n][c][h][w],\]
+\form#14:$n_{l}$
+\form#15:\[dst[n][c][h][w] = \gamma[c] \frac{src[n][c][h][w] - \mu[c]} {\sqrt{\sigma[c] + eps}} + \beta[c],\]
+\form#16:$\gamma[c], \beta[c]$
+\form#17:$\mu[c] = \frac{1}{NHW} \sum\limits_{whn} src[n][c][h][w]$
+\form#18:$\sigma[c] = \frac{1}{NHW} \sum\limits_{whn} (src[n][c][h][w] - \mu[c])^2$
+\form#19:\[dst[n][oc] = \sum\limits_{ic, kh, kw} src[n][ic][kh][kw] \cdot weights[oc][ic][kh][kw] + bias[oc]\]

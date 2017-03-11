@@ -100,8 +100,11 @@ Functions</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>A primitive to compute an inner product. </p>
-<p>Inner product layer is also known as fully connected layer. </p>
-<h2 class="groupheader">Function Documentation</h2>
+<p>Inner product layer is also known as fully connected layer. with spatial dimension:</p>
+<p class="formulaDsp">
+<img class="formulaDsp" alt="\[dst[n][oc] = \sum\limits_{ic, kh, kw} src[n][ic][kh][kw] \cdot weights[oc][ic][kh][kw] + bias[oc]\]" src="form_19.png"/>
+</p>
+ <h2 class="groupheader">Function Documentation</h2>
 <a class="anchor" id="ga42908f0482b4f21c42b3f9d0d606fb1e"></a>
 <div class="memitem">
 <div class="memproto">

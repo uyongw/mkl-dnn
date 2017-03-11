@@ -97,6 +97,15 @@ Functions</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>A primitive to perform max, min, or average pooling. </p>
+<p>Max pooling: </p>
+<p class="formulaDsp">
+<img class="formulaDsp" alt="\[dst[n][oc][oh][ow] = \max\limits_{kw,kh} (src[n][ic][oh \cdot s_h - p_l[0] + kh][ow \cdot s_w - p_r[1] + kw]),\]" src="form_10.png"/>
+</p>
+<p>Average pooling: </p>
+<p class="formulaDsp">
+<img class="formulaDsp" alt="\[dst[n][oc][oh][ow] = \frac{1}{KW \cdot KH}\sum\limits_{kw,kh} src[n][ic][oh \cdot s_h - p_l[0] + kh][ow \cdot s_w - p_r[1] + kw],\]" src="form_11.png"/>
+</p>
+<p>where <img class="formulaInl" alt="$p_l, p_r$" src="form_6.png"/> are <code>padding_l</code> and <code>padding_r</code> respectively and output spatial dimensions are calculated similarly as done in convolution. </p>
 <h2 class="groupheader">Function Documentation</h2>
 <a class="anchor" id="ga6e1b3f77868920226ace627a71616a67"></a>
 <div class="memitem">

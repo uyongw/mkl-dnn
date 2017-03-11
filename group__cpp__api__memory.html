@@ -166,7 +166,7 @@ Enumerations</h2></td></tr>
 <a class="el" href="group__cpp__api__memory.html#ggaa8a0d49cc7faaceef9d8f55d66bff57baaf36765775c9522f12bc84c72ea8355d">mkldnn::memory::f32</a> = c_api::mkldnn_f32, 
 <a class="el" href="group__cpp__api__memory.html#ggaa8a0d49cc7faaceef9d8f55d66bff57baafd6316d6d009465fd42d0effc8cdac1">mkldnn::memory::s32</a> = c_api::mkldnn_s32
  }</td></tr>
-<tr class="memdesc:gaa8a0d49cc7faaceef9d8f55d66bff57b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Data type specification. See #mkldnn_precision_t for a detailed description.  <a href="group__cpp__api__memory.html#gaa8a0d49cc7faaceef9d8f55d66bff57b">More...</a><br/></td></tr>
+<tr class="memdesc:gaa8a0d49cc7faaceef9d8f55d66bff57b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Data type specification. See <a class="el" href="group__c__api__types__generic.html#ga826b2a9be4d94ac17f99bacac6d0cb29" title="Data type specification. ">mkldnn_data_type_t</a> for a detailed description.  <a href="group__cpp__api__memory.html#gaa8a0d49cc7faaceef9d8f55d66bff57b">More...</a><br/></td></tr>
 <tr class="separator:gaa8a0d49cc7faaceef9d8f55d66bff57b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga563b90355ae4fbfed12f6db8ab25a87e"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga563b90355ae4fbfed12f6db8ab25a87e">mkldnn::memory::format</a> { <br/>
 &#160;&#160;<a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87ea1b7aba137f0d853dd8487fcb14fdc628">mkldnn::memory::format_undef</a> = c_api::mkldnn_format_undef, 
@@ -520,10 +520,12 @@ Functions</h2></td></tr>
 <tr class="separator:ga08b3e80c76cbe0f50447f3efd62b9327"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga4897c6f62e466ded00f9b7995cc00898"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga4897c6f62e466ded00f9b7995cc00898">mkldnn::pooling_forward::pooling_forward</a> (const primitive_desc &amp;aprimitive_desc, const primitive::at &amp;src, const memory &amp;dst, const memory &amp;workspace)</td></tr>
 <tr class="separator:ga4897c6f62e466ded00f9b7995cc00898"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac57bdce957bac5b98723b71e888adeac"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#gac57bdce957bac5b98723b71e888adeac">mkldnn::pooling_backward::desc::desc</a> (algorithm &amp;aalgorithm, const memory::desc &amp;diff_src_desc, const memory::desc &amp;diff_dst_desc, const memory::dims &amp;strides, const memory::dims &amp;kernel, const memory::dims &amp;padding_l, const memory::dims &amp;padding_r, const padding_kind apadding_kind)</td></tr>
-<tr class="separator:gac57bdce957bac5b98723b71e888adeac"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3f4abeed52647c1d91afa67259de5bf0"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga3f4abeed52647c1d91afa67259de5bf0">mkldnn::pooling_backward::desc::desc</a> (algorithm aalgorithm, const memory::desc &amp;diff_src_desc, const memory::desc &amp;diff_dst_desc, const memory::dims &amp;strides, const memory::dims &amp;kernel, const memory::dims &amp;padding_l, const memory::dims &amp;padding_r, const padding_kind apadding_kind)</td></tr>
+<tr class="separator:ga3f4abeed52647c1d91afa67259de5bf0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga910d3cbfb17409b76ac297b77ff0382f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga910d3cbfb17409b76ac297b77ff0382f">mkldnn::pooling_backward::primitive_desc::primitive_desc</a> (const desc &amp;adesc, const engine &amp;aengine, const pooling_forward::primitive_desc &amp;hint_fwd_primitive_desc)</td></tr>
 <tr class="separator:ga910d3cbfb17409b76ac297b77ff0382f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab7efd2303df3bee90d223da9dc623969"><td class="memItemLeft" align="right" valign="top">memory::primitive_desc&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#gab7efd2303df3bee90d223da9dc623969">mkldnn::pooling_backward::primitive_desc::diff_src_primitive_desc</a> () const </td></tr>
+<tr class="separator:gab7efd2303df3bee90d223da9dc623969"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga88f9f9ddb590ec436ba968c99f3e1eec"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga88f9f9ddb590ec436ba968c99f3e1eec">mkldnn::pooling_backward::pooling_backward</a> (const primitive_desc &amp;aprimitive_desc, const primitive::at &amp;diff_dst, const memory &amp;diff_src)</td></tr>
 <tr class="separator:ga88f9f9ddb590ec436ba968c99f3e1eec"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga0b43875cab2d5d252763d0bfdc13d692"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga0b43875cab2d5d252763d0bfdc13d692">mkldnn::pooling_backward::pooling_backward</a> (const primitive_desc &amp;aprimitive_desc, const primitive::at &amp;diff_dst, const primitive::at &amp;workspace, const memory &amp;diff_src)</td></tr>
@@ -542,6 +544,8 @@ Functions</h2></td></tr>
 <tr class="separator:ga292763b9dd646f9e1222eb9684193b9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga4cdb3c927156e3d4bb5b4b5b59f68e5e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga4cdb3c927156e3d4bb5b4b5b59f68e5e">mkldnn::relu_backward::primitive_desc::primitive_desc</a> (const desc &amp;adesc, const engine &amp;aengine, const relu_forward::primitive_desc &amp;hint_fwd_primitive_desc)</td></tr>
 <tr class="separator:ga4cdb3c927156e3d4bb5b4b5b59f68e5e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga89cdf1ddae1dfd7607562bb5af49aa2a"><td class="memItemLeft" align="right" valign="top">memory::primitive_desc&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga89cdf1ddae1dfd7607562bb5af49aa2a">mkldnn::relu_backward::primitive_desc::diff_src_primitive_desc</a> () const </td></tr>
+<tr class="separator:ga89cdf1ddae1dfd7607562bb5af49aa2a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaa9c009ebe7fa7e946fcceb9b9c5a4ad6"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#gaa9c009ebe7fa7e946fcceb9b9c5a4ad6">mkldnn::relu_backward::relu_backward</a> (const primitive_desc &amp;aprimitive_desc, const primitive::at &amp;src, const primitive::at &amp;diff_dst, const memory &amp;diff_src)</td></tr>
 <tr class="separator:gaa9c009ebe7fa7e946fcceb9b9c5a4ad6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga86f3b6079fd48f2b8a289ed7b8419c99"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga86f3b6079fd48f2b8a289ed7b8419c99">mkldnn::softmax_forward::desc::desc</a> (prop_kind aprop_kind, const memory::desc &amp;data_desc, int softmax_axis)</td></tr>
@@ -778,7 +782,7 @@ Friends</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Data type specification. See #mkldnn_precision_t for a detailed description. </p>
+<p>Data type specification. See <a class="el" href="group__c__api__types__generic.html#ga826b2a9be4d94ac17f99bacac6d0cb29" title="Data type specification. ">mkldnn_data_type_t</a> for a detailed description. </p>
 <table class="fieldtable">
 <tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggaa8a0d49cc7faaceef9d8f55d66bff57bafe36f365f50e0317a2fa5142881dc73e"></a>data_undef</em>&nbsp;</td><td class="fielddoc">
 </td></tr>
@@ -2879,7 +2883,7 @@ Friends</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="gac57bdce957bac5b98723b71e888adeac"></a>
+<a class="anchor" id="ga3f4abeed52647c1d91afa67259de5bf0"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -2889,7 +2893,7 @@ Friends</h2></td></tr>
         <tr>
           <td class="memname">mkldnn::pooling_backward::desc::desc </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="group__cpp__api__memory.html#gae45a07d6121fdd33e310782753178076">algorithm</a> &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="group__cpp__api__memory.html#gae45a07d6121fdd33e310782753178076">algorithm</a>&#160;</td>
           <td class="paramname"><em>aalgorithm</em>, </td>
         </tr>
         <tr>
@@ -3566,6 +3570,52 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
+<a class="anchor" id="gab7efd2303df3bee90d223da9dc623969"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">memory::primitive_desc mkldnn::pooling_backward::primitive_desc::diff_src_primitive_desc </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ga89cdf1ddae1dfd7607562bb5af49aa2a"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">memory::primitive_desc mkldnn::relu_backward::primitive_desc::diff_src_primitive_desc </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a class="anchor" id="ga204b44bd34a4a9c511102551fc287c99"></a>
 <div class="memitem">
 <div class="memproto">
@@ -4161,12 +4211,7 @@ template&lt;typename T, typename traits = handle_traits&lt;T&gt;&gt; </div>
 </div><div class="memdoc">
 
 <p>Returns the number of data elements in the memory described. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">with_padding</td><td>A flag to specify whether to consider the padding area in the computations. Returns the number of bytes required to allocate the memory described including the padding area. </td></tr>
-  </table>
-  </dd>
-</dl>
+<p>Returns the number of bytes required to allocate the memory described including the padding area. </p>
 
 </div>
 </div>

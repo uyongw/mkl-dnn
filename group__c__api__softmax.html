@@ -94,6 +94,10 @@ Functions</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>A primitive to perform softmax. </p>
+<p class="formulaDsp">
+<img class="formulaDsp" alt="\[dst[u][c][in] = \frac{\exp(src[ou][c][in]) - \max\limits_{c}(src[ou][c][in])} {\sum\limits_{c}\{\exp(src[ou][c][in]) - \max\limits_{c}(src[ou][c][in])\}},\]" src="form_8.png"/>
+</p>
+<p>where <img class="formulaInl" alt="$ou, iu$" src="form_9.png"/> are outer and inner sizes repectively, defined by <code>data_desc.dims</code> and <code>softmax_axis</code>. </p>
 <h2 class="groupheader">Function Documentation</h2>
 <a class="anchor" id="gaf9ea3543dc0b1d9734c7290e90ccce23"></a>
 <div class="memitem">

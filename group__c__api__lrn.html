@@ -97,6 +97,15 @@ Functions</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>A primitive to perform local response normalization (LRN) across or within channels. </p>
+<p>LRN accross channels: </p>
+<p class="formulaDsp">
+<img class="formulaDsp" alt="\[dst[n][c][h][w] = \left\{k + \frac{\alpha}{n_{l}} \sum\limits_{i=-(n_{l}-1)/2}^{(n_{l}+1)/2} (src[n][c+i][h][w])^2\right\}^{-\beta} src[n][c][h][w],\]" src="form_12.png"/>
+</p>
+<p>LRN within channels: </p>
+<p class="formulaDsp">
+<img class="formulaDsp" alt="\[dst[n][c][h][w] = \left\{k + \frac{\alpha}{n_{l}} \sum\limits_{i=-(n_{l}-1)/2}^{(n_{l}+1)/2} (src[n][c][h+i][w+i])^2\right\}^{-\beta} src[n][c][h][w],\]" src="form_13.png"/>
+</p>
+<p>where <img class="formulaInl" alt="$n_{l}$" src="form_14.png"/> is the <code>local_size</code>. </p>
 <h2 class="groupheader">Function Documentation</h2>
 <a class="anchor" id="ga26be925055d37f71ec153c1c3c5252d1"></a>
 <div class="memitem">

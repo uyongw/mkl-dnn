@@ -83,16 +83,16 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="textblock"><p>Intel(R) Math Kernel Library for Deep Neural Networks (Intel(R) MKL-DNN) is an open source performance library for Deep Learning (DL) applications intended for acceleration of DL frameworks on Intel(R) architecture. Intel MKL-DNN includes highly vectorized and threaded building blocks for implementation of convolutional neural networks (CNN) with C and C++ interfaces. This project is created to help DL community innovate on Intel(R) processors.</p>
 <p>The library supports the most commonly used primitives necessary to accelerate bleeding edge image recognition topologies, including Cifar*, AlexNet*, VGG*, GoogleNet* and ResNet*. The primitives include convolution, inner product, pooling, normalization, and activation primitives with support for inference operation. This release includes the following classes of functions:</p>
 <ul>
-<li>Convolution: direct batched convolution</li>
-<li>Inner Product</li>
-<li>Pooling: maximum, average</li>
-<li>Normalization: local response normalization (LRN) across channels and within channel, batch normalization</li>
-<li>Activation: rectified linear unit neuron activation (ReLU)</li>
-<li>Data manipulation: reorder (multi-dimensional transposition/conversion)</li>
+<li>Convolution: direct batched convolution,</li>
+<li>Inner Product,</li>
+<li>Pooling: maximum, average,</li>
+<li>Normalization: local response normalization (LRN) across channels and within channel, batch normalization,</li>
+<li>Activation: rectified linear unit neuron activation (ReLU), softmax,</li>
+<li>Data manipulation: reorder (multi-dimensional transposition/conversion), sum, concat, view.</li>
 </ul>
-<p>Intel MKL DNN primitives implement a plain C application programming interface (API) that can be used in the existing C/C++ DNN frameworks, as well as in custom DNN applications.</p>
+<p>Intel MKL DNN primitives implement a plain C/C++ application programming interface (API) that can be used in the existing C/C++ DNN frameworks, as well as in custom DNN applications.</p>
 <h2>Programming Model</h2>
-<p>While in Intel MKL-DNN model, primitives have other primitives as inputs, outputs are memory primitives only. This feature enables reconstructing the graph of computations at run time.</p>
+<p>In Intel MKL-DNN, memory is modeled as a primitive similar to an operation primitive. This feature enables reconstructing the graph of computations at run time.</p>
 <h3>Basic Terminology</h3>
 <p>Intel MKL-DNN operates on the following main objects:</p>
 <ul>
@@ -102,78 +102,131 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </ul>
 <p>A typical workflow is the following: create a set of primitives to run, push them to a stream all at once or one-by-one, and wait for the completion.</p>
 <h3>Creating Primitives</h3>
-<p>To create a primitive, follow these steps:</p>
-<ol type="1">
-<li>Create a logical description of the operation in a descriptor such as a memory descriptor or convolution descriptor.</li>
-<li>Create a description of the primitive to perform the operation. The description defines all the necessary details, such as descriptions of inputs and outputs.</li>
-<li>Create an instance of a primitive and specify other primitives as inputs and outputs.</li>
-</ol>
-<p>These steps reflect the following levels of abstraction:</p>
+<p>In Intel MKL-DNN creation of primitives goes through following levels of abstraction:</p>
 <ul>
-<li><b>Operation/memory descriptor</b> - a high-level description with logical parameters of an operation/memory. For example: the description of a convolution operation contains parameters such as sizes, strides, propagation type, and so on. A memory description contains dimensions, precision, and format of the data layout in memory. The memory format can be set to <code>any</code>, which means that it is not yet defined. This format is used to enable primitives choose the memory format for optimal performance. An operation/memory descriptor is a lightweight structure, which does not allocate any additional resources.</li>
+<li><b>Operation/memory descriptor</b> - a high-level description with logical parameters of an operation/memory. It is a lightweight structure, which does not allocate any physical memory or computation resources.</li>
 <li><b>Primitive descriptor</b> - a complete description of a primitive that contains an operation descriptor, descriptors of primitive inputs and outputs, and the target engine. Permits future API extensions to enable querying the descriptor for estimated performance, memory consumptions, and so on. A primitive descriptor is also a lightweight structure.</li>
 <li><b>Primitive</b> - a specific instance of a primitive created using the corresponding primitive descriptor. A primitive structure contains pointers to input primitives and output memory. Creation of a primitive is a potentially expensive operation because when a primitive is created, Intel MKL-DNN allocates resources that are needed to execute the primitive.</li>
 </ul>
+<p>To create a memory primitive, follow these steps:</p>
+<ol type="1">
+<li>Create a memory descriptor. It contains the dimensions, precision, and format of data layout in memory. The data layout can be either user specified or set to <code>any</code>. <code>any</code> format is used to enable the operation primitives (convolution and inner product) choose the memory format for optimal performance.</li>
+<li>Create a memory primitive descriptor. It contains the memory descriptor and the target engine.</li>
+<li>Create a memory primitive. This requires allocating a memory buffer and attaching the data handle to the memory primitive descriptor. Note, in C++ api for creating an output memory primitive, user doesn't need to allocate buffer, unless the output is needed in a user format.</li>
+</ol>
+<p>To create an operation primitive, follow these steps:</p>
+<ol type="1">
+<li>Create a logical description of the operation. For example: the description of a convolution operation contains parameters such as sizes, strides, propagation type, and so on. It will also contain the memory descriptors of input and output.</li>
+<li>Create a primitive descriptor by attaching the target engine to the logical description.</li>
+<li>Create an instance of a primitive and specify the input and output primitives.</li>
+</ol>
+<h3>Performance Considerations:</h3>
+<ul>
+<li>Convolution and innerproduct primitives when created with unspecified memory format <code>any</code> for input and/or output, choose the memory format. This is choice is based on different circumstances (like hardware, convolutional parameters etc..).</li>
+<li>Operation primitives (e.g. ReLU, LRN, pooling) following convolution or innerproduct, should be given input in the same memory format as decided by convolution or inner-product. Reorder is a potentially expensive operation, so it should be avoided unless needed for performance in convolution, innerproduct or output specifications by user.</li>
+<li>Pooling, concat and sum can be created with output memory format <code>any</code>.</li>
+<li>An operation primitive (typically operations like pooling, LRN or softmax ) may need workspace memory for storing results of intermmediate operations which are helpful in backward propagation.</li>
+</ul>
+<h3>Some operational details:</h3>
+<ul>
+<li>A reorder primitive may need to be created for converting the data from user format to a format preferred by convolution or innerproduct.</li>
+<li>All operations should be queried for requirement of workspace memory. If workspace is needed, it should only be created during the forward propagation and then shared with corresponding primitive on backward propagation.</li>
+<li>A primitive descriptor from forward propagation must be provided while creating corresponding primitive descriptor for backward propagation. This allows backward operation to know what exact implementation is chosen for the primitive on forward propagation. This in turn helps backward operation to decode the workspace memory correctly.</li>
+<li><p class="startli">User should always check the correspondance between current data format and the format that is required by a primitive. For instance, forward convolution and backward convolution with respect to source might choose different memory formats for weights (if created with <code>any</code>). Create a reorder for weights in such case. Similarly a reorder might be required for source data between forward convolution and backward convolution with respect to weights.</p>
+<p class="startli"><b>Note:</b> Please refer to extended examples for illustration of the above details.</p>
+</li>
+</ul>
 <h3>Auxiliary Types</h3>
 <ul>
-<li><b>Primitive_at</b> - a structure that contains a primitive and an index. This structure specifies which output of the primitive to use as an input for another primitive.</li>
+<li><b>Primitive_at</b> - a structure that contains a primitive and an index. This structure specifies which output of the primitive to use as an input for another primitive. For a memory primitive the index is always <code>0</code> because it doesn't have a output.</li>
 </ul>
 <h3>C++ API Example</h3>
-<p>The repository contains an example of how to build a neural network topology block that consists of convolution, ReLU, LRN, and pooling. Let's go through it step by step:</p>
+<p>The repository contains an example of how to build a neural network topology block that consists of forward convolution and ReLU.</p>
+<p>Subtleties to note in this example:</p>
 <ol type="1">
-<li>Initialize a CPU engine. The last parameter stands for the index of the engine. <div class="fragment"><div class="line"><span class="keyword">auto</span> cpu_engine = <a class="code" href="structmkldnn_1_1engine.html">mkldnn::engine</a>(<a class="code" href="group__cpp__api__memory.html#gga81bcf1ea92d7f98852a2c3e187825de6a7e33e884a6d7eb40a73125557b14a7a7">mkldnn::engine::cpu</a>, 0);</div>
+<li>How is a reorder primitive created?</li>
+<li>How is output from convolution passed as input to ReLU?.</li>
+</ol>
+<p>Let's go through it step by step:</p>
+<ol type="1">
+<li>Initialize a CPU engine. The last parameter stands for the index of the engine. <div class="fragment"><div class="line"><span class="keyword">using namespace </span>mkldnn;</div>
+<div class="line"><span class="keyword">auto</span> cpu_engine = <a class="code" href="structmkldnn_1_1engine.html">engine</a>(<a class="code" href="group__cpp__api__memory.html#gga81bcf1ea92d7f98852a2c3e187825de6a7e33e884a6d7eb40a73125557b14a7a7">engine::cpu</a>, 0);</div>
 </div><!-- fragment --></li>
-<li>Create a vector of primitives that represents the net. <div class="fragment"><div class="line">std::vector&lt;mkldnn::primitive&gt; net;</div>
+<li>Create a vector of primitives that represents the net. <div class="fragment"><div class="line">std::vector&lt;primitive&gt; net;</div>
 </div><!-- fragment --></li>
 <li>Allocate input data and create a tensor structure that describes it. <div class="fragment"><div class="line">std::vector&lt;float&gt; src(2 * 3 * 227 * 227);</div>
-<div class="line"><a class="code" href="group__cpp__api__memory.html#ga720bd5f3fae22b0e6a513deab0aacc3b">mkldnn::memory::dims</a> conv_src_dims = {2, 3, 227, 227};</div>
+<div class="line">memory::dims conv_src_tz = {2, 3, 227, 227};</div>
+<div class="line"><span class="comment">/* similarly specify tensor structure for output, weights and bias */</span></div>
 </div><!-- fragment --></li>
-<li>Create two memory descriptors: one for data in a user format, and one for the convolution input. Choose <code>nchw</code> (minibatch-channels-height-width) format for user data and the wildcard <code>any</code> for the convolution data format. <code>any</code> enables the convolution primitive to choose the data format that is most suitable for its input parameters (convolution kernel sizes, strides, padding, and so on). If the resulting format is different from <code>nchw</code>, user data needs to be transformed to the format required for the convolution. <div class="fragment"><div class="line"><span class="keyword">auto</span> user_src_md = <a class="code" href="structmkldnn_1_1memory_1_1desc.html">mkldnn::memory::desc</a>({conv_src_dims},</div>
-<div class="line">    mkldnn::memory::data_type::f32, mkldnn::memory::format::nchw);</div>
-<div class="line"><span class="keyword">auto</span> conv_src_md = <a class="code" href="structmkldnn_1_1memory_1_1desc.html">mkldnn::memory::desc</a>({conv_src_dims},</div>
-<div class="line">    mkldnn::memory::data_type::f32, mkldnn::memory::format::any);</div>
+<li>Create two memory descriptors: one for data in a user format, and one for the convolution input. Choose <code>nchw</code> (minibatch-channels-height-width) format for user data and the wildcard <code>any</code> for the convolution data format. <code>any</code> enables the convolution primitive to choose the data format that is most suitable for its input parameters (convolution kernel sizes, strides, padding, and so on). If the resulting format is different from <code>nchw</code>, user data needs to be transformed to the format required for the convolution. <div class="fragment"><div class="line"><span class="keyword">auto</span> user_src_md = memory::desc({conv_src_tz},</div>
+<div class="line">    memory::data_type::f32, memory::format::nchw);</div>
+<div class="line"><span class="keyword">auto</span> conv_src_md = memory::desc({conv_src_tz},</div>
+<div class="line">    memory::data_type::f32, memory::format::any);</div>
+<div class="line"><span class="comment">/* similarly create conv_weights_md and conv_dst_md in format::any */</span></div>
 </div><!-- fragment --></li>
-<li>Create a convolution descriptor by specifying the algorithm, propagation kind, shapes of input, weights, bias, and output, and convolution strides, padding, and padding kind. <div class="fragment"><div class="line"><span class="keyword">auto</span> conv_desc = <a class="code" href="structmkldnn_1_1convolution__forward_1_1desc.html">mkldnn::convolution_forward::desc</a>(</div>
-<div class="line">    <a class="code" href="group__cpp__api__memory.html#ggaeb087eae78f70a4d249a90aefa165cf8a064cbe5d8f2575433bfaaaef8937f369">mkldnn::prop_kind::forward</a>, <a class="code" href="group__cpp__api__memory.html#ggae45a07d6121fdd33e310782753178076a7c32719b6310ede805768dfbe7c909a8">mkldnn::algorithm::convolution_direct</a>,</div>
+<li>Create a convolution descriptor by specifying the algorithm, propagation kind, shapes of input, weights, bias, and output, and convolution strides, padding, and padding kind. <div class="fragment"><div class="line"><span class="keyword">auto</span> conv_desc = convolution_forward::desc(</div>
+<div class="line">    <a class="code" href="group__cpp__api__memory.html#ggaeb087eae78f70a4d249a90aefa165cf8a064cbe5d8f2575433bfaaaef8937f369">prop_kind::forward</a>, <a class="code" href="group__cpp__api__memory.html#ggae45a07d6121fdd33e310782753178076a7c32719b6310ede805768dfbe7c909a8">algorithm::convolution_direct</a>,</div>
 <div class="line">    conv_src_md, <span class="comment">/* format::any used here to let convolution choose a format */</span></div>
 <div class="line">    conv_weights_md, conv_bias_md, conv_dst_md,</div>
-<div class="line">    {1, 1}, {0, 0}, {0, 0}, <a class="code" href="group__cpp__api__memory.html#ggaa1ff931b28e0a90473ad5bddd21c60fcafbabef80df01bc0a5636d0ca9189355d">mkldnn::padding_kind::zero</a>);</div>
+<div class="line">    {1, 1}, {0, 0}, {0, 0}, <a class="code" href="group__cpp__api__memory.html#ggaa1ff931b28e0a90473ad5bddd21c60fcafbabef80df01bc0a5636d0ca9189355d">padding_kind::zero</a>);</div>
 </div><!-- fragment --></li>
-<li>Create a descriptor of the convolution primitive. Once created, this descriptor has specific formats instead of any wildcard formats specified in the convolution descriptor. <div class="fragment"><div class="line"><span class="keyword">auto</span> conv_pd = <a class="code" href="structmkldnn_1_1convolution__forward_1_1primitive__desc.html">mkldnn::convolution_forward::primitive_desc</a>(conv_desc, cpu_engine);</div>
+<li>Create a descriptor of the convolution primitive. Once created, this descriptor has specific formats instead of any wildcard formats specified in the convolution descriptor. <div class="fragment"><div class="line"><span class="keyword">auto</span> conv_pd = convolution_forward::primitive_desc(conv_desc, cpu_engine);</div>
 </div><!-- fragment --></li>
 <li>Create a memory primitive that contains user data and check whether the user data format differs from the format that the convolution requires. In the case of differences, create a reorder primitive that transforms the user data to the convolution format and add it to the net. <div class="fragment"><div class="line"><span class="keyword">auto</span> user_src_memory_descriptor</div>
-<div class="line">    = <a class="code" href="structmkldnn_1_1memory_1_1primitive__desc.html">mkldnn::memory::primitive_desc</a>(user_src_md, engine);</div>
+<div class="line">    = memory::primitive_desc(user_src_md, engine);</div>
 <div class="line"></div>
-<div class="line"><span class="keyword">auto</span> user_src_memory = <a class="code" href="structmkldnn_1_1memory.html">mkldnn::memory</a>(user_src_memory_descriptor, src);</div>
+<div class="line"><span class="keyword">auto</span> user_src_memory = memory(user_src_memory_descriptor, src.data());</div>
 <div class="line"></div>
 <div class="line"><span class="comment">/* Check whether a reorder is needed  */</span></div>
-<div class="line"><span class="keyword">auto</span> conv_input = user_src_memory;</div>
-<div class="line"><span class="keywordflow">if</span> (<a class="code" href="structmkldnn_1_1memory_1_1primitive__desc.html">mkldnn::memory::primitive_desc</a>(conv_pd.src_primitive_desc())</div>
+<div class="line"><span class="keyword">auto</span> conv_src_memory = user_src_memory;</div>
+<div class="line"><span class="keywordflow">if</span> (memory::primitive_desc(conv_pd.src_primitive_desc())</div>
 <div class="line">        != user_src_memory_descriptor) {</div>
 <div class="line">    <span class="comment">/* Yes, it is needed */</span></div>
 <div class="line"></div>
 <div class="line">    <span class="comment">/* Convolution primitive descriptor contains the descriptor of a memory</span></div>
 <div class="line"><span class="comment">     * primitive it requires as input. Because a pointer to the allocated</span></div>
 <div class="line"><span class="comment">     * memory is not specified, Intel MKL-DNN allocates the memory. */</span></div>
-<div class="line">    <span class="keyword">auto</span> conv_src_memory = <a class="code" href="structmkldnn_1_1memory.html">mkldnn::memory</a>(conv_pd.src_primitive_desc());</div>
+<div class="line">    conv_src_memory = memory(conv_pd.src_primitive_desc());</div>
 <div class="line"></div>
 <div class="line">    <span class="comment">/* create a reorder between data, make it an input for the convolution */</span></div>
-<div class="line">    conv_input = <a class="code" href="structmkldnn_1_1reorder.html">mkldnn::reorder</a>(user_src_memory, conv_src_memory)</div>
+<div class="line">    conv_reorder_src = reorder(user_src_memory, conv_src_memory)</div>
 <div class="line"></div>
 <div class="line">    <span class="comment">/* put the reorder in the net */</span></div>
-<div class="line">    net.push_back(conv_input);</div>
+<div class="line">    net.push_back(conv_reorder_src);</div>
 <div class="line">}</div>
 </div><!-- fragment --></li>
-<li>Create a convolution primitive and add it to the net. <div class="fragment"><div class="line"><span class="comment">/* Note that the conv_input primitive (whether it be a memory or a reorder)</span></div>
+</ol>
+<ol type="1">
+<li>Create a memory primitive for output. <div class="fragment"><div class="line"><span class="keyword">auto</span> conv_dst_memory = memory(conv_pd.dst_primitive_desc());</div>
+</div><!-- fragment --></li>
+<li>Create a convolution primitive and add it to the net. <div class="fragment"><div class="line"><span class="comment">/* Note that the conv_reorder_src primitive</span></div>
 <div class="line"><span class="comment"> * is an input dependency for the convolution primitive, which means that the</span></div>
 <div class="line"><span class="comment"> * convolution primitive will not be executed before the data is ready. */</span></div>
-<div class="line"><span class="keyword">auto</span> conv = <a class="code" href="structmkldnn_1_1convolution__forward.html">mkldnn::convolution_forward</a>(conv_pd, conv_input,</div>
-<div class="line">        conv_weights_memory, conv_user_bias_memory, conv_dst_memory);</div>
+<div class="line"><span class="keyword">auto</span> conv</div>
+<div class="line">        = convolution_forward(conv_pd, conv_src_memory, conv_weights_memory,</div>
+<div class="line">                              conv_user_bias_memory, conv_dst_memory);</div>
 <div class="line">net.push_back(conv);</div>
+</div><!-- fragment --></li>
+<li>Create relu primitive. For better performance keep ReLU (as well as for other operation primitives until another convolution or innerproduct is encountered) input data format same as format chosen by convolution. <div class="fragment"><div class="line"><span class="keyword">auto</span> relu_src_md = conv_pd.dst_primitive_desc().desc();</div>
+<div class="line"></div>
+<div class="line"><span class="keyword">auto</span> relu_desc = relu_forward::desc(<a class="code" href="group__cpp__api__memory.html#ggaeb087eae78f70a4d249a90aefa165cf8a064cbe5d8f2575433bfaaaef8937f369">prop_kind::forward</a>, relu_src_md,</div>
+<div class="line">        negative_slope);</div>
+<div class="line"><span class="keyword">auto</span> relu_dst_memory = memory(relu_pd.dst_primitive_desc());</div>
+</div><!-- fragment --></li>
+<li><b>Note:</b> pass convolution primitive as input to relu. This let's the stream establish dependencies between primitives. <div class="fragment"><div class="line"><span class="keyword">auto</span> relu = relu_forward(relu_pd, conv, relu_dst_memory);</div>
+<div class="line">net.push_back(relu);</div>
 </div><!-- fragment --></li>
 <li>Finally, create a stream, submit all the primitives, and wait for completion. <div class="fragment"><div class="line"><a class="code" href="structmkldnn_1_1stream.html">mkldnn::stream</a>(mkldnn::stream::kind::eager).<a class="code" href="group__cpp__api__memory.html#ga018e38932cc072568a48015f55fbe798">submit</a>(net).<a class="code" href="group__cpp__api__memory.html#ga577fe98393390dc1ba646266d57566e2">wait</a>();</div>
 </div><!-- fragment --></li>
 </ol>
+<h3>Extended Examples</h3>
+<p>Following examples provide more details about using the api. All the examples use the topology: Convolution, ReLU, LRN and pooling.</p>
+<ul>
+<li>simple_net.c : uses C api. Demonstrates creation of forward primitives.</li>
+<li>simple_net.cpp : uses C++ api.</li>
+<li>simple_training.c: Demonstrates creation of full training net (forward and backward primitives) using C api.</li>
+<li>simple_training_net.cpp: uses C++ api.</li>
+</ul>
 <p><a class="el" href="legal_information.html">Legal Information</a> </p>
 </div></div><!-- contents -->
 <!-- start footer part -->
