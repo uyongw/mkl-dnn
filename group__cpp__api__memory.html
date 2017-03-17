@@ -480,6 +480,8 @@ Functions</h2></td></tr>
 <tr class="separator:ga0ff751dcaa1288bea3e3b35eaa65908e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga965e13395408ec18544c7bd8782467d4"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga965e13395408ec18544c7bd8782467d4">mkldnn::convolution_relu_forward::convolution_relu_forward</a> (const primitive_desc &amp;aprimitive_desc, const primitive::at &amp;src, const primitive::at &amp;weights, const memory &amp;dst)</td></tr>
 <tr class="separator:ga965e13395408ec18544c7bd8782467d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga85e23e703a489a17e7dd6270b1cc07ec"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga85e23e703a489a17e7dd6270b1cc07ec">mkldnn::lrn_forward::desc::desc</a> (prop_kind aprop_kind, algorithm aalgorithm, const memory::desc &amp;src_desc, int local_size, double alpha, double beta, double k)</td></tr>
+<tr class="separator:ga85e23e703a489a17e7dd6270b1cc07ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga4f9973617c92aa35983174f3c66ef47c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga4f9973617c92aa35983174f3c66ef47c">mkldnn::lrn_forward::desc::desc</a> (prop_kind aprop_kind, algorithm aalgorithm, const memory::desc &amp;src_desc, int local_size, double alpha, double beta)</td></tr>
 <tr class="separator:ga4f9973617c92aa35983174f3c66ef47c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga32139b3bfd84badbb318e12a70f5394d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga32139b3bfd84badbb318e12a70f5394d">mkldnn::lrn_forward::primitive_desc::primitive_desc</a> (const desc &amp;adesc, const engine &amp;aengine)</td></tr>
@@ -494,6 +496,8 @@ Functions</h2></td></tr>
 <tr class="separator:ga452b11f3734755695cdf6eb4d4556a84"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gacbd49285d69e89a49bab508d096b27c2"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#gacbd49285d69e89a49bab508d096b27c2">mkldnn::lrn_forward::lrn_forward</a> (const primitive_desc &amp;aprimitive_desc, const primitive::at &amp;src, const memory &amp;dst)</td></tr>
 <tr class="separator:gacbd49285d69e89a49bab508d096b27c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7d1c81199253cce2aed5b30aae7a7dbc"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga7d1c81199253cce2aed5b30aae7a7dbc">mkldnn::lrn_backward::desc::desc</a> (algorithm aalgorithm, const memory::desc &amp;data_desc, const memory::desc &amp;diff_data_desc, int local_size, double alpha, double beta, double k)</td></tr>
+<tr class="separator:ga7d1c81199253cce2aed5b30aae7a7dbc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga2a2b71ef52d4017400636e8657ef91cf"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga2a2b71ef52d4017400636e8657ef91cf">mkldnn::lrn_backward::desc::desc</a> (algorithm aalgorithm, const memory::desc &amp;data_desc, const memory::desc &amp;diff_data_desc, int local_size, double alpha, double beta)</td></tr>
 <tr class="separator:ga2a2b71ef52d4017400636e8657ef91cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga16cfeddc9f31ef5bf78b812985dc1b20"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga16cfeddc9f31ef5bf78b812985dc1b20">mkldnn::lrn_backward::primitive_desc::primitive_desc</a> (const desc &amp;adesc, const engine &amp;aengine, const lrn_forward::primitive_desc &amp;hint_fwd_primitive_desc)</td></tr>
@@ -2691,6 +2695,70 @@ Friends</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="ga85e23e703a489a17e7dd6270b1cc07ec"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">mkldnn::lrn_forward::desc::desc </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__cpp__api__memory.html#gaeb087eae78f70a4d249a90aefa165cf8">prop_kind</a>&#160;</td>
+          <td class="paramname"><em>aprop_kind</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__cpp__api__memory.html#gae45a07d6121fdd33e310782753178076">algorithm</a>&#160;</td>
+          <td class="paramname"><em>aalgorithm</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="structmkldnn_1_1memory_1_1desc.html">memory::desc</a> &amp;&#160;</td>
+          <td class="paramname"><em>src_desc</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>local_size</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>alpha</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>beta</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>k</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a class="anchor" id="ga4f9973617c92aa35983174f3c66ef47c"></a>
 <div class="memitem">
 <div class="memproto">
@@ -2733,6 +2801,70 @@ Friends</h2></td></tr>
           <td></td>
           <td class="paramtype">double&#160;</td>
           <td class="paramname"><em>beta</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ga7d1c81199253cce2aed5b30aae7a7dbc"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">mkldnn::lrn_backward::desc::desc </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__cpp__api__memory.html#gae45a07d6121fdd33e310782753178076">algorithm</a>&#160;</td>
+          <td class="paramname"><em>aalgorithm</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="structmkldnn_1_1memory_1_1desc.html">memory::desc</a> &amp;&#160;</td>
+          <td class="paramname"><em>data_desc</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="structmkldnn_1_1memory_1_1desc.html">memory::desc</a> &amp;&#160;</td>
+          <td class="paramname"><em>diff_data_desc</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>local_size</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>alpha</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>beta</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>k</em>&#160;</td>
         </tr>
         <tr>
           <td></td>

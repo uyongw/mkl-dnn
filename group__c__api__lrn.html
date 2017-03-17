@@ -88,12 +88,12 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga99db427f6a958b2b2c09aa0db06eb042"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__c__api__types__generic.html#ga31866789b66acfb1c28b2f9bdd7bdfdd">mkldnn_status_t</a> MKLDNN_API&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__c__api__lrn.html#ga99db427f6a958b2b2c09aa0db06eb042">mkldnn_lrn_forward_desc_init</a> (<a class="el" href="structmkldnn__lrn__desc__t.html">mkldnn_lrn_desc_t</a> *lrn_desc, <a class="el" href="group__c__api__types__generic.html#ga5b98c8059c2aff8861157bf070c3f520">mkldnn_prop_kind_t</a> prop_kind, <a class="el" href="group__c__api__types__generic.html#gaa27d43cdd1e439cc41a9580d23ce3e97">mkldnn_alg_kind_t</a> alg_kind, const <a class="el" href="structmkldnn__memory__desc__t.html">mkldnn_memory_desc_t</a> *data_desc, int local_size, double alpha, double beta)</td></tr>
-<tr class="memdesc:ga99db427f6a958b2b2c09aa0db06eb042"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes an <code>lrn_desc</code> for forward propagation using <code>prop_kind</code> (possible values are <a class="el" href="group__c__api__types__generic.html#gga5b98c8059c2aff8861157bf070c3f520a0bb8fb5a8f3ae67cf8d9c8d13667507f" title="Forward data propagation (training mode). ">mkldnn_forward_training</a> or <a class="el" href="group__c__api__types__generic.html#gga5b98c8059c2aff8861157bf070c3f520a58a923fb6c4e1214e1505b5fa0b1e3fa" title="Forward data propagation (inference mode). ">mkldnn_forward_inference</a>), <code>alg_kind</code>, memory descriptor <code>data_desc</code>, and regularization parameters <code>local_size</code>, <code>alpha</code>, and <code>beta</code>.  <a href="#ga99db427f6a958b2b2c09aa0db06eb042">More...</a><br/></td></tr>
-<tr class="separator:ga99db427f6a958b2b2c09aa0db06eb042"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga26be925055d37f71ec153c1c3c5252d1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__c__api__types__generic.html#ga31866789b66acfb1c28b2f9bdd7bdfdd">mkldnn_status_t</a> MKLDNN_API&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__c__api__lrn.html#ga26be925055d37f71ec153c1c3c5252d1">mkldnn_lrn_backward_desc_init</a> (<a class="el" href="structmkldnn__lrn__desc__t.html">mkldnn_lrn_desc_t</a> *lrn_desc, <a class="el" href="group__c__api__types__generic.html#gaa27d43cdd1e439cc41a9580d23ce3e97">mkldnn_alg_kind_t</a> alg_kind, const <a class="el" href="structmkldnn__memory__desc__t.html">mkldnn_memory_desc_t</a> *diff_data_desc, const <a class="el" href="structmkldnn__memory__desc__t.html">mkldnn_memory_desc_t</a> *data_desc, int local_size, double alpha, double beta)</td></tr>
-<tr class="memdesc:ga26be925055d37f71ec153c1c3c5252d1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes an <code>lrn_desc</code> for backward propagation using <code>alg_kind</code>, memory descriptors <code>data_desc</code>, and <code>diff_data_desc</code>, and regularization parameters <code>local_size</code>, <code>alpha</code>, and <code>beta</code>.  <a href="#ga26be925055d37f71ec153c1c3c5252d1">More...</a><br/></td></tr>
-<tr class="separator:ga26be925055d37f71ec153c1c3c5252d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga499dd4e06b8f5264eb001a37b07b8710"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__c__api__types__generic.html#ga31866789b66acfb1c28b2f9bdd7bdfdd">mkldnn_status_t</a> MKLDNN_API&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__c__api__lrn.html#ga499dd4e06b8f5264eb001a37b07b8710">mkldnn_lrn_forward_desc_init</a> (<a class="el" href="structmkldnn__lrn__desc__t.html">mkldnn_lrn_desc_t</a> *lrn_desc, <a class="el" href="group__c__api__types__generic.html#ga5b98c8059c2aff8861157bf070c3f520">mkldnn_prop_kind_t</a> prop_kind, <a class="el" href="group__c__api__types__generic.html#gaa27d43cdd1e439cc41a9580d23ce3e97">mkldnn_alg_kind_t</a> alg_kind, const <a class="el" href="structmkldnn__memory__desc__t.html">mkldnn_memory_desc_t</a> *data_desc, int local_size, double alpha, double beta, double k)</td></tr>
+<tr class="memdesc:ga499dd4e06b8f5264eb001a37b07b8710"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes an <code>lrn_desc</code> for forward propagation using <code>prop_kind</code> (possible values are <a class="el" href="group__c__api__types__generic.html#gga5b98c8059c2aff8861157bf070c3f520a0bb8fb5a8f3ae67cf8d9c8d13667507f" title="Forward data propagation (training mode). ">mkldnn_forward_training</a> or <a class="el" href="group__c__api__types__generic.html#gga5b98c8059c2aff8861157bf070c3f520a58a923fb6c4e1214e1505b5fa0b1e3fa" title="Forward data propagation (inference mode). ">mkldnn_forward_inference</a>), <code>alg_kind</code>, memory descriptor <code>data_desc</code>, and regularization parameters <code>local_size</code>, <code>alpha</code>, <code>beta</code>, and <code>k</code>.  <a href="#ga499dd4e06b8f5264eb001a37b07b8710">More...</a><br/></td></tr>
+<tr class="separator:ga499dd4e06b8f5264eb001a37b07b8710"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga65815ba6b89f7b883872400e2031aa25"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__c__api__types__generic.html#ga31866789b66acfb1c28b2f9bdd7bdfdd">mkldnn_status_t</a> MKLDNN_API&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__c__api__lrn.html#ga65815ba6b89f7b883872400e2031aa25">mkldnn_lrn_backward_desc_init</a> (<a class="el" href="structmkldnn__lrn__desc__t.html">mkldnn_lrn_desc_t</a> *lrn_desc, <a class="el" href="group__c__api__types__generic.html#gaa27d43cdd1e439cc41a9580d23ce3e97">mkldnn_alg_kind_t</a> alg_kind, const <a class="el" href="structmkldnn__memory__desc__t.html">mkldnn_memory_desc_t</a> *diff_data_desc, const <a class="el" href="structmkldnn__memory__desc__t.html">mkldnn_memory_desc_t</a> *data_desc, int local_size, double alpha, double beta, double k)</td></tr>
+<tr class="memdesc:ga65815ba6b89f7b883872400e2031aa25"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes an <code>lrn_desc</code> for backward propagation using <code>alg_kind</code>, memory descriptors <code>data_desc</code>, and <code>diff_data_desc</code>, and regularization parameters <code>local_size</code>, <code>alpha</code>, <code>beta</code>, and <code>k</code>.  <a href="#ga65815ba6b89f7b883872400e2031aa25">More...</a><br/></td></tr>
+<tr class="separator:ga65815ba6b89f7b883872400e2031aa25"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>A primitive to perform local response normalization (LRN) across or within channels. </p>
@@ -107,7 +107,7 @@ Functions</h2></td></tr>
 </p>
 <p>where <img class="formulaInl" alt="$n_{l}$" src="form_14.png"/> is the <code>local_size</code>. </p>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="ga26be925055d37f71ec153c1c3c5252d1"></a>
+<a class="anchor" id="ga65815ba6b89f7b883872400e2031aa25"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -151,7 +151,13 @@ Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>beta</em>&#160;</td>
+          <td class="paramname"><em>beta</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>k</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -161,11 +167,11 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Initializes an <code>lrn_desc</code> for backward propagation using <code>alg_kind</code>, memory descriptors <code>data_desc</code>, and <code>diff_data_desc</code>, and regularization parameters <code>local_size</code>, <code>alpha</code>, and <code>beta</code>. </p>
+<p>Initializes an <code>lrn_desc</code> for backward propagation using <code>alg_kind</code>, memory descriptors <code>data_desc</code>, and <code>diff_data_desc</code>, and regularization parameters <code>local_size</code>, <code>alpha</code>, <code>beta</code>, and <code>k</code>. </p>
 
 </div>
 </div>
-<a class="anchor" id="ga99db427f6a958b2b2c09aa0db06eb042"></a>
+<a class="anchor" id="ga499dd4e06b8f5264eb001a37b07b8710"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -209,7 +215,13 @@ Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>beta</em>&#160;</td>
+          <td class="paramname"><em>beta</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>k</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -219,7 +231,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Initializes an <code>lrn_desc</code> for forward propagation using <code>prop_kind</code> (possible values are <a class="el" href="group__c__api__types__generic.html#gga5b98c8059c2aff8861157bf070c3f520a0bb8fb5a8f3ae67cf8d9c8d13667507f" title="Forward data propagation (training mode). ">mkldnn_forward_training</a> or <a class="el" href="group__c__api__types__generic.html#gga5b98c8059c2aff8861157bf070c3f520a58a923fb6c4e1214e1505b5fa0b1e3fa" title="Forward data propagation (inference mode). ">mkldnn_forward_inference</a>), <code>alg_kind</code>, memory descriptor <code>data_desc</code>, and regularization parameters <code>local_size</code>, <code>alpha</code>, and <code>beta</code>. </p>
+<p>Initializes an <code>lrn_desc</code> for forward propagation using <code>prop_kind</code> (possible values are <a class="el" href="group__c__api__types__generic.html#gga5b98c8059c2aff8861157bf070c3f520a0bb8fb5a8f3ae67cf8d9c8d13667507f" title="Forward data propagation (training mode). ">mkldnn_forward_training</a> or <a class="el" href="group__c__api__types__generic.html#gga5b98c8059c2aff8861157bf070c3f520a58a923fb6c4e1214e1505b5fa0b1e3fa" title="Forward data propagation (inference mode). ">mkldnn_forward_inference</a>), <code>alg_kind</code>, memory descriptor <code>data_desc</code>, and regularization parameters <code>local_size</code>, <code>alpha</code>, <code>beta</code>, and <code>k</code>. </p>
 
 </div>
 </div>

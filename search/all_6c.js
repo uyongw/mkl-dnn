@@ -12,7 +12,8 @@ var searchData=
   ['lrn_5fbackward',['lrn_backward',['../structmkldnn_1_1lrn__backward.html',1,'mkldnn']]],
   ['lrn_5fbeta',['lrn_beta',['../structmkldnn__lrn__desc__t.html#a54f24dd9b2c3c45909c259e5e350bbe1',1,'mkldnn_lrn_desc_t']]],
   ['lrn_5fd',['lrn_d',['../group__cpp__api__memory.html#gga6d88ff11a07bae09a5c348d314c5d1d9a76add43bb6bee4f897e668e2d54476a2',1,'mkldnn']]],
-  ['lrn_5fforward',['lrn_forward',['../structmkldnn_1_1lrn__forward.html',1,'mkldnn']]],
   ['lrn_5fforward',['lrn_forward',['../group__cpp__api__memory.html#ga452b11f3734755695cdf6eb4d4556a84',1,'mkldnn::lrn_forward::lrn_forward(const primitive_desc &amp;aprimitive_desc, const primitive::at &amp;src, const memory &amp;workspace, const memory &amp;dst)'],['../group__cpp__api__memory.html#gacbd49285d69e89a49bab508d096b27c2',1,'mkldnn::lrn_forward::lrn_forward(const primitive_desc &amp;aprimitive_desc, const primitive::at &amp;src, const memory &amp;dst)']]],
+  ['lrn_5fforward',['lrn_forward',['../structmkldnn_1_1lrn__forward.html',1,'mkldnn']]],
+  ['lrn_5fk',['lrn_k',['../structmkldnn__lrn__desc__t.html#a5cd1f58d969c08b3b48b0864457ff9ab',1,'mkldnn_lrn_desc_t']]],
   ['lrn_5fwithin_5fchannel',['lrn_within_channel',['../group__cpp__api__memory.html#ggae45a07d6121fdd33e310782753178076a1bec35024f741400d95f4c15897b50a2',1,'mkldnn']]]
 ];
