@@ -166,9 +166,10 @@ Enumerations</h2></td></tr>
 &#160;&#160;<a class="el" href="group__cpp__api__memory.html#ggaa8a0d49cc7faaceef9d8f55d66bff57bafe36f365f50e0317a2fa5142881dc73e">mkldnn::memory::data_undef</a> = c_api::mkldnn_data_type_undef, 
 <a class="el" href="group__cpp__api__memory.html#ggaa8a0d49cc7faaceef9d8f55d66bff57baaf36765775c9522f12bc84c72ea8355d">mkldnn::memory::f32</a> = c_api::mkldnn_f32, 
 <a class="el" href="group__cpp__api__memory.html#ggaa8a0d49cc7faaceef9d8f55d66bff57baafd6316d6d009465fd42d0effc8cdac1">mkldnn::memory::s32</a> = c_api::mkldnn_s32, 
-<a class="el" href="group__cpp__api__memory.html#ggaa8a0d49cc7faaceef9d8f55d66bff57ba4b4eb008e1bc38c0f4f2de74fdc354ab">mkldnn::memory::s8</a> = c_api::mkldnn_s8, 
+<a class="el" href="group__cpp__api__memory.html#ggaa8a0d49cc7faaceef9d8f55d66bff57ba3b210ee3077fc5a8cf09a48bd01c5f59">mkldnn::memory::s16</a> = c_api::mkldnn_s16, 
 <br/>
-&#160;&#160;<a class="el" href="group__cpp__api__memory.html#ggaa8a0d49cc7faaceef9d8f55d66bff57ba0ccb6d0e4130dfe94e06635dac6a9b11">mkldnn::memory::u8</a> = c_api::mkldnn_u8
+&#160;&#160;<a class="el" href="group__cpp__api__memory.html#ggaa8a0d49cc7faaceef9d8f55d66bff57ba4b4eb008e1bc38c0f4f2de74fdc354ab">mkldnn::memory::s8</a> = c_api::mkldnn_s8, 
+<a class="el" href="group__cpp__api__memory.html#ggaa8a0d49cc7faaceef9d8f55d66bff57ba0ccb6d0e4130dfe94e06635dac6a9b11">mkldnn::memory::u8</a> = c_api::mkldnn_u8
 <br/>
  }</td></tr>
 <tr class="memdesc:gaa8a0d49cc7faaceef9d8f55d66bff57b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Data type specification. See <a class="el" href="group__c__api__types__generic.html#ga826b2a9be4d94ac17f99bacac6d0cb29" title="Data type specification. ">mkldnn_data_type_t</a> for a detailed description.  <a href="group__cpp__api__memory.html#gaa8a0d49cc7faaceef9d8f55d66bff57b">More...</a><br/></td></tr>
@@ -199,14 +200,19 @@ Enumerations</h2></td></tr>
 <a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87ea511ae11a284c9108eeb61664ff163aea">mkldnn::memory::OIhw8o8i</a> = c_api::mkldnn_OIhw8o8i, 
 <a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87ea82c279649f9f84c2ef9a046e7777cac0">mkldnn::memory::OIhw16o16i</a> = c_api::mkldnn_OIhw16o16i, 
 <br/>
-&#160;&#160;<a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87ea2f135b7d8ff60dcce96a4919722b0fad">mkldnn::memory::Ohwi8o</a> = c_api::mkldnn_Ohwi8o, 
+&#160;&#160;<a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87eaffaad9f0dac63a0880ee0bfd9b029888">mkldnn::memory::OIhw8i16o2i</a> = c_api::mkldnn_OIhw8i16o2i, 
+<a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87ea2f135b7d8ff60dcce96a4919722b0fad">mkldnn::memory::Ohwi8o</a> = c_api::mkldnn_Ohwi8o, 
 <a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87eae01c9f565ec8b7a69ad2432df340dcf0">mkldnn::memory::Ohwi16o</a> = c_api::mkldnn_Ohwi16o, 
-<a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87ea19f8852dc26c175f22aed771f3f9614a">mkldnn::memory::goihw</a> = c_api::mkldnn_goihw, 
-<a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87ea11eda3436ae582b8a28cc85adc8433c1">mkldnn::memory::gOIhw8i8o</a> = c_api::mkldnn_gOIhw8i8o, 
+<a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87ea0e1f301f069a122158ac1ab3d1854a54">mkldnn::memory::OhIw16o4i</a> = c_api::mkldnn_OhIw16o4i, 
 <br/>
-&#160;&#160;<a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87eab47a53954142e271e59e8b0b036c7797">mkldnn::memory::gOIhw16i16o</a> = c_api::mkldnn_gOIhw16i16o, 
-<a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87eacaf364857cd0309c67bb6dff621ee71e">mkldnn::memory::gOIhw8o8i</a> = c_api::mkldnn_gOIhw8o8i, 
-<a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87eaa1cc9ef7726a93eaf88e6556bca94f64">mkldnn::memory::gOIhw16o16i</a> = c_api::mkldnn_gOIhw16o16i
+&#160;&#160;<a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87ea19f8852dc26c175f22aed771f3f9614a">mkldnn::memory::goihw</a> = c_api::mkldnn_goihw, 
+<a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87ea11eda3436ae582b8a28cc85adc8433c1">mkldnn::memory::gOIhw8i8o</a> = c_api::mkldnn_gOIhw8i8o, 
+<a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87eab47a53954142e271e59e8b0b036c7797">mkldnn::memory::gOIhw16i16o</a> = c_api::mkldnn_gOIhw16i16o, 
+<a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87ea380d9e31a9703c3b520c8cc32e6ae8b9">mkldnn::memory::gOIhw8i16o2i</a> = c_api::mkldnn_gOIhw8i16o2i, 
+<br/>
+&#160;&#160;<a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87eacaf364857cd0309c67bb6dff621ee71e">mkldnn::memory::gOIhw8o8i</a> = c_api::mkldnn_gOIhw8o8i, 
+<a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87eaa1cc9ef7726a93eaf88e6556bca94f64">mkldnn::memory::gOIhw16o16i</a> = c_api::mkldnn_gOIhw16o16i, 
+<a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87ea12dbcd423f39fcd621b399d494e5dfe7">mkldnn::memory::gOhIw16o4i</a> = c_api::mkldnn_gOhIw16o4i
 <br/>
  }</td></tr>
 <tr class="memdesc:ga563b90355ae4fbfed12f6db8ab25a87e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Memory format specification. See <a class="el" href="group__c__api__types__generic.html#ga30a390f87ef74bf03dfa48a7b3f2fb74" title="Memory format specification. ">mkldnn_memory_format_t</a> for a detailed description.  <a href="group__cpp__api__memory.html#ga563b90355ae4fbfed12f6db8ab25a87e">More...</a><br/></td></tr>
@@ -807,6 +813,8 @@ Friends</h2></td></tr>
 </td></tr>
 <tr><td class="fieldname"><em><a class="anchor" id="ggaa8a0d49cc7faaceef9d8f55d66bff57baafd6316d6d009465fd42d0effc8cdac1"></a>s32</em>&nbsp;</td><td class="fielddoc">
 </td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaa8a0d49cc7faaceef9d8f55d66bff57ba3b210ee3077fc5a8cf09a48bd01c5f59"></a>s16</em>&nbsp;</td><td class="fielddoc">
+</td></tr>
 <tr><td class="fieldname"><em><a class="anchor" id="ggaa8a0d49cc7faaceef9d8f55d66bff57ba4b4eb008e1bc38c0f4f2de74fdc354ab"></a>s8</em>&nbsp;</td><td class="fielddoc">
 </td></tr>
 <tr><td class="fieldname"><em><a class="anchor" id="ggaa8a0d49cc7faaceef9d8f55d66bff57ba0ccb6d0e4130dfe94e06635dac6a9b11"></a>u8</em>&nbsp;</td><td class="fielddoc">
@@ -867,9 +875,13 @@ Friends</h2></td></tr>
 </td></tr>
 <tr><td class="fieldname"><em><a class="anchor" id="gga563b90355ae4fbfed12f6db8ab25a87ea82c279649f9f84c2ef9a046e7777cac0"></a>OIhw16o16i</em>&nbsp;</td><td class="fielddoc">
 </td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga563b90355ae4fbfed12f6db8ab25a87eaffaad9f0dac63a0880ee0bfd9b029888"></a>OIhw8i16o2i</em>&nbsp;</td><td class="fielddoc">
+</td></tr>
 <tr><td class="fieldname"><em><a class="anchor" id="gga563b90355ae4fbfed12f6db8ab25a87ea2f135b7d8ff60dcce96a4919722b0fad"></a>Ohwi8o</em>&nbsp;</td><td class="fielddoc">
 </td></tr>
 <tr><td class="fieldname"><em><a class="anchor" id="gga563b90355ae4fbfed12f6db8ab25a87eae01c9f565ec8b7a69ad2432df340dcf0"></a>Ohwi16o</em>&nbsp;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga563b90355ae4fbfed12f6db8ab25a87ea0e1f301f069a122158ac1ab3d1854a54"></a>OhIw16o4i</em>&nbsp;</td><td class="fielddoc">
 </td></tr>
 <tr><td class="fieldname"><em><a class="anchor" id="gga563b90355ae4fbfed12f6db8ab25a87ea19f8852dc26c175f22aed771f3f9614a"></a>goihw</em>&nbsp;</td><td class="fielddoc">
 </td></tr>
@@ -877,9 +889,13 @@ Friends</h2></td></tr>
 </td></tr>
 <tr><td class="fieldname"><em><a class="anchor" id="gga563b90355ae4fbfed12f6db8ab25a87eab47a53954142e271e59e8b0b036c7797"></a>gOIhw16i16o</em>&nbsp;</td><td class="fielddoc">
 </td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga563b90355ae4fbfed12f6db8ab25a87ea380d9e31a9703c3b520c8cc32e6ae8b9"></a>gOIhw8i16o2i</em>&nbsp;</td><td class="fielddoc">
+</td></tr>
 <tr><td class="fieldname"><em><a class="anchor" id="gga563b90355ae4fbfed12f6db8ab25a87eacaf364857cd0309c67bb6dff621ee71e"></a>gOIhw8o8i</em>&nbsp;</td><td class="fielddoc">
 </td></tr>
 <tr><td class="fieldname"><em><a class="anchor" id="gga563b90355ae4fbfed12f6db8ab25a87eaa1cc9ef7726a93eaf88e6556bca94f64"></a>gOIhw16o16i</em>&nbsp;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga563b90355ae4fbfed12f6db8ab25a87ea12dbcd423f39fcd621b399d494e5dfe7"></a>gOhIw16o4i</em>&nbsp;</td><td class="fielddoc">
 </td></tr>
 </table>
 

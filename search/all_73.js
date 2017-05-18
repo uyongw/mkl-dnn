@@ -2,6 +2,7 @@ var searchData=
 [
   ['softmax',['Softmax',['../group__c__api__softmax.html',1,'']]],
   ['sum',['Sum',['../group__c__api__sum.html',1,'']]],
+  ['s16',['s16',['../group__cpp__api__memory.html#ggaa8a0d49cc7faaceef9d8f55d66bff57ba3b210ee3077fc5a8cf09a48bd01c5f59',1,'mkldnn::memory']]],
   ['s32',['s32',['../group__cpp__api__memory.html#ggaa8a0d49cc7faaceef9d8f55d66bff57baafd6316d6d009465fd42d0effc8cdac1',1,'mkldnn::memory']]],
   ['s8',['s8',['../group__cpp__api__memory.html#ggaa8a0d49cc7faaceef9d8f55d66bff57ba4b4eb008e1bc38c0f4f2de74fdc354ab',1,'mkldnn::memory']]],
   ['set_5fdata_5fhandle',['set_data_handle',['../group__cpp__api__memory.html#gab40a643171be4f413ca4cfae8c672f5d',1,'mkldnn::memory']]],
@@ -17,6 +18,6 @@ var searchData=
   ['stream',['stream',['../group__cpp__api__memory.html#ga8d3c0a2dcad3384b3eefe13168d1e382',1,'mkldnn::primitive::stream()'],['../group__cpp__api__memory.html#ga22daa1004aa81953f5d27b24b1893cc7',1,'mkldnn::stream::stream()']]],
   ['strides',['strides',['../structmkldnn__blocking__desc__t.html#a2906f6a386b81fa43b19043a59487576',1,'mkldnn_blocking_desc_t::strides()'],['../structmkldnn__convolution__desc__t.html#a55fa258e8e2ddc24de4c6fdf5562501f',1,'mkldnn_convolution_desc_t::strides()'],['../structmkldnn__pooling__desc__t.html#a8c339dae420e12a19a4bef3c7de08948',1,'mkldnn_pooling_desc_t::strides()']]],
   ['submit',['submit',['../group__cpp__api__memory.html#ga018e38932cc072568a48015f55fbe798',1,'mkldnn::stream']]],
-  ['sum',['sum',['../group__cpp__api__memory.html#gacceb32f44f2240015f58bb1d905189ca',1,'mkldnn::sum']]],
-  ['sum',['sum',['../structmkldnn_1_1sum.html',1,'mkldnn']]]
+  ['sum',['sum',['../structmkldnn_1_1sum.html',1,'mkldnn']]],
+  ['sum',['sum',['../group__cpp__api__memory.html#gacceb32f44f2240015f58bb1d905189ca',1,'mkldnn::sum']]]
 ];
