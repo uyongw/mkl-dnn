@@ -390,7 +390,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00395"></a><span class="lineno">  395</span>&#160;            <span class="keywordflow">return</span> (rc == 0) ? (<span class="keywordtype">char</span>*)ptr : <span class="keyword">nullptr</span>;</div>
 <div class="line"><a name="l00396"></a><span class="lineno">  396</span>&#160;        };</div>
 <div class="line"><a name="l00397"></a><span class="lineno">  397</span>&#160;        <span class="keyword">auto</span> _free = [](<span class="keywordtype">char</span>* p) { ::free((<span class="keywordtype">void</span>*)p); };</div>
-<div class="line"><a name="l00398"></a><span class="lineno">  398</span>&#160;        _handle.reset(_malloc(adesc.<a class="code" href="group__cpp__api__memory.html#ga3aa950433f988550f7829a8f77fe164a">get_size</a>(), 64), _free);</div>
+<div class="line"><a name="l00398"></a><span class="lineno">  398</span>&#160;        _handle.reset(_malloc(adesc.<a class="code" href="group__cpp__api__memory.html#ga3aa950433f988550f7829a8f77fe164a">get_size</a>(), 4096), _free);</div>
 <div class="line"><a name="l00399"></a><span class="lineno">  399</span>&#160;        <a class="code" href="group__cpp__api__memory.html#gab40a643171be4f413ca4cfae8c672f5d">set_data_handle</a>(_handle.get());</div>
 <div class="line"><a name="l00400"></a><span class="lineno">  400</span>&#160;    }</div>
 <div class="line"><a name="l00401"></a><span class="lineno">  401</span>&#160;</div>
