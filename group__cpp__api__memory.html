@@ -221,41 +221,6 @@ Enumerations</h2></td></tr>
  }</td></tr>
 <tr class="memdesc:ga563b90355ae4fbfed12f6db8ab25a87e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Memory format specification. See <a class="el" href="group__c__api__types__generic.html#ga30a390f87ef74bf03dfa48a7b3f2fb74" title="Memory format specification. ">mkldnn_memory_format_t</a> for a detailed description.  <a href="group__cpp__api__memory.html#ga563b90355ae4fbfed12f6db8ab25a87e">More...</a><br/></td></tr>
 <tr class="separator:ga563b90355ae4fbfed12f6db8ab25a87e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6d88ff11a07bae09a5c348d314c5d1d9"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga6d88ff11a07bae09a5c348d314c5d1d9">mkldnn::query</a> { <br/>
-&#160;&#160;<a class="el" href="group__cpp__api__memory.html#gga6d88ff11a07bae09a5c348d314c5d1d9a8d3ff637e43a48b61ad6d7855c6a9cd1">mkldnn::undef</a> = c_api::mkldnn_query_undef, 
-<a class="el" href="group__cpp__api__memory.html#gga6d88ff11a07bae09a5c348d314c5d1d9acb4cacb193ad2274f54ae1dd6c0a3fbb">mkldnn::eengine</a> = c_api::mkldnn_query_engine, 
-<a class="el" href="group__cpp__api__memory.html#gga6d88ff11a07bae09a5c348d314c5d1d9ab9ac6c4dbd943afffb6c80e0bcff4181">mkldnn::primitive_kind</a> = c_api::mkldnn_query_primitive_kind, 
-<a class="el" href="group__cpp__api__memory.html#gga6d88ff11a07bae09a5c348d314c5d1d9aa7acb3c71ec9740a93042f80b24f6110">mkldnn::num_of_inputs_s32</a> = c_api::mkldnn_query_num_of_inputs_s32, 
-<br/>
-&#160;&#160;<a class="el" href="group__cpp__api__memory.html#gga6d88ff11a07bae09a5c348d314c5d1d9a031851c9746b2eb890af91a5f209e014">mkldnn::num_of_outputs_s32</a> = c_api::mkldnn_query_num_of_outputs_s32, 
-<a class="el" href="group__cpp__api__memory.html#gga6d88ff11a07bae09a5c348d314c5d1d9a1b43385b970ea053f46e5932d574615e">mkldnn::time_estimate_f64</a> = c_api::mkldnn_query_time_estimate_f64, 
-<a class="el" href="group__cpp__api__memory.html#gga6d88ff11a07bae09a5c348d314c5d1d9a4faa2a57cddf474a9356b136ece00401">mkldnn::memory_consumption_s64</a> = c_api::mkldnn_query_memory_consumption_s64, 
-<a class="el" href="group__cpp__api__memory.html#gga6d88ff11a07bae09a5c348d314c5d1d9a7b7d987552be10a6654ea645cede0a95">mkldnn::memory_d</a> = c_api::mkldnn_query_memory_d, 
-<br/>
-&#160;&#160;<a class="el" href="group__cpp__api__memory.html#gga6d88ff11a07bae09a5c348d314c5d1d9a13f5d72b1e5ec568b24c930e3b87641b">mkldnn::convolution_d</a> = c_api::mkldnn_query_convolution_d, 
-<a class="el" href="group__cpp__api__memory.html#gga6d88ff11a07bae09a5c348d314c5d1d9a20f677933e74a40096d45a51664c5ee4">mkldnn::relu_d</a> = c_api::mkldnn_query_relu_d, 
-<a class="el" href="group__cpp__api__memory.html#gga6d88ff11a07bae09a5c348d314c5d1d9abdb39a5fa96f35b51571bb5481ed2cc2">mkldnn::softmax_d</a> = c_api::mkldnn_query_softmax_d, 
-<a class="el" href="group__cpp__api__memory.html#gga6d88ff11a07bae09a5c348d314c5d1d9a3be3f1011debd2ee2df16b6b04a0bf77">mkldnn::pooling_d</a> = c_api::mkldnn_query_pooling_d, 
-<br/>
-&#160;&#160;<a class="el" href="group__cpp__api__memory.html#gga6d88ff11a07bae09a5c348d314c5d1d9a76add43bb6bee4f897e668e2d54476a2">mkldnn::lrn_d</a> = c_api::mkldnn_query_lrn_d, 
-<a class="el" href="group__cpp__api__memory.html#gga6d88ff11a07bae09a5c348d314c5d1d9a98ae1af5a25e62ffebc0ee054e0fd7c7">mkldnn::batch_normalization_d</a> = c_api::mkldnn_query_batch_normalization_d, 
-<a class="el" href="group__cpp__api__memory.html#gga6d88ff11a07bae09a5c348d314c5d1d9a4036c4c9cc32dd0f22a8903cfceeaa41">mkldnn::inner_product_d</a> = c_api::mkldnn_query_inner_product_d, 
-<a class="el" href="group__cpp__api__memory.html#gga6d88ff11a07bae09a5c348d314c5d1d9a83453c3a1e6a6dad19d5928ae9b9b0ee">mkldnn::convolution_relu_d</a> = c_api::mkldnn_query_convolution_relu_d, 
-<br/>
-&#160;&#160;<a class="el" href="group__cpp__api__memory.html#gga6d88ff11a07bae09a5c348d314c5d1d9a508fa6b849113ef2100177d2991129fe">mkldnn::input_pd</a> = c_api::mkldnn_query_input_pd, 
-<a class="el" href="group__cpp__api__memory.html#gga6d88ff11a07bae09a5c348d314c5d1d9abab2d1abc2d37f4a1358daeb7f9a32b1">mkldnn::output_pd</a> = c_api::mkldnn_query_output_pd, 
-<a class="el" href="group__cpp__api__memory.html#gga6d88ff11a07bae09a5c348d314c5d1d9a486100f73904f2beae1418a57cc6e0b1">mkldnn::src_pd</a> = c_api::mkldnn_query_src_pd, 
-<a class="el" href="group__cpp__api__memory.html#gga6d88ff11a07bae09a5c348d314c5d1d9a255f93a5ef35321792effc4f5d23e1e3">mkldnn::diff_src_pd</a> = c_api::mkldnn_query_diff_src_pd, 
-<br/>
-&#160;&#160;<a class="el" href="group__cpp__api__memory.html#gga6d88ff11a07bae09a5c348d314c5d1d9a38a475450bc885f2a0fad13bf87f44b9">mkldnn::weights_pd</a> = c_api::mkldnn_query_weights_pd, 
-<a class="el" href="group__cpp__api__memory.html#gga6d88ff11a07bae09a5c348d314c5d1d9a7b14a983b2e690abcf176dd41da50ae1">mkldnn::diff_weights_pd</a> = c_api::mkldnn_query_diff_weights_pd, 
-<a class="el" href="group__cpp__api__memory.html#gga6d88ff11a07bae09a5c348d314c5d1d9a5e602b7cc44ad7373ab7212f73b3d7d4">mkldnn::dst_pd</a> = c_api::mkldnn_query_dst_pd, 
-<a class="el" href="group__cpp__api__memory.html#gga6d88ff11a07bae09a5c348d314c5d1d9adb9fd0a330dc402a36de022ce82bff07">mkldnn::diff_dst_pd</a> = c_api::mkldnn_query_diff_dst_pd, 
-<br/>
-&#160;&#160;<a class="el" href="group__cpp__api__memory.html#gga6d88ff11a07bae09a5c348d314c5d1d9a41d00a7019d406614ebaa00195d179bd">mkldnn::workspace_pd</a> = c_api::mkldnn_query_workspace_pd
-<br/>
- }</td></tr>
-<tr class="separator:ga6d88ff11a07bae09a5c348d314c5d1d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaa1ff931b28e0a90473ad5bddd21c60fc"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#gaa1ff931b28e0a90473ad5bddd21c60fc">mkldnn::padding_kind</a> { <a class="el" href="group__cpp__api__memory.html#ggaa1ff931b28e0a90473ad5bddd21c60fcafbabef80df01bc0a5636d0ca9189355d">mkldnn::zero</a> = c_api::mkldnn_padding_zero
  }</td></tr>
 <tr class="separator:gaa1ff931b28e0a90473ad5bddd21c60fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -341,6 +306,11 @@ Functions</h2></td></tr>
 <tr class="separator:gacfa129c9cf572d121c3b1748fc8444fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gae2645937e54c27ffacd0727c1465acec"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#gae2645937e54c27ffacd0727c1465acec">mkldnn::engine::engine</a> (const <a class="el" href="group__c__api__engine__types.html#ga40f5f917cdbf2215fa5324e4bf62d523">c_api::mkldnn_engine_t</a> &amp;aengine)</td></tr>
 <tr class="separator:gae2645937e54c27ffacd0727c1465acec"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga95f333c4582edcb606a4b9add2a53266"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga95f333c4582edcb606a4b9add2a53266">mkldnn::engine::engine</a> (const handle&lt; <a class="el" href="group__c__api__primitive__descs.html#ga4108b6ee20cf3d2e472504c1aea67497">c_api::mkldnn_primitive_desc_t</a> &gt; &amp;pd)</td></tr>
+<tr class="separator:ga95f333c4582edcb606a4b9add2a53266"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa0a4e078d059debf90e7bf09367ef868"><td class="memTemplParams" colspan="2">template&lt;class primitive_desc &gt; </td></tr>
+<tr class="memitem:gaa0a4e078d059debf90e7bf09367ef868"><td class="memTemplItemLeft" align="right" valign="top">static engine&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#gaa0a4e078d059debf90e7bf09367ef868">mkldnn::engine::query</a> (const primitive_desc &amp;pd)</td></tr>
+<tr class="separator:gaa0a4e078d059debf90e7bf09367ef868"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga2b5aee608f913a4fcbfef41b63f48650"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
 <tr class="memitem:ga2b5aee608f913a4fcbfef41b63f48650"><td class="memTemplItemLeft" align="right" valign="top">static void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga2b5aee608f913a4fcbfef41b63f48650">mkldnn::memory::validate_dims</a> (std::vector&lt; T &gt; v)</td></tr>
 <tr class="separator:ga2b5aee608f913a4fcbfef41b63f48650"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -365,6 +335,8 @@ Functions</h2></td></tr>
 <tr class="separator:gaba6354115aa655d68eacbc9a21a90d59"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga36f92d5707eeccf08646e4bf49b7e49b"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga36f92d5707eeccf08646e4bf49b7e49b">mkldnn::memory::primitive_desc::operator!=</a> (const primitive_desc &amp;other) const </td></tr>
 <tr class="separator:ga36f92d5707eeccf08646e4bf49b7e49b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaed914136c973f0bcffb8a9cbe45960b0"><td class="memItemLeft" align="right" valign="top">engine&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#gaed914136c973f0bcffb8a9cbe45960b0">mkldnn::memory::primitive_desc::get_engine</a> ()</td></tr>
+<tr class="separator:gaed914136c973f0bcffb8a9cbe45960b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga08ca6a1023e0f7a15b830ef21377ee2e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga08ca6a1023e0f7a15b830ef21377ee2e">mkldnn::memory::memory</a> (const primitive &amp;aprimitive)</td></tr>
 <tr class="memdesc:ga08ca6a1023e0f7a15b830ef21377ee2e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a memory primitive from a generic primitive.  <a href="#ga08ca6a1023e0f7a15b830ef21377ee2e">More...</a><br/></td></tr>
 <tr class="separator:ga08ca6a1023e0f7a15b830ef21377ee2e"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -386,14 +358,14 @@ Functions</h2></td></tr>
 <tr class="memitem:ga57f0d8fdf40ecf8505a9ea803a66923d"><td class="memItemLeft" align="right" valign="top">static <br class="typebreak"/>
 <a class="el" href="group__c__api__types__generic.html#ga30a390f87ef74bf03dfa48a7b3f2fb74">c_api::mkldnn_memory_format_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga57f0d8fdf40ecf8505a9ea803a66923d">mkldnn::memory::convert_to_c</a> (format aformat)</td></tr>
 <tr class="separator:ga57f0d8fdf40ecf8505a9ea803a66923d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf91d39c671143894e831dae17c0e1323"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__c__api__types__query.html#ga6eebc661a8a3437b49d9c677f8972fc9">c_api::mkldnn_query_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#gaf91d39c671143894e831dae17c0e1323">mkldnn::convert_to_c</a> (query aquery)</td></tr>
-<tr class="separator:gaf91d39c671143894e831dae17c0e1323"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gabf8ad6de3ceb0bb51786656d240544d7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__c__api__types__generic.html#ga1823708d8b9d445fe177295f2b5d74bd">c_api::mkldnn_padding_kind_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#gabf8ad6de3ceb0bb51786656d240544d7">mkldnn::convert_to_c</a> (padding_kind kind)</td></tr>
 <tr class="separator:gabf8ad6de3ceb0bb51786656d240544d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gadf3df4cb7ff424c24982ba0c3c84d086"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__c__api__types__generic.html#ga5b98c8059c2aff8861157bf070c3f520">c_api::mkldnn_prop_kind_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#gadf3df4cb7ff424c24982ba0c3c84d086">mkldnn::convert_to_c</a> (prop_kind kind)</td></tr>
 <tr class="separator:gadf3df4cb7ff424c24982ba0c3c84d086"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gabf1e4a0db34aa8681f119e8476f4527f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#gabf1e4a0db34aa8681f119e8476f4527f">mkldnn::reorder::primitive_desc::primitive_desc</a> (const memory::primitive_desc &amp;input, const memory::primitive_desc &amp;output)</td></tr>
 <tr class="separator:gabf1e4a0db34aa8681f119e8476f4527f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga885ba6e92afdd245508a50bbbd46d1ad"><td class="memItemLeft" align="right" valign="top">engine&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga885ba6e92afdd245508a50bbbd46d1ad">mkldnn::reorder::primitive_desc::get_engine</a> ()</td></tr>
+<tr class="separator:ga885ba6e92afdd245508a50bbbd46d1ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga29c984f7c35259e40d0b3a48ae2fe514"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga29c984f7c35259e40d0b3a48ae2fe514">mkldnn::reorder::reorder</a> (const primitive_desc &amp;aprimitive_desc, const primitive::at &amp;input, const memory &amp;output)</td></tr>
 <tr class="separator:ga29c984f7c35259e40d0b3a48ae2fe514"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga7dc314cf0c42202b8504f423a721a587"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga7dc314cf0c42202b8504f423a721a587">mkldnn::reorder::reorder</a> (const primitive::at &amp;input, const memory &amp;output)</td></tr>
@@ -402,6 +374,8 @@ Functions</h2></td></tr>
 <tr class="separator:ga6ecd4ece66381c74a444a0a85ad2cf29"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaa9039e82ed8648c7f30109f4787fd4f0"><td class="memItemLeft" align="right" valign="top">memory::primitive_desc&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#gaa9039e82ed8648c7f30109f4787fd4f0">mkldnn::view::primitive_desc::dst_primitive_desc</a> () const </td></tr>
 <tr class="separator:gaa9039e82ed8648c7f30109f4787fd4f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3246efbe91354cbd2dbadfae2bbaf031"><td class="memItemLeft" align="right" valign="top">engine&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga3246efbe91354cbd2dbadfae2bbaf031">mkldnn::view::primitive_desc::get_engine</a> ()</td></tr>
+<tr class="separator:ga3246efbe91354cbd2dbadfae2bbaf031"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga28b4a6dd02a91f4286f3d5e865f64e12"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga28b4a6dd02a91f4286f3d5e865f64e12">mkldnn::view::view</a> (const primitive_desc &amp;view_pd, primitive::at input)</td></tr>
 <tr class="separator:ga28b4a6dd02a91f4286f3d5e865f64e12"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gadd84c97a1d70e7135a9d35719247b761"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#gadd84c97a1d70e7135a9d35719247b761">mkldnn::view::view</a> (memory input, memory::dims dims, memory::dims offsets)</td></tr>
@@ -415,6 +389,8 @@ Functions</h2></td></tr>
 <tr class="separator:ga708b10a34b8d4cff18927a8a37a583ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga3c5daa99eb3baf8d236b573cd21199fd"><td class="memItemLeft" align="right" valign="top">memory::primitive_desc&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga3c5daa99eb3baf8d236b573cd21199fd">mkldnn::concat::primitive_desc::dst_primitive_desc</a> () const </td></tr>
 <tr class="separator:ga3c5daa99eb3baf8d236b573cd21199fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf78445af4c6965c97d82d63dc2310589"><td class="memItemLeft" align="right" valign="top">engine&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#gaf78445af4c6965c97d82d63dc2310589">mkldnn::concat::primitive_desc::get_engine</a> ()</td></tr>
+<tr class="separator:gaf78445af4c6965c97d82d63dc2310589"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga06f1dbb81a1ce8d0bc564ab69d426c64"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga06f1dbb81a1ce8d0bc564ab69d426c64">mkldnn::concat::concat</a> (const primitive_desc &amp;concat_pd, std::vector&lt; primitive::at &gt; &amp;inputs, const memory &amp;output)</td></tr>
 <tr class="separator:ga06f1dbb81a1ce8d0bc564ab69d426c64"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaafe68860bc78cb3ec94e8ffa214d9cff"><td class="memItemLeft" align="right" valign="top">std::vector<br class="typebreak"/>
@@ -426,6 +402,8 @@ Functions</h2></td></tr>
 <tr class="separator:gabcc4de43113d299e75a21c0877089aa0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga7ec177ab4a5539cc9dc0ed3c36a73b72"><td class="memItemLeft" align="right" valign="top">memory::primitive_desc&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga7ec177ab4a5539cc9dc0ed3c36a73b72">mkldnn::sum::primitive_desc::dst_primitive_desc</a> () const </td></tr>
 <tr class="separator:ga7ec177ab4a5539cc9dc0ed3c36a73b72"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabe57059625c850ee721d699d2d9b0953"><td class="memItemLeft" align="right" valign="top">engine&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#gabe57059625c850ee721d699d2d9b0953">mkldnn::sum::primitive_desc::get_engine</a> ()</td></tr>
+<tr class="separator:gabe57059625c850ee721d699d2d9b0953"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gacceb32f44f2240015f58bb1d905189ca"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#gacceb32f44f2240015f58bb1d905189ca">mkldnn::sum::sum</a> (const primitive_desc &amp;sum_pd, std::vector&lt; primitive::at &gt; &amp;inputs, const memory &amp;output)</td></tr>
 <tr class="separator:gacceb32f44f2240015f58bb1d905189ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaa5459ccbd27fb0399515ad6f872cdd90"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="group__c__api__types__stream.html#gadd66574e231fe36721cdbe02ea47aa18">c_api::mkldnn_stream_kind_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#gaa5459ccbd27fb0399515ad6f872cdd90">mkldnn::stream::convert_to_c</a> (kind akind)</td></tr>
@@ -455,6 +433,8 @@ Functions</h2></td></tr>
 <tr class="separator:ga856c325079715173852a56a614380a2a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga0d688ef5445de8791c88a0b8d24c6dd3"><td class="memItemLeft" align="right" valign="top">memory::primitive_desc&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga0d688ef5445de8791c88a0b8d24c6dd3">mkldnn::convolution_forward::primitive_desc::dst_primitive_desc</a> () const </td></tr>
 <tr class="separator:ga0d688ef5445de8791c88a0b8d24c6dd3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga61479c53728e6708a9ed2d35f6007662"><td class="memItemLeft" align="right" valign="top">engine&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga61479c53728e6708a9ed2d35f6007662">mkldnn::convolution_forward::primitive_desc::get_engine</a> ()</td></tr>
+<tr class="separator:ga61479c53728e6708a9ed2d35f6007662"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gada34888c95159b701c16c00af95bda01"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#gada34888c95159b701c16c00af95bda01">mkldnn::convolution_forward::convolution_forward</a> (const primitive_desc &amp;aprimitive_desc, const primitive::at &amp;src, const primitive::at &amp;weights, const primitive::at &amp;bias, const memory &amp;dst)</td></tr>
 <tr class="separator:gada34888c95159b701c16c00af95bda01"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga63c5cf5f767124069ddd815b142efe8c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga63c5cf5f767124069ddd815b142efe8c">mkldnn::convolution_forward::convolution_forward</a> (const primitive_desc &amp;aprimitive_desc, const primitive::at &amp;src, const primitive::at &amp;weights, const memory &amp;dst)</td></tr>
@@ -469,6 +449,8 @@ Functions</h2></td></tr>
 <tr class="separator:gaf27aa82dce4e432fc322d170eccde79f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga38789cbf4c65316757641d179849194f"><td class="memItemLeft" align="right" valign="top">memory::primitive_desc&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga38789cbf4c65316757641d179849194f">mkldnn::convolution_backward_data::primitive_desc::diff_dst_primitive_desc</a> () const </td></tr>
 <tr class="separator:ga38789cbf4c65316757641d179849194f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae916fe02cbf3bd2ea830827cf8a6b6f7"><td class="memItemLeft" align="right" valign="top">engine&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#gae916fe02cbf3bd2ea830827cf8a6b6f7">mkldnn::convolution_backward_data::primitive_desc::get_engine</a> ()</td></tr>
+<tr class="separator:gae916fe02cbf3bd2ea830827cf8a6b6f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga1718f5d44f0b7d9b1d07a51aa4938689"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga1718f5d44f0b7d9b1d07a51aa4938689">mkldnn::convolution_backward_data::convolution_backward_data</a> (const primitive_desc &amp;aprimitive_desc, const primitive::at &amp;diff_dst, const primitive::at &amp;weights, const memory &amp;diff_src)</td></tr>
 <tr class="separator:ga1718f5d44f0b7d9b1d07a51aa4938689"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gabea7ad74752b830aff0a803760556756"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#gabea7ad74752b830aff0a803760556756">mkldnn::convolution_backward_weights::desc::desc</a> (algorithm aalgorithm, const memory::desc &amp;src_desc, const memory::desc &amp;diff_weights_desc, const memory::desc &amp;diff_bias_desc, const memory::desc &amp;diff_dst_desc, const memory::dims strides, const memory::dims padding_l, const memory::dims padding_r, const padding_kind apadding_kind)</td></tr>
@@ -485,6 +467,8 @@ Functions</h2></td></tr>
 <tr class="separator:ga6bf93d6da26250ad3a25a92c17bb8b8b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gae5b4c22268758c7848dac3ee26cea098"><td class="memItemLeft" align="right" valign="top">memory::primitive_desc&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#gae5b4c22268758c7848dac3ee26cea098">mkldnn::convolution_backward_weights::primitive_desc::diff_dst_primitive_desc</a> () const </td></tr>
 <tr class="separator:gae5b4c22268758c7848dac3ee26cea098"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1d01f4da8f54209d4d33f83f354f50e6"><td class="memItemLeft" align="right" valign="top">engine&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga1d01f4da8f54209d4d33f83f354f50e6">mkldnn::convolution_backward_weights::primitive_desc::get_engine</a> ()</td></tr>
+<tr class="separator:ga1d01f4da8f54209d4d33f83f354f50e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga28ce42837036bb2147c5b2155bc82916"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga28ce42837036bb2147c5b2155bc82916">mkldnn::convolution_backward_weights::convolution_backward_weights</a> (const primitive_desc &amp;aprimitive_desc, const primitive::at &amp;src, const primitive::at &amp;diff_dst, const memory &amp;diff_weights, const memory &amp;diff_bias)</td></tr>
 <tr class="separator:ga28ce42837036bb2147c5b2155bc82916"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga7bfa169b1b205f22844a143e2a89c891"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga7bfa169b1b205f22844a143e2a89c891">mkldnn::convolution_backward_weights::convolution_backward_weights</a> (const primitive_desc &amp;aprimitive_desc, const primitive::at &amp;src, const primitive::at &amp;diff_dst, const memory &amp;diff_weights)</td></tr>
@@ -493,6 +477,8 @@ Functions</h2></td></tr>
 <tr class="separator:ga3ec78c88bffc2391c0d6eaa558a246ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga1c549d4ae15bc5a41bfa63e222ccd222"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga1c549d4ae15bc5a41bfa63e222ccd222">mkldnn::convolution_relu_forward::primitive_desc::primitive_desc</a> (const desc &amp;adesc, const engine &amp;aengine)</td></tr>
 <tr class="separator:ga1c549d4ae15bc5a41bfa63e222ccd222"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3054850c02138a54241cc39846e162a4"><td class="memItemLeft" align="right" valign="top">engine&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga3054850c02138a54241cc39846e162a4">mkldnn::convolution_relu_forward::primitive_desc::get_engine</a> ()</td></tr>
+<tr class="separator:ga3054850c02138a54241cc39846e162a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga0ff751dcaa1288bea3e3b35eaa65908e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga0ff751dcaa1288bea3e3b35eaa65908e">mkldnn::convolution_relu_forward::convolution_relu_forward</a> (const primitive_desc &amp;aprimitive_desc, const primitive::at &amp;src, const primitive::at &amp;weights, const primitive::at &amp;bias, const memory &amp;dst)</td></tr>
 <tr class="separator:ga0ff751dcaa1288bea3e3b35eaa65908e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga965e13395408ec18544c7bd8782467d4"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga965e13395408ec18544c7bd8782467d4">mkldnn::convolution_relu_forward::convolution_relu_forward</a> (const primitive_desc &amp;aprimitive_desc, const primitive::at &amp;src, const primitive::at &amp;weights, const memory &amp;dst)</td></tr>
@@ -509,6 +495,8 @@ Functions</h2></td></tr>
 <tr class="separator:ga37f958457072fb439e812ea4c368970b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga65e5b0e80054faee6b84a66d360a4ef7"><td class="memItemLeft" align="right" valign="top">memory::primitive_desc&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga65e5b0e80054faee6b84a66d360a4ef7">mkldnn::lrn_forward::primitive_desc::dst_primitive_desc</a> () const </td></tr>
 <tr class="separator:ga65e5b0e80054faee6b84a66d360a4ef7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga56241312f1744c38e06eed746e7203d3"><td class="memItemLeft" align="right" valign="top">engine&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga56241312f1744c38e06eed746e7203d3">mkldnn::lrn_forward::primitive_desc::get_engine</a> ()</td></tr>
+<tr class="separator:ga56241312f1744c38e06eed746e7203d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga452b11f3734755695cdf6eb4d4556a84"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga452b11f3734755695cdf6eb4d4556a84">mkldnn::lrn_forward::lrn_forward</a> (const primitive_desc &amp;aprimitive_desc, const primitive::at &amp;src, const memory &amp;workspace, const memory &amp;dst)</td></tr>
 <tr class="separator:ga452b11f3734755695cdf6eb4d4556a84"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gacbd49285d69e89a49bab508d096b27c2"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#gacbd49285d69e89a49bab508d096b27c2">mkldnn::lrn_forward::lrn_forward</a> (const primitive_desc &amp;aprimitive_desc, const primitive::at &amp;src, const memory &amp;dst)</td></tr>
@@ -525,6 +513,8 @@ Functions</h2></td></tr>
 <tr class="separator:gae12aeae20ba1445e8118f4c24471c81d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaecbe473e6f1e12354f38824924b6429d"><td class="memItemLeft" align="right" valign="top">memory::primitive_desc&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#gaecbe473e6f1e12354f38824924b6429d">mkldnn::lrn_backward::primitive_desc::diff_dst_primitive_desc</a> () const </td></tr>
 <tr class="separator:gaecbe473e6f1e12354f38824924b6429d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga326430dcea24c2a2300f8e21f1316d63"><td class="memItemLeft" align="right" valign="top">engine&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga326430dcea24c2a2300f8e21f1316d63">mkldnn::lrn_backward::primitive_desc::get_engine</a> ()</td></tr>
+<tr class="separator:ga326430dcea24c2a2300f8e21f1316d63"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaa8a5aca14c604d2a1fb70801cd8cca56"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#gaa8a5aca14c604d2a1fb70801cd8cca56">mkldnn::lrn_backward::lrn_backward</a> (const primitive_desc &amp;aprimitive_desc, const primitive::at &amp;src, const primitive::at &amp;diff_dst, const primitive::at &amp;workspace, const memory &amp;diff_src)</td></tr>
 <tr class="separator:gaa8a5aca14c604d2a1fb70801cd8cca56"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaf23cbd8f53aca23a80df1ba0cd135567"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#gaf23cbd8f53aca23a80df1ba0cd135567">mkldnn::lrn_backward::lrn_backward</a> (const primitive_desc &amp;aprimitive_desc, const primitive::at &amp;src, const primitive::at &amp;diff_dst, const memory &amp;diff_src)</td></tr>
@@ -537,6 +527,8 @@ Functions</h2></td></tr>
 <tr class="separator:gacf2f297c819138ec4dc77179b8820f63"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gac6848df000d86a1d9bc104a600be135b"><td class="memItemLeft" align="right" valign="top">memory::primitive_desc&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#gac6848df000d86a1d9bc104a600be135b">mkldnn::pooling_forward::primitive_desc::dst_primitive_desc</a> () const </td></tr>
 <tr class="separator:gac6848df000d86a1d9bc104a600be135b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2e66d590b2360956fa1b664fff1b4224"><td class="memItemLeft" align="right" valign="top">engine&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga2e66d590b2360956fa1b664fff1b4224">mkldnn::pooling_forward::primitive_desc::get_engine</a> ()</td></tr>
+<tr class="separator:ga2e66d590b2360956fa1b664fff1b4224"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga08b3e80c76cbe0f50447f3efd62b9327"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga08b3e80c76cbe0f50447f3efd62b9327">mkldnn::pooling_forward::pooling_forward</a> (const primitive_desc &amp;aprimitive_desc, const primitive::at &amp;src, const memory &amp;dst)</td></tr>
 <tr class="separator:ga08b3e80c76cbe0f50447f3efd62b9327"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga4897c6f62e466ded00f9b7995cc00898"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga4897c6f62e466ded00f9b7995cc00898">mkldnn::pooling_forward::pooling_forward</a> (const primitive_desc &amp;aprimitive_desc, const primitive::at &amp;src, const memory &amp;dst, const memory &amp;workspace)</td></tr>
@@ -547,6 +539,8 @@ Functions</h2></td></tr>
 <tr class="separator:ga910d3cbfb17409b76ac297b77ff0382f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gab7efd2303df3bee90d223da9dc623969"><td class="memItemLeft" align="right" valign="top">memory::primitive_desc&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#gab7efd2303df3bee90d223da9dc623969">mkldnn::pooling_backward::primitive_desc::diff_src_primitive_desc</a> () const </td></tr>
 <tr class="separator:gab7efd2303df3bee90d223da9dc623969"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadcb35562c4279715eccdb87692316462"><td class="memItemLeft" align="right" valign="top">engine&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#gadcb35562c4279715eccdb87692316462">mkldnn::pooling_backward::primitive_desc::get_engine</a> ()</td></tr>
+<tr class="separator:gadcb35562c4279715eccdb87692316462"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga88f9f9ddb590ec436ba968c99f3e1eec"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga88f9f9ddb590ec436ba968c99f3e1eec">mkldnn::pooling_backward::pooling_backward</a> (const primitive_desc &amp;aprimitive_desc, const primitive::at &amp;diff_dst, const memory &amp;diff_src)</td></tr>
 <tr class="separator:ga88f9f9ddb590ec436ba968c99f3e1eec"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga0b43875cab2d5d252763d0bfdc13d692"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga0b43875cab2d5d252763d0bfdc13d692">mkldnn::pooling_backward::pooling_backward</a> (const primitive_desc &amp;aprimitive_desc, const primitive::at &amp;diff_dst, const primitive::at &amp;workspace, const memory &amp;diff_src)</td></tr>
@@ -558,6 +552,8 @@ Functions</h2></td></tr>
 <tr class="separator:ga1fea877aaf0ee9418ea0a81023a53e2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga5a48934f2c240e3b9a1a21a219865765"><td class="memItemLeft" align="right" valign="top">memory::primitive_desc&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga5a48934f2c240e3b9a1a21a219865765">mkldnn::relu_forward::primitive_desc::dst_primitive_desc</a> () const </td></tr>
 <tr class="separator:ga5a48934f2c240e3b9a1a21a219865765"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3f9d853435d4b079e9924186f7fbcf8c"><td class="memItemLeft" align="right" valign="top">engine&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga3f9d853435d4b079e9924186f7fbcf8c">mkldnn::relu_forward::primitive_desc::get_engine</a> ()</td></tr>
+<tr class="separator:ga3f9d853435d4b079e9924186f7fbcf8c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gae0d3a5586fd4a1455e431276553e8662"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#gae0d3a5586fd4a1455e431276553e8662">mkldnn::relu_forward::relu_forward</a> (const primitive_desc &amp;aprimitive_desc, const primitive::at &amp;src, const memory &amp;dst)</td></tr>
 <tr class="separator:gae0d3a5586fd4a1455e431276553e8662"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga292763b9dd646f9e1222eb9684193b9b"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
@@ -567,12 +563,16 @@ Functions</h2></td></tr>
 <tr class="separator:ga4cdb3c927156e3d4bb5b4b5b59f68e5e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga89cdf1ddae1dfd7607562bb5af49aa2a"><td class="memItemLeft" align="right" valign="top">memory::primitive_desc&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga89cdf1ddae1dfd7607562bb5af49aa2a">mkldnn::relu_backward::primitive_desc::diff_src_primitive_desc</a> () const </td></tr>
 <tr class="separator:ga89cdf1ddae1dfd7607562bb5af49aa2a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga45ec8ada72d6c45673f9f16665083ab3"><td class="memItemLeft" align="right" valign="top">engine&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga45ec8ada72d6c45673f9f16665083ab3">mkldnn::relu_backward::primitive_desc::get_engine</a> ()</td></tr>
+<tr class="separator:ga45ec8ada72d6c45673f9f16665083ab3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaa9c009ebe7fa7e946fcceb9b9c5a4ad6"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#gaa9c009ebe7fa7e946fcceb9b9c5a4ad6">mkldnn::relu_backward::relu_backward</a> (const primitive_desc &amp;aprimitive_desc, const primitive::at &amp;src, const primitive::at &amp;diff_dst, const memory &amp;diff_src)</td></tr>
 <tr class="separator:gaa9c009ebe7fa7e946fcceb9b9c5a4ad6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga86f3b6079fd48f2b8a289ed7b8419c99"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga86f3b6079fd48f2b8a289ed7b8419c99">mkldnn::softmax_forward::desc::desc</a> (prop_kind aprop_kind, const memory::desc &amp;data_desc, int softmax_axis)</td></tr>
 <tr class="separator:ga86f3b6079fd48f2b8a289ed7b8419c99"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gae52ba21c1b9f86b0f7104ee3218fdc2b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#gae52ba21c1b9f86b0f7104ee3218fdc2b">mkldnn::softmax_forward::primitive_desc::primitive_desc</a> (const desc &amp;adesc, const engine &amp;aengine)</td></tr>
 <tr class="separator:gae52ba21c1b9f86b0f7104ee3218fdc2b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga53667cc853ad5ab6683e89203d7e5505"><td class="memItemLeft" align="right" valign="top">engine&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga53667cc853ad5ab6683e89203d7e5505">mkldnn::softmax_forward::primitive_desc::get_engine</a> ()</td></tr>
+<tr class="separator:ga53667cc853ad5ab6683e89203d7e5505"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga0c2c19e0566480132d975aa0904eadf3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga0c2c19e0566480132d975aa0904eadf3">mkldnn::softmax_forward::softmax_forward</a> (const primitive_desc &amp;aprimitive_desc, const primitive::at &amp;src, const memory &amp;dst)</td></tr>
 <tr class="separator:ga0c2c19e0566480132d975aa0904eadf3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaac8dc676e445e93676dffac6ef4390a8"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
@@ -588,6 +588,8 @@ Functions</h2></td></tr>
 <tr class="separator:ga99e37cecab1835075cd1f4587c535af9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gab08351536545991395314653fecf53c3"><td class="memItemLeft" align="right" valign="top">memory::primitive_desc&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#gab08351536545991395314653fecf53c3">mkldnn::batch_normalization_forward::primitive_desc::dst_primitive_desc</a> () const </td></tr>
 <tr class="separator:gab08351536545991395314653fecf53c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4a1ea479e653589aad8bc9de8aa7fb04"><td class="memItemLeft" align="right" valign="top">engine&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga4a1ea479e653589aad8bc9de8aa7fb04">mkldnn::batch_normalization_forward::primitive_desc::get_engine</a> ()</td></tr>
+<tr class="separator:ga4a1ea479e653589aad8bc9de8aa7fb04"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga45baa13a4d88945a14b38e2c731c64a3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga45baa13a4d88945a14b38e2c731c64a3">mkldnn::batch_normalization_forward::batch_normalization_forward</a> (const primitive_desc &amp;aprimitive_desc, const primitive::at &amp;src, const primitive::at &amp;mean, const primitive::at &amp;variance, const primitive::at &amp;weights, const memory &amp;dst)</td></tr>
 <tr class="separator:ga45baa13a4d88945a14b38e2c731c64a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga895efcf4f5bcf36957f468879a8a2143"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga895efcf4f5bcf36957f468879a8a2143">mkldnn::batch_normalization_forward::batch_normalization_forward</a> (const primitive_desc &amp;aprimitive_desc, const primitive::at &amp;src, const primitive::at &amp;mean, const primitive::at &amp;variance, const memory &amp;dst)</td></tr>
@@ -615,6 +617,8 @@ Functions</h2></td></tr>
 <tr class="separator:ga9da80aa840c523e837e9728bb689745b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga24a5e657642389303ae524ba4e1d2a0a"><td class="memItemLeft" align="right" valign="top">memory::primitive_desc&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga24a5e657642389303ae524ba4e1d2a0a">mkldnn::batch_normalization_backward::primitive_desc::dst_primitive_desc</a> () const </td></tr>
 <tr class="separator:ga24a5e657642389303ae524ba4e1d2a0a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga49c354b8bb451f93882b5ea266739623"><td class="memItemLeft" align="right" valign="top">engine&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga49c354b8bb451f93882b5ea266739623">mkldnn::batch_normalization_backward::primitive_desc::get_engine</a> ()</td></tr>
+<tr class="separator:ga49c354b8bb451f93882b5ea266739623"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga55c76342f57053d995afcb429c8b8846"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga55c76342f57053d995afcb429c8b8846">mkldnn::batch_normalization_backward::batch_normalization_backward</a> (const primitive_desc &amp;aprimitive_desc, const primitive::at &amp;src, const primitive::at &amp;mean, const primitive::at &amp;variance, const primitive::at &amp;diff_dst, const primitive::at &amp;weights, const memory &amp;diff_src, const memory &amp;diff_weights)</td></tr>
 <tr class="separator:ga55c76342f57053d995afcb429c8b8846"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga4333b9ee0aae4971353130a1cdefa793"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga4333b9ee0aae4971353130a1cdefa793">mkldnn::batch_normalization_backward::batch_normalization_backward</a> (const primitive_desc &amp;aprimitive_desc, const primitive::at &amp;src, const primitive::at &amp;mean, const primitive::at &amp;variance, const primitive::at &amp;diff_dst, const primitive::at &amp;weights, const memory &amp;diff_src)</td></tr>
@@ -635,6 +639,8 @@ Functions</h2></td></tr>
 <tr class="separator:gacb30e88fd32c41161dd5a1592f640961"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gabecbf8696d073a2dae6d10107f758d93"><td class="memItemLeft" align="right" valign="top">memory::primitive_desc&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#gabecbf8696d073a2dae6d10107f758d93">mkldnn::inner_product_forward::primitive_desc::dst_primitive_desc</a> () const </td></tr>
 <tr class="separator:gabecbf8696d073a2dae6d10107f758d93"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga49e7d4089372880edefade8295c05209"><td class="memItemLeft" align="right" valign="top">engine&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga49e7d4089372880edefade8295c05209">mkldnn::inner_product_forward::primitive_desc::get_engine</a> ()</td></tr>
+<tr class="separator:ga49e7d4089372880edefade8295c05209"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga4628cdaa5144ab07137111736b08ca18"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga4628cdaa5144ab07137111736b08ca18">mkldnn::inner_product_forward::inner_product_forward</a> (const primitive_desc &amp;aprimitive_desc, const primitive::at &amp;src, const primitive::at weights, const primitive::at &amp;bias, const memory &amp;dst)</td></tr>
 <tr class="separator:ga4628cdaa5144ab07137111736b08ca18"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaa50d1b18a8f876f03d296e7c7f10c16a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#gaa50d1b18a8f876f03d296e7c7f10c16a">mkldnn::inner_product_forward::inner_product_forward</a> (const primitive_desc &amp;aprimitive_desc, const primitive::at &amp;src, const primitive::at weights, const memory &amp;dst)</td></tr>
@@ -649,6 +655,8 @@ Functions</h2></td></tr>
 <tr class="separator:gad53b804b4763195e39a0bd97d869fc9c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga204b44bd34a4a9c511102551fc287c99"><td class="memItemLeft" align="right" valign="top">memory::primitive_desc&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga204b44bd34a4a9c511102551fc287c99">mkldnn::inner_product_backward_data::primitive_desc::diff_src_primitive_desc</a> () const </td></tr>
 <tr class="separator:ga204b44bd34a4a9c511102551fc287c99"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0fbfc8e5c0028551a9bf0c4debed492d"><td class="memItemLeft" align="right" valign="top">engine&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga0fbfc8e5c0028551a9bf0c4debed492d">mkldnn::inner_product_backward_data::primitive_desc::get_engine</a> ()</td></tr>
+<tr class="separator:ga0fbfc8e5c0028551a9bf0c4debed492d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gab53fa4a0f893020ac180770ccea5a247"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#gab53fa4a0f893020ac180770ccea5a247">mkldnn::inner_product_backward_data::inner_product_backward_data</a> (const primitive_desc &amp;aprimitive_desc, const primitive::at &amp;diff_dst, const primitive::at weights, const memory &amp;diff_src)</td></tr>
 <tr class="separator:gab53fa4a0f893020ac180770ccea5a247"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga3ef5dad0931fc196056b5cabaf53c33c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga3ef5dad0931fc196056b5cabaf53c33c">mkldnn::inner_product_backward_weights::desc::desc</a> (const memory::desc &amp;src_desc, const memory::desc &amp;diff_weights_desc, const memory::desc &amp;diff_bias_desc, const memory::desc &amp;diff_dst_desc)</td></tr>
@@ -665,6 +673,8 @@ Functions</h2></td></tr>
 <tr class="separator:ga6a7d128e1acdb9ae1976b33bc1b5e061"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga889000101e06690c7a3e799018c7014d"><td class="memItemLeft" align="right" valign="top">memory::primitive_desc&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga889000101e06690c7a3e799018c7014d">mkldnn::inner_product_backward_weights::primitive_desc::src_primitive_desc</a> () const </td></tr>
 <tr class="separator:ga889000101e06690c7a3e799018c7014d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa89469c759b83899dc3b2c0b828bf100"><td class="memItemLeft" align="right" valign="top">engine&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#gaa89469c759b83899dc3b2c0b828bf100">mkldnn::inner_product_backward_weights::primitive_desc::get_engine</a> ()</td></tr>
+<tr class="separator:gaa89469c759b83899dc3b2c0b828bf100"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaee83803b4e817c95dcc66056359c3058"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#gaee83803b4e817c95dcc66056359c3058">mkldnn::inner_product_backward_weights::inner_product_backward_weights</a> (const primitive_desc &amp;aprimitive_desc, const primitive::at &amp;src, const primitive::at diff_dst, const memory &amp;diff_weights)</td></tr>
 <tr class="separator:gaee83803b4e817c95dcc66056359c3058"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga3f6369e39278e0c137653f49efd44fd4"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga3f6369e39278e0c137653f49efd44fd4">mkldnn::inner_product_backward_weights::inner_product_backward_weights</a> (const primitive_desc &amp;aprimitive_desc, const primitive::at &amp;src, const primitive::at diff_dst, const memory &amp;diff_weights, const memory &amp;diff_bias)</td></tr>
@@ -992,70 +1002,6 @@ Friends</h2></td></tr>
 <tr><td class="fieldname"><em><a class="anchor" id="ggaeb087eae78f70a4d249a90aefa165cf8ab8c420aeb9f94fb04b4c8eadeb35b75c"></a>backward_weights</em>&nbsp;</td><td class="fielddoc">
 </td></tr>
 <tr><td class="fieldname"><em><a class="anchor" id="ggaeb087eae78f70a4d249a90aefa165cf8a2dc572d907ceb34444e7784534500e3a"></a>backward_bias</em>&nbsp;</td><td class="fielddoc">
-</td></tr>
-</table>
-
-</div>
-</div>
-<a class="anchor" id="ga6d88ff11a07bae09a5c348d314c5d1d9"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="group__cpp__api__memory.html#ga6d88ff11a07bae09a5c348d314c5d1d9">mkldnn::query</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga6d88ff11a07bae09a5c348d314c5d1d9a8d3ff637e43a48b61ad6d7855c6a9cd1"></a>undef</em>&nbsp;</td><td class="fielddoc">
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga6d88ff11a07bae09a5c348d314c5d1d9acb4cacb193ad2274f54ae1dd6c0a3fbb"></a>eengine</em>&nbsp;</td><td class="fielddoc">
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga6d88ff11a07bae09a5c348d314c5d1d9ab9ac6c4dbd943afffb6c80e0bcff4181"></a>primitive_kind</em>&nbsp;</td><td class="fielddoc">
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga6d88ff11a07bae09a5c348d314c5d1d9aa7acb3c71ec9740a93042f80b24f6110"></a>num_of_inputs_s32</em>&nbsp;</td><td class="fielddoc">
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga6d88ff11a07bae09a5c348d314c5d1d9a031851c9746b2eb890af91a5f209e014"></a>num_of_outputs_s32</em>&nbsp;</td><td class="fielddoc">
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga6d88ff11a07bae09a5c348d314c5d1d9a1b43385b970ea053f46e5932d574615e"></a>time_estimate_f64</em>&nbsp;</td><td class="fielddoc">
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga6d88ff11a07bae09a5c348d314c5d1d9a4faa2a57cddf474a9356b136ece00401"></a>memory_consumption_s64</em>&nbsp;</td><td class="fielddoc">
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga6d88ff11a07bae09a5c348d314c5d1d9a7b7d987552be10a6654ea645cede0a95"></a>memory_d</em>&nbsp;</td><td class="fielddoc">
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga6d88ff11a07bae09a5c348d314c5d1d9a13f5d72b1e5ec568b24c930e3b87641b"></a>convolution_d</em>&nbsp;</td><td class="fielddoc">
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga6d88ff11a07bae09a5c348d314c5d1d9a20f677933e74a40096d45a51664c5ee4"></a>relu_d</em>&nbsp;</td><td class="fielddoc">
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga6d88ff11a07bae09a5c348d314c5d1d9abdb39a5fa96f35b51571bb5481ed2cc2"></a>softmax_d</em>&nbsp;</td><td class="fielddoc">
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga6d88ff11a07bae09a5c348d314c5d1d9a3be3f1011debd2ee2df16b6b04a0bf77"></a>pooling_d</em>&nbsp;</td><td class="fielddoc">
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga6d88ff11a07bae09a5c348d314c5d1d9a76add43bb6bee4f897e668e2d54476a2"></a>lrn_d</em>&nbsp;</td><td class="fielddoc">
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga6d88ff11a07bae09a5c348d314c5d1d9a98ae1af5a25e62ffebc0ee054e0fd7c7"></a>batch_normalization_d</em>&nbsp;</td><td class="fielddoc">
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga6d88ff11a07bae09a5c348d314c5d1d9a4036c4c9cc32dd0f22a8903cfceeaa41"></a>inner_product_d</em>&nbsp;</td><td class="fielddoc">
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga6d88ff11a07bae09a5c348d314c5d1d9a83453c3a1e6a6dad19d5928ae9b9b0ee"></a>convolution_relu_d</em>&nbsp;</td><td class="fielddoc">
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga6d88ff11a07bae09a5c348d314c5d1d9a508fa6b849113ef2100177d2991129fe"></a>input_pd</em>&nbsp;</td><td class="fielddoc">
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga6d88ff11a07bae09a5c348d314c5d1d9abab2d1abc2d37f4a1358daeb7f9a32b1"></a>output_pd</em>&nbsp;</td><td class="fielddoc">
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga6d88ff11a07bae09a5c348d314c5d1d9a486100f73904f2beae1418a57cc6e0b1"></a>src_pd</em>&nbsp;</td><td class="fielddoc">
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga6d88ff11a07bae09a5c348d314c5d1d9a255f93a5ef35321792effc4f5d23e1e3"></a>diff_src_pd</em>&nbsp;</td><td class="fielddoc">
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga6d88ff11a07bae09a5c348d314c5d1d9a38a475450bc885f2a0fad13bf87f44b9"></a>weights_pd</em>&nbsp;</td><td class="fielddoc">
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga6d88ff11a07bae09a5c348d314c5d1d9a7b14a983b2e690abcf176dd41da50ae1"></a>diff_weights_pd</em>&nbsp;</td><td class="fielddoc">
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga6d88ff11a07bae09a5c348d314c5d1d9a5e602b7cc44ad7373ab7212f73b3d7d4"></a>dst_pd</em>&nbsp;</td><td class="fielddoc">
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga6d88ff11a07bae09a5c348d314c5d1d9adb9fd0a330dc402a36de022ce82bff07"></a>diff_dst_pd</em>&nbsp;</td><td class="fielddoc">
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga6d88ff11a07bae09a5c348d314c5d1d9a41d00a7019d406614ebaa00195d179bd"></a>workspace_pd</em>&nbsp;</td><td class="fielddoc">
 </td></tr>
 </table>
 
@@ -1731,30 +1677,6 @@ Friends</h2></td></tr>
   </td>
   <td class="mlabels-right">
 <span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="gaf91d39c671143894e831dae17c0e1323"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="group__c__api__types__query.html#ga6eebc661a8a3437b49d9c677f8972fc9">c_api::mkldnn_query_t</a> mkldnn::convert_to_c </td>
-          <td>(</td>
-          <td class="paramtype">query&#160;</td>
-          <td class="paramname"><em>aquery</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -4218,6 +4140,30 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
+<a class="anchor" id="ga95f333c4582edcb606a4b9add2a53266"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">mkldnn::engine::engine </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classmkldnn_1_1handle.html">handle</a>&lt; <a class="el" href="group__c__api__primitive__descs.html#ga4108b6ee20cf3d2e472504c1aea67497">c_api::mkldnn_primitive_desc_t</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>pd</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a class="anchor" id="ga96683a5ca544f344deb0289c35abf8f7"></a>
 <div class="memitem">
 <div class="memproto">
@@ -4349,6 +4295,489 @@ template&lt;typename T, typename traits = handle_traits&lt;T&gt;&gt; </div>
 </div><div class="memdoc">
 
 <p>Returns a handle of the data contained in the memory primitive. On the CPU engine, this is a pointer to the allocated memory. </p>
+
+</div>
+</div>
+<a class="anchor" id="gaed914136c973f0bcffb8a9cbe45960b0"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">engine mkldnn::memory::primitive_desc::get_engine </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ga885ba6e92afdd245508a50bbbd46d1ad"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">engine mkldnn::reorder::primitive_desc::get_engine </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ga3246efbe91354cbd2dbadfae2bbaf031"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">engine mkldnn::view::primitive_desc::get_engine </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="gaf78445af4c6965c97d82d63dc2310589"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">engine mkldnn::concat::primitive_desc::get_engine </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="gabe57059625c850ee721d699d2d9b0953"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">engine mkldnn::sum::primitive_desc::get_engine </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ga61479c53728e6708a9ed2d35f6007662"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">engine mkldnn::convolution_forward::primitive_desc::get_engine </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="gae916fe02cbf3bd2ea830827cf8a6b6f7"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">engine mkldnn::convolution_backward_data::primitive_desc::get_engine </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ga1d01f4da8f54209d4d33f83f354f50e6"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">engine mkldnn::convolution_backward_weights::primitive_desc::get_engine </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ga3054850c02138a54241cc39846e162a4"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">engine mkldnn::convolution_relu_forward::primitive_desc::get_engine </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ga56241312f1744c38e06eed746e7203d3"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">engine mkldnn::lrn_forward::primitive_desc::get_engine </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ga326430dcea24c2a2300f8e21f1316d63"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">engine mkldnn::lrn_backward::primitive_desc::get_engine </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ga2e66d590b2360956fa1b664fff1b4224"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">engine mkldnn::pooling_forward::primitive_desc::get_engine </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="gadcb35562c4279715eccdb87692316462"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">engine mkldnn::pooling_backward::primitive_desc::get_engine </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ga3f9d853435d4b079e9924186f7fbcf8c"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">engine mkldnn::relu_forward::primitive_desc::get_engine </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ga45ec8ada72d6c45673f9f16665083ab3"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">engine mkldnn::relu_backward::primitive_desc::get_engine </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ga53667cc853ad5ab6683e89203d7e5505"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">engine mkldnn::softmax_forward::primitive_desc::get_engine </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ga4a1ea479e653589aad8bc9de8aa7fb04"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">engine mkldnn::batch_normalization_forward::primitive_desc::get_engine </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ga49c354b8bb451f93882b5ea266739623"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">engine mkldnn::batch_normalization_backward::primitive_desc::get_engine </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ga49e7d4089372880edefade8295c05209"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">engine mkldnn::inner_product_forward::primitive_desc::get_engine </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ga0fbfc8e5c0028551a9bf0c4debed492d"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">engine mkldnn::inner_product_backward_data::primitive_desc::get_engine </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="gaa89469c759b83899dc3b2c0b828bf100"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">engine mkldnn::inner_product_backward_weights::primitive_desc::get_engine </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
 
 </div>
 </div>
@@ -6311,6 +6740,32 @@ template&lt;typename T, typename traits = handle_traits&lt;T&gt;&gt; </div>
   </td>
   <td class="mlabels-right">
 <span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="gaa0a4e078d059debf90e7bf09367ef868"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class primitive_desc &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static engine mkldnn::engine::query </td>
+          <td>(</td>
+          <td class="paramtype">const primitive_desc &amp;&#160;</td>
+          <td class="paramname"><em>pd</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">

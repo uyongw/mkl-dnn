@@ -78,7 +78,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Classes</a>  </div>
+<a href="#nested-classes">Classes</a> &#124;
+<a href="#enum-members">Enumerations</a> &#124;
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">Engine<div class="ingroups"><a class="el" href="group__cpp__api.html">C++ API</a></div></div>  </div>
 </div><!--header-->
@@ -89,8 +91,144 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmkldnn_1_1engine.html">mkldnn::engine</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">An execution engine.  <a href="structmkldnn_1_1engine.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr class="memitem:ga6d88ff11a07bae09a5c348d314c5d1d9"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__engine.html#ga6d88ff11a07bae09a5c348d314c5d1d9">mkldnn::query</a> { <br/>
+&#160;&#160;<a class="el" href="group__cpp__api__engine.html#gga6d88ff11a07bae09a5c348d314c5d1d9a8d3ff637e43a48b61ad6d7855c6a9cd1">mkldnn::undef</a> = c_api::mkldnn_query_undef, 
+<a class="el" href="group__cpp__api__engine.html#gga6d88ff11a07bae09a5c348d314c5d1d9acb4cacb193ad2274f54ae1dd6c0a3fbb">mkldnn::eengine</a> = c_api::mkldnn_query_engine, 
+<a class="el" href="group__cpp__api__engine.html#gga6d88ff11a07bae09a5c348d314c5d1d9ab9ac6c4dbd943afffb6c80e0bcff4181">mkldnn::primitive_kind</a> = c_api::mkldnn_query_primitive_kind, 
+<a class="el" href="group__cpp__api__engine.html#gga6d88ff11a07bae09a5c348d314c5d1d9aa7acb3c71ec9740a93042f80b24f6110">mkldnn::num_of_inputs_s32</a> = c_api::mkldnn_query_num_of_inputs_s32, 
+<br/>
+&#160;&#160;<a class="el" href="group__cpp__api__engine.html#gga6d88ff11a07bae09a5c348d314c5d1d9a031851c9746b2eb890af91a5f209e014">mkldnn::num_of_outputs_s32</a> = c_api::mkldnn_query_num_of_outputs_s32, 
+<a class="el" href="group__cpp__api__engine.html#gga6d88ff11a07bae09a5c348d314c5d1d9a1b43385b970ea053f46e5932d574615e">mkldnn::time_estimate_f64</a> = c_api::mkldnn_query_time_estimate_f64, 
+<a class="el" href="group__cpp__api__engine.html#gga6d88ff11a07bae09a5c348d314c5d1d9a4faa2a57cddf474a9356b136ece00401">mkldnn::memory_consumption_s64</a> = c_api::mkldnn_query_memory_consumption_s64, 
+<a class="el" href="group__cpp__api__engine.html#gga6d88ff11a07bae09a5c348d314c5d1d9a022fea4ccfab3e1045c7358d07de3d5e">mkldnn::impl_info_str</a> = c_api::mkldnn_query_impl_info_str, 
+<br/>
+&#160;&#160;<a class="el" href="group__cpp__api__engine.html#gga6d88ff11a07bae09a5c348d314c5d1d9a7b7d987552be10a6654ea645cede0a95">mkldnn::memory_d</a> = c_api::mkldnn_query_memory_d, 
+<a class="el" href="group__cpp__api__engine.html#gga6d88ff11a07bae09a5c348d314c5d1d9a13f5d72b1e5ec568b24c930e3b87641b">mkldnn::convolution_d</a> = c_api::mkldnn_query_convolution_d, 
+<a class="el" href="group__cpp__api__engine.html#gga6d88ff11a07bae09a5c348d314c5d1d9a20f677933e74a40096d45a51664c5ee4">mkldnn::relu_d</a> = c_api::mkldnn_query_relu_d, 
+<a class="el" href="group__cpp__api__engine.html#gga6d88ff11a07bae09a5c348d314c5d1d9abdb39a5fa96f35b51571bb5481ed2cc2">mkldnn::softmax_d</a> = c_api::mkldnn_query_softmax_d, 
+<br/>
+&#160;&#160;<a class="el" href="group__cpp__api__engine.html#gga6d88ff11a07bae09a5c348d314c5d1d9a3be3f1011debd2ee2df16b6b04a0bf77">mkldnn::pooling_d</a> = c_api::mkldnn_query_pooling_d, 
+<a class="el" href="group__cpp__api__engine.html#gga6d88ff11a07bae09a5c348d314c5d1d9a76add43bb6bee4f897e668e2d54476a2">mkldnn::lrn_d</a> = c_api::mkldnn_query_lrn_d, 
+<a class="el" href="group__cpp__api__engine.html#gga6d88ff11a07bae09a5c348d314c5d1d9a98ae1af5a25e62ffebc0ee054e0fd7c7">mkldnn::batch_normalization_d</a> = c_api::mkldnn_query_batch_normalization_d, 
+<a class="el" href="group__cpp__api__engine.html#gga6d88ff11a07bae09a5c348d314c5d1d9a4036c4c9cc32dd0f22a8903cfceeaa41">mkldnn::inner_product_d</a> = c_api::mkldnn_query_inner_product_d, 
+<br/>
+&#160;&#160;<a class="el" href="group__cpp__api__engine.html#gga6d88ff11a07bae09a5c348d314c5d1d9a83453c3a1e6a6dad19d5928ae9b9b0ee">mkldnn::convolution_relu_d</a> = c_api::mkldnn_query_convolution_relu_d, 
+<a class="el" href="group__cpp__api__engine.html#gga6d88ff11a07bae09a5c348d314c5d1d9a508fa6b849113ef2100177d2991129fe">mkldnn::input_pd</a> = c_api::mkldnn_query_input_pd, 
+<a class="el" href="group__cpp__api__engine.html#gga6d88ff11a07bae09a5c348d314c5d1d9abab2d1abc2d37f4a1358daeb7f9a32b1">mkldnn::output_pd</a> = c_api::mkldnn_query_output_pd, 
+<a class="el" href="group__cpp__api__engine.html#gga6d88ff11a07bae09a5c348d314c5d1d9a486100f73904f2beae1418a57cc6e0b1">mkldnn::src_pd</a> = c_api::mkldnn_query_src_pd, 
+<br/>
+&#160;&#160;<a class="el" href="group__cpp__api__engine.html#gga6d88ff11a07bae09a5c348d314c5d1d9a255f93a5ef35321792effc4f5d23e1e3">mkldnn::diff_src_pd</a> = c_api::mkldnn_query_diff_src_pd, 
+<a class="el" href="group__cpp__api__engine.html#gga6d88ff11a07bae09a5c348d314c5d1d9a38a475450bc885f2a0fad13bf87f44b9">mkldnn::weights_pd</a> = c_api::mkldnn_query_weights_pd, 
+<a class="el" href="group__cpp__api__engine.html#gga6d88ff11a07bae09a5c348d314c5d1d9a7b14a983b2e690abcf176dd41da50ae1">mkldnn::diff_weights_pd</a> = c_api::mkldnn_query_diff_weights_pd, 
+<a class="el" href="group__cpp__api__engine.html#gga6d88ff11a07bae09a5c348d314c5d1d9a5e602b7cc44ad7373ab7212f73b3d7d4">mkldnn::dst_pd</a> = c_api::mkldnn_query_dst_pd, 
+<br/>
+&#160;&#160;<a class="el" href="group__cpp__api__engine.html#gga6d88ff11a07bae09a5c348d314c5d1d9adb9fd0a330dc402a36de022ce82bff07">mkldnn::diff_dst_pd</a> = c_api::mkldnn_query_diff_dst_pd, 
+<a class="el" href="group__cpp__api__engine.html#gga6d88ff11a07bae09a5c348d314c5d1d9a41d00a7019d406614ebaa00195d179bd">mkldnn::workspace_pd</a> = c_api::mkldnn_query_workspace_pd
+<br/>
+ }</td></tr>
+<tr class="separator:ga6d88ff11a07bae09a5c348d314c5d1d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:gaf91d39c671143894e831dae17c0e1323"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__c__api__types__query.html#ga6eebc661a8a3437b49d9c677f8972fc9">c_api::mkldnn_query_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__engine.html#gaf91d39c671143894e831dae17c0e1323">mkldnn::convert_to_c</a> (query aquery)</td></tr>
+<tr class="separator:gaf91d39c671143894e831dae17c0e1323"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<h2 class="groupheader">Enumeration Type Documentation</h2>
+<a class="anchor" id="ga6d88ff11a07bae09a5c348d314c5d1d9"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group__cpp__api__engine.html#ga6d88ff11a07bae09a5c348d314c5d1d9">mkldnn::query</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga6d88ff11a07bae09a5c348d314c5d1d9a8d3ff637e43a48b61ad6d7855c6a9cd1"></a>undef</em>&nbsp;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga6d88ff11a07bae09a5c348d314c5d1d9acb4cacb193ad2274f54ae1dd6c0a3fbb"></a>eengine</em>&nbsp;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga6d88ff11a07bae09a5c348d314c5d1d9ab9ac6c4dbd943afffb6c80e0bcff4181"></a>primitive_kind</em>&nbsp;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga6d88ff11a07bae09a5c348d314c5d1d9aa7acb3c71ec9740a93042f80b24f6110"></a>num_of_inputs_s32</em>&nbsp;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga6d88ff11a07bae09a5c348d314c5d1d9a031851c9746b2eb890af91a5f209e014"></a>num_of_outputs_s32</em>&nbsp;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga6d88ff11a07bae09a5c348d314c5d1d9a1b43385b970ea053f46e5932d574615e"></a>time_estimate_f64</em>&nbsp;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga6d88ff11a07bae09a5c348d314c5d1d9a4faa2a57cddf474a9356b136ece00401"></a>memory_consumption_s64</em>&nbsp;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga6d88ff11a07bae09a5c348d314c5d1d9a022fea4ccfab3e1045c7358d07de3d5e"></a>impl_info_str</em>&nbsp;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga6d88ff11a07bae09a5c348d314c5d1d9a7b7d987552be10a6654ea645cede0a95"></a>memory_d</em>&nbsp;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga6d88ff11a07bae09a5c348d314c5d1d9a13f5d72b1e5ec568b24c930e3b87641b"></a>convolution_d</em>&nbsp;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga6d88ff11a07bae09a5c348d314c5d1d9a20f677933e74a40096d45a51664c5ee4"></a>relu_d</em>&nbsp;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga6d88ff11a07bae09a5c348d314c5d1d9abdb39a5fa96f35b51571bb5481ed2cc2"></a>softmax_d</em>&nbsp;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga6d88ff11a07bae09a5c348d314c5d1d9a3be3f1011debd2ee2df16b6b04a0bf77"></a>pooling_d</em>&nbsp;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga6d88ff11a07bae09a5c348d314c5d1d9a76add43bb6bee4f897e668e2d54476a2"></a>lrn_d</em>&nbsp;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga6d88ff11a07bae09a5c348d314c5d1d9a98ae1af5a25e62ffebc0ee054e0fd7c7"></a>batch_normalization_d</em>&nbsp;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga6d88ff11a07bae09a5c348d314c5d1d9a4036c4c9cc32dd0f22a8903cfceeaa41"></a>inner_product_d</em>&nbsp;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga6d88ff11a07bae09a5c348d314c5d1d9a83453c3a1e6a6dad19d5928ae9b9b0ee"></a>convolution_relu_d</em>&nbsp;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga6d88ff11a07bae09a5c348d314c5d1d9a508fa6b849113ef2100177d2991129fe"></a>input_pd</em>&nbsp;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga6d88ff11a07bae09a5c348d314c5d1d9abab2d1abc2d37f4a1358daeb7f9a32b1"></a>output_pd</em>&nbsp;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga6d88ff11a07bae09a5c348d314c5d1d9a486100f73904f2beae1418a57cc6e0b1"></a>src_pd</em>&nbsp;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga6d88ff11a07bae09a5c348d314c5d1d9a255f93a5ef35321792effc4f5d23e1e3"></a>diff_src_pd</em>&nbsp;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga6d88ff11a07bae09a5c348d314c5d1d9a38a475450bc885f2a0fad13bf87f44b9"></a>weights_pd</em>&nbsp;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga6d88ff11a07bae09a5c348d314c5d1d9a7b14a983b2e690abcf176dd41da50ae1"></a>diff_weights_pd</em>&nbsp;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga6d88ff11a07bae09a5c348d314c5d1d9a5e602b7cc44ad7373ab7212f73b3d7d4"></a>dst_pd</em>&nbsp;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga6d88ff11a07bae09a5c348d314c5d1d9adb9fd0a330dc402a36de022ce82bff07"></a>diff_dst_pd</em>&nbsp;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga6d88ff11a07bae09a5c348d314c5d1d9a41d00a7019d406614ebaa00195d179bd"></a>workspace_pd</em>&nbsp;</td><td class="fielddoc">
+</td></tr>
+</table>
+
+</div>
+</div>
+<h2 class="groupheader">Function Documentation</h2>
+<a class="anchor" id="gaf91d39c671143894e831dae17c0e1323"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group__c__api__types__query.html#ga6eebc661a8a3437b49d9c677f8972fc9">c_api::mkldnn_query_t</a> mkldnn::convert_to_c </td>
+          <td>(</td>
+          <td class="paramtype">query&#160;</td>
+          <td class="paramname"><em>aquery</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
