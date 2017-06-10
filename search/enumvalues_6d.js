@@ -17,6 +17,7 @@ var searchData=
   ['mkldnn_5fconvolution',['mkldnn_convolution',['../group__c__api__types__generic.html#gga4f5c189c2ba9ef6444250299f1f8e973a88592adccf64d1fd271ed6e21d66b271',1,'mkldnn_types.h']]],
   ['mkldnn_5fconvolution_5fdirect',['mkldnn_convolution_direct',['../group__c__api__types__generic.html#ggaa27d43cdd1e439cc41a9580d23ce3e97ab90fddd0ca784280b9a37b3cc6fee0a3',1,'mkldnn_types.h']]],
   ['mkldnn_5fconvolution_5frelu',['mkldnn_convolution_relu',['../group__c__api__types__generic.html#gga4f5c189c2ba9ef6444250299f1f8e973a264d5710e0bce9795951fed76b6e34a4',1,'mkldnn_types.h']]],
+  ['mkldnn_5fconvolution_5fwinograd',['mkldnn_convolution_winograd',['../group__c__api__types__generic.html#ggaa27d43cdd1e439cc41a9580d23ce3e97a39300e64bd67f98af2fe51154b398814',1,'mkldnn_types.h']]],
   ['mkldnn_5fcpu',['mkldnn_cpu',['../group__c__api__engine__types.html#ggaec8e96cbc2f19125c9def11efa98aa7ea23ee49a2c81f9299e65252b10eed4557',1,'mkldnn_types.h']]],
   ['mkldnn_5fdata_5ftype_5fundef',['mkldnn_data_type_undef',['../group__c__api__types__generic.html#gga826b2a9be4d94ac17f99bacac6d0cb29a5ff46aa58e4959d52ce8079c4f92e3b5',1,'mkldnn_types.h']]],
   ['mkldnn_5feager',['mkldnn_eager',['../group__c__api__types__stream.html#ggadd66574e231fe36721cdbe02ea47aa18a31d72581d8e1f3e15fc78f996a43ecc2',1,'mkldnn_types.h']]],
