@@ -84,6 +84,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
+<a href="#typedef-members">Typedefs</a> &#124;
 <a href="#enum-members">Enumerations</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
@@ -141,9 +142,9 @@ Classes</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmkldnn_1_1pooling__backward.html">pooling_backward</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmkldnn_1_1relu__forward.html">relu_forward</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmkldnn_1_1eltwise__forward.html">eltwise_forward</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmkldnn_1_1relu__backward.html">relu_backward</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmkldnn_1_1eltwise__backward.html">eltwise_backward</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmkldnn_1_1softmax__forward.html">softmax_forward</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -157,6 +158,13 @@ Classes</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmkldnn_1_1inner__product__backward__weights.html">inner_product_backward_weights</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:ga5a566a3bc019b743b75735b5c96d2b06"><td class="memItemLeft" align="right" valign="top">typedef <a class="el" href="structmkldnn_1_1eltwise__forward.html">eltwise_forward</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga5a566a3bc019b743b75735b5c96d2b06">relu_forward</a></td></tr>
+<tr class="separator:ga5a566a3bc019b743b75735b5c96d2b06"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab854378aae0281874a3afbd38f8917f2"><td class="memItemLeft" align="right" valign="top">typedef <a class="el" href="structmkldnn_1_1eltwise__backward.html">eltwise_backward</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#gab854378aae0281874a3afbd38f8917f2">relu_backward</a></td></tr>
+<tr class="separator:gab854378aae0281874a3afbd38f8917f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
@@ -173,25 +181,26 @@ Enumerations</h2></td></tr>
 <br/>
 &#160;&#160;<a class="el" href="group__cpp__api__engine.html#gga6d88ff11a07bae09a5c348d314c5d1d9a7b7d987552be10a6654ea645cede0a95">memory_d</a> = c_api::mkldnn_query_memory_d, 
 <a class="el" href="group__cpp__api__engine.html#gga6d88ff11a07bae09a5c348d314c5d1d9a13f5d72b1e5ec568b24c930e3b87641b">convolution_d</a> = c_api::mkldnn_query_convolution_d, 
+<a class="el" href="group__cpp__api__engine.html#gga6d88ff11a07bae09a5c348d314c5d1d9a69f238a33c9858afa87b914eb8b5ecb7">eltwise_d</a> = c_api::mkldnn_query_eltwise_d, 
 <a class="el" href="group__cpp__api__engine.html#gga6d88ff11a07bae09a5c348d314c5d1d9a20f677933e74a40096d45a51664c5ee4">relu_d</a> = c_api::mkldnn_query_relu_d, 
-<a class="el" href="group__cpp__api__engine.html#gga6d88ff11a07bae09a5c348d314c5d1d9abdb39a5fa96f35b51571bb5481ed2cc2">softmax_d</a> = c_api::mkldnn_query_softmax_d, 
 <br/>
-&#160;&#160;<a class="el" href="group__cpp__api__engine.html#gga6d88ff11a07bae09a5c348d314c5d1d9a3be3f1011debd2ee2df16b6b04a0bf77">pooling_d</a> = c_api::mkldnn_query_pooling_d, 
+&#160;&#160;<a class="el" href="group__cpp__api__engine.html#gga6d88ff11a07bae09a5c348d314c5d1d9abdb39a5fa96f35b51571bb5481ed2cc2">softmax_d</a> = c_api::mkldnn_query_softmax_d, 
+<a class="el" href="group__cpp__api__engine.html#gga6d88ff11a07bae09a5c348d314c5d1d9a3be3f1011debd2ee2df16b6b04a0bf77">pooling_d</a> = c_api::mkldnn_query_pooling_d, 
 <a class="el" href="group__cpp__api__engine.html#gga6d88ff11a07bae09a5c348d314c5d1d9a76add43bb6bee4f897e668e2d54476a2">lrn_d</a> = c_api::mkldnn_query_lrn_d, 
 <a class="el" href="group__cpp__api__engine.html#gga6d88ff11a07bae09a5c348d314c5d1d9a98ae1af5a25e62ffebc0ee054e0fd7c7">batch_normalization_d</a> = c_api::mkldnn_query_batch_normalization_d, 
-<a class="el" href="group__cpp__api__engine.html#gga6d88ff11a07bae09a5c348d314c5d1d9a4036c4c9cc32dd0f22a8903cfceeaa41">inner_product_d</a> = c_api::mkldnn_query_inner_product_d, 
 <br/>
-&#160;&#160;<a class="el" href="group__cpp__api__engine.html#gga6d88ff11a07bae09a5c348d314c5d1d9a83453c3a1e6a6dad19d5928ae9b9b0ee">convolution_relu_d</a> = c_api::mkldnn_query_convolution_relu_d, 
+&#160;&#160;<a class="el" href="group__cpp__api__engine.html#gga6d88ff11a07bae09a5c348d314c5d1d9a4036c4c9cc32dd0f22a8903cfceeaa41">inner_product_d</a> = c_api::mkldnn_query_inner_product_d, 
+<a class="el" href="group__cpp__api__engine.html#gga6d88ff11a07bae09a5c348d314c5d1d9a83453c3a1e6a6dad19d5928ae9b9b0ee">convolution_relu_d</a> = c_api::mkldnn_query_convolution_relu_d, 
 <a class="el" href="group__cpp__api__engine.html#gga6d88ff11a07bae09a5c348d314c5d1d9a508fa6b849113ef2100177d2991129fe">input_pd</a> = c_api::mkldnn_query_input_pd, 
 <a class="el" href="group__cpp__api__engine.html#gga6d88ff11a07bae09a5c348d314c5d1d9abab2d1abc2d37f4a1358daeb7f9a32b1">output_pd</a> = c_api::mkldnn_query_output_pd, 
-<a class="el" href="group__cpp__api__engine.html#gga6d88ff11a07bae09a5c348d314c5d1d9a486100f73904f2beae1418a57cc6e0b1">src_pd</a> = c_api::mkldnn_query_src_pd, 
 <br/>
-&#160;&#160;<a class="el" href="group__cpp__api__engine.html#gga6d88ff11a07bae09a5c348d314c5d1d9a255f93a5ef35321792effc4f5d23e1e3">diff_src_pd</a> = c_api::mkldnn_query_diff_src_pd, 
+&#160;&#160;<a class="el" href="group__cpp__api__engine.html#gga6d88ff11a07bae09a5c348d314c5d1d9a486100f73904f2beae1418a57cc6e0b1">src_pd</a> = c_api::mkldnn_query_src_pd, 
+<a class="el" href="group__cpp__api__engine.html#gga6d88ff11a07bae09a5c348d314c5d1d9a255f93a5ef35321792effc4f5d23e1e3">diff_src_pd</a> = c_api::mkldnn_query_diff_src_pd, 
 <a class="el" href="group__cpp__api__engine.html#gga6d88ff11a07bae09a5c348d314c5d1d9a38a475450bc885f2a0fad13bf87f44b9">weights_pd</a> = c_api::mkldnn_query_weights_pd, 
 <a class="el" href="group__cpp__api__engine.html#gga6d88ff11a07bae09a5c348d314c5d1d9a7b14a983b2e690abcf176dd41da50ae1">diff_weights_pd</a> = c_api::mkldnn_query_diff_weights_pd, 
-<a class="el" href="group__cpp__api__engine.html#gga6d88ff11a07bae09a5c348d314c5d1d9a5e602b7cc44ad7373ab7212f73b3d7d4">dst_pd</a> = c_api::mkldnn_query_dst_pd, 
 <br/>
-&#160;&#160;<a class="el" href="group__cpp__api__engine.html#gga6d88ff11a07bae09a5c348d314c5d1d9adb9fd0a330dc402a36de022ce82bff07">diff_dst_pd</a> = c_api::mkldnn_query_diff_dst_pd, 
+&#160;&#160;<a class="el" href="group__cpp__api__engine.html#gga6d88ff11a07bae09a5c348d314c5d1d9a5e602b7cc44ad7373ab7212f73b3d7d4">dst_pd</a> = c_api::mkldnn_query_dst_pd, 
+<a class="el" href="group__cpp__api__engine.html#gga6d88ff11a07bae09a5c348d314c5d1d9adb9fd0a330dc402a36de022ce82bff07">diff_dst_pd</a> = c_api::mkldnn_query_diff_dst_pd, 
 <a class="el" href="group__cpp__api__engine.html#gga6d88ff11a07bae09a5c348d314c5d1d9a41d00a7019d406614ebaa00195d179bd">workspace_pd</a> = c_api::mkldnn_query_workspace_pd
 <br/>
  }</td></tr>
@@ -215,11 +224,15 @@ Enumerations</h2></td></tr>
 <tr class="memitem:gae45a07d6121fdd33e310782753178076"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#gae45a07d6121fdd33e310782753178076">algorithm</a> { <br/>
 &#160;&#160;<a class="el" href="group__cpp__api__memory.html#ggae45a07d6121fdd33e310782753178076a7c32719b6310ede805768dfbe7c909a8">convolution_direct</a> = c_api::mkldnn_convolution_direct, 
 <a class="el" href="group__cpp__api__memory.html#ggae45a07d6121fdd33e310782753178076a3fcadb2934e7f8a0a4b9dacbcf9e8e36">convolution_winograd</a> = c_api::mkldnn_convolution_winograd, 
+<a class="el" href="group__cpp__api__memory.html#ggae45a07d6121fdd33e310782753178076a7949269c3f40dbf756f63a20e5dae2e0">eltwise_relu</a> = c_api::mkldnn_eltwise_relu, 
+<a class="el" href="group__cpp__api__memory.html#ggae45a07d6121fdd33e310782753178076a12c72b1d3a7f7b06fdd0dbd7f8fa6c12">eltwise_tanh</a> = c_api::mkldnn_eltwise_tanh, 
+<br/>
+&#160;&#160;<a class="el" href="group__cpp__api__memory.html#ggae45a07d6121fdd33e310782753178076a69bd24cf8965e1bc499cb1722c12a597">eltwise_elu</a> = c_api::mkldnn_eltwise_elu, 
 <a class="el" href="group__cpp__api__memory.html#ggae45a07d6121fdd33e310782753178076a5ba3a03af8dc6c1b9066e48508ae9b5c">lrn_across_channels</a> = c_api::mkldnn_lrn_across_channels, 
 <a class="el" href="group__cpp__api__memory.html#ggae45a07d6121fdd33e310782753178076a1bec35024f741400d95f4c15897b50a2">lrn_within_channel</a> = c_api::mkldnn_lrn_within_channel, 
+<a class="el" href="group__cpp__api__memory.html#ggae45a07d6121fdd33e310782753178076ab1d69186fe566f20003f62b15e9aee8c">pooling_max</a> = c_api::mkldnn_pooling_max, 
 <br/>
-&#160;&#160;<a class="el" href="group__cpp__api__memory.html#ggae45a07d6121fdd33e310782753178076ab1d69186fe566f20003f62b15e9aee8c">pooling_max</a> = c_api::mkldnn_pooling_max, 
-<a class="el" href="group__cpp__api__memory.html#ggae45a07d6121fdd33e310782753178076af370bca4c92b4f310923dabec54ef476">pooling_avg</a> = c_api::mkldnn_pooling_avg, 
+&#160;&#160;<a class="el" href="group__cpp__api__memory.html#ggae45a07d6121fdd33e310782753178076af370bca4c92b4f310923dabec54ef476">pooling_avg</a> = c_api::mkldnn_pooling_avg, 
 <a class="el" href="group__cpp__api__memory.html#ggae45a07d6121fdd33e310782753178076af1d57d5eddbf76411006a0206d435502">pooling_avg_include_padding</a> = c_api::mkldnn_pooling_avg_include_padding, 
 <a class="el" href="group__cpp__api__memory.html#ggae45a07d6121fdd33e310782753178076a8547db746e2b24e920a1bb912b7ed702">pooling_avg_exclude_padding</a> = c_api::mkldnn_pooling_avg_exclude_padding
 <br/>

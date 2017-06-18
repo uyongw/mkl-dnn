@@ -233,7 +233,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line">        negative_slope);</div>
 <div class="line"><span class="keyword">auto</span> relu_dst_memory = memory(relu_pd.dst_primitive_desc());</div>
 </div><!-- fragment --></li>
-<li>Pass the convolution primitive as input to relu. <b>Note:</b> this allows the stream to establish dependencies between primitives. <div class="fragment"><div class="line"><span class="keyword">auto</span> relu = relu_forward(relu_pd, conv, relu_dst_memory);</div>
+<li>Pass the convolution primitive as input to relu. <b>Note:</b> this allows the stream to establish dependencies between primitives. <div class="fragment"><div class="line"><span class="keyword">auto</span> relu = <a class="code" href="group__cpp__api__memory.html#ga5a566a3bc019b743b75735b5c96d2b06">relu_forward</a>(relu_pd, conv, relu_dst_memory);</div>
 <div class="line">net.push_back(relu);</div>
 </div><!-- fragment --></li>
 <li>Finally, create a stream, submit all the primitives, and wait for completion. <div class="fragment"><div class="line"><a class="code" href="structmkldnn_1_1stream.html">mkldnn::stream</a>(mkldnn::stream::kind::eager).<a class="code" href="group__cpp__api__memory.html#ga018e38932cc072568a48015f55fbe798">submit</a>(net).<a class="code" href="group__cpp__api__memory.html#ga577fe98393390dc1ba646266d57566e2">wait</a>();</div>

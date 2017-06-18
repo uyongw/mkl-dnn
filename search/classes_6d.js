@@ -5,6 +5,7 @@ var searchData=
   ['mkldnn_5fblocking_5fdesc_5ft',['mkldnn_blocking_desc_t',['../structmkldnn__blocking__desc__t.html',1,'']]],
   ['mkldnn_5fconvolution_5fdesc_5ft',['mkldnn_convolution_desc_t',['../structmkldnn__convolution__desc__t.html',1,'']]],
   ['mkldnn_5fconvolution_5frelu_5fdesc_5ft',['mkldnn_convolution_relu_desc_t',['../structmkldnn__convolution__relu__desc__t.html',1,'']]],
+  ['mkldnn_5feltwise_5fdesc_5ft',['mkldnn_eltwise_desc_t',['../structmkldnn__eltwise__desc__t.html',1,'']]],
   ['mkldnn_5fengine',['mkldnn_engine',['../structmkldnn__engine.html',1,'']]],
   ['mkldnn_5finner_5fproduct_5fdesc_5ft',['mkldnn_inner_product_desc_t',['../structmkldnn__inner__product__desc__t.html',1,'']]],
   ['mkldnn_5flrn_5fdesc_5ft',['mkldnn_lrn_desc_t',['../structmkldnn__lrn__desc__t.html',1,'']]],
@@ -14,7 +15,6 @@ var searchData=
   ['mkldnn_5fprimitive_5fat_5ft',['mkldnn_primitive_at_t',['../structmkldnn__primitive__at__t.html',1,'']]],
   ['mkldnn_5fprimitive_5fdesc',['mkldnn_primitive_desc',['../structmkldnn__primitive__desc.html',1,'']]],
   ['mkldnn_5fprimitive_5fdesc_5fiterator',['mkldnn_primitive_desc_iterator',['../structmkldnn__primitive__desc__iterator.html',1,'']]],
-  ['mkldnn_5frelu_5fdesc_5ft',['mkldnn_relu_desc_t',['../structmkldnn__relu__desc__t.html',1,'']]],
   ['mkldnn_5fsoftmax_5fdesc_5ft',['mkldnn_softmax_desc_t',['../structmkldnn__softmax__desc__t.html',1,'']]],
   ['mkldnn_5fstream',['mkldnn_stream',['../structmkldnn__stream.html',1,'']]]
 ];

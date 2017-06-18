@@ -191,12 +191,13 @@ Enumerations</h2></td></tr>
 <a class="el" href="group__c__api__types__generic.html#gga4f5c189c2ba9ef6444250299f1f8e973a1d5a4ac349734074b150188851be19c8">mkldnn_sum</a>, 
 <a class="el" href="group__c__api__types__generic.html#gga4f5c189c2ba9ef6444250299f1f8e973a88592adccf64d1fd271ed6e21d66b271">mkldnn_convolution</a>, 
 <br/>
-&#160;&#160;<a class="el" href="group__c__api__types__generic.html#gga4f5c189c2ba9ef6444250299f1f8e973a8beb4159b64f50ce4a367e305c9db860">mkldnn_relu</a>, 
+&#160;&#160;<a class="el" href="group__c__api__types__generic.html#gga4f5c189c2ba9ef6444250299f1f8e973ae1cbd23f0addc5270d4f8ae63e0ecc7d">mkldnn_eltwise</a>, 
+<a class="el" href="group__c__api__types__generic.html#gga4f5c189c2ba9ef6444250299f1f8e973a8beb4159b64f50ce4a367e305c9db860">mkldnn_relu</a> = mkldnn_eltwise, 
 <a class="el" href="group__c__api__types__generic.html#gga4f5c189c2ba9ef6444250299f1f8e973acda8db2022e0c87c016286c098f0c31e">mkldnn_softmax</a>, 
 <a class="el" href="group__c__api__types__generic.html#gga4f5c189c2ba9ef6444250299f1f8e973a4962b750b011e794c6a7fcebcc5a4fb2">mkldnn_pooling</a>, 
-<a class="el" href="group__c__api__types__generic.html#gga4f5c189c2ba9ef6444250299f1f8e973ac9dbe1aea35cb16f509ad407695cb8b7">mkldnn_lrn</a>, 
 <br/>
-&#160;&#160;<a class="el" href="group__c__api__types__generic.html#gga4f5c189c2ba9ef6444250299f1f8e973a07b76e29d8363303cb682627dc56a515">mkldnn_batch_normalization</a>, 
+&#160;&#160;<a class="el" href="group__c__api__types__generic.html#gga4f5c189c2ba9ef6444250299f1f8e973ac9dbe1aea35cb16f509ad407695cb8b7">mkldnn_lrn</a>, 
+<a class="el" href="group__c__api__types__generic.html#gga4f5c189c2ba9ef6444250299f1f8e973a07b76e29d8363303cb682627dc56a515">mkldnn_batch_normalization</a>, 
 <a class="el" href="group__c__api__types__generic.html#gga4f5c189c2ba9ef6444250299f1f8e973ad2ae1c6b5f66bdfca8a2734ea328385f">mkldnn_inner_product</a>, 
 <a class="el" href="group__c__api__types__generic.html#gga4f5c189c2ba9ef6444250299f1f8e973a264d5710e0bce9795951fed76b6e34a4">mkldnn_convolution_relu</a>
 <br/>
@@ -206,11 +207,15 @@ Enumerations</h2></td></tr>
 <tr class="memitem:gaa27d43cdd1e439cc41a9580d23ce3e97"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__c__api__types__generic.html#gaa27d43cdd1e439cc41a9580d23ce3e97">mkldnn_alg_kind_t</a> { <br/>
 &#160;&#160;<a class="el" href="group__c__api__types__generic.html#ggaa27d43cdd1e439cc41a9580d23ce3e97ab90fddd0ca784280b9a37b3cc6fee0a3">mkldnn_convolution_direct</a> = 1, 
 <a class="el" href="group__c__api__types__generic.html#ggaa27d43cdd1e439cc41a9580d23ce3e97a39300e64bd67f98af2fe51154b398814">mkldnn_convolution_winograd</a> = 2, 
+<a class="el" href="group__c__api__types__generic.html#ggaa27d43cdd1e439cc41a9580d23ce3e97a66ead6848424f0b494e813745efb5548">mkldnn_eltwise_relu</a> = 8, 
+<a class="el" href="group__c__api__types__generic.html#ggaa27d43cdd1e439cc41a9580d23ce3e97a6b50624e847783bfc94b7cf6badfa16c">mkldnn_eltwise_tanh</a> = 9, 
+<br/>
+&#160;&#160;<a class="el" href="group__c__api__types__generic.html#ggaa27d43cdd1e439cc41a9580d23ce3e97a9d438b0d2d277674da5f54990e029015">mkldnn_eltwise_elu</a> = 10, 
 <a class="el" href="group__c__api__types__generic.html#ggaa27d43cdd1e439cc41a9580d23ce3e97a38644ce471217d36eab206d0bc144e57">mkldnn_pooling_max</a> = 34, 
 <a class="el" href="group__c__api__types__generic.html#ggaa27d43cdd1e439cc41a9580d23ce3e97ae81aeeb0b887c9d903daffabcffac422">mkldnn_pooling_avg_include_padding</a> = 40, 
+<a class="el" href="group__c__api__types__generic.html#ggaa27d43cdd1e439cc41a9580d23ce3e97a134808cee6fb8aeb7f0927c1666605b4">mkldnn_pooling_avg_exclude_padding</a> = 41, 
 <br/>
-&#160;&#160;<a class="el" href="group__c__api__types__generic.html#ggaa27d43cdd1e439cc41a9580d23ce3e97a134808cee6fb8aeb7f0927c1666605b4">mkldnn_pooling_avg_exclude_padding</a> = 41, 
-<a class="el" href="group__c__api__types__generic.html#ggaa27d43cdd1e439cc41a9580d23ce3e97a69461b64295cd2bff5fef4eac3f3383a">mkldnn_pooling_avg</a> = mkldnn_pooling_avg_exclude_padding, 
+&#160;&#160;<a class="el" href="group__c__api__types__generic.html#ggaa27d43cdd1e439cc41a9580d23ce3e97a69461b64295cd2bff5fef4eac3f3383a">mkldnn_pooling_avg</a> = mkldnn_pooling_avg_exclude_padding, 
 <a class="el" href="group__c__api__types__generic.html#ggaa27d43cdd1e439cc41a9580d23ce3e97a1ed17baabce0edc962f1dcfe83d09d5d">mkldnn_lrn_across_channels</a> = 65, 
 <a class="el" href="group__c__api__types__generic.html#ggaa27d43cdd1e439cc41a9580d23ce3e97a03714f6e5eff68bca2f4d9c9396e9ce6">mkldnn_lrn_within_channel</a> = 66
 <br/>
@@ -243,6 +248,15 @@ Enumerations</h2></td></tr>
 </td></tr>
 <tr><td class="fieldname"><em><a class="anchor" id="ggaa27d43cdd1e439cc41a9580d23ce3e97a39300e64bd67f98af2fe51154b398814"></a>mkldnn_convolution_winograd</em>&nbsp;</td><td class="fielddoc">
 <p>Winograd convolution. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaa27d43cdd1e439cc41a9580d23ce3e97a66ead6848424f0b494e813745efb5548"></a>mkldnn_eltwise_relu</em>&nbsp;</td><td class="fielddoc">
+<p>Eltwise: ReLU. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaa27d43cdd1e439cc41a9580d23ce3e97a6b50624e847783bfc94b7cf6badfa16c"></a>mkldnn_eltwise_tanh</em>&nbsp;</td><td class="fielddoc">
+<p>Eltwise: hyperbolic tangent non-linearity (tanh) </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaa27d43cdd1e439cc41a9580d23ce3e97a9d438b0d2d277674da5f54990e029015"></a>mkldnn_eltwise_elu</em>&nbsp;</td><td class="fielddoc">
+<p>Eltwise: parametric exponential linear unit (elu) </p>
 </td></tr>
 <tr><td class="fieldname"><em><a class="anchor" id="ggaa27d43cdd1e439cc41a9580d23ce3e97a38644ce471217d36eab206d0bc144e57"></a>mkldnn_pooling_max</em>&nbsp;</td><td class="fielddoc">
 <p>Max pooling. </p>
@@ -528,8 +542,12 @@ Enumerations</h2></td></tr>
 <tr><td class="fieldname"><em><a class="anchor" id="gga4f5c189c2ba9ef6444250299f1f8e973a88592adccf64d1fd271ed6e21d66b271"></a>mkldnn_convolution</em>&nbsp;</td><td class="fielddoc">
 <p>A convolution primitive. </p>
 </td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga4f5c189c2ba9ef6444250299f1f8e973ae1cbd23f0addc5270d4f8ae63e0ecc7d"></a>mkldnn_eltwise</em>&nbsp;</td><td class="fielddoc">
+<p>An element-wise primitive. </p>
+</td></tr>
 <tr><td class="fieldname"><em><a class="anchor" id="gga4f5c189c2ba9ef6444250299f1f8e973a8beb4159b64f50ce4a367e305c9db860"></a>mkldnn_relu</em>&nbsp;</td><td class="fielddoc">
-<p>A ReLU primitive. </p>
+<p>A ReLU primitive,. </p>
+<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000005">Deprecated:</a></b></dt><dd>.</dd></dl>
 </td></tr>
 <tr><td class="fieldname"><em><a class="anchor" id="gga4f5c189c2ba9ef6444250299f1f8e973acda8db2022e0c87c016286c098f0c31e"></a>mkldnn_softmax</em>&nbsp;</td><td class="fielddoc">
 <p>A Softmax primitive. </p>

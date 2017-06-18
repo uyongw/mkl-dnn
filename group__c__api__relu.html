@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>Intel(R) MKL-DNN: ReLU</title>
+<title>Intel(R) MKL-DNN: ReLU (deprecated, use Eltwise instead)</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -80,7 +80,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div class="summary">
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">ReLU<div class="ingroups"><a class="el" href="group__c__api__primitive.html">Primitive operations</a></div></div>  </div>
+<div class="title">ReLU (deprecated, use Eltwise instead)<div class="ingroups"><a class="el" href="group__c__api__primitive.html">Primitive operations</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
@@ -89,12 +89,14 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga7558180ad82184178de06295118faf07"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__c__api__types__generic.html#ga31866789b66acfb1c28b2f9bdd7bdfdd">mkldnn_status_t</a> MKLDNN_API&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__c__api__relu.html#ga7558180ad82184178de06295118faf07">mkldnn_relu_forward_desc_init</a> (<a class="el" href="structmkldnn__relu__desc__t.html">mkldnn_relu_desc_t</a> *relu_desc, <a class="el" href="group__c__api__types__generic.html#ga5b98c8059c2aff8861157bf070c3f520">mkldnn_prop_kind_t</a> prop_kind, const <a class="el" href="structmkldnn__memory__desc__t.html">mkldnn_memory_desc_t</a> *data_desc, double negative_slope)</td></tr>
-<tr class="memdesc:ga7558180ad82184178de06295118faf07"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a <code>relu_desc</code> for forward propagation using <code>prop_kind</code> (possible values are <a class="el" href="group__c__api__types__generic.html#gga5b98c8059c2aff8861157bf070c3f520a0bb8fb5a8f3ae67cf8d9c8d13667507f" title="Forward data propagation (training mode). ">mkldnn_forward_training</a> or <a class="el" href="group__c__api__types__generic.html#gga5b98c8059c2aff8861157bf070c3f520a58a923fb6c4e1214e1505b5fa0b1e3fa" title="Forward data propagation (inference mode). ">mkldnn_forward_inference</a>), <code>negative_slope</code> and memory descriptor <code>data_desc</code>.  <a href="#ga7558180ad82184178de06295118faf07">More...</a><br/></td></tr>
-<tr class="separator:ga7558180ad82184178de06295118faf07"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9df5d3755ac67a372375f17e7355c5d8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__c__api__types__generic.html#ga31866789b66acfb1c28b2f9bdd7bdfdd">mkldnn_status_t</a> MKLDNN_API&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__c__api__relu.html#ga9df5d3755ac67a372375f17e7355c5d8">mkldnn_relu_backward_desc_init</a> (<a class="el" href="structmkldnn__relu__desc__t.html">mkldnn_relu_desc_t</a> *relu_desc, const <a class="el" href="structmkldnn__memory__desc__t.html">mkldnn_memory_desc_t</a> *diff_data_desc, const <a class="el" href="structmkldnn__memory__desc__t.html">mkldnn_memory_desc_t</a> *data_desc, double negative_slope)</td></tr>
-<tr class="memdesc:ga9df5d3755ac67a372375f17e7355c5d8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a <code>relu_desc</code> for backward propagation using <code>negative_slope</code> and memory descriptors <code>diff_data_desc</code> and <code>data_desc</code>.  <a href="#ga9df5d3755ac67a372375f17e7355c5d8">More...</a><br/></td></tr>
-<tr class="separator:ga9df5d3755ac67a372375f17e7355c5d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad80d4869c671dcf51d62c5565e016d25"><td class="memItemLeft" align="right" valign="top">MKLDNN_DEPRECATED <br class="typebreak"/>
+<a class="el" href="group__c__api__types__generic.html#ga31866789b66acfb1c28b2f9bdd7bdfdd">mkldnn_status_t</a> MKLDNN_API&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__c__api__relu.html#gad80d4869c671dcf51d62c5565e016d25">mkldnn_relu_forward_desc_init</a> (<a class="el" href="group__c__api__types__memory.html#ga5472f7e013cb456d4ef7789cf8785a4c">mkldnn_relu_desc_t</a> *relu_desc, <a class="el" href="group__c__api__types__generic.html#ga5b98c8059c2aff8861157bf070c3f520">mkldnn_prop_kind_t</a> prop_kind, const <a class="el" href="structmkldnn__memory__desc__t.html">mkldnn_memory_desc_t</a> *data_desc, double negative_slope)</td></tr>
+<tr class="memdesc:gad80d4869c671dcf51d62c5565e016d25"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a <code>relu_desc</code> for forward propagation using <code>prop_kind</code> (possible values are <a class="el" href="group__c__api__types__generic.html#gga5b98c8059c2aff8861157bf070c3f520a0bb8fb5a8f3ae67cf8d9c8d13667507f" title="Forward data propagation (training mode). ">mkldnn_forward_training</a> or <a class="el" href="group__c__api__types__generic.html#gga5b98c8059c2aff8861157bf070c3f520a58a923fb6c4e1214e1505b5fa0b1e3fa" title="Forward data propagation (inference mode). ">mkldnn_forward_inference</a>), <code>negative_slope</code> and memory descriptor <code>data_desc</code>.  <a href="#gad80d4869c671dcf51d62c5565e016d25">More...</a><br/></td></tr>
+<tr class="separator:gad80d4869c671dcf51d62c5565e016d25"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga06dd85dacbe0459e1424dd777ea8d0c2"><td class="memItemLeft" align="right" valign="top">MKLDNN_DEPRECATED <br class="typebreak"/>
+<a class="el" href="group__c__api__types__generic.html#ga31866789b66acfb1c28b2f9bdd7bdfdd">mkldnn_status_t</a> MKLDNN_API&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__c__api__relu.html#ga06dd85dacbe0459e1424dd777ea8d0c2">mkldnn_relu_backward_desc_init</a> (<a class="el" href="group__c__api__types__memory.html#ga5472f7e013cb456d4ef7789cf8785a4c">mkldnn_relu_desc_t</a> *relu_desc, const <a class="el" href="structmkldnn__memory__desc__t.html">mkldnn_memory_desc_t</a> *diff_data_desc, const <a class="el" href="structmkldnn__memory__desc__t.html">mkldnn_memory_desc_t</a> *data_desc, double negative_slope)</td></tr>
+<tr class="memdesc:ga06dd85dacbe0459e1424dd777ea8d0c2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a <code>relu_desc</code> for backward propagation using <code>negative_slope</code> and memory descriptors <code>diff_data_desc</code> and <code>data_desc</code>.  <a href="#ga06dd85dacbe0459e1424dd777ea8d0c2">More...</a><br/></td></tr>
+<tr class="separator:ga06dd85dacbe0459e1424dd777ea8d0c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>A primitive to compute a parametric rectifier linear unit (ReLU). </p>
@@ -102,14 +104,14 @@ Functions</h2></td></tr>
 <img class="formulaDsp" alt="\[dst[n][c][h][w] = \max(src[n][c][h][w], 0) + \min(src[n][c][h][w], 0) \cdot negative\_slope\]" src="form_7.png"/>
 </p>
  <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="ga9df5d3755ac67a372375f17e7355c5d8"></a>
+<a class="anchor" id="ga06dd85dacbe0459e1424dd777ea8d0c2"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group__c__api__types__generic.html#ga31866789b66acfb1c28b2f9bdd7bdfdd">mkldnn_status_t</a> MKLDNN_API mkldnn_relu_backward_desc_init </td>
+          <td class="memname">MKLDNN_DEPRECATED <a class="el" href="group__c__api__types__generic.html#ga31866789b66acfb1c28b2f9bdd7bdfdd">mkldnn_status_t</a> MKLDNN_API mkldnn_relu_backward_desc_init </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="structmkldnn__relu__desc__t.html">mkldnn_relu_desc_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="group__c__api__types__memory.html#ga5472f7e013cb456d4ef7789cf8785a4c">mkldnn_relu_desc_t</a> *&#160;</td>
           <td class="paramname"><em>relu_desc</em>, </td>
         </tr>
         <tr>
@@ -139,17 +141,18 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Initializes a <code>relu_desc</code> for backward propagation using <code>negative_slope</code> and memory descriptors <code>diff_data_desc</code> and <code>data_desc</code>. </p>
+<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000002">Deprecated:</a></b></dt><dd>use <a class="el" href="group__c__api__eltwise.html#ga2c8a1ff918b22abafdfd9464d9c6bdde" title="Initializes a eltwise_desc for backward propagation using alg_kind algorithm memory descriptors diff_...">mkldnn_eltwise_backward_desc_init()</a> instead, with <code>alpha</code> equals  </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="ga7558180ad82184178de06295118faf07"></a>
+<a class="anchor" id="gad80d4869c671dcf51d62c5565e016d25"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group__c__api__types__generic.html#ga31866789b66acfb1c28b2f9bdd7bdfdd">mkldnn_status_t</a> MKLDNN_API mkldnn_relu_forward_desc_init </td>
+          <td class="memname">MKLDNN_DEPRECATED <a class="el" href="group__c__api__types__generic.html#ga31866789b66acfb1c28b2f9bdd7bdfdd">mkldnn_status_t</a> MKLDNN_API mkldnn_relu_forward_desc_init </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="structmkldnn__relu__desc__t.html">mkldnn_relu_desc_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="group__c__api__types__memory.html#ga5472f7e013cb456d4ef7789cf8785a4c">mkldnn_relu_desc_t</a> *&#160;</td>
           <td class="paramname"><em>relu_desc</em>, </td>
         </tr>
         <tr>
@@ -179,6 +182,7 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Initializes a <code>relu_desc</code> for forward propagation using <code>prop_kind</code> (possible values are <a class="el" href="group__c__api__types__generic.html#gga5b98c8059c2aff8861157bf070c3f520a0bb8fb5a8f3ae67cf8d9c8d13667507f" title="Forward data propagation (training mode). ">mkldnn_forward_training</a> or <a class="el" href="group__c__api__types__generic.html#gga5b98c8059c2aff8861157bf070c3f520a58a923fb6c4e1214e1505b5fa0b1e3fa" title="Forward data propagation (inference mode). ">mkldnn_forward_inference</a>), <code>negative_slope</code> and memory descriptor <code>data_desc</code>. </p>
+<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000001">Deprecated:</a></b></dt><dd>use <a class="el" href="group__c__api__eltwise.html#ga0ac7165cba8a30e8204f25f23da280ce" title="Initializes a eltwise_desc for forward propagation using prop_kind (possible values are mkldnn_forwar...">mkldnn_eltwise_forward_desc_init()</a> instead, with <code>alpha</code> equals  </dd></dl>
 
 </div>
 </div>
