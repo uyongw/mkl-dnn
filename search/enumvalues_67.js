@@ -8,5 +8,6 @@ var searchData=
   ['goihw16o16i',['gOIhw16o16i',['../group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87eaa1cc9ef7726a93eaf88e6556bca94f64',1,'mkldnn::memory']]],
   ['goihw8i16o2i',['gOIhw8i16o2i',['../group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87ea380d9e31a9703c3b520c8cc32e6ae8b9',1,'mkldnn::memory']]],
   ['goihw8i8o',['gOIhw8i8o',['../group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87ea11eda3436ae582b8a28cc85adc8433c1',1,'mkldnn::memory']]],
+  ['goihw8o16i2o',['gOIhw8o16i2o',['../group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87ea924d233b52d5b5cbad3f00280e7bae61',1,'mkldnn::memory']]],
   ['goihw8o8i',['gOIhw8o8i',['../group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87eacaf364857cd0309c67bb6dff621ee71e',1,'mkldnn::memory']]]
 ];

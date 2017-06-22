@@ -14,6 +14,7 @@ var searchData=
   ['oihw8i',['oIhw8i',['../group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87eaabeb598d814c8420a22243d26e6ed3c9',1,'mkldnn::memory']]],
   ['oihw8i16o2i',['OIhw8i16o2i',['../group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87eaffaad9f0dac63a0880ee0bfd9b029888',1,'mkldnn::memory']]],
   ['oihw8i8o',['OIhw8i8o',['../group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87eab1ff88a5571cab5c4495acfb07669762',1,'mkldnn::memory']]],
+  ['oihw8o16i2o',['OIhw8o16i2o',['../group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87eae2907c3b58ca4186e7f6a31343b352cd',1,'mkldnn::memory']]],
   ['oihw8o8i',['OIhw8o8i',['../group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87ea511ae11a284c9108eeb61664ff163aea',1,'mkldnn::memory']]],
   ['omit_5fstats',['omit_stats',['../group__cpp__api__memory.html#gga344b5c240a7392585aba615ff4d0d7f1a030cc07467d878652fddc39b5290f2a9',1,'mkldnn']]],
   ['operator_20primitive',['operator primitive',['../group__cpp__api__memory.html#gae11efc467d645e02364da19a7d859fc9',1,'mkldnn::primitive::at']]],
