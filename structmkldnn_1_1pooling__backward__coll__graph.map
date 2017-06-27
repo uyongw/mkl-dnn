@@ -1,4 +1,4 @@
 <map id="mkldnn::pooling_backward" name="mkldnn::pooling_backward">
 <area shape="rect" id="node2" href="$classmkldnn_1_1primitive.html" title="Base class for all computational primitives. " alt="" coords="33,96,153,123"/>
-<area shape="rect" id="node3" href="$classmkldnn_1_1handle.html" title="mkldnn::handle\&lt; c_api\l::mkldnn_primitive_t \&gt;" alt="" coords="17,6,169,47"/>
+<area shape="rect" id="node3" href="$classmkldnn_1_1handle.html" title="mkldnn::handle\&lt; mkldnn\l_primitive_t \&gt;" alt="" coords="11,6,175,47"/>
 </map>

@@ -1,0 +1,4 @@
+<map id="mkldnn::memory::desc" name="mkldnn::memory::desc">
+<area shape="rect" id="node2" href="$structmkldnn__memory__desc__t.html" title="Memory descriptor. " alt="" coords="6,96,169,123"/>
+<area shape="rect" id="node3" href="$structmkldnn__blocking__desc__t.html" title="Generic description of blocked data layout for most memory formats. " alt="" coords="5,5,171,32"/>
+</map>

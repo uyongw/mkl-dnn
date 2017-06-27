@@ -16,9 +16,9 @@ var searchData=
   ['eltwise_5fforward',['eltwise_forward',['../group__cpp__api__memory.html#ga8d284ab511d05dadf55deeb518b36ae7',1,'mkldnn::eltwise_forward']]],
   ['eltwise_5frelu',['eltwise_relu',['../group__cpp__api__memory.html#ggae45a07d6121fdd33e310782753178076a7949269c3f40dbf756f63a20e5dae2e0',1,'mkldnn']]],
   ['eltwise_5ftanh',['eltwise_tanh',['../group__cpp__api__memory.html#ggae45a07d6121fdd33e310782753178076a12c72b1d3a7f7b06fdd0dbd7f8fa6c12',1,'mkldnn']]],
-  ['engine',['engine',['../group__cpp__api__memory.html#gacfa129c9cf572d121c3b1748fc8444fa',1,'mkldnn::engine::engine(kind akind, size_t index)'],['../group__cpp__api__memory.html#gae2645937e54c27ffacd0727c1465acec',1,'mkldnn::engine::engine(const c_api::mkldnn_engine_t &amp;aengine)'],['../group__cpp__api__memory.html#ga95f333c4582edcb606a4b9add2a53266',1,'mkldnn::engine::engine(const handle&lt; c_api::mkldnn_primitive_desc_t &gt; &amp;pd)']]],
+  ['engine',['engine',['../group__cpp__api__memory.html#gacfa129c9cf572d121c3b1748fc8444fa',1,'mkldnn::engine::engine(kind akind, size_t index)'],['../group__cpp__api__memory.html#gaeab8a660589202ecf17ed042a69bf5d5',1,'mkldnn::engine::engine(const mkldnn_engine_t &amp;aengine)'],['../group__cpp__api__memory.html#ga8511af0d3b8729e1ef9edab6d68a5e0d',1,'mkldnn::engine::engine(const handle&lt; mkldnn_primitive_desc_t &gt; &amp;pd)']]],
   ['engine',['engine',['../structmkldnn_1_1engine.html',1,'mkldnn']]],
   ['error',['error',['../structmkldnn_1_1error.html',1,'mkldnn']]],
-  ['error',['error',['../group__cpp__api__memory.html#ga44a600fabe6477225905e375551b34d1',1,'mkldnn::primitive::error()'],['../group__cpp__api__memory.html#ga96683a5ca544f344deb0289c35abf8f7',1,'mkldnn::error::error()']]],
+  ['error',['error',['../group__cpp__api__memory.html#ga44a600fabe6477225905e375551b34d1',1,'mkldnn::primitive::error()'],['../group__cpp__api__memory.html#ga7812548bbce0899a64348d1a73e2f57a',1,'mkldnn::error::error()']]],
   ['error_5fprimitive',['error_primitive',['../group__cpp__api__memory.html#gafa457ffa341634f9275610aa34a36c4c',1,'mkldnn::error']]]
 ];

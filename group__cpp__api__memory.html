@@ -95,7 +95,7 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmkldnn_1_1primitive_1_1at.html">mkldnn::primitive::at</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A wrapper structure to specify a particular output of a primitive.  <a href="structmkldnn_1_1primitive_1_1at.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmkldnn_1_1handle__traits_3_01c__api_1_1mkldnn__primitive__desc__t_01_4.html">mkldnn::handle_traits&lt; c_api::mkldnn_primitive_desc_t &gt;</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmkldnn_1_1handle__traits_3_01mkldnn__primitive__desc__t_01_4.html">mkldnn::handle_traits&lt; mkldnn_primitive_desc_t &gt;</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmkldnn_1_1memory.html">mkldnn::memory</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Memory primitive that describes the data.  <a href="structmkldnn_1_1memory.html#details">More...</a><br/></td></tr>
@@ -151,10 +151,10 @@ Classes</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:ga720bd5f3fae22b0e6a513deab0aacc3b"><td class="memItemLeft" align="right" valign="top">typedef std::vector<br class="typebreak"/>
+<tr class="memitem:ga0fa655354b5c62453d93c58e2f229a43"><td class="memItemLeft" align="right" valign="top">typedef std::vector<br class="typebreak"/>
 &lt; std::remove_extent<br class="typebreak"/>
-&lt; <a class="el" href="group__c__api__types__memory.html#ga9acc437c5b1f7ca760c048dc2de1c44d">c_api::mkldnn_dims_t</a> &gt;::type &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga720bd5f3fae22b0e6a513deab0aacc3b">mkldnn::memory::dims</a></td></tr>
-<tr class="separator:ga720bd5f3fae22b0e6a513deab0aacc3b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+&lt; <a class="el" href="group__c__api__types__memory.html#ga9acc437c5b1f7ca760c048dc2de1c44d">mkldnn_dims_t</a> &gt;::type &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga0fa655354b5c62453d93c58e2f229a43">mkldnn::memory::dims</a></td></tr>
+<tr class="separator:ga0fa655354b5c62453d93c58e2f229a43"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga5a566a3bc019b743b75735b5c96d2b06"><td class="memItemLeft" align="right" valign="top">typedef eltwise_forward&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga5a566a3bc019b743b75735b5c96d2b06">mkldnn::relu_forward</a></td></tr>
 <tr class="separator:ga5a566a3bc019b743b75735b5c96d2b06"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gab854378aae0281874a3afbd38f8917f2"><td class="memItemLeft" align="right" valign="top">typedef eltwise_backward&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#gab854378aae0281874a3afbd38f8917f2">mkldnn::relu_backward</a></td></tr>
@@ -162,112 +162,112 @@ Typedefs</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
-<tr class="memitem:ga81bcf1ea92d7f98852a2c3e187825de6"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga81bcf1ea92d7f98852a2c3e187825de6">mkldnn::engine::kind</a> { <a class="el" href="group__cpp__api__memory.html#gga81bcf1ea92d7f98852a2c3e187825de6af65460ef562d540de287f58445d54748">mkldnn::engine::any</a> = c_api::mkldnn_any_engine, 
-<a class="el" href="group__cpp__api__memory.html#gga81bcf1ea92d7f98852a2c3e187825de6a7e33e884a6d7eb40a73125557b14a7a7">mkldnn::engine::cpu</a> = c_api::mkldnn_cpu
+<tr class="memitem:ga81bcf1ea92d7f98852a2c3e187825de6"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga81bcf1ea92d7f98852a2c3e187825de6">mkldnn::engine::kind</a> { <a class="el" href="group__cpp__api__memory.html#gga81bcf1ea92d7f98852a2c3e187825de6af65460ef562d540de287f58445d54748">mkldnn::engine::any</a> = mkldnn_any_engine, 
+<a class="el" href="group__cpp__api__memory.html#gga81bcf1ea92d7f98852a2c3e187825de6a7e33e884a6d7eb40a73125557b14a7a7">mkldnn::engine::cpu</a> = mkldnn_cpu
  }</td></tr>
 <tr class="memdesc:ga81bcf1ea92d7f98852a2c3e187825de6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Kinds of engines.  <a href="group__cpp__api__memory.html#ga81bcf1ea92d7f98852a2c3e187825de6">More...</a><br/></td></tr>
 <tr class="separator:ga81bcf1ea92d7f98852a2c3e187825de6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaa8a0d49cc7faaceef9d8f55d66bff57b"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#gaa8a0d49cc7faaceef9d8f55d66bff57b">mkldnn::memory::data_type</a> { <br/>
-&#160;&#160;<a class="el" href="group__cpp__api__memory.html#ggaa8a0d49cc7faaceef9d8f55d66bff57bafe36f365f50e0317a2fa5142881dc73e">mkldnn::memory::data_undef</a> = c_api::mkldnn_data_type_undef, 
-<a class="el" href="group__cpp__api__memory.html#ggaa8a0d49cc7faaceef9d8f55d66bff57baaf36765775c9522f12bc84c72ea8355d">mkldnn::memory::f32</a> = c_api::mkldnn_f32, 
-<a class="el" href="group__cpp__api__memory.html#ggaa8a0d49cc7faaceef9d8f55d66bff57baafd6316d6d009465fd42d0effc8cdac1">mkldnn::memory::s32</a> = c_api::mkldnn_s32, 
-<a class="el" href="group__cpp__api__memory.html#ggaa8a0d49cc7faaceef9d8f55d66bff57ba3b210ee3077fc5a8cf09a48bd01c5f59">mkldnn::memory::s16</a> = c_api::mkldnn_s16, 
+&#160;&#160;<a class="el" href="group__cpp__api__memory.html#ggaa8a0d49cc7faaceef9d8f55d66bff57bafe36f365f50e0317a2fa5142881dc73e">mkldnn::memory::data_undef</a> = mkldnn_data_type_undef, 
+<a class="el" href="group__cpp__api__memory.html#ggaa8a0d49cc7faaceef9d8f55d66bff57baaf36765775c9522f12bc84c72ea8355d">mkldnn::memory::f32</a> = mkldnn_f32, 
+<a class="el" href="group__cpp__api__memory.html#ggaa8a0d49cc7faaceef9d8f55d66bff57baafd6316d6d009465fd42d0effc8cdac1">mkldnn::memory::s32</a> = mkldnn_s32, 
+<a class="el" href="group__cpp__api__memory.html#ggaa8a0d49cc7faaceef9d8f55d66bff57ba3b210ee3077fc5a8cf09a48bd01c5f59">mkldnn::memory::s16</a> = mkldnn_s16, 
 <br/>
-&#160;&#160;<a class="el" href="group__cpp__api__memory.html#ggaa8a0d49cc7faaceef9d8f55d66bff57ba4b4eb008e1bc38c0f4f2de74fdc354ab">mkldnn::memory::s8</a> = c_api::mkldnn_s8, 
-<a class="el" href="group__cpp__api__memory.html#ggaa8a0d49cc7faaceef9d8f55d66bff57ba0ccb6d0e4130dfe94e06635dac6a9b11">mkldnn::memory::u8</a> = c_api::mkldnn_u8
+&#160;&#160;<a class="el" href="group__cpp__api__memory.html#ggaa8a0d49cc7faaceef9d8f55d66bff57ba4b4eb008e1bc38c0f4f2de74fdc354ab">mkldnn::memory::s8</a> = mkldnn_s8, 
+<a class="el" href="group__cpp__api__memory.html#ggaa8a0d49cc7faaceef9d8f55d66bff57ba0ccb6d0e4130dfe94e06635dac6a9b11">mkldnn::memory::u8</a> = mkldnn_u8
 <br/>
  }</td></tr>
 <tr class="memdesc:gaa8a0d49cc7faaceef9d8f55d66bff57b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Data type specification. See <a class="el" href="group__c__api__types__generic.html#ga826b2a9be4d94ac17f99bacac6d0cb29" title="Data type specification. ">mkldnn_data_type_t</a> for a detailed description.  <a href="group__cpp__api__memory.html#gaa8a0d49cc7faaceef9d8f55d66bff57b">More...</a><br/></td></tr>
 <tr class="separator:gaa8a0d49cc7faaceef9d8f55d66bff57b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga563b90355ae4fbfed12f6db8ab25a87e"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga563b90355ae4fbfed12f6db8ab25a87e">mkldnn::memory::format</a> { <br/>
-&#160;&#160;<a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87ea1b7aba137f0d853dd8487fcb14fdc628">mkldnn::memory::format_undef</a> = c_api::mkldnn_format_undef, 
-<a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87ea986f069b593c7c6610bc15d678e653d9">mkldnn::memory::any</a> = c_api::mkldnn_any, 
-<a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87ea94a49fa4a564bc23f011c970383b94e3">mkldnn::memory::blocked</a> = c_api::mkldnn_blocked, 
-<a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87eaea99de727949bed9013befda32206aeb">mkldnn::memory::x</a> = c_api::mkldnn_x, 
+&#160;&#160;<a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87ea1b7aba137f0d853dd8487fcb14fdc628">mkldnn::memory::format_undef</a> = mkldnn_format_undef, 
+<a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87ea986f069b593c7c6610bc15d678e653d9">mkldnn::memory::any</a> = mkldnn_any, 
+<a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87ea94a49fa4a564bc23f011c970383b94e3">mkldnn::memory::blocked</a> = mkldnn_blocked, 
+<a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87eaea99de727949bed9013befda32206aeb">mkldnn::memory::x</a> = mkldnn_x, 
 <br/>
-&#160;&#160;<a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87ea4ff01f91c212576306e693c1a1ac4c12">mkldnn::memory::nc</a> = c_api::mkldnn_nc, 
-<a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87eafc4fd623cc6ff8ed099be6d52743200a">mkldnn::memory::nchw</a> = c_api::mkldnn_nchw, 
-<a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87ea5ec50071376483f7364de8b1b85d685d">mkldnn::memory::nhwc</a> = c_api::mkldnn_nhwc, 
-<a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87eaeab9b02510aacc27bd0043473caa6a8e">mkldnn::memory::chwn</a> = c_api::mkldnn_chwn, 
+&#160;&#160;<a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87ea4ff01f91c212576306e693c1a1ac4c12">mkldnn::memory::nc</a> = mkldnn_nc, 
+<a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87eafc4fd623cc6ff8ed099be6d52743200a">mkldnn::memory::nchw</a> = mkldnn_nchw, 
+<a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87ea5ec50071376483f7364de8b1b85d685d">mkldnn::memory::nhwc</a> = mkldnn_nhwc, 
+<a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87eaeab9b02510aacc27bd0043473caa6a8e">mkldnn::memory::chwn</a> = mkldnn_chwn, 
 <br/>
-&#160;&#160;<a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87ea248862baad8f48e384015ffd20327223">mkldnn::memory::nChw8c</a> = c_api::mkldnn_nChw8c, 
-<a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87ea7ee460916f5c04b7f46e103474c543b7">mkldnn::memory::nChw16c</a> = c_api::mkldnn_nChw16c, 
-<a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87ea4c8c6b41aae08b78d95bb5b76d28d22b">mkldnn::memory::oi</a> = c_api::mkldnn_oi, 
-<a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87eabdc33953230281d5e6413d2fb78b06ce">mkldnn::memory::io</a> = c_api::mkldnn_io, 
+&#160;&#160;<a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87ea248862baad8f48e384015ffd20327223">mkldnn::memory::nChw8c</a> = mkldnn_nChw8c, 
+<a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87ea7ee460916f5c04b7f46e103474c543b7">mkldnn::memory::nChw16c</a> = mkldnn_nChw16c, 
+<a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87ea4c8c6b41aae08b78d95bb5b76d28d22b">mkldnn::memory::oi</a> = mkldnn_oi, 
+<a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87eabdc33953230281d5e6413d2fb78b06ce">mkldnn::memory::io</a> = mkldnn_io, 
 <br/>
-&#160;&#160;<a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87ead5691debf8e19e13d09e15d7d99a7ee3">mkldnn::memory::oihw</a> = c_api::mkldnn_oihw, 
-<a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87ea7fe3459cd6d4a96ee1b7374a829339d5">mkldnn::memory::ihwo</a> = c_api::mkldnn_ihwo, 
-<a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87eaabeb598d814c8420a22243d26e6ed3c9">mkldnn::memory::oIhw8i</a> = c_api::mkldnn_oIhw8i, 
-<a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87eadfb8daccb2a4b9ef406c1dfc929e2a83">mkldnn::memory::oIhw16i</a> = c_api::mkldnn_oIhw16i, 
+&#160;&#160;<a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87ead5691debf8e19e13d09e15d7d99a7ee3">mkldnn::memory::oihw</a> = mkldnn_oihw, 
+<a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87ea7fe3459cd6d4a96ee1b7374a829339d5">mkldnn::memory::ihwo</a> = mkldnn_ihwo, 
+<a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87eaabeb598d814c8420a22243d26e6ed3c9">mkldnn::memory::oIhw8i</a> = mkldnn_oIhw8i, 
+<a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87eadfb8daccb2a4b9ef406c1dfc929e2a83">mkldnn::memory::oIhw16i</a> = mkldnn_oIhw16i, 
 <br/>
-&#160;&#160;<a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87eab1ff88a5571cab5c4495acfb07669762">mkldnn::memory::OIhw8i8o</a> = c_api::mkldnn_OIhw8i8o, 
-<a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87ea2f7490bd350bc8d194f2e4b67213adf7">mkldnn::memory::OIhw16i16o</a> = c_api::mkldnn_OIhw16i16o, 
-<a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87ea511ae11a284c9108eeb61664ff163aea">mkldnn::memory::OIhw8o8i</a> = c_api::mkldnn_OIhw8o8i, 
-<a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87ea82c279649f9f84c2ef9a046e7777cac0">mkldnn::memory::OIhw16o16i</a> = c_api::mkldnn_OIhw16o16i, 
+&#160;&#160;<a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87eab1ff88a5571cab5c4495acfb07669762">mkldnn::memory::OIhw8i8o</a> = mkldnn_OIhw8i8o, 
+<a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87ea2f7490bd350bc8d194f2e4b67213adf7">mkldnn::memory::OIhw16i16o</a> = mkldnn_OIhw16i16o, 
+<a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87ea511ae11a284c9108eeb61664ff163aea">mkldnn::memory::OIhw8o8i</a> = mkldnn_OIhw8o8i, 
+<a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87ea82c279649f9f84c2ef9a046e7777cac0">mkldnn::memory::OIhw16o16i</a> = mkldnn_OIhw16o16i, 
 <br/>
-&#160;&#160;<a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87eaffaad9f0dac63a0880ee0bfd9b029888">mkldnn::memory::OIhw8i16o2i</a> = c_api::mkldnn_OIhw8i16o2i, 
-<a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87eae2907c3b58ca4186e7f6a31343b352cd">mkldnn::memory::OIhw8o16i2o</a> = c_api::mkldnn_OIhw8o16i2o, 
-<a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87ea2f135b7d8ff60dcce96a4919722b0fad">mkldnn::memory::Ohwi8o</a> = c_api::mkldnn_Ohwi8o, 
-<a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87eae01c9f565ec8b7a69ad2432df340dcf0">mkldnn::memory::Ohwi16o</a> = c_api::mkldnn_Ohwi16o, 
+&#160;&#160;<a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87eaffaad9f0dac63a0880ee0bfd9b029888">mkldnn::memory::OIhw8i16o2i</a> = mkldnn_OIhw8i16o2i, 
+<a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87eae2907c3b58ca4186e7f6a31343b352cd">mkldnn::memory::OIhw8o16i2o</a> = mkldnn_OIhw8o16i2o, 
+<a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87ea2f135b7d8ff60dcce96a4919722b0fad">mkldnn::memory::Ohwi8o</a> = mkldnn_Ohwi8o, 
+<a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87eae01c9f565ec8b7a69ad2432df340dcf0">mkldnn::memory::Ohwi16o</a> = mkldnn_Ohwi16o, 
 <br/>
-&#160;&#160;<a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87ea0e1f301f069a122158ac1ab3d1854a54">mkldnn::memory::OhIw16o4i</a> = c_api::mkldnn_OhIw16o4i, 
-<a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87ea19f8852dc26c175f22aed771f3f9614a">mkldnn::memory::goihw</a> = c_api::mkldnn_goihw, 
-<a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87ea11eda3436ae582b8a28cc85adc8433c1">mkldnn::memory::gOIhw8i8o</a> = c_api::mkldnn_gOIhw8i8o, 
-<a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87eab47a53954142e271e59e8b0b036c7797">mkldnn::memory::gOIhw16i16o</a> = c_api::mkldnn_gOIhw16i16o, 
+&#160;&#160;<a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87ea0e1f301f069a122158ac1ab3d1854a54">mkldnn::memory::OhIw16o4i</a> = mkldnn_OhIw16o4i, 
+<a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87ea19f8852dc26c175f22aed771f3f9614a">mkldnn::memory::goihw</a> = mkldnn_goihw, 
+<a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87ea11eda3436ae582b8a28cc85adc8433c1">mkldnn::memory::gOIhw8i8o</a> = mkldnn_gOIhw8i8o, 
+<a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87eab47a53954142e271e59e8b0b036c7797">mkldnn::memory::gOIhw16i16o</a> = mkldnn_gOIhw16i16o, 
 <br/>
-&#160;&#160;<a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87ea380d9e31a9703c3b520c8cc32e6ae8b9">mkldnn::memory::gOIhw8i16o2i</a> = c_api::mkldnn_gOIhw8i16o2i, 
-<a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87ea924d233b52d5b5cbad3f00280e7bae61">mkldnn::memory::gOIhw8o16i2o</a> = c_api::mkldnn_gOIhw8o16i2o, 
-<a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87eae7df7db47e81d11cd459f53f46928cb9">mkldnn::memory::gOhwi8o</a> = c_api::mkldnn_gOhwi8o, 
-<a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87ea5686f7dbdddd9ee3f502f7600cbe731a">mkldnn::memory::gOhwi16o</a> = c_api::mkldnn_gOhwi16o, 
+&#160;&#160;<a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87ea380d9e31a9703c3b520c8cc32e6ae8b9">mkldnn::memory::gOIhw8i16o2i</a> = mkldnn_gOIhw8i16o2i, 
+<a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87ea924d233b52d5b5cbad3f00280e7bae61">mkldnn::memory::gOIhw8o16i2o</a> = mkldnn_gOIhw8o16i2o, 
+<a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87eae7df7db47e81d11cd459f53f46928cb9">mkldnn::memory::gOhwi8o</a> = mkldnn_gOhwi8o, 
+<a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87ea5686f7dbdddd9ee3f502f7600cbe731a">mkldnn::memory::gOhwi16o</a> = mkldnn_gOhwi16o, 
 <br/>
-&#160;&#160;<a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87eacaf364857cd0309c67bb6dff621ee71e">mkldnn::memory::gOIhw8o8i</a> = c_api::mkldnn_gOIhw8o8i, 
-<a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87eaa1cc9ef7726a93eaf88e6556bca94f64">mkldnn::memory::gOIhw16o16i</a> = c_api::mkldnn_gOIhw16o16i, 
-<a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87ea12dbcd423f39fcd621b399d494e5dfe7">mkldnn::memory::gOhIw16o4i</a> = c_api::mkldnn_gOhIw16o4i
+&#160;&#160;<a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87eacaf364857cd0309c67bb6dff621ee71e">mkldnn::memory::gOIhw8o8i</a> = mkldnn_gOIhw8o8i, 
+<a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87eaa1cc9ef7726a93eaf88e6556bca94f64">mkldnn::memory::gOIhw16o16i</a> = mkldnn_gOIhw16o16i, 
+<a class="el" href="group__cpp__api__memory.html#gga563b90355ae4fbfed12f6db8ab25a87ea12dbcd423f39fcd621b399d494e5dfe7">mkldnn::memory::gOhIw16o4i</a> = mkldnn_gOhIw16o4i
 <br/>
  }</td></tr>
 <tr class="memdesc:ga563b90355ae4fbfed12f6db8ab25a87e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Memory format specification. See <a class="el" href="group__c__api__types__generic.html#ga30a390f87ef74bf03dfa48a7b3f2fb74" title="Memory format specification. ">mkldnn_memory_format_t</a> for a detailed description.  <a href="group__cpp__api__memory.html#ga563b90355ae4fbfed12f6db8ab25a87e">More...</a><br/></td></tr>
 <tr class="separator:ga563b90355ae4fbfed12f6db8ab25a87e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa1ff931b28e0a90473ad5bddd21c60fc"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#gaa1ff931b28e0a90473ad5bddd21c60fc">mkldnn::padding_kind</a> { <a class="el" href="group__cpp__api__memory.html#ggaa1ff931b28e0a90473ad5bddd21c60fcafbabef80df01bc0a5636d0ca9189355d">mkldnn::zero</a> = c_api::mkldnn_padding_zero
+<tr class="memitem:gaa1ff931b28e0a90473ad5bddd21c60fc"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#gaa1ff931b28e0a90473ad5bddd21c60fc">mkldnn::padding_kind</a> { <a class="el" href="group__cpp__api__memory.html#ggaa1ff931b28e0a90473ad5bddd21c60fcafbabef80df01bc0a5636d0ca9189355d">mkldnn::zero</a> = mkldnn_padding_zero
  }</td></tr>
 <tr class="separator:gaa1ff931b28e0a90473ad5bddd21c60fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaeb087eae78f70a4d249a90aefa165cf8"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#gaeb087eae78f70a4d249a90aefa165cf8">mkldnn::prop_kind</a> { <br/>
-&#160;&#160;<a class="el" href="group__cpp__api__memory.html#ggaeb087eae78f70a4d249a90aefa165cf8a8785b34f315bf9050e762cb3dc03e70b">mkldnn::forward_training</a> = c_api::mkldnn_forward_training, 
-<a class="el" href="group__cpp__api__memory.html#ggaeb087eae78f70a4d249a90aefa165cf8a37d307ffc75ba883d698801b8cda5c55">mkldnn::forward_scoring</a> = c_api::mkldnn_forward_scoring, 
-<a class="el" href="group__cpp__api__memory.html#ggaeb087eae78f70a4d249a90aefa165cf8ad3fbf2689723f727189276e535b0058e">mkldnn::forward_inference</a> = c_api::mkldnn_forward_inference, 
-<a class="el" href="group__cpp__api__memory.html#ggaeb087eae78f70a4d249a90aefa165cf8a064cbe5d8f2575433bfaaaef8937f369">mkldnn::forward</a> = c_api::mkldnn_forward, 
+&#160;&#160;<a class="el" href="group__cpp__api__memory.html#ggaeb087eae78f70a4d249a90aefa165cf8a8785b34f315bf9050e762cb3dc03e70b">mkldnn::forward_training</a> = mkldnn_forward_training, 
+<a class="el" href="group__cpp__api__memory.html#ggaeb087eae78f70a4d249a90aefa165cf8a37d307ffc75ba883d698801b8cda5c55">mkldnn::forward_scoring</a> = mkldnn_forward_scoring, 
+<a class="el" href="group__cpp__api__memory.html#ggaeb087eae78f70a4d249a90aefa165cf8ad3fbf2689723f727189276e535b0058e">mkldnn::forward_inference</a> = mkldnn_forward_inference, 
+<a class="el" href="group__cpp__api__memory.html#ggaeb087eae78f70a4d249a90aefa165cf8a064cbe5d8f2575433bfaaaef8937f369">mkldnn::forward</a> = mkldnn_forward, 
 <br/>
-&#160;&#160;<a class="el" href="group__cpp__api__memory.html#ggaeb087eae78f70a4d249a90aefa165cf8a05b9d88cfffee07540a51383b29a8016">mkldnn::backward</a> = c_api::mkldnn_backward, 
-<a class="el" href="group__cpp__api__memory.html#ggaeb087eae78f70a4d249a90aefa165cf8ab81b2707fb8a509e7b4fde96d4b4e29f">mkldnn::backward_data</a> = c_api::mkldnn_backward_data, 
-<a class="el" href="group__cpp__api__memory.html#ggaeb087eae78f70a4d249a90aefa165cf8ab8c420aeb9f94fb04b4c8eadeb35b75c">mkldnn::backward_weights</a> = c_api::mkldnn_backward_weights, 
-<a class="el" href="group__cpp__api__memory.html#ggaeb087eae78f70a4d249a90aefa165cf8a2dc572d907ceb34444e7784534500e3a">mkldnn::backward_bias</a> = c_api::mkldnn_backward_bias
+&#160;&#160;<a class="el" href="group__cpp__api__memory.html#ggaeb087eae78f70a4d249a90aefa165cf8a05b9d88cfffee07540a51383b29a8016">mkldnn::backward</a> = mkldnn_backward, 
+<a class="el" href="group__cpp__api__memory.html#ggaeb087eae78f70a4d249a90aefa165cf8ab81b2707fb8a509e7b4fde96d4b4e29f">mkldnn::backward_data</a> = mkldnn_backward_data, 
+<a class="el" href="group__cpp__api__memory.html#ggaeb087eae78f70a4d249a90aefa165cf8ab8c420aeb9f94fb04b4c8eadeb35b75c">mkldnn::backward_weights</a> = mkldnn_backward_weights, 
+<a class="el" href="group__cpp__api__memory.html#ggaeb087eae78f70a4d249a90aefa165cf8a2dc572d907ceb34444e7784534500e3a">mkldnn::backward_bias</a> = mkldnn_backward_bias
 <br/>
  }</td></tr>
 <tr class="separator:gaeb087eae78f70a4d249a90aefa165cf8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gae45a07d6121fdd33e310782753178076"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#gae45a07d6121fdd33e310782753178076">mkldnn::algorithm</a> { <br/>
-&#160;&#160;<a class="el" href="group__cpp__api__memory.html#ggae45a07d6121fdd33e310782753178076a7c32719b6310ede805768dfbe7c909a8">mkldnn::convolution_direct</a> = c_api::mkldnn_convolution_direct, 
-<a class="el" href="group__cpp__api__memory.html#ggae45a07d6121fdd33e310782753178076a3fcadb2934e7f8a0a4b9dacbcf9e8e36">mkldnn::convolution_winograd</a> = c_api::mkldnn_convolution_winograd, 
-<a class="el" href="group__cpp__api__memory.html#ggae45a07d6121fdd33e310782753178076a7949269c3f40dbf756f63a20e5dae2e0">mkldnn::eltwise_relu</a> = c_api::mkldnn_eltwise_relu, 
-<a class="el" href="group__cpp__api__memory.html#ggae45a07d6121fdd33e310782753178076a12c72b1d3a7f7b06fdd0dbd7f8fa6c12">mkldnn::eltwise_tanh</a> = c_api::mkldnn_eltwise_tanh, 
+&#160;&#160;<a class="el" href="group__cpp__api__memory.html#ggae45a07d6121fdd33e310782753178076a7c32719b6310ede805768dfbe7c909a8">mkldnn::convolution_direct</a> = mkldnn_convolution_direct, 
+<a class="el" href="group__cpp__api__memory.html#ggae45a07d6121fdd33e310782753178076a3fcadb2934e7f8a0a4b9dacbcf9e8e36">mkldnn::convolution_winograd</a> = mkldnn_convolution_winograd, 
+<a class="el" href="group__cpp__api__memory.html#ggae45a07d6121fdd33e310782753178076a7949269c3f40dbf756f63a20e5dae2e0">mkldnn::eltwise_relu</a> = mkldnn_eltwise_relu, 
+<a class="el" href="group__cpp__api__memory.html#ggae45a07d6121fdd33e310782753178076a12c72b1d3a7f7b06fdd0dbd7f8fa6c12">mkldnn::eltwise_tanh</a> = mkldnn_eltwise_tanh, 
 <br/>
-&#160;&#160;<a class="el" href="group__cpp__api__memory.html#ggae45a07d6121fdd33e310782753178076a69bd24cf8965e1bc499cb1722c12a597">mkldnn::eltwise_elu</a> = c_api::mkldnn_eltwise_elu, 
-<a class="el" href="group__cpp__api__memory.html#ggae45a07d6121fdd33e310782753178076a5ba3a03af8dc6c1b9066e48508ae9b5c">mkldnn::lrn_across_channels</a> = c_api::mkldnn_lrn_across_channels, 
-<a class="el" href="group__cpp__api__memory.html#ggae45a07d6121fdd33e310782753178076a1bec35024f741400d95f4c15897b50a2">mkldnn::lrn_within_channel</a> = c_api::mkldnn_lrn_within_channel, 
-<a class="el" href="group__cpp__api__memory.html#ggae45a07d6121fdd33e310782753178076ab1d69186fe566f20003f62b15e9aee8c">mkldnn::pooling_max</a> = c_api::mkldnn_pooling_max, 
+&#160;&#160;<a class="el" href="group__cpp__api__memory.html#ggae45a07d6121fdd33e310782753178076a69bd24cf8965e1bc499cb1722c12a597">mkldnn::eltwise_elu</a> = mkldnn_eltwise_elu, 
+<a class="el" href="group__cpp__api__memory.html#ggae45a07d6121fdd33e310782753178076a5ba3a03af8dc6c1b9066e48508ae9b5c">mkldnn::lrn_across_channels</a> = mkldnn_lrn_across_channels, 
+<a class="el" href="group__cpp__api__memory.html#ggae45a07d6121fdd33e310782753178076a1bec35024f741400d95f4c15897b50a2">mkldnn::lrn_within_channel</a> = mkldnn_lrn_within_channel, 
+<a class="el" href="group__cpp__api__memory.html#ggae45a07d6121fdd33e310782753178076ab1d69186fe566f20003f62b15e9aee8c">mkldnn::pooling_max</a> = mkldnn_pooling_max, 
 <br/>
-&#160;&#160;<a class="el" href="group__cpp__api__memory.html#ggae45a07d6121fdd33e310782753178076af370bca4c92b4f310923dabec54ef476">mkldnn::pooling_avg</a> = c_api::mkldnn_pooling_avg, 
-<a class="el" href="group__cpp__api__memory.html#ggae45a07d6121fdd33e310782753178076af1d57d5eddbf76411006a0206d435502">mkldnn::pooling_avg_include_padding</a> = c_api::mkldnn_pooling_avg_include_padding, 
-<a class="el" href="group__cpp__api__memory.html#ggae45a07d6121fdd33e310782753178076a8547db746e2b24e920a1bb912b7ed702">mkldnn::pooling_avg_exclude_padding</a> = c_api::mkldnn_pooling_avg_exclude_padding
+&#160;&#160;<a class="el" href="group__cpp__api__memory.html#ggae45a07d6121fdd33e310782753178076af370bca4c92b4f310923dabec54ef476">mkldnn::pooling_avg</a> = mkldnn_pooling_avg, 
+<a class="el" href="group__cpp__api__memory.html#ggae45a07d6121fdd33e310782753178076af1d57d5eddbf76411006a0206d435502">mkldnn::pooling_avg_include_padding</a> = mkldnn_pooling_avg_include_padding, 
+<a class="el" href="group__cpp__api__memory.html#ggae45a07d6121fdd33e310782753178076a8547db746e2b24e920a1bb912b7ed702">mkldnn::pooling_avg_exclude_padding</a> = mkldnn_pooling_avg_exclude_padding
 <br/>
  }</td></tr>
 <tr class="separator:gae45a07d6121fdd33e310782753178076"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga344b5c240a7392585aba615ff4d0d7f1"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga344b5c240a7392585aba615ff4d0d7f1">mkldnn::batch_normalization_flag</a> { <a class="el" href="group__cpp__api__memory.html#gga344b5c240a7392585aba615ff4d0d7f1a97fcd7beeed54e37e2718124d0051d5c">mkldnn::use_global_stats</a> = c_api::mkldnn_use_global_stats, 
-<a class="el" href="group__cpp__api__memory.html#gga344b5c240a7392585aba615ff4d0d7f1a67734f09ab5b5b5282855d52c3e62486">mkldnn::use_scale_shift</a> = c_api::mkldnn_use_scaleshift, 
-<a class="el" href="group__cpp__api__memory.html#gga344b5c240a7392585aba615ff4d0d7f1a030cc07467d878652fddc39b5290f2a9">mkldnn::omit_stats</a> = c_api::mkldnn_omit_stats
+<tr class="memitem:ga344b5c240a7392585aba615ff4d0d7f1"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga344b5c240a7392585aba615ff4d0d7f1">mkldnn::batch_normalization_flag</a> { <a class="el" href="group__cpp__api__memory.html#gga344b5c240a7392585aba615ff4d0d7f1a97fcd7beeed54e37e2718124d0051d5c">mkldnn::use_global_stats</a> = mkldnn_use_global_stats, 
+<a class="el" href="group__cpp__api__memory.html#gga344b5c240a7392585aba615ff4d0d7f1a67734f09ab5b5b5282855d52c3e62486">mkldnn::use_scale_shift</a> = mkldnn_use_scaleshift, 
+<a class="el" href="group__cpp__api__memory.html#gga344b5c240a7392585aba615ff4d0d7f1a030cc07467d878652fddc39b5290f2a9">mkldnn::omit_stats</a> = mkldnn_omit_stats
  }</td></tr>
 <tr class="separator:ga344b5c240a7392585aba615ff4d0d7f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7b46a4cd837ea0ccf835d7fa4fc37cff"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga7b46a4cd837ea0ccf835d7fa4fc37cff">mkldnn::stream::kind</a> { <a class="el" href="group__cpp__api__memory.html#gga7b46a4cd837ea0ccf835d7fa4fc37cffa488e6cebf53697050c0b2cc3829aeb94">mkldnn::stream::any</a> = c_api::mkldnn_stream_kind_t::mkldnn_any_stream, 
-<a class="el" href="group__cpp__api__memory.html#gga7b46a4cd837ea0ccf835d7fa4fc37cffa6be8d548cd5645db2b66fb4eca81c854">mkldnn::stream::eager</a> = c_api::mkldnn_stream_kind_t::mkldnn_eager, 
-<a class="el" href="group__cpp__api__memory.html#gga7b46a4cd837ea0ccf835d7fa4fc37cffa02b04eb4c732cc0525e409b7e7e60498">mkldnn::stream::lazy</a> = c_api::mkldnn_stream_kind_t::mkldnn_lazy
+<tr class="memitem:ga7b46a4cd837ea0ccf835d7fa4fc37cff"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga7b46a4cd837ea0ccf835d7fa4fc37cff">mkldnn::stream::kind</a> { <a class="el" href="group__cpp__api__memory.html#gga7b46a4cd837ea0ccf835d7fa4fc37cffa488e6cebf53697050c0b2cc3829aeb94">mkldnn::stream::any</a> = mkldnn_stream_kind_t::mkldnn_any_stream, 
+<a class="el" href="group__cpp__api__memory.html#gga7b46a4cd837ea0ccf835d7fa4fc37cffa6be8d548cd5645db2b66fb4eca81c854">mkldnn::stream::eager</a> = mkldnn_stream_kind_t::mkldnn_eager, 
+<a class="el" href="group__cpp__api__memory.html#gga7b46a4cd837ea0ccf835d7fa4fc37cffa02b04eb4c732cc0525e409b7e7e60498">mkldnn::stream::lazy</a> = mkldnn_stream_kind_t::mkldnn_lazy
  }</td></tr>
 <tr class="separator:ga7b46a4cd837ea0ccf835d7fa4fc37cff"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -300,25 +300,25 @@ Functions</h2></td></tr>
 <tr class="memitem:gae11efc467d645e02364da19a7d859fc9"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#gae11efc467d645e02364da19a7d859fc9">mkldnn::primitive::at::operator primitive</a> () const </td></tr>
 <tr class="memdesc:gae11efc467d645e02364da19a7d859fc9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the specified output.  <a href="#gae11efc467d645e02364da19a7d859fc9">More...</a><br/></td></tr>
 <tr class="separator:gae11efc467d645e02364da19a7d859fc9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaae0f4c7e0efb88a9cdc411164a5a1c52"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__c__api__primitive__descs.html#ga9f002a6449ae9be775393e888698cfe0">c_api::const_mkldnn_primitive_desc_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#gaae0f4c7e0efb88a9cdc411164a5a1c52">mkldnn::primitive::get_primitive_desc</a> () const </td></tr>
-<tr class="memdesc:gaae0f4c7e0efb88a9cdc411164a5a1c52"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the descriptor of the underlying C API primitive.  <a href="#gaae0f4c7e0efb88a9cdc411164a5a1c52">More...</a><br/></td></tr>
-<tr class="separator:gaae0f4c7e0efb88a9cdc411164a5a1c52"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga96683a5ca544f344deb0289c35abf8f7"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga96683a5ca544f344deb0289c35abf8f7">mkldnn::error::error</a> (<a class="el" href="group__c__api__types__generic.html#ga31866789b66acfb1c28b2f9bdd7bdfdd">c_api::mkldnn_status_t</a> astatus, std::string amessage, <a class="el" href="group__c__api__types__primitive.html#gac7821f6b4a4fa0d58fe5279a1ff2fda3">c_api::mkldnn_primitive_t</a> aerror_primitive=0)</td></tr>
-<tr class="memdesc:ga96683a5ca544f344deb0289c35abf8f7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs an error instance.  <a href="#ga96683a5ca544f344deb0289c35abf8f7">More...</a><br/></td></tr>
-<tr class="separator:ga96683a5ca544f344deb0289c35abf8f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9217132bf07620e239523c921c51e36d"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga9217132bf07620e239523c921c51e36d">mkldnn::error::wrap_c_api</a> (<a class="el" href="group__c__api__types__generic.html#ga31866789b66acfb1c28b2f9bdd7bdfdd">c_api::mkldnn_status_t</a> status, std::string message, <a class="el" href="group__c__api__types__primitive.html#gac7821f6b4a4fa0d58fe5279a1ff2fda3">c_api::mkldnn_primitive_t</a> *error_primitive=0)</td></tr>
-<tr class="memdesc:ga9217132bf07620e239523c921c51e36d"><td class="mdescLeft">&#160;</td><td class="mdescRight">A convenience function for wrapping calls to the C API. Checks the return status and throws an <a class="el" href="group__cpp__api__memory.html#ga96683a5ca544f344deb0289c35abf8f7" title="Constructs an error instance. ">error</a> in case of failure.  <a href="#ga9217132bf07620e239523c921c51e36d">More...</a><br/></td></tr>
-<tr class="separator:ga9217132bf07620e239523c921c51e36d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad620dea4032ae111acef2a46e0902722"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__c__api__primitive__descs.html#ga9f002a6449ae9be775393e888698cfe0">const_mkldnn_primitive_desc_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#gad620dea4032ae111acef2a46e0902722">mkldnn::primitive::get_primitive_desc</a> () const </td></tr>
+<tr class="memdesc:gad620dea4032ae111acef2a46e0902722"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the descriptor of the underlying C API primitive.  <a href="#gad620dea4032ae111acef2a46e0902722">More...</a><br/></td></tr>
+<tr class="separator:gad620dea4032ae111acef2a46e0902722"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7812548bbce0899a64348d1a73e2f57a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga7812548bbce0899a64348d1a73e2f57a">mkldnn::error::error</a> (<a class="el" href="group__c__api__types__generic.html#ga31866789b66acfb1c28b2f9bdd7bdfdd">mkldnn_status_t</a> astatus, std::string amessage, <a class="el" href="group__c__api__types__primitive.html#gac7821f6b4a4fa0d58fe5279a1ff2fda3">mkldnn_primitive_t</a> aerror_primitive=0)</td></tr>
+<tr class="memdesc:ga7812548bbce0899a64348d1a73e2f57a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs an error instance.  <a href="#ga7812548bbce0899a64348d1a73e2f57a">More...</a><br/></td></tr>
+<tr class="separator:ga7812548bbce0899a64348d1a73e2f57a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8e8ca40a348b25f0b11bc211dc4d204f"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga8e8ca40a348b25f0b11bc211dc4d204f">mkldnn::error::wrap_c_api</a> (<a class="el" href="group__c__api__types__generic.html#ga31866789b66acfb1c28b2f9bdd7bdfdd">mkldnn_status_t</a> status, std::string message, <a class="el" href="group__c__api__types__primitive.html#gac7821f6b4a4fa0d58fe5279a1ff2fda3">mkldnn_primitive_t</a> *error_primitive=0)</td></tr>
+<tr class="memdesc:ga8e8ca40a348b25f0b11bc211dc4d204f"><td class="mdescLeft">&#160;</td><td class="mdescRight">A convenience function for wrapping calls to the C API. Checks the return status and throws an <a class="el" href="group__cpp__api__memory.html#ga7812548bbce0899a64348d1a73e2f57a" title="Constructs an error instance. ">error</a> in case of failure.  <a href="#ga8e8ca40a348b25f0b11bc211dc4d204f">More...</a><br/></td></tr>
+<tr class="separator:ga8e8ca40a348b25f0b11bc211dc4d204f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga27e38cf2b95a0e29713c726ed702fe70"><td class="memItemLeft" align="right" valign="top">static size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga27e38cf2b95a0e29713c726ed702fe70">mkldnn::engine::get_count</a> (kind akind)</td></tr>
 <tr class="memdesc:ga27e38cf2b95a0e29713c726ed702fe70"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the number of engines of a certain kind.  <a href="#ga27e38cf2b95a0e29713c726ed702fe70">More...</a><br/></td></tr>
 <tr class="separator:ga27e38cf2b95a0e29713c726ed702fe70"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gacfa129c9cf572d121c3b1748fc8444fa"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#gacfa129c9cf572d121c3b1748fc8444fa">mkldnn::engine::engine</a> (kind akind, size_t index)</td></tr>
 <tr class="memdesc:gacfa129c9cf572d121c3b1748fc8444fa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs an engine.  <a href="#gacfa129c9cf572d121c3b1748fc8444fa">More...</a><br/></td></tr>
 <tr class="separator:gacfa129c9cf572d121c3b1748fc8444fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae2645937e54c27ffacd0727c1465acec"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#gae2645937e54c27ffacd0727c1465acec">mkldnn::engine::engine</a> (const <a class="el" href="group__c__api__engine__types.html#ga40f5f917cdbf2215fa5324e4bf62d523">c_api::mkldnn_engine_t</a> &amp;aengine)</td></tr>
-<tr class="separator:gae2645937e54c27ffacd0727c1465acec"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga95f333c4582edcb606a4b9add2a53266"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga95f333c4582edcb606a4b9add2a53266">mkldnn::engine::engine</a> (const handle&lt; <a class="el" href="group__c__api__primitive__descs.html#ga4108b6ee20cf3d2e472504c1aea67497">c_api::mkldnn_primitive_desc_t</a> &gt; &amp;pd)</td></tr>
-<tr class="separator:ga95f333c4582edcb606a4b9add2a53266"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaeab8a660589202ecf17ed042a69bf5d5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#gaeab8a660589202ecf17ed042a69bf5d5">mkldnn::engine::engine</a> (const <a class="el" href="group__c__api__engine__types.html#ga40f5f917cdbf2215fa5324e4bf62d523">mkldnn_engine_t</a> &amp;aengine)</td></tr>
+<tr class="separator:gaeab8a660589202ecf17ed042a69bf5d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8511af0d3b8729e1ef9edab6d68a5e0d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga8511af0d3b8729e1ef9edab6d68a5e0d">mkldnn::engine::engine</a> (const handle&lt; <a class="el" href="group__c__api__primitive__descs.html#ga4108b6ee20cf3d2e472504c1aea67497">mkldnn_primitive_desc_t</a> &gt; &amp;pd)</td></tr>
+<tr class="separator:ga8511af0d3b8729e1ef9edab6d68a5e0d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaa0a4e078d059debf90e7bf09367ef868"><td class="memTemplParams" colspan="2">template&lt;class primitive_desc &gt; </td></tr>
 <tr class="memitem:gaa0a4e078d059debf90e7bf09367ef868"><td class="memTemplItemLeft" align="right" valign="top">static engine&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#gaa0a4e078d059debf90e7bf09367ef868">mkldnn::engine::query</a> (const primitive_desc &amp;pd)</td></tr>
 <tr class="separator:gaa0a4e078d059debf90e7bf09367ef868"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -328,9 +328,9 @@ Functions</h2></td></tr>
 <tr class="memitem:gad369b767c09b54cf8e7bc2bc62d59f2a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#gad369b767c09b54cf8e7bc2bc62d59f2a">mkldnn::memory::desc::desc</a> (dims adims, data_type adata_type, format aformat)</td></tr>
 <tr class="memdesc:gad369b767c09b54cf8e7bc2bc62d59f2a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a memory descriptor.  <a href="#gad369b767c09b54cf8e7bc2bc62d59f2a">More...</a><br/></td></tr>
 <tr class="separator:gad369b767c09b54cf8e7bc2bc62d59f2a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga81c0c2ff03785300cfd2680396d2b868"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga81c0c2ff03785300cfd2680396d2b868">mkldnn::memory::desc::desc</a> (const c_api::mkldnn_memory_desc_t &amp;adata)</td></tr>
-<tr class="memdesc:ga81c0c2ff03785300cfd2680396d2b868"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a memory descriptor from a C API data structure.  <a href="#ga81c0c2ff03785300cfd2680396d2b868">More...</a><br/></td></tr>
-<tr class="separator:ga81c0c2ff03785300cfd2680396d2b868"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1c920d7252520c2aec79b191eb85c9de"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga1c920d7252520c2aec79b191eb85c9de">mkldnn::memory::desc::desc</a> (const <a class="el" href="structmkldnn__memory__desc__t.html">mkldnn_memory_desc_t</a> &amp;adata)</td></tr>
+<tr class="memdesc:ga1c920d7252520c2aec79b191eb85c9de"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a memory descriptor from a C API data structure.  <a href="#ga1c920d7252520c2aec79b191eb85c9de">More...</a><br/></td></tr>
+<tr class="separator:ga1c920d7252520c2aec79b191eb85c9de"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga5c7e06039a24a95713e5943fedf27394"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga5c7e06039a24a95713e5943fedf27394">mkldnn::memory::primitive_desc::primitive_desc</a> ()</td></tr>
 <tr class="separator:ga5c7e06039a24a95713e5943fedf27394"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gae6df8af4aaff9162dc421ad21a38ce6d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#gae6df8af4aaff9162dc421ad21a38ce6d">mkldnn::memory::primitive_desc::primitive_desc</a> (const desc &amp;adesc, const engine &amp;aengine)</td></tr>
@@ -364,15 +364,30 @@ Functions</h2></td></tr>
 <tr class="separator:ga07d67b26cdd115092f8574cc000f96fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gab40a643171be4f413ca4cfae8c672f5d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#gab40a643171be4f413ca4cfae8c672f5d">mkldnn::memory::set_data_handle</a> (void *handle) const </td></tr>
 <tr class="separator:gab40a643171be4f413ca4cfae8c672f5d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga47bcab007bb018c9444da5b356906b1d"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="group__c__api__types__generic.html#ga826b2a9be4d94ac17f99bacac6d0cb29">c_api::mkldnn_data_type_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga47bcab007bb018c9444da5b356906b1d">mkldnn::memory::convert_to_c</a> (data_type adata_type)</td></tr>
-<tr class="separator:ga47bcab007bb018c9444da5b356906b1d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga57f0d8fdf40ecf8505a9ea803a66923d"><td class="memItemLeft" align="right" valign="top">static <br class="typebreak"/>
-<a class="el" href="group__c__api__types__generic.html#ga30a390f87ef74bf03dfa48a7b3f2fb74">c_api::mkldnn_memory_format_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga57f0d8fdf40ecf8505a9ea803a66923d">mkldnn::memory::convert_to_c</a> (format aformat)</td></tr>
-<tr class="separator:ga57f0d8fdf40ecf8505a9ea803a66923d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gabf8ad6de3ceb0bb51786656d240544d7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__c__api__types__generic.html#ga1823708d8b9d445fe177295f2b5d74bd">c_api::mkldnn_padding_kind_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#gabf8ad6de3ceb0bb51786656d240544d7">mkldnn::convert_to_c</a> (padding_kind kind)</td></tr>
-<tr class="separator:gabf8ad6de3ceb0bb51786656d240544d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gadf3df4cb7ff424c24982ba0c3c84d086"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__c__api__types__generic.html#ga5b98c8059c2aff8861157bf070c3f520">c_api::mkldnn_prop_kind_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#gadf3df4cb7ff424c24982ba0c3c84d086">mkldnn::convert_to_c</a> (prop_kind kind)</td></tr>
-<tr class="separator:gadf3df4cb7ff424c24982ba0c3c84d086"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2f533b52ae52b2f0e98609af11b489ab"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="group__c__api__types__generic.html#ga826b2a9be4d94ac17f99bacac6d0cb29">mkldnn_data_type_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga2f533b52ae52b2f0e98609af11b489ab">mkldnn::memory::convert_to_c</a> (data_type adata_type)</td></tr>
+<tr class="separator:ga2f533b52ae52b2f0e98609af11b489ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gacde65f106d6ddc0d194e5993a01bb5c3"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="group__c__api__types__generic.html#ga30a390f87ef74bf03dfa48a7b3f2fb74">mkldnn_memory_format_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#gacde65f106d6ddc0d194e5993a01bb5c3">mkldnn::memory::convert_to_c</a> (format aformat)</td></tr>
+<tr class="separator:gacde65f106d6ddc0d194e5993a01bb5c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf571070d442c8057567f0b3b125c48a9"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#gaf571070d442c8057567f0b3b125c48a9">mkldnn::operator==</a> (<a class="el" href="group__c__api__types__generic.html#ga826b2a9be4d94ac17f99bacac6d0cb29">mkldnn_data_type_t</a> a, memory::data_type b)</td></tr>
+<tr class="separator:gaf571070d442c8057567f0b3b125c48a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga048da9d3a9199cec52d3baa4daf6c880"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga048da9d3a9199cec52d3baa4daf6c880">mkldnn::operator!=</a> (<a class="el" href="group__c__api__types__generic.html#ga826b2a9be4d94ac17f99bacac6d0cb29">mkldnn_data_type_t</a> a, memory::data_type b)</td></tr>
+<tr class="separator:ga048da9d3a9199cec52d3baa4daf6c880"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga45725446175060a0c85d45f1eacfb657"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga45725446175060a0c85d45f1eacfb657">mkldnn::operator==</a> (memory::data_type a, <a class="el" href="group__c__api__types__generic.html#ga826b2a9be4d94ac17f99bacac6d0cb29">mkldnn_data_type_t</a> b)</td></tr>
+<tr class="separator:ga45725446175060a0c85d45f1eacfb657"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad7e115584a180164ff0ec8e6a42ccf1a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#gad7e115584a180164ff0ec8e6a42ccf1a">mkldnn::operator!=</a> (memory::data_type a, <a class="el" href="group__c__api__types__generic.html#ga826b2a9be4d94ac17f99bacac6d0cb29">mkldnn_data_type_t</a> b)</td></tr>
+<tr class="separator:gad7e115584a180164ff0ec8e6a42ccf1a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1922947b0e5d8f91403bd645ffb6c13c"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga1922947b0e5d8f91403bd645ffb6c13c">mkldnn::operator==</a> (<a class="el" href="group__c__api__types__generic.html#ga30a390f87ef74bf03dfa48a7b3f2fb74">mkldnn_memory_format_t</a> a, memory::format b)</td></tr>
+<tr class="separator:ga1922947b0e5d8f91403bd645ffb6c13c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9212cee5b7beaa78d962547f9941b55d"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga9212cee5b7beaa78d962547f9941b55d">mkldnn::operator!=</a> (<a class="el" href="group__c__api__types__generic.html#ga30a390f87ef74bf03dfa48a7b3f2fb74">mkldnn_memory_format_t</a> a, memory::format b)</td></tr>
+<tr class="separator:ga9212cee5b7beaa78d962547f9941b55d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4963150af69775cf57bfc9025ad921a9"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga4963150af69775cf57bfc9025ad921a9">mkldnn::operator==</a> (memory::format a, <a class="el" href="group__c__api__types__generic.html#ga30a390f87ef74bf03dfa48a7b3f2fb74">mkldnn_memory_format_t</a> b)</td></tr>
+<tr class="separator:ga4963150af69775cf57bfc9025ad921a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabc7b0cb3ed3e54e783cb4377b8f9c1a6"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#gabc7b0cb3ed3e54e783cb4377b8f9c1a6">mkldnn::operator!=</a> (memory::format a, <a class="el" href="group__c__api__types__generic.html#ga30a390f87ef74bf03dfa48a7b3f2fb74">mkldnn_memory_format_t</a> b)</td></tr>
+<tr class="separator:gabc7b0cb3ed3e54e783cb4377b8f9c1a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga38bf2fbbd9d10eb42c524175de8480ba"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__c__api__types__generic.html#ga1823708d8b9d445fe177295f2b5d74bd">mkldnn_padding_kind_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga38bf2fbbd9d10eb42c524175de8480ba">mkldnn::convert_to_c</a> (padding_kind kind)</td></tr>
+<tr class="separator:ga38bf2fbbd9d10eb42c524175de8480ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5721fbb011e85a530876ca8fe3b869dd"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__c__api__types__generic.html#ga5b98c8059c2aff8861157bf070c3f520">mkldnn_prop_kind_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga5721fbb011e85a530876ca8fe3b869dd">mkldnn::convert_to_c</a> (prop_kind kind)</td></tr>
+<tr class="separator:ga5721fbb011e85a530876ca8fe3b869dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gabf1e4a0db34aa8681f119e8476f4527f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#gabf1e4a0db34aa8681f119e8476f4527f">mkldnn::reorder::primitive_desc::primitive_desc</a> (const memory::primitive_desc &amp;input, const memory::primitive_desc &amp;output)</td></tr>
 <tr class="separator:gabf1e4a0db34aa8681f119e8476f4527f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga885ba6e92afdd245508a50bbbd46d1ad"><td class="memItemLeft" align="right" valign="top">engine&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga885ba6e92afdd245508a50bbbd46d1ad">mkldnn::reorder::primitive_desc::get_engine</a> ()</td></tr>
@@ -391,9 +406,9 @@ Functions</h2></td></tr>
 <tr class="separator:ga28b4a6dd02a91f4286f3d5e865f64e12"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gadd84c97a1d70e7135a9d35719247b761"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#gadd84c97a1d70e7135a9d35719247b761">mkldnn::view::view</a> (memory input, memory::dims dims, memory::dims offsets)</td></tr>
 <tr class="separator:gadd84c97a1d70e7135a9d35719247b761"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac14e94a4adb714a09354540a6ad20f16"><td class="memItemLeft" align="right" valign="top">std::vector<br class="typebreak"/>
-&lt; <a class="el" href="group__c__api__primitive__descs.html#ga9f002a6449ae9be775393e888698cfe0">c_api::const_mkldnn_primitive_desc_t</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#gac14e94a4adb714a09354540a6ad20f16">mkldnn::concat::primitive_desc::cpp_to_c</a> (std::vector&lt; memory::primitive_desc &gt; inputs)</td></tr>
-<tr class="separator:gac14e94a4adb714a09354540a6ad20f16"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac793435e6dbb7c2a3777e9aa5daf9282"><td class="memItemLeft" align="right" valign="top">std::vector<br class="typebreak"/>
+&lt; <a class="el" href="group__c__api__primitive__descs.html#ga9f002a6449ae9be775393e888698cfe0">const_mkldnn_primitive_desc_t</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#gac793435e6dbb7c2a3777e9aa5daf9282">mkldnn::concat::primitive_desc::cpp_to_c</a> (std::vector&lt; memory::primitive_desc &gt; inputs)</td></tr>
+<tr class="separator:gac793435e6dbb7c2a3777e9aa5daf9282"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga8be0ff3001d2bdd5b8c1e50bf53613a8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga8be0ff3001d2bdd5b8c1e50bf53613a8">mkldnn::concat::primitive_desc::primitive_desc</a> (const memory::desc &amp;output, int concat_dimension, std::vector&lt; memory::primitive_desc &gt; inputs)</td></tr>
 <tr class="separator:ga8be0ff3001d2bdd5b8c1e50bf53613a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga708b10a34b8d4cff18927a8a37a583ff"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga708b10a34b8d4cff18927a8a37a583ff">mkldnn::concat::primitive_desc::primitive_desc</a> (int concat_dimension, std::vector&lt; memory::primitive_desc &gt; inputs)</td></tr>
@@ -404,9 +419,9 @@ Functions</h2></td></tr>
 <tr class="separator:gaf78445af4c6965c97d82d63dc2310589"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga06f1dbb81a1ce8d0bc564ab69d426c64"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga06f1dbb81a1ce8d0bc564ab69d426c64">mkldnn::concat::concat</a> (const primitive_desc &amp;concat_pd, std::vector&lt; primitive::at &gt; &amp;inputs, const memory &amp;output)</td></tr>
 <tr class="separator:ga06f1dbb81a1ce8d0bc564ab69d426c64"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaafe68860bc78cb3ec94e8ffa214d9cff"><td class="memItemLeft" align="right" valign="top">std::vector<br class="typebreak"/>
-&lt; <a class="el" href="group__c__api__primitive__descs.html#ga9f002a6449ae9be775393e888698cfe0">c_api::const_mkldnn_primitive_desc_t</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#gaafe68860bc78cb3ec94e8ffa214d9cff">mkldnn::sum::primitive_desc::cpp_to_c</a> (std::vector&lt; memory::primitive_desc &gt; inputs)</td></tr>
-<tr class="separator:gaafe68860bc78cb3ec94e8ffa214d9cff"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadeed5a7321878bf5111f053612c29c1a"><td class="memItemLeft" align="right" valign="top">std::vector<br class="typebreak"/>
+&lt; <a class="el" href="group__c__api__primitive__descs.html#ga9f002a6449ae9be775393e888698cfe0">const_mkldnn_primitive_desc_t</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#gadeed5a7321878bf5111f053612c29c1a">mkldnn::sum::primitive_desc::cpp_to_c</a> (std::vector&lt; memory::primitive_desc &gt; inputs)</td></tr>
+<tr class="separator:gadeed5a7321878bf5111f053612c29c1a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga4ad18faa79b0ba87d73d923396c28adf"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga4ad18faa79b0ba87d73d923396c28adf">mkldnn::sum::primitive_desc::primitive_desc</a> (const memory::desc &amp;output, std::vector&lt; double &gt; scale, std::vector&lt; memory::primitive_desc &gt; inputs)</td></tr>
 <tr class="separator:ga4ad18faa79b0ba87d73d923396c28adf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gabcc4de43113d299e75a21c0877089aa0"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#gabcc4de43113d299e75a21c0877089aa0">mkldnn::sum::primitive_desc::primitive_desc</a> (std::vector&lt; double &gt; scale, std::vector&lt; memory::primitive_desc &gt; inputs)</td></tr>
@@ -417,8 +432,8 @@ Functions</h2></td></tr>
 <tr class="separator:gabe57059625c850ee721d699d2d9b0953"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gacceb32f44f2240015f58bb1d905189ca"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#gacceb32f44f2240015f58bb1d905189ca">mkldnn::sum::sum</a> (const primitive_desc &amp;sum_pd, std::vector&lt; primitive::at &gt; &amp;inputs, const memory &amp;output)</td></tr>
 <tr class="separator:gacceb32f44f2240015f58bb1d905189ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa5459ccbd27fb0399515ad6f872cdd90"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="group__c__api__types__stream.html#gadd66574e231fe36721cdbe02ea47aa18">c_api::mkldnn_stream_kind_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#gaa5459ccbd27fb0399515ad6f872cdd90">mkldnn::stream::convert_to_c</a> (kind akind)</td></tr>
-<tr class="separator:gaa5459ccbd27fb0399515ad6f872cdd90"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadd9ed9afb08e743ae3bb3c95067b396f"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="group__c__api__types__stream.html#gadd66574e231fe36721cdbe02ea47aa18">mkldnn_stream_kind_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#gadd9ed9afb08e743ae3bb3c95067b396f">mkldnn::stream::convert_to_c</a> (kind akind)</td></tr>
+<tr class="separator:gadd9ed9afb08e743ae3bb3c95067b396f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga22daa1004aa81953f5d27b24b1893cc7"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga22daa1004aa81953f5d27b24b1893cc7">mkldnn::stream::stream</a> (kind akind)</td></tr>
 <tr class="memdesc:ga22daa1004aa81953f5d27b24b1893cc7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a stream.  <a href="#ga22daa1004aa81953f5d27b24b1893cc7">More...</a><br/></td></tr>
 <tr class="separator:ga22daa1004aa81953f5d27b24b1893cc7"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -703,54 +718,54 @@ Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
-<tr class="memitem:ga701ef9b3441982544e2d5b2cff39d4ac"><td class="memItemLeft" align="right" valign="top">static constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga701ef9b3441982544e2d5b2cff39d4ac">mkldnn::handle_traits&lt; c_api::mkldnn_primitive_t &gt;::destructor</a> = &amp;<a class="el" href="group__c__api__primitive__common.html#ga083d8c44cc398146be7056c7b450ee83">c_api::mkldnn_primitive_destroy</a></td></tr>
-<tr class="separator:ga701ef9b3441982544e2d5b2cff39d4ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga8c79ba96d6210c8b71ad79056ee53b36"><td class="memItemLeft" align="right" valign="top">c_api::mkldnn_primitive_at_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga8c79ba96d6210c8b71ad79056ee53b36">mkldnn::primitive::at::data</a></td></tr>
-<tr class="memdesc:ga8c79ba96d6210c8b71ad79056ee53b36"><td class="mdescLeft">&#160;</td><td class="mdescRight">The underlying C API structure.  <a href="#ga8c79ba96d6210c8b71ad79056ee53b36">More...</a><br/></td></tr>
-<tr class="separator:ga8c79ba96d6210c8b71ad79056ee53b36"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga372df84a0b6d6b928cd849eabca73e34"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__c__api__types__generic.html#ga31866789b66acfb1c28b2f9bdd7bdfdd">c_api::mkldnn_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga372df84a0b6d6b928cd849eabca73e34">mkldnn::error::status</a></td></tr>
-<tr class="separator:ga372df84a0b6d6b928cd849eabca73e34"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7543df2118833d466cb839f5e5d3d570"><td class="memItemLeft" align="right" valign="top">static constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga7543df2118833d466cb839f5e5d3d570">mkldnn::handle_traits&lt; mkldnn_primitive_t &gt;::destructor</a> = &amp;<a class="el" href="group__c__api__primitive__common.html#ga083d8c44cc398146be7056c7b450ee83">mkldnn_primitive_destroy</a></td></tr>
+<tr class="separator:ga7543df2118833d466cb839f5e5d3d570"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4961f21e96c398293a16deccc2bc89b0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structmkldnn__primitive__at__t.html">mkldnn_primitive_at_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga4961f21e96c398293a16deccc2bc89b0">mkldnn::primitive::at::data</a></td></tr>
+<tr class="memdesc:ga4961f21e96c398293a16deccc2bc89b0"><td class="mdescLeft">&#160;</td><td class="mdescRight">The underlying C API structure.  <a href="#ga4961f21e96c398293a16deccc2bc89b0">More...</a><br/></td></tr>
+<tr class="separator:ga4961f21e96c398293a16deccc2bc89b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga198ac0b350f00924dae2553086e90e97"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__c__api__types__generic.html#ga31866789b66acfb1c28b2f9bdd7bdfdd">mkldnn_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga198ac0b350f00924dae2553086e90e97">mkldnn::error::status</a></td></tr>
+<tr class="separator:ga198ac0b350f00924dae2553086e90e97"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaac33c1b8a1a10d6d1acfe2ec5ce6cdcb"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#gaac33c1b8a1a10d6d1acfe2ec5ce6cdcb">mkldnn::error::message</a></td></tr>
 <tr class="separator:gaac33c1b8a1a10d6d1acfe2ec5ce6cdcb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gafa457ffa341634f9275610aa34a36c4c"><td class="memItemLeft" align="right" valign="top">primitive&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#gafa457ffa341634f9275610aa34a36c4c">mkldnn::error::error_primitive</a></td></tr>
 <tr class="separator:gafa457ffa341634f9275610aa34a36c4c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga74dd5d0d9b6d8dd4aa86bad6e3af27e4"><td class="memItemLeft" align="right" valign="top">static constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga74dd5d0d9b6d8dd4aa86bad6e3af27e4">mkldnn::handle_traits&lt; c_api::mkldnn_primitive_desc_t &gt;::destructor</a> = &amp;<a class="el" href="group__c__api__primitive__common.html#gacad44a12c7d863fb47dc02a76b4b794a">c_api::mkldnn_primitive_desc_destroy</a></td></tr>
-<tr class="separator:ga74dd5d0d9b6d8dd4aa86bad6e3af27e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga93f7e71aa256699bc7ef7a0919c4ae4b"><td class="memItemLeft" align="right" valign="top">c_api::mkldnn_memory_desc_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga93f7e71aa256699bc7ef7a0919c4ae4b">mkldnn::memory::desc::data</a></td></tr>
-<tr class="memdesc:ga93f7e71aa256699bc7ef7a0919c4ae4b"><td class="mdescLeft">&#160;</td><td class="mdescRight">The underlying C API data structure.  <a href="#ga93f7e71aa256699bc7ef7a0919c4ae4b">More...</a><br/></td></tr>
-<tr class="separator:ga93f7e71aa256699bc7ef7a0919c4ae4b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga71c781ccaa22ed693c9185aae6390bad"><td class="memItemLeft" align="right" valign="top">c_api::mkldnn_convolution_desc_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga71c781ccaa22ed693c9185aae6390bad">mkldnn::convolution_forward::desc::data</a></td></tr>
-<tr class="separator:ga71c781ccaa22ed693c9185aae6390bad"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf2adf70ebe81652cabd43ed395217b96"><td class="memItemLeft" align="right" valign="top">c_api::mkldnn_convolution_desc_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#gaf2adf70ebe81652cabd43ed395217b96">mkldnn::convolution_backward_data::desc::data</a></td></tr>
-<tr class="separator:gaf2adf70ebe81652cabd43ed395217b96"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gabd31ad709d295a31998b2bb4267a360b"><td class="memItemLeft" align="right" valign="top">c_api::mkldnn_convolution_desc_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#gabd31ad709d295a31998b2bb4267a360b">mkldnn::convolution_backward_weights::desc::data</a></td></tr>
-<tr class="separator:gabd31ad709d295a31998b2bb4267a360b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4e729d0141544f85b5c2a4485b39c1d2"><td class="memItemLeft" align="right" valign="top">c_api::mkldnn_convolution_relu_desc_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga4e729d0141544f85b5c2a4485b39c1d2">mkldnn::convolution_relu_forward::desc::data</a></td></tr>
-<tr class="separator:ga4e729d0141544f85b5c2a4485b39c1d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga8f40d4e0c519dbf013fb068083342453"><td class="memItemLeft" align="right" valign="top">c_api::mkldnn_lrn_desc_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga8f40d4e0c519dbf013fb068083342453">mkldnn::lrn_forward::desc::data</a></td></tr>
-<tr class="separator:ga8f40d4e0c519dbf013fb068083342453"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga19984e278a6aa298990370279d877562"><td class="memItemLeft" align="right" valign="top">c_api::mkldnn_lrn_desc_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga19984e278a6aa298990370279d877562">mkldnn::lrn_backward::desc::data</a></td></tr>
-<tr class="separator:ga19984e278a6aa298990370279d877562"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga2e4cd4e00741e3b110b16c4a8518186d"><td class="memItemLeft" align="right" valign="top">c_api::mkldnn_pooling_desc_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga2e4cd4e00741e3b110b16c4a8518186d">mkldnn::pooling_forward::desc::data</a></td></tr>
-<tr class="separator:ga2e4cd4e00741e3b110b16c4a8518186d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6210aad0df630722855044f087f3876c"><td class="memItemLeft" align="right" valign="top">c_api::mkldnn_pooling_desc_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga6210aad0df630722855044f087f3876c">mkldnn::pooling_backward::desc::data</a></td></tr>
-<tr class="separator:ga6210aad0df630722855044f087f3876c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga27b96fb940427e3ee82e662561e035d2"><td class="memItemLeft" align="right" valign="top">c_api::mkldnn_eltwise_desc_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga27b96fb940427e3ee82e662561e035d2">mkldnn::eltwise_forward::desc::data</a></td></tr>
-<tr class="separator:ga27b96fb940427e3ee82e662561e035d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga46271904d0073a8a9271ace43b507f43"><td class="memItemLeft" align="right" valign="top">c_api::mkldnn_eltwise_desc_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga46271904d0073a8a9271ace43b507f43">mkldnn::eltwise_backward::desc::data</a></td></tr>
-<tr class="separator:ga46271904d0073a8a9271ace43b507f43"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6b85a96ce413ecae79a19f27aba46b21"><td class="memItemLeft" align="right" valign="top">c_api::mkldnn_softmax_desc_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga6b85a96ce413ecae79a19f27aba46b21">mkldnn::softmax_forward::desc::data</a></td></tr>
-<tr class="separator:ga6b85a96ce413ecae79a19f27aba46b21"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaad37b03adb44296ae611aad4eeeec57b"><td class="memItemLeft" align="right" valign="top">c_api::mkldnn_batch_normalization_desc_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#gaad37b03adb44296ae611aad4eeeec57b">mkldnn::batch_normalization_forward::desc::data</a></td></tr>
-<tr class="separator:gaad37b03adb44296ae611aad4eeeec57b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gafb972c68a8fc85bf273da76c3b01e5a4"><td class="memItemLeft" align="right" valign="top">c_api::mkldnn_batch_normalization_desc_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#gafb972c68a8fc85bf273da76c3b01e5a4">mkldnn::batch_normalization_backward::desc::data</a></td></tr>
-<tr class="separator:gafb972c68a8fc85bf273da76c3b01e5a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4198991b1ffc650006212c577debbf1a"><td class="memItemLeft" align="right" valign="top">c_api::mkldnn_inner_product_desc_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga4198991b1ffc650006212c577debbf1a">mkldnn::inner_product_forward::desc::data</a></td></tr>
-<tr class="separator:ga4198991b1ffc650006212c577debbf1a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf6db646208f62a4533b7e64a423f574f"><td class="memItemLeft" align="right" valign="top">c_api::mkldnn_inner_product_desc_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#gaf6db646208f62a4533b7e64a423f574f">mkldnn::inner_product_backward_data::desc::data</a></td></tr>
-<tr class="separator:gaf6db646208f62a4533b7e64a423f574f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga2e8a4ee44da2e12e10619c017b959b06"><td class="memItemLeft" align="right" valign="top">c_api::mkldnn_inner_product_desc_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga2e8a4ee44da2e12e10619c017b959b06">mkldnn::inner_product_backward_weights::desc::data</a></td></tr>
-<tr class="separator:ga2e8a4ee44da2e12e10619c017b959b06"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf94d233c0788af73e64d0f8dd379cba3"><td class="memItemLeft" align="right" valign="top">static constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#gaf94d233c0788af73e64d0f8dd379cba3">mkldnn::handle_traits&lt; mkldnn_primitive_desc_t &gt;::destructor</a> = &amp;<a class="el" href="group__c__api__primitive__common.html#gacad44a12c7d863fb47dc02a76b4b794a">mkldnn_primitive_desc_destroy</a></td></tr>
+<tr class="separator:gaf94d233c0788af73e64d0f8dd379cba3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabeddf8909e2b4af626153c88da9f8b37"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structmkldnn__memory__desc__t.html">mkldnn_memory_desc_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#gabeddf8909e2b4af626153c88da9f8b37">mkldnn::memory::desc::data</a></td></tr>
+<tr class="memdesc:gabeddf8909e2b4af626153c88da9f8b37"><td class="mdescLeft">&#160;</td><td class="mdescRight">The underlying C API data structure.  <a href="#gabeddf8909e2b4af626153c88da9f8b37">More...</a><br/></td></tr>
+<tr class="separator:gabeddf8909e2b4af626153c88da9f8b37"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0ea88a5e59efc5ceef38549be00f0788"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structmkldnn__convolution__desc__t.html">mkldnn_convolution_desc_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga0ea88a5e59efc5ceef38549be00f0788">mkldnn::convolution_forward::desc::data</a></td></tr>
+<tr class="separator:ga0ea88a5e59efc5ceef38549be00f0788"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8d9a44245d964fdd0d7c7a609f84b666"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structmkldnn__convolution__desc__t.html">mkldnn_convolution_desc_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga8d9a44245d964fdd0d7c7a609f84b666">mkldnn::convolution_backward_data::desc::data</a></td></tr>
+<tr class="separator:ga8d9a44245d964fdd0d7c7a609f84b666"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1e03f8de02a6b42539d991ff0d011d61"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structmkldnn__convolution__desc__t.html">mkldnn_convolution_desc_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga1e03f8de02a6b42539d991ff0d011d61">mkldnn::convolution_backward_weights::desc::data</a></td></tr>
+<tr class="separator:ga1e03f8de02a6b42539d991ff0d011d61"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9762fffb328a4384835382d1efb16311"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structmkldnn__convolution__relu__desc__t.html">mkldnn_convolution_relu_desc_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga9762fffb328a4384835382d1efb16311">mkldnn::convolution_relu_forward::desc::data</a></td></tr>
+<tr class="separator:ga9762fffb328a4384835382d1efb16311"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae9e14265c9d3fbd67ea04dd8241d995e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structmkldnn__lrn__desc__t.html">mkldnn_lrn_desc_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#gae9e14265c9d3fbd67ea04dd8241d995e">mkldnn::lrn_forward::desc::data</a></td></tr>
+<tr class="separator:gae9e14265c9d3fbd67ea04dd8241d995e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9b8640a231c4894c9684861fb26345bd"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structmkldnn__lrn__desc__t.html">mkldnn_lrn_desc_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga9b8640a231c4894c9684861fb26345bd">mkldnn::lrn_backward::desc::data</a></td></tr>
+<tr class="separator:ga9b8640a231c4894c9684861fb26345bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae8cab6012ec16ca9d2051a95304ac211"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structmkldnn__pooling__desc__t.html">mkldnn_pooling_desc_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#gae8cab6012ec16ca9d2051a95304ac211">mkldnn::pooling_forward::desc::data</a></td></tr>
+<tr class="separator:gae8cab6012ec16ca9d2051a95304ac211"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3c403de448817a04fb6e6d0a5df9296d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structmkldnn__pooling__desc__t.html">mkldnn_pooling_desc_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga3c403de448817a04fb6e6d0a5df9296d">mkldnn::pooling_backward::desc::data</a></td></tr>
+<tr class="separator:ga3c403de448817a04fb6e6d0a5df9296d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae026c9756e872ce3f3e5d36a1627d687"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structmkldnn__eltwise__desc__t.html">mkldnn_eltwise_desc_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#gae026c9756e872ce3f3e5d36a1627d687">mkldnn::eltwise_forward::desc::data</a></td></tr>
+<tr class="separator:gae026c9756e872ce3f3e5d36a1627d687"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5ec9abe07651be1f683382201e22fcf5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structmkldnn__eltwise__desc__t.html">mkldnn_eltwise_desc_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga5ec9abe07651be1f683382201e22fcf5">mkldnn::eltwise_backward::desc::data</a></td></tr>
+<tr class="separator:ga5ec9abe07651be1f683382201e22fcf5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9c897c20a09e9353ad6b9a1dd76bb54a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structmkldnn__softmax__desc__t.html">mkldnn_softmax_desc_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga9c897c20a09e9353ad6b9a1dd76bb54a">mkldnn::softmax_forward::desc::data</a></td></tr>
+<tr class="separator:ga9c897c20a09e9353ad6b9a1dd76bb54a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga77a416b8a2518f020ed2d0b8b8c07d8f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structmkldnn__batch__normalization__desc__t.html">mkldnn_batch_normalization_desc_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga77a416b8a2518f020ed2d0b8b8c07d8f">mkldnn::batch_normalization_forward::desc::data</a></td></tr>
+<tr class="separator:ga77a416b8a2518f020ed2d0b8b8c07d8f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaebfd6852378609f93ab3fdd5bce94c57"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structmkldnn__batch__normalization__desc__t.html">mkldnn_batch_normalization_desc_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#gaebfd6852378609f93ab3fdd5bce94c57">mkldnn::batch_normalization_backward::desc::data</a></td></tr>
+<tr class="separator:gaebfd6852378609f93ab3fdd5bce94c57"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga59b6030e4823c0df000a9314e7b09d2a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structmkldnn__inner__product__desc__t.html">mkldnn_inner_product_desc_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga59b6030e4823c0df000a9314e7b09d2a">mkldnn::inner_product_forward::desc::data</a></td></tr>
+<tr class="separator:ga59b6030e4823c0df000a9314e7b09d2a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga399a117fd034667f1b036eb00aa195c0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structmkldnn__inner__product__desc__t.html">mkldnn_inner_product_desc_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga399a117fd034667f1b036eb00aa195c0">mkldnn::inner_product_backward_data::desc::data</a></td></tr>
+<tr class="separator:ga399a117fd034667f1b036eb00aa195c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6123bbb5cbd84ad0d6e989dbe43f99f6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structmkldnn__inner__product__desc__t.html">mkldnn_inner_product_desc_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga6123bbb5cbd84ad0d6e989dbe43f99f6">mkldnn::inner_product_backward_weights::desc::data</a></td></tr>
+<tr class="separator:ga6123bbb5cbd84ad0d6e989dbe43f99f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="friend-members"></a>
 Friends</h2></td></tr>
@@ -769,12 +784,12 @@ Friends</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <h2 class="groupheader">Typedef Documentation</h2>
-<a class="anchor" id="ga720bd5f3fae22b0e6a513deab0aacc3b"></a>
+<a class="anchor" id="ga0fa655354b5c62453d93c58e2f229a43"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">typedef std::vector&lt;std::remove_extent&lt;<a class="el" href="group__c__api__types__memory.html#ga9acc437c5b1f7ca760c048dc2de1c44d">c_api::mkldnn_dims_t</a>&gt;::type&gt; <a class="el" href="group__cpp__api__memory.html#ga720bd5f3fae22b0e6a513deab0aacc3b">mkldnn::memory::dims</a></td>
+          <td class="memname">typedef std::vector&lt;std::remove_extent&lt;<a class="el" href="group__c__api__types__memory.html#ga9acc437c5b1f7ca760c048dc2de1c44d">mkldnn_dims_t</a>&gt;::type&gt; <a class="el" href="group__cpp__api__memory.html#ga0fa655354b5c62453d93c58e2f229a43">mkldnn::memory::dims</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -1692,7 +1707,7 @@ Friends</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ga47bcab007bb018c9444da5b356906b1d"></a>
+<a class="anchor" id="ga2f533b52ae52b2f0e98609af11b489ab"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -1700,7 +1715,7 @@ Friends</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static <a class="el" href="group__c__api__types__generic.html#ga826b2a9be4d94ac17f99bacac6d0cb29">c_api::mkldnn_data_type_t</a> mkldnn::memory::convert_to_c </td>
+          <td class="memname">static <a class="el" href="group__c__api__types__generic.html#ga826b2a9be4d94ac17f99bacac6d0cb29">mkldnn_data_type_t</a> mkldnn::memory::convert_to_c </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="group__cpp__api__memory.html#gaa8a0d49cc7faaceef9d8f55d66bff57b">data_type</a>&#160;</td>
           <td class="paramname"><em>adata_type</em></td><td>)</td>
@@ -1716,7 +1731,7 @@ Friends</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ga57f0d8fdf40ecf8505a9ea803a66923d"></a>
+<a class="anchor" id="gacde65f106d6ddc0d194e5993a01bb5c3"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -1724,7 +1739,7 @@ Friends</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static <a class="el" href="group__c__api__types__generic.html#ga30a390f87ef74bf03dfa48a7b3f2fb74">c_api::mkldnn_memory_format_t</a> mkldnn::memory::convert_to_c </td>
+          <td class="memname">static <a class="el" href="group__c__api__types__generic.html#ga30a390f87ef74bf03dfa48a7b3f2fb74">mkldnn_memory_format_t</a> mkldnn::memory::convert_to_c </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="group__cpp__api__memory.html#ga563b90355ae4fbfed12f6db8ab25a87e">format</a>&#160;</td>
           <td class="paramname"><em>aformat</em></td><td>)</td>
@@ -1740,7 +1755,7 @@ Friends</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="gabf8ad6de3ceb0bb51786656d240544d7"></a>
+<a class="anchor" id="ga38bf2fbbd9d10eb42c524175de8480ba"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -1748,7 +1763,7 @@ Friends</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group__c__api__types__generic.html#ga1823708d8b9d445fe177295f2b5d74bd">c_api::mkldnn_padding_kind_t</a> mkldnn::convert_to_c </td>
+          <td class="memname"><a class="el" href="group__c__api__types__generic.html#ga1823708d8b9d445fe177295f2b5d74bd">mkldnn_padding_kind_t</a> mkldnn::convert_to_c </td>
           <td>(</td>
           <td class="paramtype">padding_kind&#160;</td>
           <td class="paramname"><em>kind</em></td><td>)</td>
@@ -1764,7 +1779,7 @@ Friends</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="gadf3df4cb7ff424c24982ba0c3c84d086"></a>
+<a class="anchor" id="ga5721fbb011e85a530876ca8fe3b869dd"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -1772,7 +1787,7 @@ Friends</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group__c__api__types__generic.html#ga5b98c8059c2aff8861157bf070c3f520">c_api::mkldnn_prop_kind_t</a> mkldnn::convert_to_c </td>
+          <td class="memname"><a class="el" href="group__c__api__types__generic.html#ga5b98c8059c2aff8861157bf070c3f520">mkldnn_prop_kind_t</a> mkldnn::convert_to_c </td>
           <td>(</td>
           <td class="paramtype">prop_kind&#160;</td>
           <td class="paramname"><em>kind</em></td><td>)</td>
@@ -1788,7 +1803,7 @@ Friends</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="gaa5459ccbd27fb0399515ad6f872cdd90"></a>
+<a class="anchor" id="gadd9ed9afb08e743ae3bb3c95067b396f"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -1796,7 +1811,7 @@ Friends</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static <a class="el" href="group__c__api__types__stream.html#gadd66574e231fe36721cdbe02ea47aa18">c_api::mkldnn_stream_kind_t</a> mkldnn::stream::convert_to_c </td>
+          <td class="memname">static <a class="el" href="group__c__api__types__stream.html#gadd66574e231fe36721cdbe02ea47aa18">mkldnn_stream_kind_t</a> mkldnn::stream::convert_to_c </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="group__cpp__api__memory.html#ga7b46a4cd837ea0ccf835d7fa4fc37cff">kind</a>&#160;</td>
           <td class="paramname"><em>akind</em></td><td>)</td>
@@ -2152,7 +2167,7 @@ Friends</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="gac14e94a4adb714a09354540a6ad20f16"></a>
+<a class="anchor" id="gac793435e6dbb7c2a3777e9aa5daf9282"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -2160,7 +2175,7 @@ Friends</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">std::vector&lt;<a class="el" href="group__c__api__primitive__descs.html#ga9f002a6449ae9be775393e888698cfe0">c_api::const_mkldnn_primitive_desc_t</a>&gt; mkldnn::concat::primitive_desc::cpp_to_c </td>
+          <td class="memname">std::vector&lt;<a class="el" href="group__c__api__primitive__descs.html#ga9f002a6449ae9be775393e888698cfe0">const_mkldnn_primitive_desc_t</a>&gt; mkldnn::concat::primitive_desc::cpp_to_c </td>
           <td>(</td>
           <td class="paramtype">std::vector&lt; <a class="el" href="structmkldnn_1_1memory_1_1primitive__desc.html">memory::primitive_desc</a> &gt;&#160;</td>
           <td class="paramname"><em>inputs</em></td><td>)</td>
@@ -2176,7 +2191,7 @@ Friends</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="gaafe68860bc78cb3ec94e8ffa214d9cff"></a>
+<a class="anchor" id="gadeed5a7321878bf5111f053612c29c1a"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -2184,7 +2199,7 @@ Friends</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">std::vector&lt;<a class="el" href="group__c__api__primitive__descs.html#ga9f002a6449ae9be775393e888698cfe0">c_api::const_mkldnn_primitive_desc_t</a>&gt; mkldnn::sum::primitive_desc::cpp_to_c </td>
+          <td class="memname">std::vector&lt;<a class="el" href="group__c__api__primitive__descs.html#ga9f002a6449ae9be775393e888698cfe0">const_mkldnn_primitive_desc_t</a>&gt; mkldnn::sum::primitive_desc::cpp_to_c </td>
           <td>(</td>
           <td class="paramtype">std::vector&lt; <a class="el" href="structmkldnn_1_1memory_1_1primitive__desc.html">memory::primitive_desc</a> &gt;&#160;</td>
           <td class="paramname"><em>inputs</em></td><td>)</td>
@@ -2210,7 +2225,7 @@ Friends</h2></td></tr>
         <tr>
           <td class="memname">mkldnn::memory::desc::desc </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="group__cpp__api__memory.html#ga720bd5f3fae22b0e6a513deab0aacc3b">dims</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="group__cpp__api__memory.html#ga0fa655354b5c62453d93c58e2f229a43">dims</a>&#160;</td>
           <td class="paramname"><em>adims</em>, </td>
         </tr>
         <tr>
@@ -2250,7 +2265,7 @@ Friends</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ga81c0c2ff03785300cfd2680396d2b868"></a>
+<a class="anchor" id="ga1c920d7252520c2aec79b191eb85c9de"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -2260,7 +2275,7 @@ Friends</h2></td></tr>
         <tr>
           <td class="memname">mkldnn::memory::desc::desc </td>
           <td>(</td>
-          <td class="paramtype">const c_api::mkldnn_memory_desc_t &amp;&#160;</td>
+          <td class="paramtype">const <a class="el" href="structmkldnn__memory__desc__t.html">mkldnn_memory_desc_t</a> &amp;&#160;</td>
           <td class="paramname"><em>adata</em></td><td>)</td>
           <td></td>
         </tr>
@@ -2353,19 +2368,19 @@ Friends</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="group__cpp__api__memory.html#ga720bd5f3fae22b0e6a513deab0aacc3b">memory::dims</a>&#160;</td>
+          <td class="paramtype">const <a class="el" href="group__cpp__api__memory.html#ga0fa655354b5c62453d93c58e2f229a43">memory::dims</a>&#160;</td>
           <td class="paramname"><em>strides</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="group__cpp__api__memory.html#ga720bd5f3fae22b0e6a513deab0aacc3b">memory::dims</a>&#160;</td>
+          <td class="paramtype">const <a class="el" href="group__cpp__api__memory.html#ga0fa655354b5c62453d93c58e2f229a43">memory::dims</a>&#160;</td>
           <td class="paramname"><em>padding_l</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="group__cpp__api__memory.html#ga720bd5f3fae22b0e6a513deab0aacc3b">memory::dims</a>&#160;</td>
+          <td class="paramtype">const <a class="el" href="group__cpp__api__memory.html#ga0fa655354b5c62453d93c58e2f229a43">memory::dims</a>&#160;</td>
           <td class="paramname"><em>padding_r</em>, </td>
         </tr>
         <tr>
@@ -2429,19 +2444,19 @@ Friends</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="group__cpp__api__memory.html#ga720bd5f3fae22b0e6a513deab0aacc3b">memory::dims</a>&#160;</td>
+          <td class="paramtype">const <a class="el" href="group__cpp__api__memory.html#ga0fa655354b5c62453d93c58e2f229a43">memory::dims</a>&#160;</td>
           <td class="paramname"><em>strides</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="group__cpp__api__memory.html#ga720bd5f3fae22b0e6a513deab0aacc3b">memory::dims</a>&#160;</td>
+          <td class="paramtype">const <a class="el" href="group__cpp__api__memory.html#ga0fa655354b5c62453d93c58e2f229a43">memory::dims</a>&#160;</td>
           <td class="paramname"><em>padding_l</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="group__cpp__api__memory.html#ga720bd5f3fae22b0e6a513deab0aacc3b">memory::dims</a>&#160;</td>
+          <td class="paramtype">const <a class="el" href="group__cpp__api__memory.html#ga0fa655354b5c62453d93c58e2f229a43">memory::dims</a>&#160;</td>
           <td class="paramname"><em>padding_r</em>, </td>
         </tr>
         <tr>
@@ -2511,25 +2526,25 @@ Friends</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="group__cpp__api__memory.html#ga720bd5f3fae22b0e6a513deab0aacc3b">memory::dims</a>&#160;</td>
+          <td class="paramtype">const <a class="el" href="group__cpp__api__memory.html#ga0fa655354b5c62453d93c58e2f229a43">memory::dims</a>&#160;</td>
           <td class="paramname"><em>strides</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="group__cpp__api__memory.html#ga720bd5f3fae22b0e6a513deab0aacc3b">memory::dims</a>&#160;</td>
+          <td class="paramtype">const <a class="el" href="group__cpp__api__memory.html#ga0fa655354b5c62453d93c58e2f229a43">memory::dims</a>&#160;</td>
           <td class="paramname"><em>dilates</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="group__cpp__api__memory.html#ga720bd5f3fae22b0e6a513deab0aacc3b">memory::dims</a>&#160;</td>
+          <td class="paramtype">const <a class="el" href="group__cpp__api__memory.html#ga0fa655354b5c62453d93c58e2f229a43">memory::dims</a>&#160;</td>
           <td class="paramname"><em>padding_l</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="group__cpp__api__memory.html#ga720bd5f3fae22b0e6a513deab0aacc3b">memory::dims</a>&#160;</td>
+          <td class="paramtype">const <a class="el" href="group__cpp__api__memory.html#ga0fa655354b5c62453d93c58e2f229a43">memory::dims</a>&#160;</td>
           <td class="paramname"><em>padding_r</em>, </td>
         </tr>
         <tr>
@@ -2593,25 +2608,25 @@ Friends</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="group__cpp__api__memory.html#ga720bd5f3fae22b0e6a513deab0aacc3b">memory::dims</a>&#160;</td>
+          <td class="paramtype">const <a class="el" href="group__cpp__api__memory.html#ga0fa655354b5c62453d93c58e2f229a43">memory::dims</a>&#160;</td>
           <td class="paramname"><em>strides</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="group__cpp__api__memory.html#ga720bd5f3fae22b0e6a513deab0aacc3b">memory::dims</a>&#160;</td>
+          <td class="paramtype">const <a class="el" href="group__cpp__api__memory.html#ga0fa655354b5c62453d93c58e2f229a43">memory::dims</a>&#160;</td>
           <td class="paramname"><em>dilates</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="group__cpp__api__memory.html#ga720bd5f3fae22b0e6a513deab0aacc3b">memory::dims</a>&#160;</td>
+          <td class="paramtype">const <a class="el" href="group__cpp__api__memory.html#ga0fa655354b5c62453d93c58e2f229a43">memory::dims</a>&#160;</td>
           <td class="paramname"><em>padding_l</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="group__cpp__api__memory.html#ga720bd5f3fae22b0e6a513deab0aacc3b">memory::dims</a>&#160;</td>
+          <td class="paramtype">const <a class="el" href="group__cpp__api__memory.html#ga0fa655354b5c62453d93c58e2f229a43">memory::dims</a>&#160;</td>
           <td class="paramname"><em>padding_r</em>, </td>
         </tr>
         <tr>
@@ -2669,19 +2684,19 @@ Friends</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="group__cpp__api__memory.html#ga720bd5f3fae22b0e6a513deab0aacc3b">memory::dims</a>&#160;</td>
+          <td class="paramtype">const <a class="el" href="group__cpp__api__memory.html#ga0fa655354b5c62453d93c58e2f229a43">memory::dims</a>&#160;</td>
           <td class="paramname"><em>strides</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="group__cpp__api__memory.html#ga720bd5f3fae22b0e6a513deab0aacc3b">memory::dims</a>&#160;</td>
+          <td class="paramtype">const <a class="el" href="group__cpp__api__memory.html#ga0fa655354b5c62453d93c58e2f229a43">memory::dims</a>&#160;</td>
           <td class="paramname"><em>padding_l</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="group__cpp__api__memory.html#ga720bd5f3fae22b0e6a513deab0aacc3b">memory::dims</a>&#160;</td>
+          <td class="paramtype">const <a class="el" href="group__cpp__api__memory.html#ga0fa655354b5c62453d93c58e2f229a43">memory::dims</a>&#160;</td>
           <td class="paramname"><em>padding_r</em>, </td>
         </tr>
         <tr>
@@ -2745,19 +2760,19 @@ Friends</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="group__cpp__api__memory.html#ga720bd5f3fae22b0e6a513deab0aacc3b">memory::dims</a>&#160;</td>
+          <td class="paramtype">const <a class="el" href="group__cpp__api__memory.html#ga0fa655354b5c62453d93c58e2f229a43">memory::dims</a>&#160;</td>
           <td class="paramname"><em>strides</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="group__cpp__api__memory.html#ga720bd5f3fae22b0e6a513deab0aacc3b">memory::dims</a>&#160;</td>
+          <td class="paramtype">const <a class="el" href="group__cpp__api__memory.html#ga0fa655354b5c62453d93c58e2f229a43">memory::dims</a>&#160;</td>
           <td class="paramname"><em>padding_l</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="group__cpp__api__memory.html#ga720bd5f3fae22b0e6a513deab0aacc3b">memory::dims</a>&#160;</td>
+          <td class="paramtype">const <a class="el" href="group__cpp__api__memory.html#ga0fa655354b5c62453d93c58e2f229a43">memory::dims</a>&#160;</td>
           <td class="paramname"><em>padding_r</em>, </td>
         </tr>
         <tr>
@@ -2815,19 +2830,19 @@ Friends</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="group__cpp__api__memory.html#ga720bd5f3fae22b0e6a513deab0aacc3b">memory::dims</a>&#160;</td>
+          <td class="paramtype">const <a class="el" href="group__cpp__api__memory.html#ga0fa655354b5c62453d93c58e2f229a43">memory::dims</a>&#160;</td>
           <td class="paramname"><em>strides</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="group__cpp__api__memory.html#ga720bd5f3fae22b0e6a513deab0aacc3b">memory::dims</a>&#160;</td>
+          <td class="paramtype">const <a class="el" href="group__cpp__api__memory.html#ga0fa655354b5c62453d93c58e2f229a43">memory::dims</a>&#160;</td>
           <td class="paramname"><em>padding_l</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="group__cpp__api__memory.html#ga720bd5f3fae22b0e6a513deab0aacc3b">memory::dims</a>&#160;</td>
+          <td class="paramtype">const <a class="el" href="group__cpp__api__memory.html#ga0fa655354b5c62453d93c58e2f229a43">memory::dims</a>&#160;</td>
           <td class="paramname"><em>padding_r</em>, </td>
         </tr>
         <tr>
@@ -3163,25 +3178,25 @@ Friends</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="group__cpp__api__memory.html#ga720bd5f3fae22b0e6a513deab0aacc3b">memory::dims</a>&#160;</td>
+          <td class="paramtype">const <a class="el" href="group__cpp__api__memory.html#ga0fa655354b5c62453d93c58e2f229a43">memory::dims</a>&#160;</td>
           <td class="paramname"><em>strides</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="group__cpp__api__memory.html#ga720bd5f3fae22b0e6a513deab0aacc3b">memory::dims</a>&#160;</td>
+          <td class="paramtype">const <a class="el" href="group__cpp__api__memory.html#ga0fa655354b5c62453d93c58e2f229a43">memory::dims</a>&#160;</td>
           <td class="paramname"><em>kernel</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="group__cpp__api__memory.html#ga720bd5f3fae22b0e6a513deab0aacc3b">memory::dims</a>&#160;</td>
+          <td class="paramtype">const <a class="el" href="group__cpp__api__memory.html#ga0fa655354b5c62453d93c58e2f229a43">memory::dims</a>&#160;</td>
           <td class="paramname"><em>padding_l</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="group__cpp__api__memory.html#ga720bd5f3fae22b0e6a513deab0aacc3b">memory::dims</a>&#160;</td>
+          <td class="paramtype">const <a class="el" href="group__cpp__api__memory.html#ga0fa655354b5c62453d93c58e2f229a43">memory::dims</a>&#160;</td>
           <td class="paramname"><em>padding_r</em>, </td>
         </tr>
         <tr>
@@ -3233,25 +3248,25 @@ Friends</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="group__cpp__api__memory.html#ga720bd5f3fae22b0e6a513deab0aacc3b">memory::dims</a> &amp;&#160;</td>
+          <td class="paramtype">const <a class="el" href="group__cpp__api__memory.html#ga0fa655354b5c62453d93c58e2f229a43">memory::dims</a> &amp;&#160;</td>
           <td class="paramname"><em>strides</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="group__cpp__api__memory.html#ga720bd5f3fae22b0e6a513deab0aacc3b">memory::dims</a> &amp;&#160;</td>
+          <td class="paramtype">const <a class="el" href="group__cpp__api__memory.html#ga0fa655354b5c62453d93c58e2f229a43">memory::dims</a> &amp;&#160;</td>
           <td class="paramname"><em>kernel</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="group__cpp__api__memory.html#ga720bd5f3fae22b0e6a513deab0aacc3b">memory::dims</a> &amp;&#160;</td>
+          <td class="paramtype">const <a class="el" href="group__cpp__api__memory.html#ga0fa655354b5c62453d93c58e2f229a43">memory::dims</a> &amp;&#160;</td>
           <td class="paramname"><em>padding_l</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="group__cpp__api__memory.html#ga720bd5f3fae22b0e6a513deab0aacc3b">memory::dims</a> &amp;&#160;</td>
+          <td class="paramtype">const <a class="el" href="group__cpp__api__memory.html#ga0fa655354b5c62453d93c58e2f229a43">memory::dims</a> &amp;&#160;</td>
           <td class="paramname"><em>padding_r</em>, </td>
         </tr>
         <tr>
@@ -4539,7 +4554,7 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
-<a class="anchor" id="gae2645937e54c27ffacd0727c1465acec"></a>
+<a class="anchor" id="gaeab8a660589202ecf17ed042a69bf5d5"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -4549,7 +4564,7 @@ template&lt;typename T &gt; </div>
         <tr>
           <td class="memname">mkldnn::engine::engine </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="group__c__api__engine__types.html#ga40f5f917cdbf2215fa5324e4bf62d523">c_api::mkldnn_engine_t</a> &amp;&#160;</td>
+          <td class="paramtype">const <a class="el" href="group__c__api__engine__types.html#ga40f5f917cdbf2215fa5324e4bf62d523">mkldnn_engine_t</a> &amp;&#160;</td>
           <td class="paramname"><em>aengine</em></td><td>)</td>
           <td></td>
         </tr>
@@ -4563,7 +4578,7 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
-<a class="anchor" id="ga95f333c4582edcb606a4b9add2a53266"></a>
+<a class="anchor" id="ga8511af0d3b8729e1ef9edab6d68a5e0d"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -4573,7 +4588,7 @@ template&lt;typename T &gt; </div>
         <tr>
           <td class="memname">mkldnn::engine::engine </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="classmkldnn_1_1handle.html">handle</a>&lt; <a class="el" href="group__c__api__primitive__descs.html#ga4108b6ee20cf3d2e472504c1aea67497">c_api::mkldnn_primitive_desc_t</a> &gt; &amp;&#160;</td>
+          <td class="paramtype">const <a class="el" href="classmkldnn_1_1handle.html">handle</a>&lt; <a class="el" href="group__c__api__primitive__descs.html#ga4108b6ee20cf3d2e472504c1aea67497">mkldnn_primitive_desc_t</a> &gt; &amp;&#160;</td>
           <td class="paramname"><em>pd</em></td><td>)</td>
           <td></td>
         </tr>
@@ -4587,7 +4602,7 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
-<a class="anchor" id="ga96683a5ca544f344deb0289c35abf8f7"></a>
+<a class="anchor" id="ga7812548bbce0899a64348d1a73e2f57a"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -4597,7 +4612,7 @@ template&lt;typename T &gt; </div>
         <tr>
           <td class="memname">mkldnn::error::error </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="group__c__api__types__generic.html#ga31866789b66acfb1c28b2f9bdd7bdfdd">c_api::mkldnn_status_t</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="group__c__api__types__generic.html#ga31866789b66acfb1c28b2f9bdd7bdfdd">mkldnn_status_t</a>&#160;</td>
           <td class="paramname"><em>astatus</em>, </td>
         </tr>
         <tr>
@@ -4609,7 +4624,7 @@ template&lt;typename T &gt; </div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="group__c__api__types__primitive.html#gac7821f6b4a4fa0d58fe5279a1ff2fda3">c_api::mkldnn_primitive_t</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="group__c__api__types__primitive.html#gac7821f6b4a4fa0d58fe5279a1ff2fda3">mkldnn_primitive_t</a>&#160;</td>
           <td class="paramname"><em>aerror_primitive</em> = <code>0</code>&#160;</td>
         </tr>
         <tr>
@@ -5204,7 +5219,7 @@ template&lt;typename T, typename traits = handle_traits&lt;T&gt;&gt; </div>
 
 </div>
 </div>
-<a class="anchor" id="gaae0f4c7e0efb88a9cdc411164a5a1c52"></a>
+<a class="anchor" id="gad620dea4032ae111acef2a46e0902722"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -5212,7 +5227,7 @@ template&lt;typename T, typename traits = handle_traits&lt;T&gt;&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group__c__api__primitive__descs.html#ga9f002a6449ae9be775393e888698cfe0">c_api::const_mkldnn_primitive_desc_t</a> mkldnn::primitive::get_primitive_desc </td>
+          <td class="memname"><a class="el" href="group__c__api__primitive__descs.html#ga9f002a6449ae9be775393e888698cfe0">const_mkldnn_primitive_desc_t</a> mkldnn::primitive::get_primitive_desc </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -6022,6 +6037,142 @@ template&lt;typename T, typename traits = handle_traits&lt;T&gt;&gt; </div>
 
 </div>
 </div>
+<a class="anchor" id="ga048da9d3a9199cec52d3baa4daf6c880"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool mkldnn::operator!= </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__c__api__types__generic.html#ga826b2a9be4d94ac17f99bacac6d0cb29">mkldnn_data_type_t</a>&#160;</td>
+          <td class="paramname"><em>a</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">memory::data_type&#160;</td>
+          <td class="paramname"><em>b</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="gad7e115584a180164ff0ec8e6a42ccf1a"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool mkldnn::operator!= </td>
+          <td>(</td>
+          <td class="paramtype">memory::data_type&#160;</td>
+          <td class="paramname"><em>a</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__c__api__types__generic.html#ga826b2a9be4d94ac17f99bacac6d0cb29">mkldnn_data_type_t</a>&#160;</td>
+          <td class="paramname"><em>b</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ga9212cee5b7beaa78d962547f9941b55d"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool mkldnn::operator!= </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__c__api__types__generic.html#ga30a390f87ef74bf03dfa48a7b3f2fb74">mkldnn_memory_format_t</a>&#160;</td>
+          <td class="paramname"><em>a</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">memory::format&#160;</td>
+          <td class="paramname"><em>b</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="gabc7b0cb3ed3e54e783cb4377b8f9c1a6"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool mkldnn::operator!= </td>
+          <td>(</td>
+          <td class="paramtype">memory::format&#160;</td>
+          <td class="paramname"><em>a</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__c__api__types__generic.html#ga30a390f87ef74bf03dfa48a7b3f2fb74">mkldnn_memory_format_t</a>&#160;</td>
+          <td class="paramname"><em>b</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a class="anchor" id="ga09e6a786752e89ba4a7a2c4b566b1f74"></a>
 <div class="memitem">
 <div class="memproto">
@@ -6113,6 +6264,142 @@ template&lt;typename T, typename traits = handle_traits&lt;T&gt;&gt; </div>
           <td class="paramtype">const <a class="el" href="structmkldnn_1_1memory_1_1primitive__desc.html">primitive_desc</a> &amp;&#160;</td>
           <td class="paramname"><em>other</em></td><td>)</td>
           <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="gaf571070d442c8057567f0b3b125c48a9"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool mkldnn::operator== </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__c__api__types__generic.html#ga826b2a9be4d94ac17f99bacac6d0cb29">mkldnn_data_type_t</a>&#160;</td>
+          <td class="paramname"><em>a</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">memory::data_type&#160;</td>
+          <td class="paramname"><em>b</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ga45725446175060a0c85d45f1eacfb657"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool mkldnn::operator== </td>
+          <td>(</td>
+          <td class="paramtype">memory::data_type&#160;</td>
+          <td class="paramname"><em>a</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__c__api__types__generic.html#ga826b2a9be4d94ac17f99bacac6d0cb29">mkldnn_data_type_t</a>&#160;</td>
+          <td class="paramname"><em>b</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ga1922947b0e5d8f91403bd645ffb6c13c"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool mkldnn::operator== </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__c__api__types__generic.html#ga30a390f87ef74bf03dfa48a7b3f2fb74">mkldnn_memory_format_t</a>&#160;</td>
+          <td class="paramname"><em>a</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">memory::format&#160;</td>
+          <td class="paramname"><em>b</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ga4963150af69775cf57bfc9025ad921a9"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool mkldnn::operator== </td>
+          <td>(</td>
+          <td class="paramtype">memory::format&#160;</td>
+          <td class="paramname"><em>a</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__c__api__types__generic.html#ga30a390f87ef74bf03dfa48a7b3f2fb74">mkldnn_memory_format_t</a>&#160;</td>
+          <td class="paramname"><em>b</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
   </td>
@@ -6405,13 +6692,13 @@ template&lt;typename T, typename traits = handle_traits&lt;T&gt;&gt; </div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="group__cpp__api__memory.html#ga720bd5f3fae22b0e6a513deab0aacc3b">memory::dims</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="group__cpp__api__memory.html#ga0fa655354b5c62453d93c58e2f229a43">memory::dims</a>&#160;</td>
           <td class="paramname"><em>dims</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="group__cpp__api__memory.html#ga720bd5f3fae22b0e6a513deab0aacc3b">memory::dims</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="group__cpp__api__memory.html#ga0fa655354b5c62453d93c58e2f229a43">memory::dims</a>&#160;</td>
           <td class="paramname"><em>offsets</em>&#160;</td>
         </tr>
         <tr>
@@ -7737,13 +8024,13 @@ template&lt;typename T &gt; </div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="group__cpp__api__memory.html#ga720bd5f3fae22b0e6a513deab0aacc3b">memory::dims</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="group__cpp__api__memory.html#ga0fa655354b5c62453d93c58e2f229a43">memory::dims</a>&#160;</td>
           <td class="paramname"><em>dims</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="group__cpp__api__memory.html#ga720bd5f3fae22b0e6a513deab0aacc3b">memory::dims</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="group__cpp__api__memory.html#ga0fa655354b5c62453d93c58e2f229a43">memory::dims</a>&#160;</td>
           <td class="paramname"><em>offsets</em>&#160;</td>
         </tr>
         <tr>
@@ -8003,7 +8290,7 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
-<a class="anchor" id="ga9217132bf07620e239523c921c51e36d"></a>
+<a class="anchor" id="ga8e8ca40a348b25f0b11bc211dc4d204f"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -8013,7 +8300,7 @@ template&lt;typename T &gt; </div>
         <tr>
           <td class="memname">static void mkldnn::error::wrap_c_api </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="group__c__api__types__generic.html#ga31866789b66acfb1c28b2f9bdd7bdfdd">c_api::mkldnn_status_t</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="group__c__api__types__generic.html#ga31866789b66acfb1c28b2f9bdd7bdfdd">mkldnn_status_t</a>&#160;</td>
           <td class="paramname"><em>status</em>, </td>
         </tr>
         <tr>
@@ -8025,7 +8312,7 @@ template&lt;typename T &gt; </div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="group__c__api__types__primitive.html#gac7821f6b4a4fa0d58fe5279a1ff2fda3">c_api::mkldnn_primitive_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="group__c__api__types__primitive.html#gac7821f6b4a4fa0d58fe5279a1ff2fda3">mkldnn_primitive_t</a> *&#160;</td>
           <td class="paramname"><em>error_primitive</em> = <code>0</code>&#160;</td>
         </tr>
         <tr>
@@ -8041,7 +8328,7 @@ template&lt;typename T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>A convenience function for wrapping calls to the C API. Checks the return status and throws an <a class="el" href="group__cpp__api__memory.html#ga96683a5ca544f344deb0289c35abf8f7" title="Constructs an error instance. ">error</a> in case of failure. </p>
+<p>A convenience function for wrapping calls to the C API. Checks the return status and throws an <a class="el" href="group__cpp__api__memory.html#ga7812548bbce0899a64348d1a73e2f57a" title="Constructs an error instance. ">error</a> in case of failure. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">status</td><td>The error status returned by the C API. </td></tr>
@@ -8054,12 +8341,12 @@ template&lt;typename T &gt; </div>
 </div>
 </div>
 <h2 class="groupheader">Variable Documentation</h2>
-<a class="anchor" id="ga8c79ba96d6210c8b71ad79056ee53b36"></a>
+<a class="anchor" id="ga4961f21e96c398293a16deccc2bc89b0"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">c_api::mkldnn_primitive_at_t mkldnn::primitive::at::data</td>
+          <td class="memname"><a class="el" href="structmkldnn__primitive__at__t.html">mkldnn_primitive_at_t</a> mkldnn::primitive::at::data</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -8068,12 +8355,12 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
-<a class="anchor" id="ga93f7e71aa256699bc7ef7a0919c4ae4b"></a>
+<a class="anchor" id="gabeddf8909e2b4af626153c88da9f8b37"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">c_api::mkldnn_memory_desc_t mkldnn::memory::desc::data</td>
+          <td class="memname"><a class="el" href="structmkldnn__memory__desc__t.html">mkldnn_memory_desc_t</a> mkldnn::memory::desc::data</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -8082,199 +8369,199 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
-<a class="anchor" id="ga71c781ccaa22ed693c9185aae6390bad"></a>
+<a class="anchor" id="ga0ea88a5e59efc5ceef38549be00f0788"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">c_api::mkldnn_convolution_desc_t mkldnn::convolution_forward::desc::data</td>
+          <td class="memname"><a class="el" href="structmkldnn__convolution__desc__t.html">mkldnn_convolution_desc_t</a> mkldnn::convolution_forward::desc::data</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="gaf2adf70ebe81652cabd43ed395217b96"></a>
+<a class="anchor" id="ga8d9a44245d964fdd0d7c7a609f84b666"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">c_api::mkldnn_convolution_desc_t mkldnn::convolution_backward_data::desc::data</td>
+          <td class="memname"><a class="el" href="structmkldnn__convolution__desc__t.html">mkldnn_convolution_desc_t</a> mkldnn::convolution_backward_data::desc::data</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="gabd31ad709d295a31998b2bb4267a360b"></a>
+<a class="anchor" id="ga1e03f8de02a6b42539d991ff0d011d61"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">c_api::mkldnn_convolution_desc_t mkldnn::convolution_backward_weights::desc::data</td>
+          <td class="memname"><a class="el" href="structmkldnn__convolution__desc__t.html">mkldnn_convolution_desc_t</a> mkldnn::convolution_backward_weights::desc::data</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="ga4e729d0141544f85b5c2a4485b39c1d2"></a>
+<a class="anchor" id="ga9762fffb328a4384835382d1efb16311"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">c_api::mkldnn_convolution_relu_desc_t mkldnn::convolution_relu_forward::desc::data</td>
+          <td class="memname"><a class="el" href="structmkldnn__convolution__relu__desc__t.html">mkldnn_convolution_relu_desc_t</a> mkldnn::convolution_relu_forward::desc::data</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="ga8f40d4e0c519dbf013fb068083342453"></a>
+<a class="anchor" id="gae9e14265c9d3fbd67ea04dd8241d995e"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">c_api::mkldnn_lrn_desc_t mkldnn::lrn_forward::desc::data</td>
+          <td class="memname"><a class="el" href="structmkldnn__lrn__desc__t.html">mkldnn_lrn_desc_t</a> mkldnn::lrn_forward::desc::data</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="ga19984e278a6aa298990370279d877562"></a>
+<a class="anchor" id="ga9b8640a231c4894c9684861fb26345bd"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">c_api::mkldnn_lrn_desc_t mkldnn::lrn_backward::desc::data</td>
+          <td class="memname"><a class="el" href="structmkldnn__lrn__desc__t.html">mkldnn_lrn_desc_t</a> mkldnn::lrn_backward::desc::data</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="ga2e4cd4e00741e3b110b16c4a8518186d"></a>
+<a class="anchor" id="gae8cab6012ec16ca9d2051a95304ac211"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">c_api::mkldnn_pooling_desc_t mkldnn::pooling_forward::desc::data</td>
+          <td class="memname"><a class="el" href="structmkldnn__pooling__desc__t.html">mkldnn_pooling_desc_t</a> mkldnn::pooling_forward::desc::data</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="ga6210aad0df630722855044f087f3876c"></a>
+<a class="anchor" id="ga3c403de448817a04fb6e6d0a5df9296d"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">c_api::mkldnn_pooling_desc_t mkldnn::pooling_backward::desc::data</td>
+          <td class="memname"><a class="el" href="structmkldnn__pooling__desc__t.html">mkldnn_pooling_desc_t</a> mkldnn::pooling_backward::desc::data</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="ga27b96fb940427e3ee82e662561e035d2"></a>
+<a class="anchor" id="gae026c9756e872ce3f3e5d36a1627d687"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">c_api::mkldnn_eltwise_desc_t mkldnn::eltwise_forward::desc::data</td>
+          <td class="memname"><a class="el" href="structmkldnn__eltwise__desc__t.html">mkldnn_eltwise_desc_t</a> mkldnn::eltwise_forward::desc::data</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="ga46271904d0073a8a9271ace43b507f43"></a>
+<a class="anchor" id="ga5ec9abe07651be1f683382201e22fcf5"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">c_api::mkldnn_eltwise_desc_t mkldnn::eltwise_backward::desc::data</td>
+          <td class="memname"><a class="el" href="structmkldnn__eltwise__desc__t.html">mkldnn_eltwise_desc_t</a> mkldnn::eltwise_backward::desc::data</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="ga6b85a96ce413ecae79a19f27aba46b21"></a>
+<a class="anchor" id="ga9c897c20a09e9353ad6b9a1dd76bb54a"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">c_api::mkldnn_softmax_desc_t mkldnn::softmax_forward::desc::data</td>
+          <td class="memname"><a class="el" href="structmkldnn__softmax__desc__t.html">mkldnn_softmax_desc_t</a> mkldnn::softmax_forward::desc::data</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="gaad37b03adb44296ae611aad4eeeec57b"></a>
+<a class="anchor" id="ga77a416b8a2518f020ed2d0b8b8c07d8f"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">c_api::mkldnn_batch_normalization_desc_t mkldnn::batch_normalization_forward::desc::data</td>
+          <td class="memname"><a class="el" href="structmkldnn__batch__normalization__desc__t.html">mkldnn_batch_normalization_desc_t</a> mkldnn::batch_normalization_forward::desc::data</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="gafb972c68a8fc85bf273da76c3b01e5a4"></a>
+<a class="anchor" id="gaebfd6852378609f93ab3fdd5bce94c57"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">c_api::mkldnn_batch_normalization_desc_t mkldnn::batch_normalization_backward::desc::data</td>
+          <td class="memname"><a class="el" href="structmkldnn__batch__normalization__desc__t.html">mkldnn_batch_normalization_desc_t</a> mkldnn::batch_normalization_backward::desc::data</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="ga4198991b1ffc650006212c577debbf1a"></a>
+<a class="anchor" id="ga59b6030e4823c0df000a9314e7b09d2a"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">c_api::mkldnn_inner_product_desc_t mkldnn::inner_product_forward::desc::data</td>
+          <td class="memname"><a class="el" href="structmkldnn__inner__product__desc__t.html">mkldnn_inner_product_desc_t</a> mkldnn::inner_product_forward::desc::data</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="gaf6db646208f62a4533b7e64a423f574f"></a>
+<a class="anchor" id="ga399a117fd034667f1b036eb00aa195c0"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">c_api::mkldnn_inner_product_desc_t mkldnn::inner_product_backward_data::desc::data</td>
+          <td class="memname"><a class="el" href="structmkldnn__inner__product__desc__t.html">mkldnn_inner_product_desc_t</a> mkldnn::inner_product_backward_data::desc::data</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="ga2e8a4ee44da2e12e10619c017b959b06"></a>
+<a class="anchor" id="ga6123bbb5cbd84ad0d6e989dbe43f99f6"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">c_api::mkldnn_inner_product_desc_t mkldnn::inner_product_backward_weights::desc::data</td>
+          <td class="memname"><a class="el" href="structmkldnn__inner__product__desc__t.html">mkldnn_inner_product_desc_t</a> mkldnn::inner_product_backward_weights::desc::data</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="ga701ef9b3441982544e2d5b2cff39d4ac"></a>
+<a class="anchor" id="ga7543df2118833d466cb839f5e5d3d570"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -8282,7 +8569,7 @@ template&lt;typename T &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">constexpr auto <a class="el" href="classmkldnn_1_1handle__traits.html">mkldnn::handle_traits</a>&lt; <a class="el" href="group__c__api__types__primitive.html#gac7821f6b4a4fa0d58fe5279a1ff2fda3">c_api::mkldnn_primitive_t</a> &gt;::destructor = &amp;<a class="el" href="group__c__api__primitive__common.html#ga083d8c44cc398146be7056c7b450ee83">c_api::mkldnn_primitive_destroy</a></td>
+          <td class="memname">constexpr auto <a class="el" href="classmkldnn_1_1handle__traits.html">mkldnn::handle_traits</a>&lt; <a class="el" href="group__c__api__types__primitive.html#gac7821f6b4a4fa0d58fe5279a1ff2fda3">mkldnn_primitive_t</a> &gt;::destructor = &amp;<a class="el" href="group__c__api__primitive__common.html#ga083d8c44cc398146be7056c7b450ee83">mkldnn_primitive_destroy</a></td>
         </tr>
       </table>
   </td>
@@ -8294,7 +8581,7 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
-<a class="anchor" id="ga74dd5d0d9b6d8dd4aa86bad6e3af27e4"></a>
+<a class="anchor" id="gaf94d233c0788af73e64d0f8dd379cba3"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -8302,7 +8589,7 @@ template&lt;typename T &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">constexpr auto <a class="el" href="classmkldnn_1_1handle__traits.html">mkldnn::handle_traits</a>&lt; <a class="el" href="group__c__api__primitive__descs.html#ga4108b6ee20cf3d2e472504c1aea67497">c_api::mkldnn_primitive_desc_t</a> &gt;::destructor = &amp;<a class="el" href="group__c__api__primitive__common.html#gacad44a12c7d863fb47dc02a76b4b794a">c_api::mkldnn_primitive_desc_destroy</a></td>
+          <td class="memname">constexpr auto <a class="el" href="classmkldnn_1_1handle__traits.html">mkldnn::handle_traits</a>&lt; <a class="el" href="group__c__api__primitive__descs.html#ga4108b6ee20cf3d2e472504c1aea67497">mkldnn_primitive_desc_t</a> &gt;::destructor = &amp;<a class="el" href="group__c__api__primitive__common.html#gacad44a12c7d863fb47dc02a76b4b794a">mkldnn_primitive_desc_destroy</a></td>
         </tr>
       </table>
   </td>
@@ -8338,12 +8625,12 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
-<a class="anchor" id="ga372df84a0b6d6b928cd849eabca73e34"></a>
+<a class="anchor" id="ga198ac0b350f00924dae2553086e90e97"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group__c__api__types__generic.html#ga31866789b66acfb1c28b2f9bdd7bdfdd">c_api::mkldnn_status_t</a> mkldnn::error::status</td>
+          <td class="memname"><a class="el" href="group__c__api__types__generic.html#ga31866789b66acfb1c28b2f9bdd7bdfdd">mkldnn_status_t</a> mkldnn::error::status</td>
         </tr>
       </table>
 </div><div class="memdoc">

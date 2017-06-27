@@ -1,0 +1,5 @@
+<map id="mkldnn::softmax_forward::desc" name="mkldnn::softmax_forward::desc">
+<area shape="rect" id="node2" href="$structmkldnn__softmax__desc__t.html" title="A descriptor of a Softmax operation. " alt="" coords="7,187,171,213"/>
+<area shape="rect" id="node3" href="$structmkldnn__memory__desc__t.html" title="Memory descriptor. " alt="" coords="7,96,171,123"/>
+<area shape="rect" id="node4" href="$structmkldnn__blocking__desc__t.html" title="Generic description of blocked data layout for most memory formats. " alt="" coords="7,5,172,32"/>
+</map>

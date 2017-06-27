@@ -100,7 +100,7 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmkldnn_1_1handle.html">handle</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A class for wrapping an Intel(R) MKL-DNN handle. It is used as the base class for primitive (<a class="el" href="group__c__api__types__primitive.html#gac7821f6b4a4fa0d58fe5279a1ff2fda3" title="A primitive handle. ">mkldnn_primitive_t</a>), engine (<a class="el" href="group__c__api__engine__types.html#ga40f5f917cdbf2215fa5324e4bf62d523" title="An engine handle. ">mkldnn_engine_t</a>), and stream (<a class="el" href="group__c__api__types__stream.html#ga45075c5015f9a5ef3b0365af92fa1529" title="An execution stream handle. ">mkldnn_stream_t</a>) handles. An object of the <a class="el" href="classmkldnn_1_1handle.html" title="A class for wrapping an Intel(R) MKL-DNN handle. It is used as the base class for primitive (mkldnn_p...">mkldnn::handle</a> class can be passed by value. This class enables wrapping:  <a href="classmkldnn_1_1handle.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmkldnn_1_1handle__traits_3_01c__api_1_1mkldnn__primitive__t_01_4.html">handle_traits&lt; c_api::mkldnn_primitive_t &gt;</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmkldnn_1_1handle__traits_3_01mkldnn__primitive__t_01_4.html">handle_traits&lt; mkldnn_primitive_t &gt;</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmkldnn_1_1primitive.html">primitive</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Base class for all computational primitives.  <a href="classmkldnn_1_1primitive.html#details">More...</a><br/></td></tr>
@@ -111,7 +111,7 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmkldnn_1_1engine.html">engine</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">An execution engine.  <a href="structmkldnn_1_1engine.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmkldnn_1_1handle__traits_3_01c__api_1_1mkldnn__primitive__desc__t_01_4.html">handle_traits&lt; c_api::mkldnn_primitive_desc_t &gt;</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmkldnn_1_1handle__traits_3_01mkldnn__primitive__desc__t_01_4.html">handle_traits&lt; mkldnn_primitive_desc_t &gt;</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmkldnn_1_1memory.html">memory</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Memory primitive that describes the data.  <a href="structmkldnn_1_1memory.html#details">More...</a><br/></td></tr>
@@ -169,89 +169,105 @@ Typedefs</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
 <tr class="memitem:ga6d88ff11a07bae09a5c348d314c5d1d9"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__engine.html#ga6d88ff11a07bae09a5c348d314c5d1d9">query</a> { <br/>
-&#160;&#160;<a class="el" href="group__cpp__api__engine.html#gga6d88ff11a07bae09a5c348d314c5d1d9a8d3ff637e43a48b61ad6d7855c6a9cd1">undef</a> = c_api::mkldnn_query_undef, 
-<a class="el" href="group__cpp__api__engine.html#gga6d88ff11a07bae09a5c348d314c5d1d9acb4cacb193ad2274f54ae1dd6c0a3fbb">eengine</a> = c_api::mkldnn_query_engine, 
-<a class="el" href="group__cpp__api__engine.html#gga6d88ff11a07bae09a5c348d314c5d1d9ab9ac6c4dbd943afffb6c80e0bcff4181">primitive_kind</a> = c_api::mkldnn_query_primitive_kind, 
-<a class="el" href="group__cpp__api__engine.html#gga6d88ff11a07bae09a5c348d314c5d1d9aa7acb3c71ec9740a93042f80b24f6110">num_of_inputs_s32</a> = c_api::mkldnn_query_num_of_inputs_s32, 
+&#160;&#160;<a class="el" href="group__cpp__api__engine.html#gga6d88ff11a07bae09a5c348d314c5d1d9a8d3ff637e43a48b61ad6d7855c6a9cd1">undef</a> = mkldnn_query_undef, 
+<a class="el" href="group__cpp__api__engine.html#gga6d88ff11a07bae09a5c348d314c5d1d9acb4cacb193ad2274f54ae1dd6c0a3fbb">eengine</a> = mkldnn_query_engine, 
+<a class="el" href="group__cpp__api__engine.html#gga6d88ff11a07bae09a5c348d314c5d1d9ab9ac6c4dbd943afffb6c80e0bcff4181">primitive_kind</a> = mkldnn_query_primitive_kind, 
+<a class="el" href="group__cpp__api__engine.html#gga6d88ff11a07bae09a5c348d314c5d1d9aa7acb3c71ec9740a93042f80b24f6110">num_of_inputs_s32</a> = mkldnn_query_num_of_inputs_s32, 
 <br/>
-&#160;&#160;<a class="el" href="group__cpp__api__engine.html#gga6d88ff11a07bae09a5c348d314c5d1d9a031851c9746b2eb890af91a5f209e014">num_of_outputs_s32</a> = c_api::mkldnn_query_num_of_outputs_s32, 
-<a class="el" href="group__cpp__api__engine.html#gga6d88ff11a07bae09a5c348d314c5d1d9a1b43385b970ea053f46e5932d574615e">time_estimate_f64</a> = c_api::mkldnn_query_time_estimate_f64, 
-<a class="el" href="group__cpp__api__engine.html#gga6d88ff11a07bae09a5c348d314c5d1d9a4faa2a57cddf474a9356b136ece00401">memory_consumption_s64</a> = c_api::mkldnn_query_memory_consumption_s64, 
-<a class="el" href="group__cpp__api__engine.html#gga6d88ff11a07bae09a5c348d314c5d1d9a022fea4ccfab3e1045c7358d07de3d5e">impl_info_str</a> = c_api::mkldnn_query_impl_info_str, 
+&#160;&#160;<a class="el" href="group__cpp__api__engine.html#gga6d88ff11a07bae09a5c348d314c5d1d9a031851c9746b2eb890af91a5f209e014">num_of_outputs_s32</a> = mkldnn_query_num_of_outputs_s32, 
+<a class="el" href="group__cpp__api__engine.html#gga6d88ff11a07bae09a5c348d314c5d1d9a1b43385b970ea053f46e5932d574615e">time_estimate_f64</a> = mkldnn_query_time_estimate_f64, 
+<a class="el" href="group__cpp__api__engine.html#gga6d88ff11a07bae09a5c348d314c5d1d9a4faa2a57cddf474a9356b136ece00401">memory_consumption_s64</a> = mkldnn_query_memory_consumption_s64, 
+<a class="el" href="group__cpp__api__engine.html#gga6d88ff11a07bae09a5c348d314c5d1d9a022fea4ccfab3e1045c7358d07de3d5e">impl_info_str</a> = mkldnn_query_impl_info_str, 
 <br/>
-&#160;&#160;<a class="el" href="group__cpp__api__engine.html#gga6d88ff11a07bae09a5c348d314c5d1d9a7b7d987552be10a6654ea645cede0a95">memory_d</a> = c_api::mkldnn_query_memory_d, 
-<a class="el" href="group__cpp__api__engine.html#gga6d88ff11a07bae09a5c348d314c5d1d9a13f5d72b1e5ec568b24c930e3b87641b">convolution_d</a> = c_api::mkldnn_query_convolution_d, 
-<a class="el" href="group__cpp__api__engine.html#gga6d88ff11a07bae09a5c348d314c5d1d9a69f238a33c9858afa87b914eb8b5ecb7">eltwise_d</a> = c_api::mkldnn_query_eltwise_d, 
-<a class="el" href="group__cpp__api__engine.html#gga6d88ff11a07bae09a5c348d314c5d1d9a20f677933e74a40096d45a51664c5ee4">relu_d</a> = c_api::mkldnn_query_relu_d, 
+&#160;&#160;<a class="el" href="group__cpp__api__engine.html#gga6d88ff11a07bae09a5c348d314c5d1d9a7b7d987552be10a6654ea645cede0a95">memory_d</a> = mkldnn_query_memory_d, 
+<a class="el" href="group__cpp__api__engine.html#gga6d88ff11a07bae09a5c348d314c5d1d9a13f5d72b1e5ec568b24c930e3b87641b">convolution_d</a> = mkldnn_query_convolution_d, 
+<a class="el" href="group__cpp__api__engine.html#gga6d88ff11a07bae09a5c348d314c5d1d9a69f238a33c9858afa87b914eb8b5ecb7">eltwise_d</a> = mkldnn_query_eltwise_d, 
+<a class="el" href="group__cpp__api__engine.html#gga6d88ff11a07bae09a5c348d314c5d1d9a20f677933e74a40096d45a51664c5ee4">relu_d</a> = mkldnn_query_relu_d, 
 <br/>
-&#160;&#160;<a class="el" href="group__cpp__api__engine.html#gga6d88ff11a07bae09a5c348d314c5d1d9abdb39a5fa96f35b51571bb5481ed2cc2">softmax_d</a> = c_api::mkldnn_query_softmax_d, 
-<a class="el" href="group__cpp__api__engine.html#gga6d88ff11a07bae09a5c348d314c5d1d9a3be3f1011debd2ee2df16b6b04a0bf77">pooling_d</a> = c_api::mkldnn_query_pooling_d, 
-<a class="el" href="group__cpp__api__engine.html#gga6d88ff11a07bae09a5c348d314c5d1d9a76add43bb6bee4f897e668e2d54476a2">lrn_d</a> = c_api::mkldnn_query_lrn_d, 
-<a class="el" href="group__cpp__api__engine.html#gga6d88ff11a07bae09a5c348d314c5d1d9a98ae1af5a25e62ffebc0ee054e0fd7c7">batch_normalization_d</a> = c_api::mkldnn_query_batch_normalization_d, 
+&#160;&#160;<a class="el" href="group__cpp__api__engine.html#gga6d88ff11a07bae09a5c348d314c5d1d9abdb39a5fa96f35b51571bb5481ed2cc2">softmax_d</a> = mkldnn_query_softmax_d, 
+<a class="el" href="group__cpp__api__engine.html#gga6d88ff11a07bae09a5c348d314c5d1d9a3be3f1011debd2ee2df16b6b04a0bf77">pooling_d</a> = mkldnn_query_pooling_d, 
+<a class="el" href="group__cpp__api__engine.html#gga6d88ff11a07bae09a5c348d314c5d1d9a76add43bb6bee4f897e668e2d54476a2">lrn_d</a> = mkldnn_query_lrn_d, 
+<a class="el" href="group__cpp__api__engine.html#gga6d88ff11a07bae09a5c348d314c5d1d9a98ae1af5a25e62ffebc0ee054e0fd7c7">batch_normalization_d</a> = mkldnn_query_batch_normalization_d, 
 <br/>
-&#160;&#160;<a class="el" href="group__cpp__api__engine.html#gga6d88ff11a07bae09a5c348d314c5d1d9a4036c4c9cc32dd0f22a8903cfceeaa41">inner_product_d</a> = c_api::mkldnn_query_inner_product_d, 
-<a class="el" href="group__cpp__api__engine.html#gga6d88ff11a07bae09a5c348d314c5d1d9a83453c3a1e6a6dad19d5928ae9b9b0ee">convolution_relu_d</a> = c_api::mkldnn_query_convolution_relu_d, 
-<a class="el" href="group__cpp__api__engine.html#gga6d88ff11a07bae09a5c348d314c5d1d9a508fa6b849113ef2100177d2991129fe">input_pd</a> = c_api::mkldnn_query_input_pd, 
-<a class="el" href="group__cpp__api__engine.html#gga6d88ff11a07bae09a5c348d314c5d1d9abab2d1abc2d37f4a1358daeb7f9a32b1">output_pd</a> = c_api::mkldnn_query_output_pd, 
+&#160;&#160;<a class="el" href="group__cpp__api__engine.html#gga6d88ff11a07bae09a5c348d314c5d1d9a4036c4c9cc32dd0f22a8903cfceeaa41">inner_product_d</a> = mkldnn_query_inner_product_d, 
+<a class="el" href="group__cpp__api__engine.html#gga6d88ff11a07bae09a5c348d314c5d1d9a83453c3a1e6a6dad19d5928ae9b9b0ee">convolution_relu_d</a> = mkldnn_query_convolution_relu_d, 
+<a class="el" href="group__cpp__api__engine.html#gga6d88ff11a07bae09a5c348d314c5d1d9a508fa6b849113ef2100177d2991129fe">input_pd</a> = mkldnn_query_input_pd, 
+<a class="el" href="group__cpp__api__engine.html#gga6d88ff11a07bae09a5c348d314c5d1d9abab2d1abc2d37f4a1358daeb7f9a32b1">output_pd</a> = mkldnn_query_output_pd, 
 <br/>
-&#160;&#160;<a class="el" href="group__cpp__api__engine.html#gga6d88ff11a07bae09a5c348d314c5d1d9a486100f73904f2beae1418a57cc6e0b1">src_pd</a> = c_api::mkldnn_query_src_pd, 
-<a class="el" href="group__cpp__api__engine.html#gga6d88ff11a07bae09a5c348d314c5d1d9a255f93a5ef35321792effc4f5d23e1e3">diff_src_pd</a> = c_api::mkldnn_query_diff_src_pd, 
-<a class="el" href="group__cpp__api__engine.html#gga6d88ff11a07bae09a5c348d314c5d1d9a38a475450bc885f2a0fad13bf87f44b9">weights_pd</a> = c_api::mkldnn_query_weights_pd, 
-<a class="el" href="group__cpp__api__engine.html#gga6d88ff11a07bae09a5c348d314c5d1d9a7b14a983b2e690abcf176dd41da50ae1">diff_weights_pd</a> = c_api::mkldnn_query_diff_weights_pd, 
+&#160;&#160;<a class="el" href="group__cpp__api__engine.html#gga6d88ff11a07bae09a5c348d314c5d1d9a486100f73904f2beae1418a57cc6e0b1">src_pd</a> = mkldnn_query_src_pd, 
+<a class="el" href="group__cpp__api__engine.html#gga6d88ff11a07bae09a5c348d314c5d1d9a255f93a5ef35321792effc4f5d23e1e3">diff_src_pd</a> = mkldnn_query_diff_src_pd, 
+<a class="el" href="group__cpp__api__engine.html#gga6d88ff11a07bae09a5c348d314c5d1d9a38a475450bc885f2a0fad13bf87f44b9">weights_pd</a> = mkldnn_query_weights_pd, 
+<a class="el" href="group__cpp__api__engine.html#gga6d88ff11a07bae09a5c348d314c5d1d9a7b14a983b2e690abcf176dd41da50ae1">diff_weights_pd</a> = mkldnn_query_diff_weights_pd, 
 <br/>
-&#160;&#160;<a class="el" href="group__cpp__api__engine.html#gga6d88ff11a07bae09a5c348d314c5d1d9a5e602b7cc44ad7373ab7212f73b3d7d4">dst_pd</a> = c_api::mkldnn_query_dst_pd, 
-<a class="el" href="group__cpp__api__engine.html#gga6d88ff11a07bae09a5c348d314c5d1d9adb9fd0a330dc402a36de022ce82bff07">diff_dst_pd</a> = c_api::mkldnn_query_diff_dst_pd, 
-<a class="el" href="group__cpp__api__engine.html#gga6d88ff11a07bae09a5c348d314c5d1d9a41d00a7019d406614ebaa00195d179bd">workspace_pd</a> = c_api::mkldnn_query_workspace_pd
+&#160;&#160;<a class="el" href="group__cpp__api__engine.html#gga6d88ff11a07bae09a5c348d314c5d1d9a5e602b7cc44ad7373ab7212f73b3d7d4">dst_pd</a> = mkldnn_query_dst_pd, 
+<a class="el" href="group__cpp__api__engine.html#gga6d88ff11a07bae09a5c348d314c5d1d9adb9fd0a330dc402a36de022ce82bff07">diff_dst_pd</a> = mkldnn_query_diff_dst_pd, 
+<a class="el" href="group__cpp__api__engine.html#gga6d88ff11a07bae09a5c348d314c5d1d9a41d00a7019d406614ebaa00195d179bd">workspace_pd</a> = mkldnn_query_workspace_pd
 <br/>
  }</td></tr>
 <tr class="separator:ga6d88ff11a07bae09a5c348d314c5d1d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa1ff931b28e0a90473ad5bddd21c60fc"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#gaa1ff931b28e0a90473ad5bddd21c60fc">padding_kind</a> { <a class="el" href="group__cpp__api__memory.html#ggaa1ff931b28e0a90473ad5bddd21c60fcafbabef80df01bc0a5636d0ca9189355d">zero</a> = c_api::mkldnn_padding_zero
+<tr class="memitem:gaa1ff931b28e0a90473ad5bddd21c60fc"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#gaa1ff931b28e0a90473ad5bddd21c60fc">padding_kind</a> { <a class="el" href="group__cpp__api__memory.html#ggaa1ff931b28e0a90473ad5bddd21c60fcafbabef80df01bc0a5636d0ca9189355d">zero</a> = mkldnn_padding_zero
  }</td></tr>
 <tr class="separator:gaa1ff931b28e0a90473ad5bddd21c60fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaeb087eae78f70a4d249a90aefa165cf8"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#gaeb087eae78f70a4d249a90aefa165cf8">prop_kind</a> { <br/>
-&#160;&#160;<a class="el" href="group__cpp__api__memory.html#ggaeb087eae78f70a4d249a90aefa165cf8a8785b34f315bf9050e762cb3dc03e70b">forward_training</a> = c_api::mkldnn_forward_training, 
-<a class="el" href="group__cpp__api__memory.html#ggaeb087eae78f70a4d249a90aefa165cf8a37d307ffc75ba883d698801b8cda5c55">forward_scoring</a> = c_api::mkldnn_forward_scoring, 
-<a class="el" href="group__cpp__api__memory.html#ggaeb087eae78f70a4d249a90aefa165cf8ad3fbf2689723f727189276e535b0058e">forward_inference</a> = c_api::mkldnn_forward_inference, 
-<a class="el" href="group__cpp__api__memory.html#ggaeb087eae78f70a4d249a90aefa165cf8a064cbe5d8f2575433bfaaaef8937f369">forward</a> = c_api::mkldnn_forward, 
+&#160;&#160;<a class="el" href="group__cpp__api__memory.html#ggaeb087eae78f70a4d249a90aefa165cf8a8785b34f315bf9050e762cb3dc03e70b">forward_training</a> = mkldnn_forward_training, 
+<a class="el" href="group__cpp__api__memory.html#ggaeb087eae78f70a4d249a90aefa165cf8a37d307ffc75ba883d698801b8cda5c55">forward_scoring</a> = mkldnn_forward_scoring, 
+<a class="el" href="group__cpp__api__memory.html#ggaeb087eae78f70a4d249a90aefa165cf8ad3fbf2689723f727189276e535b0058e">forward_inference</a> = mkldnn_forward_inference, 
+<a class="el" href="group__cpp__api__memory.html#ggaeb087eae78f70a4d249a90aefa165cf8a064cbe5d8f2575433bfaaaef8937f369">forward</a> = mkldnn_forward, 
 <br/>
-&#160;&#160;<a class="el" href="group__cpp__api__memory.html#ggaeb087eae78f70a4d249a90aefa165cf8a05b9d88cfffee07540a51383b29a8016">backward</a> = c_api::mkldnn_backward, 
-<a class="el" href="group__cpp__api__memory.html#ggaeb087eae78f70a4d249a90aefa165cf8ab81b2707fb8a509e7b4fde96d4b4e29f">backward_data</a> = c_api::mkldnn_backward_data, 
-<a class="el" href="group__cpp__api__memory.html#ggaeb087eae78f70a4d249a90aefa165cf8ab8c420aeb9f94fb04b4c8eadeb35b75c">backward_weights</a> = c_api::mkldnn_backward_weights, 
-<a class="el" href="group__cpp__api__memory.html#ggaeb087eae78f70a4d249a90aefa165cf8a2dc572d907ceb34444e7784534500e3a">backward_bias</a> = c_api::mkldnn_backward_bias
+&#160;&#160;<a class="el" href="group__cpp__api__memory.html#ggaeb087eae78f70a4d249a90aefa165cf8a05b9d88cfffee07540a51383b29a8016">backward</a> = mkldnn_backward, 
+<a class="el" href="group__cpp__api__memory.html#ggaeb087eae78f70a4d249a90aefa165cf8ab81b2707fb8a509e7b4fde96d4b4e29f">backward_data</a> = mkldnn_backward_data, 
+<a class="el" href="group__cpp__api__memory.html#ggaeb087eae78f70a4d249a90aefa165cf8ab8c420aeb9f94fb04b4c8eadeb35b75c">backward_weights</a> = mkldnn_backward_weights, 
+<a class="el" href="group__cpp__api__memory.html#ggaeb087eae78f70a4d249a90aefa165cf8a2dc572d907ceb34444e7784534500e3a">backward_bias</a> = mkldnn_backward_bias
 <br/>
  }</td></tr>
 <tr class="separator:gaeb087eae78f70a4d249a90aefa165cf8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gae45a07d6121fdd33e310782753178076"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#gae45a07d6121fdd33e310782753178076">algorithm</a> { <br/>
-&#160;&#160;<a class="el" href="group__cpp__api__memory.html#ggae45a07d6121fdd33e310782753178076a7c32719b6310ede805768dfbe7c909a8">convolution_direct</a> = c_api::mkldnn_convolution_direct, 
-<a class="el" href="group__cpp__api__memory.html#ggae45a07d6121fdd33e310782753178076a3fcadb2934e7f8a0a4b9dacbcf9e8e36">convolution_winograd</a> = c_api::mkldnn_convolution_winograd, 
-<a class="el" href="group__cpp__api__memory.html#ggae45a07d6121fdd33e310782753178076a7949269c3f40dbf756f63a20e5dae2e0">eltwise_relu</a> = c_api::mkldnn_eltwise_relu, 
-<a class="el" href="group__cpp__api__memory.html#ggae45a07d6121fdd33e310782753178076a12c72b1d3a7f7b06fdd0dbd7f8fa6c12">eltwise_tanh</a> = c_api::mkldnn_eltwise_tanh, 
+&#160;&#160;<a class="el" href="group__cpp__api__memory.html#ggae45a07d6121fdd33e310782753178076a7c32719b6310ede805768dfbe7c909a8">convolution_direct</a> = mkldnn_convolution_direct, 
+<a class="el" href="group__cpp__api__memory.html#ggae45a07d6121fdd33e310782753178076a3fcadb2934e7f8a0a4b9dacbcf9e8e36">convolution_winograd</a> = mkldnn_convolution_winograd, 
+<a class="el" href="group__cpp__api__memory.html#ggae45a07d6121fdd33e310782753178076a7949269c3f40dbf756f63a20e5dae2e0">eltwise_relu</a> = mkldnn_eltwise_relu, 
+<a class="el" href="group__cpp__api__memory.html#ggae45a07d6121fdd33e310782753178076a12c72b1d3a7f7b06fdd0dbd7f8fa6c12">eltwise_tanh</a> = mkldnn_eltwise_tanh, 
 <br/>
-&#160;&#160;<a class="el" href="group__cpp__api__memory.html#ggae45a07d6121fdd33e310782753178076a69bd24cf8965e1bc499cb1722c12a597">eltwise_elu</a> = c_api::mkldnn_eltwise_elu, 
-<a class="el" href="group__cpp__api__memory.html#ggae45a07d6121fdd33e310782753178076a5ba3a03af8dc6c1b9066e48508ae9b5c">lrn_across_channels</a> = c_api::mkldnn_lrn_across_channels, 
-<a class="el" href="group__cpp__api__memory.html#ggae45a07d6121fdd33e310782753178076a1bec35024f741400d95f4c15897b50a2">lrn_within_channel</a> = c_api::mkldnn_lrn_within_channel, 
-<a class="el" href="group__cpp__api__memory.html#ggae45a07d6121fdd33e310782753178076ab1d69186fe566f20003f62b15e9aee8c">pooling_max</a> = c_api::mkldnn_pooling_max, 
+&#160;&#160;<a class="el" href="group__cpp__api__memory.html#ggae45a07d6121fdd33e310782753178076a69bd24cf8965e1bc499cb1722c12a597">eltwise_elu</a> = mkldnn_eltwise_elu, 
+<a class="el" href="group__cpp__api__memory.html#ggae45a07d6121fdd33e310782753178076a5ba3a03af8dc6c1b9066e48508ae9b5c">lrn_across_channels</a> = mkldnn_lrn_across_channels, 
+<a class="el" href="group__cpp__api__memory.html#ggae45a07d6121fdd33e310782753178076a1bec35024f741400d95f4c15897b50a2">lrn_within_channel</a> = mkldnn_lrn_within_channel, 
+<a class="el" href="group__cpp__api__memory.html#ggae45a07d6121fdd33e310782753178076ab1d69186fe566f20003f62b15e9aee8c">pooling_max</a> = mkldnn_pooling_max, 
 <br/>
-&#160;&#160;<a class="el" href="group__cpp__api__memory.html#ggae45a07d6121fdd33e310782753178076af370bca4c92b4f310923dabec54ef476">pooling_avg</a> = c_api::mkldnn_pooling_avg, 
-<a class="el" href="group__cpp__api__memory.html#ggae45a07d6121fdd33e310782753178076af1d57d5eddbf76411006a0206d435502">pooling_avg_include_padding</a> = c_api::mkldnn_pooling_avg_include_padding, 
-<a class="el" href="group__cpp__api__memory.html#ggae45a07d6121fdd33e310782753178076a8547db746e2b24e920a1bb912b7ed702">pooling_avg_exclude_padding</a> = c_api::mkldnn_pooling_avg_exclude_padding
+&#160;&#160;<a class="el" href="group__cpp__api__memory.html#ggae45a07d6121fdd33e310782753178076af370bca4c92b4f310923dabec54ef476">pooling_avg</a> = mkldnn_pooling_avg, 
+<a class="el" href="group__cpp__api__memory.html#ggae45a07d6121fdd33e310782753178076af1d57d5eddbf76411006a0206d435502">pooling_avg_include_padding</a> = mkldnn_pooling_avg_include_padding, 
+<a class="el" href="group__cpp__api__memory.html#ggae45a07d6121fdd33e310782753178076a8547db746e2b24e920a1bb912b7ed702">pooling_avg_exclude_padding</a> = mkldnn_pooling_avg_exclude_padding
 <br/>
  }</td></tr>
 <tr class="separator:gae45a07d6121fdd33e310782753178076"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga344b5c240a7392585aba615ff4d0d7f1"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga344b5c240a7392585aba615ff4d0d7f1">batch_normalization_flag</a> { <a class="el" href="group__cpp__api__memory.html#gga344b5c240a7392585aba615ff4d0d7f1a97fcd7beeed54e37e2718124d0051d5c">use_global_stats</a> = c_api::mkldnn_use_global_stats, 
-<a class="el" href="group__cpp__api__memory.html#gga344b5c240a7392585aba615ff4d0d7f1a67734f09ab5b5b5282855d52c3e62486">use_scale_shift</a> = c_api::mkldnn_use_scaleshift, 
-<a class="el" href="group__cpp__api__memory.html#gga344b5c240a7392585aba615ff4d0d7f1a030cc07467d878652fddc39b5290f2a9">omit_stats</a> = c_api::mkldnn_omit_stats
+<tr class="memitem:ga344b5c240a7392585aba615ff4d0d7f1"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga344b5c240a7392585aba615ff4d0d7f1">batch_normalization_flag</a> { <a class="el" href="group__cpp__api__memory.html#gga344b5c240a7392585aba615ff4d0d7f1a97fcd7beeed54e37e2718124d0051d5c">use_global_stats</a> = mkldnn_use_global_stats, 
+<a class="el" href="group__cpp__api__memory.html#gga344b5c240a7392585aba615ff4d0d7f1a67734f09ab5b5b5282855d52c3e62486">use_scale_shift</a> = mkldnn_use_scaleshift, 
+<a class="el" href="group__cpp__api__memory.html#gga344b5c240a7392585aba615ff4d0d7f1a030cc07467d878652fddc39b5290f2a9">omit_stats</a> = mkldnn_omit_stats
  }</td></tr>
 <tr class="separator:ga344b5c240a7392585aba615ff4d0d7f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:gaf91d39c671143894e831dae17c0e1323"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__c__api__types__query.html#ga6eebc661a8a3437b49d9c677f8972fc9">c_api::mkldnn_query_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__engine.html#gaf91d39c671143894e831dae17c0e1323">convert_to_c</a> (<a class="el" href="group__cpp__api__engine.html#ga6d88ff11a07bae09a5c348d314c5d1d9">query</a> aquery)</td></tr>
-<tr class="separator:gaf91d39c671143894e831dae17c0e1323"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gabf8ad6de3ceb0bb51786656d240544d7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__c__api__types__generic.html#ga1823708d8b9d445fe177295f2b5d74bd">c_api::mkldnn_padding_kind_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#gabf8ad6de3ceb0bb51786656d240544d7">convert_to_c</a> (<a class="el" href="group__cpp__api__memory.html#gaa1ff931b28e0a90473ad5bddd21c60fc">padding_kind</a> kind)</td></tr>
-<tr class="separator:gabf8ad6de3ceb0bb51786656d240544d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gadf3df4cb7ff424c24982ba0c3c84d086"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__c__api__types__generic.html#ga5b98c8059c2aff8861157bf070c3f520">c_api::mkldnn_prop_kind_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#gadf3df4cb7ff424c24982ba0c3c84d086">convert_to_c</a> (<a class="el" href="group__cpp__api__memory.html#gaeb087eae78f70a4d249a90aefa165cf8">prop_kind</a> kind)</td></tr>
-<tr class="separator:gadf3df4cb7ff424c24982ba0c3c84d086"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7bb17e3c54dceba9073f4abcada1d9b6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__c__api__types__query.html#ga6eebc661a8a3437b49d9c677f8972fc9">mkldnn_query_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__engine.html#ga7bb17e3c54dceba9073f4abcada1d9b6">convert_to_c</a> (<a class="el" href="group__cpp__api__engine.html#ga6d88ff11a07bae09a5c348d314c5d1d9">query</a> aquery)</td></tr>
+<tr class="separator:ga7bb17e3c54dceba9073f4abcada1d9b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf571070d442c8057567f0b3b125c48a9"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#gaf571070d442c8057567f0b3b125c48a9">operator==</a> (<a class="el" href="group__c__api__types__generic.html#ga826b2a9be4d94ac17f99bacac6d0cb29">mkldnn_data_type_t</a> a, <a class="el" href="group__cpp__api__memory.html#gaa8a0d49cc7faaceef9d8f55d66bff57b">memory::data_type</a> b)</td></tr>
+<tr class="separator:gaf571070d442c8057567f0b3b125c48a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga048da9d3a9199cec52d3baa4daf6c880"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga048da9d3a9199cec52d3baa4daf6c880">operator!=</a> (<a class="el" href="group__c__api__types__generic.html#ga826b2a9be4d94ac17f99bacac6d0cb29">mkldnn_data_type_t</a> a, <a class="el" href="group__cpp__api__memory.html#gaa8a0d49cc7faaceef9d8f55d66bff57b">memory::data_type</a> b)</td></tr>
+<tr class="separator:ga048da9d3a9199cec52d3baa4daf6c880"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga45725446175060a0c85d45f1eacfb657"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga45725446175060a0c85d45f1eacfb657">operator==</a> (<a class="el" href="group__cpp__api__memory.html#gaa8a0d49cc7faaceef9d8f55d66bff57b">memory::data_type</a> a, <a class="el" href="group__c__api__types__generic.html#ga826b2a9be4d94ac17f99bacac6d0cb29">mkldnn_data_type_t</a> b)</td></tr>
+<tr class="separator:ga45725446175060a0c85d45f1eacfb657"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad7e115584a180164ff0ec8e6a42ccf1a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#gad7e115584a180164ff0ec8e6a42ccf1a">operator!=</a> (<a class="el" href="group__cpp__api__memory.html#gaa8a0d49cc7faaceef9d8f55d66bff57b">memory::data_type</a> a, <a class="el" href="group__c__api__types__generic.html#ga826b2a9be4d94ac17f99bacac6d0cb29">mkldnn_data_type_t</a> b)</td></tr>
+<tr class="separator:gad7e115584a180164ff0ec8e6a42ccf1a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1922947b0e5d8f91403bd645ffb6c13c"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga1922947b0e5d8f91403bd645ffb6c13c">operator==</a> (<a class="el" href="group__c__api__types__generic.html#ga30a390f87ef74bf03dfa48a7b3f2fb74">mkldnn_memory_format_t</a> a, <a class="el" href="group__cpp__api__memory.html#ga563b90355ae4fbfed12f6db8ab25a87e">memory::format</a> b)</td></tr>
+<tr class="separator:ga1922947b0e5d8f91403bd645ffb6c13c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9212cee5b7beaa78d962547f9941b55d"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga9212cee5b7beaa78d962547f9941b55d">operator!=</a> (<a class="el" href="group__c__api__types__generic.html#ga30a390f87ef74bf03dfa48a7b3f2fb74">mkldnn_memory_format_t</a> a, <a class="el" href="group__cpp__api__memory.html#ga563b90355ae4fbfed12f6db8ab25a87e">memory::format</a> b)</td></tr>
+<tr class="separator:ga9212cee5b7beaa78d962547f9941b55d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4963150af69775cf57bfc9025ad921a9"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga4963150af69775cf57bfc9025ad921a9">operator==</a> (<a class="el" href="group__cpp__api__memory.html#ga563b90355ae4fbfed12f6db8ab25a87e">memory::format</a> a, <a class="el" href="group__c__api__types__generic.html#ga30a390f87ef74bf03dfa48a7b3f2fb74">mkldnn_memory_format_t</a> b)</td></tr>
+<tr class="separator:ga4963150af69775cf57bfc9025ad921a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabc7b0cb3ed3e54e783cb4377b8f9c1a6"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#gabc7b0cb3ed3e54e783cb4377b8f9c1a6">operator!=</a> (<a class="el" href="group__cpp__api__memory.html#ga563b90355ae4fbfed12f6db8ab25a87e">memory::format</a> a, <a class="el" href="group__c__api__types__generic.html#ga30a390f87ef74bf03dfa48a7b3f2fb74">mkldnn_memory_format_t</a> b)</td></tr>
+<tr class="separator:gabc7b0cb3ed3e54e783cb4377b8f9c1a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga38bf2fbbd9d10eb42c524175de8480ba"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__c__api__types__generic.html#ga1823708d8b9d445fe177295f2b5d74bd">mkldnn_padding_kind_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga38bf2fbbd9d10eb42c524175de8480ba">convert_to_c</a> (<a class="el" href="group__cpp__api__memory.html#gaa1ff931b28e0a90473ad5bddd21c60fc">padding_kind</a> kind)</td></tr>
+<tr class="separator:ga38bf2fbbd9d10eb42c524175de8480ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5721fbb011e85a530876ca8fe3b869dd"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__c__api__types__generic.html#ga5b98c8059c2aff8861157bf070c3f520">mkldnn_prop_kind_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cpp__api__memory.html#ga5721fbb011e85a530876ca8fe3b869dd">convert_to_c</a> (<a class="el" href="group__cpp__api__memory.html#gaeb087eae78f70a4d249a90aefa165cf8">prop_kind</a> kind)</td></tr>
+<tr class="separator:ga5721fbb011e85a530876ca8fe3b869dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 <!-- start footer part -->
