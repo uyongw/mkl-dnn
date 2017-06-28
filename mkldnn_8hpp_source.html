@@ -396,9 +396,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00385"></a><span class="lineno">  385</span>&#160;                <a class="code" href="group__cpp__api__memory.html#ga563b90355ae4fbfed12f6db8ab25a87e">format</a> aformat) {</div>
 <div class="line"><a name="l00386"></a><span class="lineno">  386</span>&#160;            <a class="code" href="group__cpp__api__memory.html#ga2b5aee608f913a4fcbfef41b63f48650">validate_dims</a>(adims);</div>
 <div class="line"><a name="l00387"></a><span class="lineno">  387</span>&#160;            <a class="code" href="group__cpp__api__memory.html#ga8e8ca40a348b25f0b11bc211dc4d204f">error::wrap_c_api</a>(</div>
-<div class="line"><a name="l00388"></a><span class="lineno">  388</span>&#160;                    <a class="code" href="group__c__api__memory.html#ga02cbee3c2c0142a1f18eaae5f2f3d890">mkldnn_memory_desc_init</a>(&amp;<a class="code" href="group__cpp__api__memory.html#gabeddf8909e2b4af626153c88da9f8b37">data</a>, adims.size(),</div>
+<div class="line"><a name="l00388"></a><span class="lineno">  388</span>&#160;                    <a class="code" href="group__c__api__memory.html#ga02cbee3c2c0142a1f18eaae5f2f3d890">mkldnn_memory_desc_init</a>(&amp;<a class="code" href="group__cpp__api__memory.html#gabeddf8909e2b4af626153c88da9f8b37">data</a>, (<span class="keywordtype">int</span>)adims.size(),</div>
 <div class="line"><a name="l00389"></a><span class="lineno">  389</span>&#160;                        adims.size() == 0 ? <span class="keyword">nullptr</span> : &amp;adims[0],</div>
-<div class="line"><a name="l00390"></a><span class="lineno">  390</span>&#160;                         <a class="code" href="group__cpp__api__memory.html#ga2f533b52ae52b2f0e98609af11b489ab">convert_to_c</a>(adata_type), <a class="code" href="group__cpp__api__memory.html#ga2f533b52ae52b2f0e98609af11b489ab">convert_to_c</a>(aformat)),</div>
+<div class="line"><a name="l00390"></a><span class="lineno">  390</span>&#160;                        <a class="code" href="group__cpp__api__memory.html#ga2f533b52ae52b2f0e98609af11b489ab">convert_to_c</a>(adata_type), <a class="code" href="group__cpp__api__memory.html#ga2f533b52ae52b2f0e98609af11b489ab">convert_to_c</a>(aformat)),</div>
 <div class="line"><a name="l00391"></a><span class="lineno">  391</span>&#160;                    <span class="stringliteral">&quot;could not initialize a memory descriptor&quot;</span>);</div>
 <div class="line"><a name="l00392"></a><span class="lineno">  392</span>&#160;        }</div>
 <div class="line"><a name="l00393"></a><span class="lineno">  393</span>&#160;</div>
@@ -689,7 +689,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00697"></a><span class="lineno">  697</span>&#160;            <span class="keyword">auto</span> c_api_inputs = <a class="code" href="group__cpp__api__memory.html#gac793435e6dbb7c2a3777e9aa5daf9282">cpp_to_c</a>(inputs);</div>
 <div class="line"><a name="l00698"></a><span class="lineno">  698</span>&#160;</div>
 <div class="line"><a name="l00699"></a><span class="lineno">  699</span>&#160;            <a class="code" href="group__cpp__api__memory.html#ga8e8ca40a348b25f0b11bc211dc4d204f">error::wrap_c_api</a>(<a class="code" href="group__c__api__concat.html#gaf089f0cfbdb53c8115ade0ce98d9e5fe">mkldnn_concat_primitive_desc_create</a>(</div>
-<div class="line"><a name="l00700"></a><span class="lineno">  700</span>&#160;                    &amp;result, &amp;output.<a class="code" href="group__cpp__api__memory.html#gabeddf8909e2b4af626153c88da9f8b37">data</a>, c_api_inputs.size(),</div>
+<div class="line"><a name="l00700"></a><span class="lineno">  700</span>&#160;                    &amp;result, &amp;output.<a class="code" href="group__cpp__api__memory.html#gabeddf8909e2b4af626153c88da9f8b37">data</a>, (<span class="keywordtype">int</span>)c_api_inputs.size(),</div>
 <div class="line"><a name="l00701"></a><span class="lineno">  701</span>&#160;                    concat_dimension, &amp;c_api_inputs[0]),</div>
 <div class="line"><a name="l00702"></a><span class="lineno">  702</span>&#160;                <span class="stringliteral">&quot;could not create a concat primitive descriptor&quot;</span>);</div>
 <div class="line"><a name="l00703"></a><span class="lineno">  703</span>&#160;            <a class="code" href="group__cpp__api__memory.html#ga3aa9cec1c7e14dd77c9a904503960b9e">reset</a>(result);</div>
@@ -702,8 +702,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00710"></a><span class="lineno">  710</span>&#160;            <span class="keyword">auto</span> c_api_inputs = <a class="code" href="group__cpp__api__memory.html#gac793435e6dbb7c2a3777e9aa5daf9282">cpp_to_c</a>(inputs);</div>
 <div class="line"><a name="l00711"></a><span class="lineno">  711</span>&#160;</div>
 <div class="line"><a name="l00712"></a><span class="lineno">  712</span>&#160;            <a class="code" href="group__cpp__api__memory.html#ga8e8ca40a348b25f0b11bc211dc4d204f">error::wrap_c_api</a>(<a class="code" href="group__c__api__concat.html#gaf089f0cfbdb53c8115ade0ce98d9e5fe">mkldnn_concat_primitive_desc_create</a>(</div>
-<div class="line"><a name="l00713"></a><span class="lineno">  713</span>&#160;                    &amp;result, <span class="keyword">nullptr</span>, c_api_inputs.size(), concat_dimension,</div>
-<div class="line"><a name="l00714"></a><span class="lineno">  714</span>&#160;                    &amp;c_api_inputs[0]),</div>
+<div class="line"><a name="l00713"></a><span class="lineno">  713</span>&#160;                    &amp;result, <span class="keyword">nullptr</span>, (<span class="keywordtype">int</span>)c_api_inputs.size(),</div>
+<div class="line"><a name="l00714"></a><span class="lineno">  714</span>&#160;                    concat_dimension, &amp;c_api_inputs[0]),</div>
 <div class="line"><a name="l00715"></a><span class="lineno">  715</span>&#160;                <span class="stringliteral">&quot;could not create a concat primitive descriptor&quot;</span>);</div>
 <div class="line"><a name="l00716"></a><span class="lineno">  716</span>&#160;            <a class="code" href="group__cpp__api__memory.html#ga3aa9cec1c7e14dd77c9a904503960b9e">reset</a>(result);</div>
 <div class="line"><a name="l00717"></a><span class="lineno">  717</span>&#160;        }</div>
@@ -758,7 +758,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00766"></a><span class="lineno">  766</span>&#160;            <span class="keyword">auto</span> c_api_inputs = <a class="code" href="group__cpp__api__memory.html#gadeed5a7321878bf5111f053612c29c1a">cpp_to_c</a>(inputs);</div>
 <div class="line"><a name="l00767"></a><span class="lineno">  767</span>&#160;</div>
 <div class="line"><a name="l00768"></a><span class="lineno">  768</span>&#160;            <a class="code" href="group__cpp__api__memory.html#ga8e8ca40a348b25f0b11bc211dc4d204f">error::wrap_c_api</a>(<a class="code" href="group__c__api__sum.html#ga774023b168aa45c13a39e60219642d52">mkldnn_sum_primitive_desc_create</a>(</div>
-<div class="line"><a name="l00769"></a><span class="lineno">  769</span>&#160;                    &amp;result, &amp;output.<a class="code" href="group__cpp__api__memory.html#gabeddf8909e2b4af626153c88da9f8b37">data</a>, c_api_inputs.size(),</div>
+<div class="line"><a name="l00769"></a><span class="lineno">  769</span>&#160;                    &amp;result, &amp;output.<a class="code" href="group__cpp__api__memory.html#gabeddf8909e2b4af626153c88da9f8b37">data</a>, (<span class="keywordtype">int</span>)c_api_inputs.size(),</div>
 <div class="line"><a name="l00770"></a><span class="lineno">  770</span>&#160;                    &amp;scale[0], &amp;c_api_inputs[0]),</div>
 <div class="line"><a name="l00771"></a><span class="lineno">  771</span>&#160;                <span class="stringliteral">&quot;could not create a sum primitive descriptor&quot;</span>);</div>
 <div class="line"><a name="l00772"></a><span class="lineno">  772</span>&#160;            <a class="code" href="group__cpp__api__memory.html#ga3aa9cec1c7e14dd77c9a904503960b9e">reset</a>(result);</div>
@@ -771,7 +771,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00779"></a><span class="lineno">  779</span>&#160;            <span class="keyword">auto</span> c_api_inputs = <a class="code" href="group__cpp__api__memory.html#gadeed5a7321878bf5111f053612c29c1a">cpp_to_c</a>(inputs);</div>
 <div class="line"><a name="l00780"></a><span class="lineno">  780</span>&#160;</div>
 <div class="line"><a name="l00781"></a><span class="lineno">  781</span>&#160;            <a class="code" href="group__cpp__api__memory.html#ga8e8ca40a348b25f0b11bc211dc4d204f">error::wrap_c_api</a>(<a class="code" href="group__c__api__sum.html#ga774023b168aa45c13a39e60219642d52">mkldnn_sum_primitive_desc_create</a>(</div>
-<div class="line"><a name="l00782"></a><span class="lineno">  782</span>&#160;                    &amp;result, <span class="keyword">nullptr</span>, c_api_inputs.size(), &amp;scale[0],</div>
+<div class="line"><a name="l00782"></a><span class="lineno">  782</span>&#160;                    &amp;result, <span class="keyword">nullptr</span>, (<span class="keywordtype">int</span>)c_api_inputs.size(), &amp;scale[0],</div>
 <div class="line"><a name="l00783"></a><span class="lineno">  783</span>&#160;                    &amp;c_api_inputs[0]),</div>
 <div class="line"><a name="l00784"></a><span class="lineno">  784</span>&#160;                <span class="stringliteral">&quot;could not create a sum primitive descriptor&quot;</span>);</div>
 <div class="line"><a name="l00785"></a><span class="lineno">  785</span>&#160;            <a class="code" href="group__cpp__api__memory.html#ga3aa9cec1c7e14dd77c9a904503960b9e">reset</a>(result);</div>
