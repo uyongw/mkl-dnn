@@ -141,7 +141,7 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Initializes a <code>relu_desc</code> for backward propagation using <code>negative_slope</code> and memory descriptors <code>diff_data_desc</code> and <code>data_desc</code>. </p>
-<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000002">Deprecated:</a></b></dt><dd>use <a class="el" href="group__c__api__eltwise.html#ga2c8a1ff918b22abafdfd9464d9c6bdde" title="Initializes a eltwise_desc for backward propagation using alg_kind algorithm memory descriptors diff_...">mkldnn_eltwise_backward_desc_init()</a> instead, with <code>alpha</code> equals  </dd></dl>
+<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000002">Deprecated:</a></b></dt><dd>use <a class="el" href="group__c__api__eltwise.html#ga2c8a1ff918b22abafdfd9464d9c6bdde" title="Initializes a eltwise_desc for backward propagation using alg_kind algorithm memory descriptors diff_...">mkldnn_eltwise_backward_desc_init()</a> instead, with <code>alpha</code> equals <code>negative_slope</code> </dd></dl>
 
 </div>
 </div>
@@ -182,7 +182,7 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Initializes a <code>relu_desc</code> for forward propagation using <code>prop_kind</code> (possible values are <a class="el" href="group__c__api__types__generic.html#gga5b98c8059c2aff8861157bf070c3f520a0bb8fb5a8f3ae67cf8d9c8d13667507f" title="Forward data propagation (training mode). ">mkldnn_forward_training</a> or <a class="el" href="group__c__api__types__generic.html#gga5b98c8059c2aff8861157bf070c3f520a58a923fb6c4e1214e1505b5fa0b1e3fa" title="Forward data propagation (inference mode). ">mkldnn_forward_inference</a>), <code>negative_slope</code> and memory descriptor <code>data_desc</code>. </p>
-<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000001">Deprecated:</a></b></dt><dd>use <a class="el" href="group__c__api__eltwise.html#ga0ac7165cba8a30e8204f25f23da280ce" title="Initializes a eltwise_desc for forward propagation using prop_kind (possible values are mkldnn_forwar...">mkldnn_eltwise_forward_desc_init()</a> instead, with <code>alpha</code> equals  </dd></dl>
+<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000001">Deprecated:</a></b></dt><dd>use <a class="el" href="group__c__api__eltwise.html#ga0ac7165cba8a30e8204f25f23da280ce" title="Initializes a eltwise_desc for forward propagation using prop_kind (possible values are mkldnn_forwar...">mkldnn_eltwise_forward_desc_init()</a> instead, with <code>alpha</code> equals <code>negative_slope</code> </dd></dl>
 
 </div>
 </div>
