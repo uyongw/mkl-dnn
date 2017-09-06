@@ -143,7 +143,8 @@ struct jit_avx512_common_convolution_bwd_data_t: public cpu_primitive_t {
             using namespace memory_format;
 
             if (this->diff_src_pd_.desc()->format == any)
-                CHECK(this->diff_src_pd_.set_format(nChw16c));
+                CHECK(this->diff_src_pd_.set_format(
+                        (this->IC() <= 4) ? nhwc : nChw16c));
             if (this->diff_dst_pd_.desc()->format == any)
                 CHECK(this->diff_dst_pd_.set_format(
                         (this->OC() <= 4) ? nhwc : nChw16c));
@@ -156,7 +157,9 @@ struct jit_avx512_common_convolution_bwd_data_t: public cpu_primitive_t {
                  } else if (diff_dst_type == data_type::f32
                             && diff_src_type == data_type::f32
                             && wei_type == data_type::f32) {
-                    if (this->OC() <= 4)
+                    if (this->IC() <= 4)
+                        CHECK(this->weights_pd_.set_format(Ohw16oi));
+                    else if (this->OC() <= 4)
                         CHECK(this->weights_pd_.set_format(Ihwo16i));
                     else
                         CHECK(this->weights_pd_.set_format(this->with_groups()
