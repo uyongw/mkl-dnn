@@ -633,13 +633,13 @@ void jit_avx512_common_convolution_bwd_weights_t::compute_diff_bias(
                 b_job_loc * rb->balancer_.job_size_];
 
             if (img == img_start)
-                for (int o = 0; o < 16; ++o)
+                for (int o = 0; o < jcp.oc_block; ++o)
                     d_bias[o] = 0.;
 
             for (int hw = 0; hw < jcp.oh * jcp.ow; ++hw) {
-                for (int o = 0; o < 16; ++o)
+                for (int o = 0; o < jcp.oc_block; ++o)
                     d_bias[o] += d_dst[o];
-                d_dst += 16;
+                d_dst += jcp.oc_block;
             }
 
             nd_iterator_step(g, jcp.ngroups, ocb, jcp.nb_oc);

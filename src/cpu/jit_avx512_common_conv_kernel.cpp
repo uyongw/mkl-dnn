@@ -434,7 +434,7 @@ void jit_avx512_common_conv_fwd_kernel::compute_loop_fma(int ur_w, int pad_l,
 
     int ker_pipeline_depth = 4;
     assert(ker_reg_base_idx + ker_pipeline_depth <= 32);
-    assert(oc_block >= ker_pipeline_depth);
+    assert(ic_block >= ker_pipeline_depth);
 
     int num_ker_loads = ic_block * nb_oc_block * kw;
     const int simd_w = 16;
@@ -469,6 +469,8 @@ void jit_avx512_common_conv_fwd_kernel::compute_loop_fma(int ur_w, int pad_l,
     {
         int step = 0;
         int ker_prfs = 0;
+        int fma_idx = 0;
+
         for (int ki = 0; ki < kw; ki++) {
             for (int ic = 0; ic < ic_block; ic++) {
                 int aux_kernel_offset = 0;
@@ -497,7 +499,7 @@ void jit_avx512_common_conv_fwd_kernel::compute_loop_fma(int ur_w, int pad_l,
                             EVEX_compress_addr(
                                 aux_reg_inp, aux_input_offset, true));
 
-                    int fma_idx = step * ur_w + j;
+                    fma_idx++;
                     int prf_slot_idx = fma_idx / prf_inst_spacing;
                     if (fma_idx % prf_inst_spacing == prf_inst_trigger) {
                         if (prf_ker && !ker_prf_inserted
@@ -1265,11 +1267,13 @@ void jit_avx512_common_conv_bwd_data_kernel_f32::compute_loop_fma(int ur_w,
     L(kh_label); {
         int step = 0;
         int ker_prfs = 0;
+        int fma_idx = 0;
+
         for (int ki = 0; ki < kw; ki++) {
             for (int oc = 0; oc < oc_block; oc++) {
                 if (step == 0) {
                     for (int i = 0; i < ker_pipeline_depth; i++) {
-                        int aux_kernel_offset = typesize * ((oc + i) * oc_block
+                        int aux_kernel_offset = typesize * ((oc + i) * ic_block
                                 + ki * ic_block * oc_block);
                         vmovups(zmm_ker(i), EVEX_compress_addr(
                                     aux_reg_ker, aux_kernel_offset));
@@ -1279,7 +1283,7 @@ void jit_avx512_common_conv_bwd_data_kernel_f32::compute_loop_fma(int ur_w,
                     int ker_load_reg_idx
                         = (step + load_offset) % ker_pipeline_depth;
                     int aux_kernel_offset = typesize * ((oc + load_offset)
-                            * oc_block + ki * ic_block * oc_block);
+                            * ic_block + ki * ic_block * oc_block);
                     vmovups(zmm_ker(ker_load_reg_idx),
                             EVEX_compress_addr(aux_reg_ker, aux_kernel_offset));
                 }
@@ -1301,25 +1305,25 @@ void jit_avx512_common_conv_bwd_data_kernel_f32::compute_loop_fma(int ur_w,
                     vfmadd231ps(zmm_out(jj, 0), zmm_kernel,
                         EVEX_compress_addr(aux_reg_dst, aux_dst_offset, true));
 
-                    int fma_idx = (step * ur_w + jj) / stride_w;
+                    fma_idx++;
                     int prf_slot_idx = fma_idx / prf_inst_spacing;
                     if (fma_idx % prf_inst_spacing == prf_inst_trigger) {
                         if (!ker_prf_inserted && ker_prfs < num_ker_loads) {
                             int ker_prf_offset = typesize
-                                * ker_prfs * jcp.oc_block;
+                                * ker_prfs * jcp.ic_block;
                             mic_prefetcht1(EVEX_compress_addr(
                                         aux_reg_ker_prf, ker_prf_offset));
                             ker_prf_inserted = true;
                             ker_prfs++;
                         } else {
-                            int inp_prf_idx = prf_slot_idx - ker_prfs;
-                            if (inp_prf_idx < num_inp_prfs) {
-                                int inp_prf_offset
-                                    = ic_block * typesize
-                                    * ((inp_prf_idx / kw) * kw
-                                            + (inp_prf_idx % kw));
+                            int out_prf_idx = prf_slot_idx - ker_prfs;
+                            if (out_prf_idx < num_inp_prfs) {
+                                int out_prf_offset
+                                    = oc_block * typesize
+                                    * ((out_prf_idx / kw) * kw
+                                            + (out_prf_idx % kw));
                                 mic_prefetcht0(EVEX_compress_addr(
-                                            aux_reg_dst_prf, inp_prf_offset));
+                                            aux_reg_dst_prf, out_prf_offset));
                             }
                         }
                     }
@@ -1368,8 +1372,8 @@ void jit_avx512_common_conv_bwd_data_kernel_f32::generate()
     int ur_w_tail = jcp.ur_w_tail;
     int stride_w  = jcp.stride_w;
 
-    int dst_shift = jcp.typesize_in * (ur_w / stride_w) * ic_block;
-    int src_shift = jcp.typesize_out * ur_w * oc_block;
+    int dst_shift = jcp.typesize_in * (ur_w / stride_w) * oc_block;
+    int src_shift = jcp.typesize_out * ur_w * ic_block;
 
     preamble();
 
@@ -1580,7 +1584,7 @@ status_t jit_avx512_common_conv_bwd_data_kernel_f32::init_conf(
 
     jcp.loop_order = loop_gnc;
 
-    bool large_code_size = (jcp.ur_w != jcp.ow)
+    bool large_code_size = (jcp.ur_w != jcp.iw)
          && ((l_overflow <= 0 && n_oi > 0) ||(l_overflow >  0 && n_oi > 1))
          && (r_overflow1 > 0) && (l_overflow > 0);
     if (large_code_size) {
