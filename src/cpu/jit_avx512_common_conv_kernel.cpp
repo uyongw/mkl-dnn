@@ -432,7 +432,7 @@ void jit_avx512_common_conv_fwd_kernel::compute_loop_fma(int ur_w, int pad_l,
     int nb_oc_block = jcp.nb_oc_blocking;
     Label kh_label;
 
-    int ker_pipeline_depth = 4;
+    int ker_pipeline_depth = nstl::min(4, jcp.ic_block);
     assert(ker_reg_base_idx + ker_pipeline_depth <= 32);
     assert(ic_block >= ker_pipeline_depth);
 
@@ -770,21 +770,15 @@ status_t jit_avx512_common_conv_fwd_kernel::init_conf(jit_conv_conf_t &jcp,
     if (jcp.dilate_h != 0 || jcp.dilate_w != 0)
         return status::unimplemented;
 
-    // TODO: simplify
-    if (jcp.ic % simd_w != 0) {
-        if (jcp.ic == 3 || jcp.ic == 1)
-            jcp.is_1stconv = true;
-        else
-            return status::unimplemented;
-    } else
-        jcp.is_1stconv = false;
-
     if (dst_d.format() == any)
         CHECK(dst_pd.set_format(nChw16c));
     if (dst_d.format() != nChw16c)
         return status::unimplemented;
 
+    jcp.is_1stconv = jcp.ic % simd_w;
     if (jcp.is_1stconv) {
+        if (!one_of(jcp.ic, 1, 3, 4))
+            return status::unimplemented;
         if (src_d.format() == any)
             CHECK(src_pd.set_format(nchw));
         if (src_d.format() != nchw)
@@ -1241,7 +1235,7 @@ void jit_avx512_common_conv_bwd_data_kernel_f32::compute_loop_fma(int ur_w,
     int l_pad    = jcp.l_pad;
     int stride_w = jcp.stride_w;
 
-    int ker_pipeline_depth = 4;
+    int ker_pipeline_depth = nstl::min(4, oc_block);
     assert(ker_reg_base_idx + ker_pipeline_depth <= 32);
     assert(oc_block >= ker_pipeline_depth);
 
@@ -1496,8 +1490,7 @@ status_t jit_avx512_common_conv_bwd_data_kernel_f32::init_conf(
     jcp.owp = jcp.ow;
 
     bool args_ok = true
-        && diff_src_d.format() == nChw16c
-        && diff_dst_d.format() == nChw16c;
+        && diff_src_d.format() == nChw16c;
     if (!args_ok)
         return status::unimplemented;
 
@@ -1520,7 +1513,23 @@ status_t jit_avx512_common_conv_bwd_data_kernel_f32::init_conf(
         jcp.nb_ic = 1;
     }
 
-    jcp.oc_block = simd_w;
+    jcp.is_lastconv = jcp.oc % simd_w;
+    if (jcp.is_lastconv) {
+        if (one_of(jcp.oc, 1, 3, 4)) {
+            if (with_groups)
+                return status::unimplemented;
+            if (diff_dst_d.format() != nhwc)
+                return status::unimplemented;
+            if (jcp.is_1stconv)
+                return status::unimplemented;
+        } else
+            return status::unimplemented;
+    } else {
+        if (diff_dst_d.format() != nChw16c)
+            return status::unimplemented;
+    }
+
+    jcp.oc_block = (jcp.oc % simd_w) ? jcp.oc : simd_w;
     if (jcp.oc % jcp.oc_block)
         return status::unimplemented;
     jcp.nb_oc = jcp.oc / jcp.oc_block;
@@ -1547,7 +1556,7 @@ status_t jit_avx512_common_conv_bwd_data_kernel_f32::init_conf(
                                 - jcp.r_pad) / jcp.stride_w);
     if (r_overflow1 > 0) n_oi--;
 
-    if (mayiuse(avx512_mic_4ops) && !jcp.is_1stconv
+    if (mayiuse(avx512_mic_4ops) && !jcp.is_1stconv && !jcp.is_lastconv
            && jcp.stride_w == 1 && jcp.stride_h == 1
            && diff_dst_d.data_type() == data_type::s16
            && weights_d.data_type() == data_type::s16
@@ -1561,12 +1570,16 @@ status_t jit_avx512_common_conv_bwd_data_kernel_f32::init_conf(
             diff_dst_d.data_type() == data_type::f32
          && weights_d.data_type() == data_type::f32
          && diff_src_d.data_type() == data_type::f32) {
-        if (weights_d.format() != (with_groups ? gOIhw16o16i : OIhw16o16i))
+        if (jcp.is_lastconv) {
+            if (weights_d.format() != Ihwo16i)
+                return status::unimplemented;
+        } else if (weights_d.format() != (with_groups
+                                          ? gOIhw16o16i : OIhw16o16i))
             return status::unimplemented;
         jcp.ver = ver_fma;
         jcp.typesize_in = sizeof(float);
         jcp.typesize_out = sizeof(float);
-        if (mayiuse(avx512_mic_4ops) && !jcp.is_1stconv
+        if (mayiuse(avx512_mic_4ops) && !jcp.is_1stconv && !jcp.is_lastconv
             && jcp.stride_w == 1 && jcp.stride_h == 1) {
                 jcp.ver = ver_4fma;
             }
@@ -2935,7 +2948,7 @@ status_t jit_avx512_common_conv_bwd_weights_kernel_f32::init_conf(
             CHECK(src_pd.set_format(nchw));
 
         const bool src_ok = true
-            && one_of(jcp.ic, 1, 3)
+            && one_of(jcp.ic, 1, 3, 4)
             && implication(jcp.ic == 1, one_of(src_d.format(), nchw, nhwc))
             && implication(jcp.ic != 1, src_d.format() == nchw)
             && jcp.ngroups == 1;

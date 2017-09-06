@@ -62,6 +62,7 @@ struct jit_conv_conf_t {
     int ur_h, ur_w;
     int ur_w_tail;
     bool is_1stconv;
+    bool is_lastconv;
     /* 4fma */
     int tr_iw;
     int tr_src_num_guard_elems;

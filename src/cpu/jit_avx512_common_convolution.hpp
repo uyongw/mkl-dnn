@@ -145,19 +145,23 @@ struct jit_avx512_common_convolution_bwd_data_t: public cpu_primitive_t {
             if (this->diff_src_pd_.desc()->format == any)
                 CHECK(this->diff_src_pd_.set_format(nChw16c));
             if (this->diff_dst_pd_.desc()->format == any)
-                CHECK(this->diff_dst_pd_.set_format(nChw16c));
+                CHECK(this->diff_dst_pd_.set_format(
+                        (this->OC() <= 4) ? nhwc : nChw16c));
             if (this->weights_pd_.desc()->format == any) {
                 if (diff_dst_type == data_type::s16
-                 && diff_src_type == data_type::s32
-                 && wei_type == data_type::s16) {
-                        CHECK(this->weights_pd_.set_format(this->with_groups() ?
-                                    gOIhw8o16i2o : OIhw8o16i2o));
+                    && diff_src_type == data_type::s32
+                    && wei_type == data_type::s16) {
+                    CHECK(this->weights_pd_.set_format(
+                            this->with_groups() ? gOIhw8o16i2o : OIhw8o16i2o));
                  } else if (diff_dst_type == data_type::f32
-                         && diff_src_type == data_type::f32
-                         && wei_type == data_type::f32) {
+                            && diff_src_type == data_type::f32
+                            && wei_type == data_type::f32) {
+                    if (this->OC() <= 4)
+                        CHECK(this->weights_pd_.set_format(Ihwo16i));
+                    else
                         CHECK(this->weights_pd_.set_format(this->with_groups()
                                     ? gOIhw16o16i : OIhw16o16i));
-                      }
+                 }
             }
             return status::success;
         }
