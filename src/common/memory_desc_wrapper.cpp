@@ -289,6 +289,36 @@ status_t fill_Ohwi16o(memory_desc_t &md) {
     return fill_contiguous_blocked(md, block_dims, perm);
 }
 
+status_t fill_Ohw16oi(memory_desc_t &md) {
+    if (md.ndims != 4) return invalid_arguments;
+
+    const dims_t block_dims = {16, 1, 1, 1};
+    const int perm[] = {
+        0, 2, 3, 4,
+        1, 5, 6, 7};
+    return fill_contiguous_blocked(md, block_dims, perm);
+}
+
+status_t fill_Ihwo16i(memory_desc_t &md) {
+    if (md.ndims != 4) return invalid_arguments;
+
+    const dims_t block_dims = {1, 16, 1, 1};
+    const int perm[] = {
+        1, 2, 3, 0,
+        5, 4, 6, 7};
+    return fill_contiguous_blocked(md, block_dims, perm);
+}
+
+status_t fill_Ihw16io(memory_desc_t &md) {
+    if (md.ndims != 4) return invalid_arguments;
+
+    const dims_t block_dims = {1, 16, 1, 1};
+    const int perm[] = {
+        1, 2, 3, 5,
+        0, 4, 6, 7};
+    return fill_contiguous_blocked(md, block_dims, perm);
+}
+
 status_t fill_OhIw16o4i(memory_desc_t &md) {
     if (md.ndims != 4) return invalid_arguments;
 
@@ -445,6 +475,9 @@ status_t memory_desc_wrapper::compute_blocking(memory_desc_t &memory_desc)
     case Oihw16o: return fill_Oihw16o(memory_desc);
     case Ohwi8o: return fill_Ohwi8o(memory_desc);
     case Ohwi16o: return fill_Ohwi16o(memory_desc);
+    case Ohw16oi: return fill_Ohw16oi(memory_desc);
+    case Ihwo16i: return fill_Ihwo16i(memory_desc);
+    case Ihw16io: return fill_Ihw16io(memory_desc);
     case OhIw16o4i: return fill_OhIw16o4i(memory_desc);
     case goihw: return fill_goihw(memory_desc);
     case gOIhw8i8o: return fill_gOIhw8i8o(memory_desc);

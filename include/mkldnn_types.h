@@ -171,6 +171,18 @@ typedef enum {
      * channels) with output channels data laid out in memory in 16-element
      * blocks. */
     mkldnn_Ohwi16o,
+    /** 4D weights tensor in the format (output channels, height, width, input
+     * channels) with output channels data laid out in memory in 16-element
+     * blocks and input chainnels in flat. */
+    mkldnn_Ohw16oi,
+    /** 4D weights tensor in the format (input channels, height, width, output
+     * channels) with input channels data laid out in memory in 16-element
+     * blocks. */
+    mkldnn_Ihwo16i,
+    /** 4D weights tensor in the format (input channels, height, width, output
+     * channels) with input channels data laid out in memory in 16-element
+     * blocks and output channels in flat. */
+    mkldnn_Ihw16io,
     /** 4D weights tensor in the @c oihw format with both input and output
      * channels data laid out in memory in 16-element and 4-element blocks. */
     mkldnn_OhIw16o4i,
