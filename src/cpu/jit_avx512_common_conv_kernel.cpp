@@ -39,6 +39,15 @@ do {                                                                           \
     pop(Xbyak::Reg64(reg_tmp));                                                \
 } while(0)
 
+#define CACHE_LINE_SHIFT  6 /* cache line size: 64 */
+#define IF_NEW_CACHE_LINE(old_cache_line, off, prf_stmt)                       \
+do {                                                                           \
+    int _new_cache_line = (off) >> CACHE_LINE_SHIFT;                           \
+    if (old_cache_line != _new_cache_line) {                                   \
+        old_cache_line = _new_cache_line;                                      \
+        prf_stmt;                                                              \
+    }                                                                          \
+} while(0)
 
 namespace mkldnn {
 namespace impl {
@@ -75,12 +84,15 @@ inline void pick_loop_order(jit_conv_conf_t &jcp) {
 
 void jit_avx512_common_conv_fwd_kernel::prepare_output(int ur_w)
 {
+    int saved_cache_line = -1;
     for (int k = 0; k < jcp.nb_oc_blocking; k++)
         for (int j = 0; j < ur_w; j++) {
             Zmm zmm = zmm_out(j, k);
             vpxord(zmm, zmm, zmm);
             int aux_output_offset = get_output_offset(j, k);
-            mic_prefetcht1(EVEX_compress_addr(reg_out_prf, aux_output_offset));
+            IF_NEW_CACHE_LINE(saved_cache_line, aux_output_offset,
+                              mic_prefetcht1(EVEX_compress_addr(
+                                      reg_out_prf, aux_output_offset)));
         }
 }
 
@@ -140,6 +152,7 @@ void jit_avx512_common_conv_fwd_kernel::store_output(int ur_w)
     }
 
     L(store_label);
+    int saved_cache_line = -1;
     for (int k = 0; k < jcp.nb_oc_blocking; k++)
         for (int j = 0; j < ur_w; j++) {
             Zmm zmm = jcp.is_lastconv
@@ -147,7 +160,9 @@ void jit_avx512_common_conv_fwd_kernel::store_output(int ur_w)
             int aux_output_offset
                 = typesize * (k * jcp.oh * jcp.ow + j) * jcp.oc_block;
             vmovups(EVEX_compress_addr(reg_out, aux_output_offset), zmm);
-            mic_prefetcht0(EVEX_compress_addr(reg_out_prf, aux_output_offset));
+            IF_NEW_CACHE_LINE(saved_cache_line, aux_output_offset,
+                              mic_prefetcht0(EVEX_compress_addr(
+                                      reg_out_prf, aux_output_offset)));
         }
 }
 
@@ -489,6 +504,7 @@ void jit_avx512_common_conv_fwd_kernel::compute_loop_fma(int ur_w, int pad_l,
         int step = 0;
         int ker_prfs = 0;
         int fma_idx = 0;
+        int saved_kcache_line = -1;
 
         for (int ki = 0; ki < kw; ki++) {
             for (int ic = 0; ic < ic_block; ic++) {
@@ -531,8 +547,9 @@ void jit_avx512_common_conv_fwd_kernel::compute_loop_fma(int ur_w, int pad_l,
                                 && ker_prfs < num_ker_prfs) {
                             int ker_prf_offset
                                     = jcp.typesize_in * ker_prfs * jcp.oc_block;
-                            mic_prefetcht2(EVEX_compress_addr(
-                                    aux_reg_ker_prf, ker_prf_offset));
+                            IF_NEW_CACHE_LINE(saved_kcache_line, ker_prf_offset,
+                                    mic_prefetcht2(EVEX_compress_addr(
+                                    aux_reg_ker_prf, ker_prf_offset)));
                             ker_prf_inserted = true;
                             ker_prfs++;
                         } else if (prf_inp) {
@@ -972,13 +989,15 @@ status_t jit_avx512_common_conv_fwd_kernel::init_conf(jit_conv_conf_t &jcp,
 
 void jit_avx512_common_conv_bwd_data_kernel_f32::prepare_output(int ur_w)
 {
+    int saved_cache_line = -1;
     for (int k = 0; k < jcp.nb_ic_blocking; k++) {
         for (int j = 0; j  < ur_w; j++) {
             Zmm zmm = zmm_out(j, k);
             vpxord(zmm, zmm, zmm);
             int aux_src_offset
                 = typesize * (k * jcp.ih * jcp.iw + j) * jcp.ic_block;
-            prefetcht1(EVEX_compress_addr(reg_src_prf, aux_src_offset));
+            IF_NEW_CACHE_LINE(saved_cache_line, aux_src_offset, prefetcht1(
+                    EVEX_compress_addr(reg_src_prf, aux_src_offset)));
         }
     }
 }
@@ -1001,6 +1020,7 @@ void jit_avx512_common_conv_bwd_data_kernel_f32::store_output(int ur_w)
     }
 
     L(no_update_label);
+    int saved_cache_line = -1;
     for (int k = 0; k < jcp.nb_ic_blocking; k++) {
         for (int j = 0; j < ur_w; j++) {
             Zmm zmm = jcp.is_1stconv ?
@@ -1008,7 +1028,8 @@ void jit_avx512_common_conv_bwd_data_kernel_f32::store_output(int ur_w)
             int aux_src_offset
                 = typesize * (k * jcp.ih * jcp.iw + j) * jcp.ic_block;
             vmovups(EVEX_compress_addr(reg_src, aux_src_offset), zmm);
-            mic_prefetcht0(EVEX_compress_addr(reg_src_prf, aux_src_offset));
+            IF_NEW_CACHE_LINE(saved_cache_line, aux_src_offset, mic_prefetcht0(
+                    EVEX_compress_addr(reg_src_prf, aux_src_offset)));
         }
     }
 }
@@ -1312,6 +1333,8 @@ void jit_avx512_common_conv_bwd_data_kernel_f32::compute_loop_fma(int ur_w,
         int step = 0;
         int ker_prfs = 0;
         int fma_idx = 0;
+        int saved_kcache_line = -1;
+        int saved_dcache_line = -1;
 
         for (int ki = 0; ki < kw; ki++) {
             for (int oc = 0; oc < oc_block; oc++) {
@@ -1362,8 +1385,9 @@ void jit_avx512_common_conv_bwd_data_kernel_f32::compute_loop_fma(int ur_w,
                         if (!ker_prf_inserted && ker_prfs < num_ker_loads) {
                             int ker_prf_offset = typesize
                                 * ker_prfs * jcp.ic_block;
-                            mic_prefetcht1(EVEX_compress_addr(
-                                        aux_reg_ker_prf, ker_prf_offset));
+                            IF_NEW_CACHE_LINE(saved_kcache_line, ker_prf_offset,
+                                             mic_prefetcht1(EVEX_compress_addr(
+                                             aux_reg_ker_prf, ker_prf_offset)));
                             ker_prf_inserted = true;
                             ker_prfs++;
                         } else {
@@ -1373,8 +1397,10 @@ void jit_avx512_common_conv_bwd_data_kernel_f32::compute_loop_fma(int ur_w,
                                     = oc_block * typesize
                                     * ((out_prf_idx / kw) * kw
                                             + (out_prf_idx % kw));
-                                mic_prefetcht0(EVEX_compress_addr(
-                                            aux_reg_dst_prf, out_prf_offset));
+                                IF_NEW_CACHE_LINE(saved_dcache_line,
+                                             out_prf_offset, mic_prefetcht0(
+                                             EVEX_compress_addr(aux_reg_dst_prf,
+                                             out_prf_offset)));
                             }
                         }
                     }
