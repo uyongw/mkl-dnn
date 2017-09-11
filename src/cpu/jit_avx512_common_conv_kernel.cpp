@@ -464,6 +464,7 @@ void jit_avx512_common_conv_fwd_kernel::compute_loop_fma(int ur_w, int pad_l,
     int ic_block = jcp.ic_block;
     int oc_block = jcp.oc_block;
     int nb_oc_block = jcp.nb_oc_blocking;
+    int dilate_h = jcp.dilate_h + 1;
     Label kh_label;
 
     int ker_pipeline_depth = nstl::min(4, jcp.ic_block);
@@ -584,9 +585,9 @@ void jit_avx512_common_conv_fwd_kernel::compute_loop_fma(int ur_w, int pad_l,
         if (prf_ker)
             add(aux_reg_ker_prf, jcp.typesize_in * kw * oc_block * ic_block);
         int inp_mul = !jcp.is_1stconv ? ic_block : 1;
-        add(aux_reg_inp, jcp.typesize_in * iw * inp_mul);
+        add(aux_reg_inp, jcp.typesize_in * iw * inp_mul * dilate_h);
         if (prf_inp)
-            add(aux_reg_inp_prf, jcp.typesize_in * iw * inp_mul);
+            add(aux_reg_inp_prf, jcp.typesize_in * iw * inp_mul * dilate_h);
 
         dec(reg_kj);
         cmp(reg_kj, 0);
@@ -695,6 +696,7 @@ void jit_avx512_common_conv_fwd_kernel::generate()
     int stride_w = jcp.stride_w;
     int ic_block = jcp.ic_block;
     int oc_block = jcp.oc_block;
+    int dilate_w = jcp.dilate_w + 1;
 
     int inp_mult = !jcp.is_1stconv ? ic_block : 1;
     int inp_shift_pad = jcp.typesize_in * (ur_w * stride_w - l_pad) * inp_mult;
@@ -712,7 +714,8 @@ void jit_avx512_common_conv_fwd_kernel::generate()
     mov(reg_ker_prf, ptr[param1 + GET_OFF(filt_prf)]);
     mov(reg_kh, ptr[param1 + GET_OFF(kh_padding)]);
 
-    int r_pad = nstl::max(0, (ow - 1) * stride_w + (kw - 1) - (iw + l_pad - 1));
+    int r_pad = nstl::max(0, (ow - 1) * stride_w + (kw - 1)
+                          * dilate_w - (iw + l_pad - 1));
     if (ow == ur_w) {
         mov(reg_inp_prf, ptr[param1 + GET_OFF(src_prf)]);
         mov(reg_out_prf, ptr[param1 + GET_OFF(dst_prf)]);
@@ -722,7 +725,8 @@ void jit_avx512_common_conv_fwd_kernel::generate()
         mov(reg_out_prf, reg_out);
         int n_oi = ow / ur_w;
 
-        int r_pad1 = (ur_w * n_oi - 1) * stride_w + kw - 1 - (iw + l_pad - 1);
+        int r_pad1 = (ur_w * n_oi - 1) * stride_w + (kw - 1)
+            * dilate_w - (iw + l_pad - 1);
         xor_(reg_oi, reg_oi);
         if (l_pad > 0) {
             add(reg_inp_prf, inp_shift_pad);
@@ -813,8 +817,6 @@ status_t jit_avx512_common_conv_fwd_kernel::init_conf(jit_conv_conf_t &jcp,
 
     jcp.dilate_h = cd.dilates[0];
     jcp.dilate_w = cd.dilates[1];
-    if (jcp.dilate_h != 0 || jcp.dilate_w != 0)
-        return status::unimplemented;
 
     jcp.is_1stconv = jcp.ic % simd_w;
     if (jcp.is_1stconv) {
@@ -939,7 +941,8 @@ status_t jit_avx512_common_conv_fwd_kernel::init_conf(jit_conv_conf_t &jcp,
         jcp.ur_w = regs;
 
     int n_oi = (jcp.ow / jcp.ur_w);
-    int r_pad = (jcp.ur_w * n_oi - 1) * jcp.stride_w + jcp.kw - jcp.iw
+    int r_pad = (jcp.ur_w * n_oi - 1) * jcp.stride_w + jcp.kw
+        * (jcp.dilate_w + 1) - jcp.iw
             - jcp.l_pad;
     if (jcp.l_pad > 0 && r_pad > 0)
         n_oi--;
@@ -968,7 +971,7 @@ status_t jit_avx512_common_conv_fwd_kernel::init_conf(jit_conv_conf_t &jcp,
         return status::unimplemented;
 
     int r_pad_no_tail = nstl::max(0, (jcp.ow - jcp.ur_w_tail - 1) * jcp.stride_w
-                    + jcp.kw - jcp.iw - jcp.l_pad);
+                    + (jcp.kw - 1)*(jcp.dilate_w + 1) - (jcp.iw + jcp.l_pad - 1));
     if (r_pad_no_tail > jcp.ur_w)
         return status::unimplemented;
 

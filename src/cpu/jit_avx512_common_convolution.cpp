@@ -125,14 +125,19 @@ void _jit_avx512_common_convolution_fwd_t
                         oj < oh_e; ++oj, ij += jcp.stride_h)
                 {
                     int i_t_overflow = -min(0, ij);
-                    int i_b_overflow = max(jcp.ih, ij + jcp.kh) - jcp.ih;
-                    int kh_padding
-                        = nstl::max(0, jcp.kh - i_t_overflow - i_b_overflow);
+                    const int ih = nstl::max(div_up(i_t_overflow,
+                                   (jcp.dilate_h+1)) * (jcp.dilate_h + 1), 0);
+                    const int wh = div_up(i_t_overflow, (jcp.dilate_h + 1));
+                    int i_b_overflow = max(jcp.ih, ij + (jcp.kh - 1)
+                                           * (jcp.dilate_h + 1) + 1) - jcp.ih;
+                    int kh_padding = nstl::max(0, jcp.kh
+                                    - div_up(i_t_overflow, jcp.dilate_h + 1)
+                                    - div_up(i_b_overflow, jcp.dilate_h + 1));
 
                     jit_conv_ker_pipeline(kernel_->jit_ker, par_conv,
-                            src_c + i_t_overflow * src_h_stride,
+                            src_c + ih * src_h_stride,
                             dst_c,
-                            wht_w + i_t_overflow * wht_h_stride,
+                            wht_w + wh * wht_h_stride,
                             bias_w,
                             icb, kh_padding);
 
