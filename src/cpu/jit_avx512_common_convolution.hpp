@@ -158,9 +158,11 @@ struct jit_avx512_common_convolution_bwd_data_t: public cpu_primitive_t {
                             && diff_src_type == data_type::f32
                             && wei_type == data_type::f32) {
                     if (this->IC() <= 4)
-                        CHECK(this->weights_pd_.set_format(Ohw16oi));
+                        CHECK(this->weights_pd_.set_format(this->with_groups()
+                                    ? gOhw16oi : Ohw16oi));
                     else if (this->OC() <= 4)
-                        CHECK(this->weights_pd_.set_format(Ihwo16i));
+                        CHECK(this->weights_pd_.set_format(this->with_groups()
+                                    ? gIhwo16i : Ihwo16i));
                     else
                         CHECK(this->weights_pd_.set_format(this->with_groups()
                                     ? gOIhw16o16i : OIhw16o16i));

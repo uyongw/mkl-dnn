@@ -843,7 +843,7 @@ status_t jit_avx512_common_conv_fwd_kernel::init_conf(jit_conv_conf_t &jcp,
             CHECK(dst_pd.set_format(nhwc));
         if (dst_d.format() != nhwc)
             return status::unimplemented;
-        if (with_relu || with_groups)
+        if (with_relu)
             return status::unimplemented;
     } else {
         if (dst_d.format() == any)
@@ -908,8 +908,8 @@ status_t jit_avx512_common_conv_fwd_kernel::init_conf(jit_conv_conf_t &jcp,
             }
         } else if (jcp.is_lastconv) {
             if (weights_d.format() == any)
-                CHECK(weights_pd.set_format(Ihw16io));
-            if (weights_d.format() != Ihw16io)
+                CHECK(weights_pd.set_format(with_groups ? gIhw16io : Ihw16io));
+            if (!one_of(weights_d.format(), Ihw16io, gIhw16io))
                 return status::unimplemented;
         } else {
             const auto w_format = (with_groups) ? gOIhw16i16o : OIhw16i16o;
@@ -1583,8 +1583,6 @@ status_t jit_avx512_common_conv_bwd_data_kernel_f32::init_conf(
     jcp.is_1stconv = jcp.ic % simd_w;
     if (jcp.is_1stconv) {
         if (one_of(jcp.ic, 3, 4)) { // IC=1 may have performance issue
-            if (with_groups)
-                return status::unimplemented;
             if (diff_src_d.format() != nhwc)
                 return status::unimplemented;
         } else
@@ -1600,8 +1598,6 @@ status_t jit_avx512_common_conv_bwd_data_kernel_f32::init_conf(
     jcp.is_lastconv = jcp.oc % simd_w;
     if (jcp.is_lastconv) {
         if (one_of(jcp.oc, 1, 3, 4)) {
-            if (with_groups)
-                return status::unimplemented;
             if (diff_dst_d.format() != nhwc)
                 return status::unimplemented;
             if (jcp.is_1stconv)
@@ -1652,10 +1648,10 @@ status_t jit_avx512_common_conv_bwd_data_kernel_f32::init_conf(
          && weights_d.data_type() == data_type::f32
          && diff_src_d.data_type() == data_type::f32) {
         if (jcp.is_1stconv) {
-            if (weights_d.format() != Ohw16oi)
+            if (!one_of(weights_d.format(), Ohw16oi, gOhw16oi))
                 return status::unimplemented;
         } else if (jcp.is_lastconv) {
-            if (weights_d.format() != Ihwo16i)
+            if (!one_of(weights_d.format(), Ihwo16i, gIhwo16i))
                 return status::unimplemented;
         } else if (weights_d.format() != (with_groups
                                           ? gOIhw16o16i : OIhw16o16i))
@@ -3111,15 +3107,15 @@ status_t jit_avx512_common_conv_bwd_weights_kernel_f32::init_conf(
     } else {
         if (src_d.format() == any)
             CHECK(src_pd.set_format(nChw16c));
-        if (diff_weights_d.format() == any)
-            CHECK(diff_weights_pd.set_format(jcp.is_lastconv
-                        ? Ihw16io : (with_groups ? gOIhw16i16o : OIhw16i16o)));
+        if (src_d.format() != nChw16c)
+            return status::unimplemented;
 
-        const bool ok = true
-            && src_d.format() == nChw16c
-            && diff_weights_d.format() == jcp.is_lastconv
-                        ? Ihw16io : (with_groups ? gOIhw16i16o : OIhw16i16o);
-        if (!ok)
+        const auto want_wfmt = jcp.is_lastconv
+            ? (with_groups ? gIhw16io : Ihw16io)
+            : (with_groups ? gOIhw16i16o : OIhw16i16o);
+        if (diff_weights_d.format() == any)
+            CHECK(diff_weights_pd.set_format(want_wfmt));
+        if (diff_weights_d.format() != want_wfmt)
             return status::unimplemented;
 
         jcp.ic_block = simd_w;
