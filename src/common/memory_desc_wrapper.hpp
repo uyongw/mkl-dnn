@@ -72,7 +72,8 @@ struct memory_desc_wrapper: public c_compatible {
                     OIhw16o16i, Oihw8o, Oihw16o, Ohwi8o, Ohwi16o, Ohw16oi,
                     OhIw16o4i, Ihwo16i, Ihw16io, goihw, gOIhw8i8o, gOIhw16i16o,
                     gOIhw8i16o2i, gOIhw8o16i2o, gOIhw8o8i, gOIhw16o16i, gOihw8o,
-                    gOihw16o, gOhwi8o, gOhwi16o, gOhIw16o4i));
+                    gOihw16o, gOhwi8o, gOhwi16o, gOhw16oi, gIhwo16i, gIhw16io,
+                    gOhIw16o4i));
 
         if (blocking_desc().offset_padding != 0) return 0;
 

@@ -125,6 +125,9 @@ namespace memory_format {
     const memory_format_t gOihw16o = mkldnn_gOihw16o;
     const memory_format_t gOhwi8o = mkldnn_gOhwi8o;
     const memory_format_t gOhwi16o = mkldnn_gOhwi16o;
+    const memory_format_t gOhw16oi = mkldnn_gOhw16oi;
+    const memory_format_t gIhwo16i = mkldnn_gIhwo16i;
+    const memory_format_t gIhw16io = mkldnn_gIhw16io;
     const memory_format_t gOhIw16o4i = mkldnn_gOhIw16o4i;
 }
 

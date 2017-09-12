@@ -60,7 +60,7 @@ inline memory_format_t format_normalize(const memory_format_t fmt) {
                 Oihw16o, Ohwi8o, Ohwi16o, Ohw16oi, Ihwo16i, OhIw16o4i, Ihw16io,
                 goihw, gOIhw8i8o, gOIhw16i16o, gOIhw8i16o2i, gOIhw8o16i2o,
                 gOIhw8o8i, gOIhw16o16i, gOihw8o, gOihw16o, gOhwi8o, gOhwi16o,
-                gOhIw16o4i))
+                gOhw16oi, gIhwo16i, gIhw16io, gOhIw16o4i))
         return blocked;
     return fmt;
 }
