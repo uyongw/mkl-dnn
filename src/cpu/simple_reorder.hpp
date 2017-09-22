@@ -1227,7 +1227,7 @@ struct simple_reorder_impl<SIMPLE_REORDER_TEMPL_CALL,
         const int _G = w_groups ? dims[0] : 1;
 
 #       pragma omp parallel for collapse(4) schedule(static)
-        for (int g = 0; g < _G; ++g) {        
+        for (int g = 0; g < _G; ++g) {
             for (int O = 0; O < dims[w_groups + 0] / blksize; ++O) {
                 for (int h = 0; h < dims[w_groups + 2]; ++h) {
                     for (int w = 0; w < dims[w_groups + 3]; ++w) {
