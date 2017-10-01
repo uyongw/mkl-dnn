@@ -109,7 +109,8 @@ struct jit_avx512_common_conv_winograd_bwd_weights_kernel_f32
             gemm_loop_ker_first_iter = (decltype(gemm_loop_ker_first_iter))addr;
         }
 
-        if (jcp.tile_block > 1) {
+        // always generate the 2nd iter kernel -wxy
+        {
             align();
             const Xbyak::uint8 *addr = getCurr();
             this->gemm_loop_generate(false);

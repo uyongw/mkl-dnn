@@ -33,14 +33,70 @@ inline void allocate_winograd_scratchpad(const jit_conv_winograd_conf_t &jcp,
         size_t &up_offset, size_t &vp_offset, size_t &mp_offset,
         scratchpad_t *&winograd_scratchpad)
 {
-    const size_t up_size = jcp.alpha * jcp.alpha
-        * jcp.ic * jcp.oc * sizeof(float);
-    const size_t vp_size = jcp.alpha * jcp.alpha *
-        (jcp.itiles * jcp.jtiles + jcp.tile_4fma_padding) *
-        jcp.ic * jcp.mb * sizeof(float);
-    const size_t mp_size = jcp.alpha * jcp.alpha *
-            (jcp.itiles * jcp.jtiles + jcp.tile_4fma_padding) *
-            jcp.oc * jcp.mb * sizeof(float);
+    size_t up_size = 0, vp_size = 0, mp_size = 0;
+    if (jcp.sched_policy == WSCHED_DATA_W_SGDt) {
+        up_size = jcp.alpha * jcp.alpha * jcp.ic * jcp.oc * sizeof(float);
+        vp_size = omp_get_max_threads() * jcp.alpha * jcp.alpha
+            * (jcp.nb_tile_block_ur * jcp.tile_block_ur + jcp.tile_4fma_padding)
+            * jcp.ic * jcp.tile_4fma * sizeof(float);
+        mp_size = omp_get_max_threads() * jcp.alpha * jcp.alpha
+            * (jcp.nb_tile_block_ur * jcp.tile_block_ur + jcp.tile_4fma_padding)
+            * jcp.oc * jcp.tile_4fma * sizeof(float);
+    } else if (jcp.sched_policy == WSCHED_DATA_W_S_GDot) {
+        up_size = jcp.alpha * jcp.alpha * jcp.ic * jcp.oc * sizeof(float);
+        vp_size = jcp.alpha * jcp.alpha
+            * (jcp.itiles * jcp.jtiles + jcp.tile_4fma_padding)
+            * jcp.ic * jcp.mb * sizeof(float);
+        mp_size = omp_get_max_threads() * jcp.alpha * jcp.alpha
+            * (jcp.nb_tile_block_ur * jcp.tile_block_ur + jcp.tile_4fma_padding)
+            * jcp.oc_simd_block * jcp.oc_block * jcp.tile_4fma * sizeof(float);
+    } else if (jcp.sched_policy == WSCHED_WEI_SDGt_W) {
+        up_size = omp_get_max_threads() * jcp.alpha * jcp.alpha
+            * jcp.ic * jcp.oc * sizeof(float);
+        vp_size = omp_get_max_threads() * jcp.alpha * jcp.alpha
+            * (jcp.nb_tile_block_ur * jcp.tile_block_ur + jcp.tile_4fma_padding)
+            * jcp.ic * jcp.tile_4fma * sizeof(float);
+        mp_size = omp_get_max_threads() * jcp.alpha * jcp.alpha
+            * (jcp.nb_tile_block_ur * jcp.tile_block_ur + jcp.tile_4fma_padding)
+            * jcp.oc * jcp.tile_4fma * sizeof(float);
+    } else if (jcp.sched_policy == WSCHED_WEI_SDGit_W) {
+        up_size = omp_get_max_threads() * jcp.alpha * jcp.alpha
+            * jcp.ic_block * jcp.ic_simd_block * jcp.oc * sizeof(float);
+        vp_size = omp_get_max_threads() * jcp.alpha * jcp.alpha
+            * (jcp.nb_tile_block_ur * jcp.tile_block_ur + jcp.tile_4fma_padding)
+            * jcp.ic_simd_block * jcp.ic_block * jcp.tile_4fma * sizeof(float);
+        mp_size = omp_get_max_threads() * jcp.alpha * jcp.alpha
+            * (jcp.nb_tile_block_ur * jcp.tile_block_ur + jcp.tile_4fma_padding)
+            * jcp.oc * jcp.tile_4fma * sizeof(float);
+    } else if (jcp.sched_policy == WSCHED_WEI_SDGot_W) {
+        up_size = omp_get_max_threads() * jcp.alpha * jcp.alpha
+            * jcp.oc_block * jcp.oc_simd_block * jcp.ic * sizeof(float);
+        vp_size = jcp.alpha * jcp.alpha
+            * (jcp.itiles * jcp.jtiles + jcp.tile_4fma_padding)
+            * jcp.ic * jcp.mb * sizeof(float);
+        mp_size = omp_get_max_threads() * jcp.alpha * jcp.alpha
+            * (jcp.nb_tile_block_ur * jcp.tile_block_ur + jcp.tile_4fma_padding)
+            * jcp.oc_simd_block * jcp.oc_block * jcp.tile_4fma * sizeof(float);
+    } else if (jcp.sched_policy == WSCHED_WEI_S_D_Giot_W) {
+        up_size = omp_get_max_threads() * jcp.alpha * jcp.alpha
+            * jcp.ic * jcp.oc * sizeof(float);
+        vp_size = jcp.alpha * jcp.alpha
+            * (jcp.itiles * jcp.jtiles + jcp.tile_4fma_padding)
+            * jcp.ic * jcp.mb * sizeof(float);
+        mp_size = jcp.alpha * jcp.alpha
+            * (jcp.itiles * jcp.jtiles + jcp.tile_4fma_padding)
+            * jcp.oc * jcp.mb * sizeof(float);
+    } else {
+        assert(jcp.sched_policy == WSCHED_DATA_W_S_G_D
+                || jcp.sched_policy == WSCHED_WEI_S_D_G_W);
+        up_size = jcp.alpha * jcp.alpha * jcp.ic * jcp.oc * sizeof(float);
+        vp_size = jcp.alpha * jcp.alpha
+            * (jcp.itiles * jcp.jtiles + jcp.tile_4fma_padding)
+            * jcp.ic * jcp.mb * sizeof(float);
+        mp_size = jcp.alpha * jcp.alpha
+            * (jcp.itiles * jcp.jtiles + jcp.tile_4fma_padding)
+            * jcp.oc * jcp.mb * sizeof(float);
+    }
 
     /* Allocating memory buffers on a page boundary reduces TLB/page misses */
     const size_t page_size = 2097152;
@@ -139,6 +195,11 @@ struct _jit_avx512_common_convolution_winograd_fwd_t : public cpu_primitive_t {
 
 private:
     void execute_forward();
+
+    void _execute_forward_W_S_G_D();
+    void _execute_forward_W_S_GDot();
+    void _execute_forward_W_SGDt();
+
     pd_t conf_;
     jit_avx512_common_conv_winograd_fwd_kernel_f32 *kernel_;
 
@@ -239,6 +300,9 @@ struct jit_avx512_common_convolution_winograd_bwd_data_t
 
 private:
     void execute_backward_data();
+    void _execute_backward_data_W_S_G_D();
+    void _execute_backward_data_W_SGDt();
+
     pd_t conf_;
     jit_avx512_common_conv_winograd_bwd_data_kernel_f32 *kernel_;
 
@@ -337,6 +401,12 @@ struct jit_avx512_common_convolution_winograd_bwd_weights_t
 
 private:
     void execute_backward_weights();
+    void _execute_backward_weights_S_D_G_W();
+    void _execute_backward_weights_S_D_Giot_W();
+    void _execute_backward_weights_SDGit_W();
+    void _execute_backward_weights_SDGot_W();
+    void _execute_backward_weights_SDGt_W();
+
     pd_t conf_;
     jit_avx512_common_conv_winograd_bwd_weights_kernel_f32 *kernel_;
 

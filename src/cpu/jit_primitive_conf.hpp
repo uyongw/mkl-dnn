@@ -37,6 +37,43 @@ enum {
     FLAG_REDUCE_FIRST = 1<<8, FLAG_REDUCE_LAST = 1<<9,
 };
 
+/*
+   Winograd sched policy:
+
+   Computation Unit:
+   W: weights transform
+   S: src transform
+   D: dst transform
+   G: gemm
+
+   Thread grouping by:
+   i: nb_ic
+   o: nb_oc
+   t: tile_block
+
+   Note: 'i' and 'o' are omited if
+   i. not comblined with t or
+   ii. with discrete transforms
+
+   Current policies supported:
+*/
+enum {
+    WSCHED_INVALID = 0,
+
+    /* Forward & backward-data */
+    WSCHED_DATA_W_S_G_D,
+    WSCHED_DATA_W_SGit_D,
+    WSCHED_DATA_W_S_GDot,
+    WSCHED_DATA_W_SGDt,
+
+    /* Backward-weights */
+    WSCHED_WEI_S_D_G_W,
+    WSCHED_WEI_S_D_Giot_W,
+    WSCHED_WEI_SDGit_W,
+    WSCHED_WEI_SDGot_W,
+    WSCHED_WEI_SDGt_W,
+};
+
 struct jit_conv_conf_t {
     prop_kind_t prop_kind;
     conv_version_t ver;
@@ -114,6 +151,8 @@ struct jit_conv_winograd_conf_t : public jit_conv_conf_t {
     int dimN_reg_block;
     int dimN_block;
     int dimN_nb_block;
+
+    int sched_policy;
 };
 
 struct jit_conv_call_s {
