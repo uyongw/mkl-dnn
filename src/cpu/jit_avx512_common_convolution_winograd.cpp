@@ -2517,21 +2517,40 @@ _execute_backward_weights_S_D_Giot_W()
     }
 
     if (jcp.with_bias) {
+        // TODO: move this to scratchpad
+        float Bp[jcp.oc * jcp.mb];
+        array_offset_calculator<float, 3> B(Bp, jcp.mb,
+                jcp.oc/simd_w, simd_w);
 #pragma omp parallel
-#pragma omp for
-        for (int bofm = 0; bofm < jcp.oc / simd_w; bofm++) {
+#pragma omp for collapse(2)
+        for (int img = 0; img < jcp.mb; img++) {
+            for (int bofm = 0; bofm < jcp.oc / simd_w; bofm++) {
 #pragma omp simd
-            for (int v = 0; v < 16; v++)
-                diff_bias(bofm, v) = 0.0f;
-            for (int img = 0; img < jcp.mb; img++) {
+                for (int v = 0; v < simd_w; v++)
+                    B(img, bofm, v) = 0.0f;
+
                 for (int h = 0; h < jcp.oh; h++) {
                     for (int w = 0; w < jcp.ow; w++) {
 #pragma omp simd
                         for (int v = 0; v < simd_w; v++) {
-                            diff_bias(bofm, v) +=
+                            B(img, bofm, v) +=
                                 diff_dst(img, bofm, h, w, v);
                         }
                     }
+                }
+            }
+        }
+#pragma omp parallel
+#pragma omp for
+        for (int bofm = 0; bofm < jcp.oc / simd_w; bofm++) {
+#pragma omp simd
+                for (int v = 0; v < simd_w; v++)
+                    diff_bias(bofm, v) = 0.0f;
+            for (int img = 0; img < jcp.mb; img++) {
+#pragma omp simd
+                for (int v = 0; v < simd_w; v++) {
+                    diff_bias(bofm, v) +=
+                        B(img, bofm, v);
                 }
             }
         }
@@ -2816,21 +2835,40 @@ _execute_backward_weights_SDGot_W()
     }
 
     if (jcp.with_bias) {
+        // TODO: move this to scratchpad
+        float Bp[jcp.oc * jcp.mb];
+        array_offset_calculator<float, 3> B(Bp, jcp.mb,
+                jcp.oc/simd_w, simd_w);
 #pragma omp parallel
-#pragma omp for
-        for (int bofm = 0; bofm < jcp.oc / simd_w; bofm++) {
+#pragma omp for collapse(2)
+        for (int img = 0; img < jcp.mb; img++) {
+            for (int bofm = 0; bofm < jcp.oc / simd_w; bofm++) {
 #pragma omp simd
-            for (int v = 0; v < 16; v++)
-                diff_bias(bofm, v) = 0.0f;
-            for (int img = 0; img < jcp.mb; img++) {
+                for (int v = 0; v < simd_w; v++)
+                    B(img, bofm, v) = 0.0f;
+
                 for (int h = 0; h < jcp.oh; h++) {
                     for (int w = 0; w < jcp.ow; w++) {
 #pragma omp simd
                         for (int v = 0; v < simd_w; v++) {
-                            diff_bias(bofm, v) +=
+                            B(img, bofm, v) +=
                                 diff_dst(img, bofm, h, w, v);
                         }
                     }
+                }
+            }
+        }
+#pragma omp parallel
+#pragma omp for
+        for (int bofm = 0; bofm < jcp.oc / simd_w; bofm++) {
+#pragma omp simd
+                for (int v = 0; v < simd_w; v++)
+                    diff_bias(bofm, v) = 0.0f;
+            for (int img = 0; img < jcp.mb; img++) {
+#pragma omp simd
+                for (int v = 0; v < simd_w; v++) {
+                    diff_bias(bofm, v) +=
+                        B(img, bofm, v);
                 }
             }
         }
@@ -2976,21 +3014,40 @@ _execute_backward_weights_SDGt_W()
     }
 
     if (jcp.with_bias) {
+        // TODO: move this to scratchpad
+        float Bp[jcp.oc * jcp.mb];
+        array_offset_calculator<float, 3> B(Bp, jcp.mb,
+                jcp.oc/simd_w, simd_w);
 #pragma omp parallel
-#pragma omp for
-        for (int bofm = 0; bofm < jcp.oc / simd_w; bofm++) {
+#pragma omp for collapse(2)
+        for (int img = 0; img < jcp.mb; img++) {
+            for (int bofm = 0; bofm < jcp.oc / simd_w; bofm++) {
 #pragma omp simd
-            for (int v = 0; v < 16; v++)
-                diff_bias(bofm, v) = 0.0f;
-            for (int img = 0; img < jcp.mb; img++) {
+                for (int v = 0; v < simd_w; v++)
+                    B(img, bofm, v) = 0.0f;
+
                 for (int h = 0; h < jcp.oh; h++) {
                     for (int w = 0; w < jcp.ow; w++) {
 #pragma omp simd
                         for (int v = 0; v < simd_w; v++) {
-                            diff_bias(bofm, v) +=
+                            B(img, bofm, v) +=
                                 diff_dst(img, bofm, h, w, v);
                         }
                     }
+                }
+            }
+        }
+#pragma omp parallel
+#pragma omp for
+        for (int bofm = 0; bofm < jcp.oc / simd_w; bofm++) {
+#pragma omp simd
+                for (int v = 0; v < simd_w; v++)
+                    diff_bias(bofm, v) = 0.0f;
+            for (int img = 0; img < jcp.mb; img++) {
+#pragma omp simd
+                for (int v = 0; v < simd_w; v++) {
+                    diff_bias(bofm, v) +=
+                        B(img, bofm, v);
                 }
             }
         }
