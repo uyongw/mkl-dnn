@@ -550,7 +550,7 @@ void src_transform_fwd_tile(int tile_block, jit_conv_winograd_conf_t conv,
                             Iw[j][i]);
                 }
             }
-            n_tiles++; 
+            n_tiles++;
         }
     }
 }
@@ -2517,6 +2517,7 @@ _execute_backward_weights_S_D_Giot_W()
     }
 
     if (jcp.with_bias) {
+#pragma omp parallel
 #pragma omp for
         for (int bofm = 0; bofm < jcp.oc / simd_w; bofm++) {
 #pragma omp simd
@@ -2666,6 +2667,7 @@ _execute_backward_weights_SDGit_W()
     }
 
     if (jcp.with_bias) {
+#pragma omp parallel
 #pragma omp for
         for (int bofm = 0; bofm < jcp.oc / simd_w; bofm++) {
 #pragma omp simd
@@ -2814,6 +2816,7 @@ _execute_backward_weights_SDGot_W()
     }
 
     if (jcp.with_bias) {
+#pragma omp parallel
 #pragma omp for
         for (int bofm = 0; bofm < jcp.oc / simd_w; bofm++) {
 #pragma omp simd
@@ -2897,7 +2900,7 @@ _execute_backward_weights_SDGt_W()
                         kernel_->transpose_4fma_ker);
             }
         }
-        
+
         for (int ofm1 = 0; ofm1 < jcp.nb_oc; ofm1++) {
             for (int ofm2 = 0; ofm2 < jcp.oc_block; ofm2++) {
                 diff_dst_transform_bwd_weights_tile(tile_block, jcp,
@@ -2973,6 +2976,7 @@ _execute_backward_weights_SDGt_W()
     }
 
     if (jcp.with_bias) {
+#pragma omp parallel
 #pragma omp for
         for (int bofm = 0; bofm < jcp.oc / simd_w; bofm++) {
 #pragma omp simd

@@ -438,19 +438,11 @@ status_t set_wsched_DATA_W_SGDt(jit_conv_winograd_conf_t &jcp)
        N into multiple tile blocks and group each tile block's src-transform,
        gemm and dst-transform into one thread for better L2 cache locality.
 
-       Parameter selection: 
+       Parameter selection:
        1. V:thread-size + M:thread-size:  [C1, C2] * L2_cache_size
        2. work-amount is within (T1 ~ T2) * OMP-MAX-THREADS (thread balance)
        3. N:reg-block as big as possible
        4. V:K-block-size + M:M-block-size < C * L1_cache_size
-       
-       Steps:
-       Search start:
-         dimN_reg_block = max-possible
-         dimN_block = 1
-       check-condition:
-         size-two-small: dimN_block UP
-         size-two-big: dimN_reg_block DOWN
 
        */
     const float C1_1 = 0.01, C1_2 = 0.8;
@@ -557,7 +549,7 @@ status_t set_wsched_DATA_W_S_GDot(jit_conv_winograd_conf_t &jcp)
        relatively big (compared to K), we could split N * M into multiple
        tile blocks and group each tile block's gemm and dst-transform into
        one thread for better L2 cache locality.
-      
+
        */
 
 
@@ -578,7 +570,7 @@ status_t set_wsched_DATA_W_SGit_D(jit_conv_winograd_conf_t &jcp)
        relatively big (compared to M), we could split N * K into multiple
        tile blocks and group each tile block's src-transform and gemm into
        one thread for better L2 cache locality.
-      
+
        */
 
 
@@ -591,7 +583,7 @@ status_t set_wsched_DATA_W_SGit_D(jit_conv_winograd_conf_t &jcp)
 status_t set_wsched_DATA_W_S_G_D(jit_conv_winograd_conf_t &jcp)
 {
     /*
-     Parameter selection: WSCHED_DATA_W_S_G_D 
+     Parameter selection: WSCHED_DATA_W_S_G_D
 
      [1] L1_cache condition with stores
      [dimM_block][dimN_reg_block][simd_w]
@@ -641,7 +633,7 @@ status_t set_wsched_DATA_W_S_G_D(jit_conv_winograd_conf_t &jcp)
           maintenance burden as the weights will likely be
           architecture dependant
    */
- 
+
     //******************* Choosing dimN_reg_block *******************//
     // Fix issue when N (ex. mb1ih28oh28) is small. And choose a bigger
     // dimN_reg_block  -wxy
@@ -1111,12 +1103,12 @@ bool check_cond2_wu(int dimM_block, int dimM_simdw, int dimK_block,
 status_t set_wsched_WEI_SDGt_W(jit_conv_winograd_conf_t &jcp)
 {
     /*
-       Parameter selection: 
+       Parameter selection:
        1. V:thread-size + M:thread-size + U:size: [C1, C2] * L2_cache_size
        2. work-amount is within (T1 ~ T2) * OMP-MAX-THREADS (thread balance)
        3. V:N-block-size + M:M-block-size + U:M-block-size < C * L1_cache_size
 
-       */ 
+       */
 
     const float C1_1 = 0.01, C1_2 = 0.9; // L1
     const float C2_1 = 0.2, C2_2 = 1.1; // L2, overflow to L3
@@ -1242,14 +1234,14 @@ status_t set_wsched_WEI_SDGit_W(jit_conv_winograd_conf_t &jcp)
 status_t set_wsched_WEI_SDGot_W(jit_conv_winograd_conf_t &jcp)
 {
     /*
-       Parameter selection: 
+       Parameter selection:
        Same as SGD_W but with additional thread-blocking via M
 
        1. V:thread-size + M:thread-size + U:size: [C1, C2] * L2_cache_size
        2. work-amount is within (T1 ~ T2) * OMP-MAX-THREADS (thread balance)
        3. V:N-block-size + M:M-block-size + U:M-block-size < C * L1_cache_size
 
-       */ 
+       */
 
     const float C1_1 = 0.01, C1_2 = 1.1; // L1
     const float C2_1 = .2, C2_2 = .9; // L2, overflow to L3
@@ -1409,7 +1401,7 @@ status_t set_wsched_WEI_S_D_Giot_W(jit_conv_winograd_conf_t &jcp)
     jcp.dimK_reg_block = get_max_divisor_satisfying_cond(
             jcp, jcp.dimK, current_dimK_reg_block, test_cond_dimK_reg_block);
     if (jcp.dimK_reg_block == current_dimK_reg_block)
-        return status::unimplemented;        
+        return status::unimplemented;
 
     jcp.dimK_block = 1;
     jcp.dimK_nb_block = jcp.dimK / jcp.dimK_4fma / jcp.dimK_reg_block / jcp.dimK_block;
@@ -1428,7 +1420,7 @@ status_t set_wsched_WEI_S_D_Giot_W(jit_conv_winograd_conf_t &jcp)
     printf("set sched policy WEI_S_D_Giot_W\n");
 
     return status::success;
- 
+
 }
 
 
