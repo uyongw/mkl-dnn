@@ -682,7 +682,7 @@ void weight_transform_fwd(jit_conv_winograd_conf_t conv, float *wp, float *twp)
     }
 }
 
-template <bool with_bias>
+template <bool with_bias, bool with_relu>
 void dst_transform_fwd_tile(int tile_block, jit_conv_winograd_conf_t conv,
         float *toutp, float *outp, float *bias)
 {
@@ -730,13 +730,16 @@ void dst_transform_fwd_tile(int tile_block, jit_conv_winograd_conf_t conv,
                     for (int i = 0; i < tile_size; i++) {
                         int xdim = ti * tile_size + i;
                         if (xdim < conv.ow) {
-                            if (with_bias) {
 #pragma omp simd
-                                for (int v = 0; v < simd_w; v++) {
-                                    O[j][i][v] += bias[v];
-                                }
+                            for (int v = 0; v < simd_w; v++) {
+                                O[j][i][v] += with_bias ? bias[v] : 0.0f;
+                                O[j][i][v] = (with_relu && O[j][i][v] < 0.0f)
+                                             ? O[j][i][v] * conv.relu_negative_slope
+                                             : O[j][i][v];
+
                             }
-                            store_ps(&(output(img, 0, ydim, xdim, 0)), O[j][i]);
+
+                            stream_ps(&(output(img, 0, ydim, xdim, 0)), O[j][i]);
                         }
                     }
                 }
@@ -746,7 +749,7 @@ void dst_transform_fwd_tile(int tile_block, jit_conv_winograd_conf_t conv,
     }
 }
 
-template <bool with_bias>
+template <bool with_bias, bool with_relu>
 void dst_transform_fwd(int image, jit_conv_winograd_conf_t conv, float *toutp,
         float *outp, float *bias)
 {
@@ -795,12 +798,13 @@ void dst_transform_fwd(int image, jit_conv_winograd_conf_t conv, float *toutp,
                     for (int i = 0; i < tile_size; i++) {
                         int xdim = ti * tile_size + i;
                         if (xdim < conv.ow) {
-                            if (with_bias) {
 #pragma omp simd
-                                for (int v = 0; v < simd_w; v++) {
-                                    O[j][i][v] += bias[v];
+                            for (int v = 0; v < simd_w; v++) {
+                                O[j][i][v] += with_bias ? bias[v] : 0.0f;
+                                O[j][i][v] = (with_relu && O[j][i][v] < 0.0f)
+                                             ? O[j][i][v] * conv.relu_negative_slope
+                                             : O[j][i][v];
 
-                                }
                             }
                             stream_ps(&(output(0, ydim, xdim, 0)), O[j][i]);
                         }
@@ -1626,8 +1630,8 @@ _execute_forward_W_S_G_D()
     const int alpha = 6;
     const auto &jcp = kernel_->jcp;
 
-    auto output_transform = jcp.with_bias ? dst_transform_fwd<true> :
-                                            dst_transform_fwd<false>;
+    auto output_transform = jcp.with_bias ? dst_transform_fwd<true, with_relu> :
+                                            dst_transform_fwd<false, with_relu>;
 
     array_offset_calculator<float, 5> src((float *)this->input_memory(0),
             jcp.mb, jcp.ic/simd_w, jcp.ih, jcp.iw, simd_w);
@@ -1748,8 +1752,9 @@ _execute_forward_W_S_GDot()
     const int alpha = 6;
     const auto &jcp = kernel_->jcp;
 
-    auto output_transform_tile = jcp.with_bias ? dst_transform_fwd_tile<true> :
-        dst_transform_fwd_tile<false>;
+    auto output_transform_tile = jcp.with_bias
+        ? dst_transform_fwd_tile<true, with_relu>
+        : dst_transform_fwd_tile<false, with_relu>;
 
     array_offset_calculator<float, 5> src((float *)this->input_memory(0),
             jcp.mb, jcp.ic/simd_w, jcp.ih, jcp.iw, simd_w);
@@ -1855,8 +1860,9 @@ _execute_forward_W_SGDt()
     const int alpha = 6;
     const auto &jcp = kernel_->jcp;
 
-    auto output_transform_tile = jcp.with_bias ? dst_transform_fwd_tile<true> :
-        dst_transform_fwd_tile<false>;
+    auto output_transform_tile = jcp.with_bias
+        ? dst_transform_fwd_tile<true, with_relu>
+        : dst_transform_fwd_tile<false, with_relu>;
 
     array_offset_calculator<float, 5> src((float *)this->input_memory(0),
             jcp.mb, jcp.ic/simd_w, jcp.ih, jcp.iw, simd_w);
