@@ -646,6 +646,18 @@ status_t set_wsched_DATA_W_S_G_D(jit_conv_winograd_conf_t &jcp)
     };
     jcp.dimN_reg_block = get_max_divisor_satisfying_cond(
             jcp, jcp.dimN, jcp.dimN, test_cond_dimN_reg_block);
+
+    if (jcp.dimN_reg_block >= jcp.nb_reg) {
+        auto test_cond_dimN_reg_block = [](jit_conv_winograd_conf_t jcp,
+                int dimN_reg_block, int current_best) {
+            return (dimN_reg_block < jcp.nb_reg)
+                && (dimN_reg_block > current_best);
+        };
+
+        jcp.dimN_reg_block = get_divisor_satisfying_cond(
+                jcp, jcp.dimN, 1, test_cond_dimN_reg_block);
+    }
+
     //jcp.dimN_reg_block = 7; //wxy
 
     //********************* Choosing dimK_block **********************//
