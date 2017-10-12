@@ -367,7 +367,7 @@ status_t _jit_avx512_common_conv_winograd_data_kernel_f32::init_conf_common(
     /* Assumption: padding = 1*/
     jcp.itiles = (jcp.ow + tile_size - 1) / tile_size;
     jcp.jtiles = (jcp.oh + tile_size - 1) / tile_size;
-    jcp.ntiles = jcp.mb * jcp.itiles * jcp.itiles;
+    jcp.ntiles = jcp.mb * jcp.jtiles * jcp.itiles;
 
     // Checking conditions not supported by these kernels
     if (jcp.ngroups != 1)
