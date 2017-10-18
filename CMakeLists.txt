@@ -121,6 +121,10 @@ if(HAVE_MKL)
     endif()
 endif()
 
+if(${CMAKE_CXX_COMPILER_ID} STREQUAL "Intel")
+    set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -xCore-AVX512")
+endif()
+
 enable_testing()
 
 include_directories(include)
