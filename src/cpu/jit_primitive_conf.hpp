@@ -50,6 +50,7 @@ enum {
    i: nb_ic
    o: nb_oc
    t: tile_block
+   e: element in tile
 
    Note: 'i' and 'o' are omited if
    i. not comblined with t or

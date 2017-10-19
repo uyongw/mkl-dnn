@@ -722,7 +722,7 @@ status_t set_wsched_DATA_W_SGDt(jit_conv_winograd_conf_t &jcp)
          BWD: prefer more nb_ic blocking
 
        */
-    auto get_cache_size = [](jit_conv_winograd_conf_t &jcp,
+    auto get_thread_size = [](jit_conv_winograd_conf_t &jcp,
             int tile_block)->int {
         return jcp.alpha * jcp.alpha * jcp.oc
             * (jcp.ntiles / tile_block) * sizeof(float)
@@ -738,7 +738,7 @@ status_t set_wsched_DATA_W_SGDt(jit_conv_winograd_conf_t &jcp)
 
     if (jcp.dimK == jcp.ic) { // FWD
         if (set_wsched_SGDt(jcp, true, true, 12, jcp.nb_reg, true,
-                    get_cache_size, get_gemm_size)) {
+                    get_thread_size, get_gemm_size)) {
             jcp.dimN_reg_block = jcp.tile_block_ur;
             jcp.dimN_block = jcp.nb_tile_block_ur;
             jcp.dimN_nb_block = jcp.tile_block;
@@ -755,7 +755,7 @@ status_t set_wsched_DATA_W_SGDt(jit_conv_winograd_conf_t &jcp)
     } else { // BWD-Data
         assert(jcp.dimK == jcp.oc);
         if (set_wsched_SGDt(jcp, false, true, 12, jcp.nb_reg, true,
-                    get_cache_size, get_gemm_size)) {
+                    get_thread_size, get_gemm_size)) {
             jcp.dimN_reg_block = jcp.tile_block_ur;
             jcp.dimN_block = jcp.nb_tile_block_ur;
             jcp.dimN_nb_block = jcp.tile_block;
@@ -781,9 +781,9 @@ status_t set_wsched_DATA_W_S_GDot(jit_conv_winograd_conf_t &jcp)
        ============
 
        Intuition:
-       If N is not big enough to feed the number of threads/cores while M is
-       relatively big (compared to K), we could split N * M into multiple
-       tile blocks and group each tile block's gemm and dst-transform into
+       If ntiles is not big enough to feed the number of threads/cores while oc is
+       relatively big (compared to K), we could split ntiles * oc into multiple
+       blocks and group each block's gemm and dst-transform into
        one thread for better L2 cache locality.
 
        */
@@ -792,15 +792,6 @@ status_t set_wsched_DATA_W_S_GDot(jit_conv_winograd_conf_t &jcp)
 
     //jcp.sched_policy = WSCHED_DATA_W_S_GDot;
     //printf("set DATA_W_S_GDot\n");
-    //return status::success;
-}
-
-status_t set_wsched_DATA_W_SGDot(jit_conv_winograd_conf_t &jcp)
-{
-    return status::unimplemented;
-
-    //jcp.sched_policy = WSCHED_DATA_W_SGDot;
-    //printf("set DATA_W_SGDot\n");
     //return status::success;
 }
 
@@ -1002,7 +993,7 @@ status_t _jit_avx512_common_conv_winograd_data_kernel_f32::init_conf_kernel(
     jcp.sched_policy = WSCHED_INVALID;
     status_t res;
     if ((res = set_wsched_DATA_W_SGDt(jcp))   == status::success ||
-        (res = set_wsched_DATA_W_SGDot(jcp))  == status::success ||
+        (res = set_wsched_DATA_W_S_GDot(jcp))  == status::success ||
         (res = set_wsched_DATA_W_SGit_D(jcp))  == status::success ||
         (res = set_wsched_DATA_W_S_G_D(jcp)) == status::success)
         ;
@@ -1365,7 +1356,7 @@ status_t set_wsched_WEI_SDGt_W(jit_conv_winograd_conf_t &jcp)
        3. V:N-block-size + M:M-block-size + U:M-block-size ~ C * L1_cache_size
 
        */
-    auto get_cache_size = [](jit_conv_winograd_conf_t &jcp,
+    auto get_thread_size = [](jit_conv_winograd_conf_t &jcp,
             int tile_block)->int {
         return jcp.alpha * jcp.alpha * jcp.oc
             * (jcp.ntiles / tile_block) * sizeof(float)
@@ -1381,7 +1372,7 @@ status_t set_wsched_WEI_SDGt_W(jit_conv_winograd_conf_t &jcp)
     };
 
     if (set_wsched_SGDt(jcp, false, false, 4, 64, false,
-                get_cache_size, get_gemm_size)) {
+                get_thread_size, get_gemm_size)) {
         jcp.dimK_reg_block = jcp.tile_block_ur;
         jcp.dimK_block = jcp.nb_tile_block_ur;
         jcp.dimK_nb_block = jcp.tile_block;
@@ -1412,7 +1403,7 @@ status_t set_wsched_WEI_SDGit_W(jit_conv_winograd_conf_t &jcp)
 status_t set_wsched_WEI_SDGot_W(jit_conv_winograd_conf_t &jcp)
 {
     // Same as SGDt_W but with additional thread-blocking via oc
-    auto get_cache_size = [](jit_conv_winograd_conf_t &jcp,
+    auto get_thread_size = [](jit_conv_winograd_conf_t &jcp,
             int tile_block, int nb_oc)->int {
         return jcp.alpha * jcp.alpha * (jcp.oc / nb_oc)
             * (jcp.ntiles / tile_block) * sizeof(float)
@@ -1428,7 +1419,7 @@ status_t set_wsched_WEI_SDGot_W(jit_conv_winograd_conf_t &jcp)
             + (jcp.ic / nb_ic) * (jcp.oc / nb_oc) * sizeof(float);
     };
 
-    if (set_wsched_SGDot(jcp, 4, 64, get_cache_size, get_gemm_size)) {
+    if (set_wsched_SGDot(jcp, 4, 64, get_thread_size, get_gemm_size)) {
         jcp.dimK_reg_block = jcp.tile_block_ur;
         jcp.dimK_block = jcp.nb_tile_block_ur;
         jcp.dimK_nb_block = jcp.tile_block;

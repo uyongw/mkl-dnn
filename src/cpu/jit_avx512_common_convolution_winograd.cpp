@@ -1600,6 +1600,7 @@ void diff_weights_transform_bwd_weights(jit_conv_winograd_conf_t conv,
     }
 }
 
+// Sum to the first buffer array
 void array_sum(int num_arrs, float *output,
         size_t nelems, float *input_ptrs[])
 {
@@ -1739,7 +1740,7 @@ _execute_forward_W_S_G_D()
 
 #pragma omp barrier
 ////////////////////////// New GEMM //////////////////////////
-#pragma omp for collapse(5) nowait schedule(static)
+#pragma omp for collapse(4) nowait schedule(static)
         for (int tile_block = 0; tile_block < jcp.tile_block; tile_block++) {
             for (int oj = 0; oj < alpha; oj++) {
                 for (int oi = 0; oi < alpha; oi++) {
