@@ -1738,6 +1738,7 @@ _execute_forward_W_S_G_D()
             }
         }
 
+        // W_S_Gteo_D
 #pragma omp barrier
 ////////////////////////// New GEMM //////////////////////////
 #pragma omp for collapse(4) nowait schedule(static)

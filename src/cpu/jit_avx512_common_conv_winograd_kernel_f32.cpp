@@ -427,16 +427,25 @@ bool check_cond2(int nb_dimN_reg_block, int dimN_reg_block, int dimK_nb_block,
     return (lhs < rhs);
 }
 
+#define FOREACH_INC(n, min, max, m) \
+    for (n = (min); n <= (max); ++n) if ((m) % n == 0)
+#define FOREACH_DEC(n, min, max, m) \
+    for (n = (max); n >= (min); --n) if ((m) % n == 0)
+#define in_range(v, min, max) \
+    (v > (min)) && (v < (max))
+
+
 bool set_wsched_SGDt(jit_conv_winograd_conf_t &jcp,
         bool reduce_ic, bool shared_weights,
         int min_tile_block_ur, int max_tile_block_ur, bool tile_block_ur_parall,
         int (*get_thread_size)(jit_conv_winograd_conf_t &jcp, int tile_block),
         int (*get_gemm_size)(jit_conv_winograd_conf_t &jcp,
-            int tile_block, int tile_block_ur, int nb_ic, int nb_oc))
+            int tile_block, int tile_block_ur, int nb_ic, int nb_oc),
+        int (*get_thread_number)(jit_conv_winograd_conf_t &jcp, int tile_block))
 {
     const float C1_min = .1, C1_0 = .7, C1_max = shared_weights ? .9 : 1.;
     const float C2_min = .1, C2_0 = .7, C2_max = shared_weights ? 1. : 1.1;
-    int T = 12;
+    const int T_min = 2, T0 = 12;
 
     int ic_simd_block = 16, ic_block = 0, nb_ic = 0;
     int oc_simd_block = 16, oc_block = 0, nb_oc = 0;
@@ -454,97 +463,56 @@ bool set_wsched_SGDt(jit_conv_winograd_conf_t &jcp,
         jcp.nb_oc = nb_oc;
     };
 
-retry:
-    for (float C1 = C1_0, C2 = C2_0; C1 > C1_min, C2 > C2_min;
-            C1 -= .1, C2 -= .1) {
-        tile_block = 0;
-        if (tile_block_ur_parall) {
-            for (tile_block_ur = min_tile_block_ur;
-                    tile_block_ur <= max_tile_block_ur; ++tile_block_ur) {
-                if (jcp.ntiles % tile_block_ur == 0) {
-                    int tile_block_size = get_thread_size(jcp,
-                            jcp.ntiles / tile_block_ur);
-                    if (tile_block_size > C2 * L2_cache_size &&
-                            tile_block_size < C2_max * L2_cache_size) {
-                        if ((jcp.ntiles / tile_block_ur) >
-                                T * omp_get_max_threads()) {
-                            nb_tile_block_ur = 1;
-                            tile_block = jcp.ntiles / tile_block_ur
-                                / nb_tile_block_ur;
-                            printf("tile_block_size=%d\n", tile_block_size);
-                            break;
+    for (float C1 = C1_0, C2 = C2_0;
+            C1 > C1_min, C2 > C2_min; C1 -= .1, C2 -= .1) {
+    for (int T = T0; T >= T_min; --T) {
+        FOREACH_DEC(tile_block_ur, min_tile_block_ur,
+                max_tile_block_ur, jcp.ntiles) {
+            int thread_size = get_thread_size(jcp, jcp.ntiles / tile_block_ur);
+            int thread_number = get_thread_number(jcp,
+                    jcp.ntiles / tile_block_ur);
+            if (in_range(thread_size, C2 * L2_cache_size, L2_cache_size) &&
+                    (thread_number > T * omp_get_max_threads())) {
+                nb_tile_block_ur = 1;
+                tile_block = jcp.ntiles / tile_block_ur / nb_tile_block_ur;
+                if (reduce_ic) {
+                    FOREACH_INC(nb_ic, 1, jcp.ic / ic_simd_block,
+                            jcp.ic / ic_simd_block) {
+                    FOREACH_INC(nb_oc, 1, jcp.oc / oc_simd_block,
+                            jcp.oc / oc_simd_block) {
+                        int gemm_size = get_gemm_size(jcp, tile_block,
+                                tile_block_ur, nb_ic, nb_oc);
+                        if (in_range(gemm_size,
+                                    C1 * L1_cache_size,
+                                    C1_max * L1_cache_size)) {
+                            ic_block = jcp.ic / ic_simd_block / nb_ic;
+                            oc_block = jcp.oc / oc_simd_block / nb_oc;
+                            printf("thread_size=%d, gemm_size=%d, thread_number=%d\n", thread_size, gemm_size, thread_number);
+                            set_params(jcp);
+                            return true;
                         }
-                    }
-                }
-            }
-        } else {
-            for (tile_block_ur = max_tile_block_ur;
-                    tile_block_ur >= min_tile_block_ur; --tile_block_ur) {
-                if (jcp.ntiles % tile_block_ur == 0) {
-                    int tile_block_size = get_thread_size(jcp,
-                            jcp.ntiles / tile_block_ur);
-                    if (tile_block_size > C2 * L2_cache_size &&
-                            tile_block_size < C2_max * L2_cache_size) {
-                        if ((jcp.ntiles / tile_block_ur) >
-                                T * omp_get_max_threads()) {
-                            nb_tile_block_ur = 1;
-                            tile_block = jcp.ntiles / tile_block_ur
-                                / nb_tile_block_ur;
-                            printf("tile_block_size=%d\n", tile_block_size);
-                            break;
+                    }}
+                } else {
+                    FOREACH_INC(nb_oc, 1, jcp.oc / oc_simd_block,
+                            jcp.oc / oc_simd_block) {
+                    FOREACH_INC(nb_ic, 1, jcp.ic / ic_simd_block,
+                            jcp.ic / ic_simd_block) {
+                        int gemm_size = get_gemm_size(jcp, tile_block,
+                                tile_block_ur, nb_ic, nb_oc);
+                        if (in_range(gemm_size,
+                                    C1 * L1_cache_size,
+                                    C1_max * L1_cache_size)) {
+                            ic_block = jcp.ic / ic_simd_block / nb_ic;
+                            oc_block = jcp.oc / oc_simd_block / nb_oc;
+                            printf("thread_size=%d, gemm_size=%d, thread_number=%d\n", thread_size, gemm_size, thread_number);
+                            set_params(jcp);
+                            return true;
                         }
-                    }
-                }
-            }
-
-        }
-
-        if (tile_block != 0 && reduce_ic) {
-            for (nb_ic = 1; nb_ic <= jcp.ic / ic_simd_block; ++nb_ic) {
-                if ((jcp.ic / ic_simd_block) % nb_ic == 0) {
-                    for (nb_oc = 1; nb_oc <= jcp.oc / oc_simd_block; ++nb_oc) {
-                        if ((jcp.oc / oc_simd_block) % nb_oc == 0) {
-                            int gemm_size = get_gemm_size(jcp, tile_block,
-                                    tile_block_ur, nb_ic, nb_oc);
-                            if (gemm_size > C1 * L1_cache_size &&
-                                    gemm_size < C1_max * L1_cache_size) {
-                                ic_block = jcp.ic / ic_simd_block / nb_ic;
-                                oc_block = jcp.oc / oc_simd_block / nb_oc;
-                                printf("gemm_size=%d\n", gemm_size);
-                                set_params(jcp);
-                                return true;
-                            }
-                        }
-                    }
-                }
-            }
-        } else if (tile_block != 0) {
-            for (nb_oc = 1; nb_oc <= jcp.oc / oc_simd_block; ++nb_oc) {
-                if ((jcp.oc / oc_simd_block) % nb_oc == 0) {
-                    for (nb_ic = 1; nb_ic <= jcp.ic / ic_simd_block; ++nb_ic) {
-                        if ((jcp.ic / ic_simd_block) % nb_ic == 0) {
-                            int gemm_size = get_gemm_size(jcp, tile_block,
-                                    tile_block_ur, nb_ic, nb_oc);
-                            if (gemm_size > C1 * L1_cache_size &&
-                                    gemm_size < C1_max * L1_cache_size) {
-                                ic_block = jcp.ic / ic_simd_block / nb_ic;
-                                oc_block = jcp.oc / oc_simd_block / nb_oc;
-                                printf("gemm_size=%d\n", gemm_size);
-                                set_params(jcp);
-                                return true;
-                            }
-                        }
-                    }
+                    }}
                 }
             }
         }
-    }
-
-    if (--T == 2)
-        return false;
-    else
-        goto retry;
-
+    }}
     return false;
 }
 
@@ -553,12 +521,14 @@ bool set_wsched_SGDot(jit_conv_winograd_conf_t &jcp,
         int (*get_thread_size)(jit_conv_winograd_conf_t &jcp,
             int tile_block, int nb_oc),
         int (*get_gemm_size)(jit_conv_winograd_conf_t &jcp,
-            int tile_block, int tile_block_ur, int nb_ic, int nb_oc))
+            int tile_block, int tile_block_ur, int nb_ic, int nb_oc),
+        int (*get_thread_number)(jit_conv_winograd_conf_t &jcp,
+            int tile_block, int nb_oc))
 {
     const float C1_min = .1, C1_0 = .7, C1_max = .8;
     const float C2_min = .1, C2_0 = .7, C2_max = .9;
     const int max_nb_oc = 4; // Limit the sequential execution
-    int T = 12;
+    const int T0 = 12, T_min = 1;
 
     int ic_simd_block = 16, ic_block = 0, nb_ic = 0;
     int oc_simd_block = 16, oc_block = 0, nb_oc = 0;
@@ -576,57 +546,37 @@ bool set_wsched_SGDot(jit_conv_winograd_conf_t &jcp,
         jcp.nb_oc = nb_oc;
     };
 
-retry:
+    for (int T = T0; T >= T_min; --T) {
     for (float C1 = C1_0, C2 = C2_0; C1 > C1_min, C2 > C2_min;
             C1 -= .1, C2 -= .1) {
-        for (nb_oc = 1; nb_oc <= max_nb_oc; ++nb_oc) {
-            if ((jcp.oc / oc_simd_block) % nb_oc == 0) {
-                tile_block = 0;
-                for (tile_block_ur = max_tile_block_ur;
-                        tile_block_ur >= min_tile_block_ur; --tile_block_ur) {
-                    if (jcp.ntiles % tile_block_ur == 0) {
-                        int tile_block_size = get_thread_size(jcp,
-                                jcp.ntiles / tile_block_ur, nb_oc);
-                        if (tile_block_size > C2 * L2_cache_size &&
-                                tile_block_size < C2_max * L2_cache_size) {
-                            if ((jcp.ntiles / tile_block_ur) >
-                                    T * omp_get_max_threads()) {
-                                nb_tile_block_ur = 1;
-                                tile_block = jcp.ntiles / tile_block_ur
-                                    / nb_tile_block_ur;
-                                printf("tile_block_size=%d, tile_block_ur=%d, nb_oc=%d\n",
-                                        tile_block_size, tile_block_ur, nb_oc);
-                                break;
-                            }
-                        }
-                    }
-                }
-
-                if (tile_block != 0) {
-                    for (nb_ic = 1; nb_ic <= jcp.ic / ic_simd_block; ++nb_ic) {
-                        if ((jcp.ic / ic_simd_block) % nb_ic == 0) {
-                            int gemm_size = get_gemm_size(jcp, tile_block,
-                                    tile_block_ur, nb_ic, nb_oc);
-                            if (gemm_size > C1 * L1_cache_size &&
-                                    gemm_size < C1_max * L1_cache_size) {
-                                ic_block = jcp.ic / ic_simd_block / nb_ic;
-                                oc_block = jcp.oc / oc_simd_block / nb_oc;
-                                printf("gemm_size=%d, tile_block_ur=%d, nb_oc=%d\n",
-                                        gemm_size, tile_block_ur, nb_oc);
-                                set_params(jcp);
-                                return true;
-                            }
-                        }
+        FOREACH_INC(nb_oc, 1, max_nb_oc, jcp.oc / oc_simd_block) {
+        FOREACH_DEC(tile_block_ur, min_tile_block_ur,
+                max_tile_block_ur, jcp.ntiles) {
+            int thread_size = get_thread_size(jcp,
+                    jcp.ntiles / tile_block_ur, nb_oc);
+            int thread_number = get_thread_number(jcp,
+                    jcp.ntiles / tile_block_ur, nb_oc);
+            if (in_range(thread_size, C2 * L2_cache_size,
+                        C2_max * L2_cache_size) &&
+                    (thread_number > T * omp_get_max_threads())) {
+                nb_tile_block_ur = 1;
+                tile_block = jcp.ntiles / tile_block_ur / nb_tile_block_ur;
+                FOREACH_INC(nb_ic, 1, jcp.ic / ic_simd_block,
+                        jcp.ic / ic_simd_block) {
+                    int gemm_size = get_gemm_size(jcp, tile_block,
+                            tile_block_ur, nb_ic, nb_oc);
+                    if (in_range(gemm_size, C1 * L1_cache_size,
+                                C1_max * L1_cache_size)) {
+                        ic_block = jcp.ic / ic_simd_block / nb_ic;
+                        oc_block = jcp.oc / oc_simd_block / nb_oc;
+                        printf("thread_size=%d, gemm_size=%d, thread_number=%d\n", thread_size, gemm_size, thread_number);
+                        set_params(jcp);
+                        return true;
                     }
                 }
             }
-        }
-    }
-
-    if (--T == 2)
-        return false;
-    else
-        goto retry;
+        }}
+    }}
 
     return false;
 }
@@ -634,6 +584,8 @@ retry:
 bool set_wsched_S_D_Giot(jit_conv_winograd_conf_t &jcp,
         int min_tile_block_ur, int max_tile_block_ur,
         int (*get_gemm_size)(jit_conv_winograd_conf_t &jcp,
+            int tile_block, int nb_ic, int nb_oc),
+        int (*get_thread_number)(jit_conv_winograd_conf_t &jcp,
             int tile_block, int nb_ic, int nb_oc))
 {
     const float C2_min = .05, C2_0 = .1, C2_max = .8;
@@ -657,40 +609,115 @@ bool set_wsched_S_D_Giot(jit_conv_winograd_conf_t &jcp,
 
     nb_ic = 1;
     for (float C2 = C2_0; C2 > C2_min; C2 -= .01) {
-        for (nb_oc = 1; nb_oc < 4; ++nb_oc) {
-            if ((jcp.oc / jcp.oc_simd_block) % nb_oc == 0) {
-                for (tile_block_ur = min_tile_block_ur;
-                        tile_block_ur <= max_tile_block_ur;
-                        ++tile_block_ur) {
-                    if (jcp.ntiles % tile_block_ur == 0) {
-                        int gemm_size = get_gemm_size(jcp,
-                                jcp.ntiles / tile_block_ur, nb_ic, nb_oc);
-                        if (gemm_size > C2 * L2_cache_size &&
-                                gemm_size < C2_max * L2_cache_size) {
-                            if ((jcp.ntiles / tile_block_ur) * nb_oc * nb_ic
-                                    > T * omp_get_max_threads()) {
-                                ic_block = jcp.ic / ic_simd_block / nb_ic;
-                                oc_block = jcp.oc / oc_simd_block / nb_oc;
-                                nb_tile_block_ur = 1;
-                                ic_block = jcp.ic / nb_ic / ic_simd_block;
-                                oc_block = jcp.oc / nb_oc / oc_simd_block;
-                                tile_block = jcp.ntiles / nb_tile_block_ur
-                                    / tile_block_ur;
-                                set_params(jcp);
-                                printf("tile_block=ur=%d, gemm_size=%d, nb_ic=%d, nb_oc=%d\n",
-                                        jcp.tile_block_ur, gemm_size, jcp.nb_ic, jcp.nb_oc);
-                                return true;
-                            }
-                        }
-                    }
-                }
+        FOREACH_INC(nb_oc, 1, 4, jcp.oc / oc_simd_block) {
+        FOREACH_INC(tile_block_ur, min_tile_block_ur,
+                max_tile_block_ur, jcp.ntiles) {
+            int gemm_size = get_gemm_size(jcp,
+                    jcp.ntiles / tile_block_ur, nb_ic, nb_oc);
+            int thread_number = get_thread_number(jcp,
+                    jcp.ntiles / tile_block_ur, nb_ic, nb_oc);
+            if (in_range(gemm_size, C2 * L2_cache_size,
+                        C2_max * L2_cache_size) &&
+                    (thread_number > T * omp_get_max_threads())) {
+                ic_block = jcp.ic / ic_simd_block / nb_ic;
+                oc_block = jcp.oc / oc_simd_block / nb_oc;
+                nb_tile_block_ur = 1;
+                ic_block = jcp.ic / nb_ic / ic_simd_block;
+                oc_block = jcp.oc / nb_oc / oc_simd_block;
+                tile_block = jcp.ntiles / nb_tile_block_ur
+                    / tile_block_ur;
+                set_params(jcp);
+                printf("gemm_size=%d, thread_number=%d\n", gemm_size, thread_number);
+                return true;
             }
-        }
+        }}
     }
 
     return false;
 }
 
+bool set_wsched_S_G_D(jit_conv_winograd_conf_t &jcp,
+        bool reduce_ic, int min_tile_block_ur, int max_tile_block_ur,
+        int (*get_thread_size)(jit_conv_winograd_conf_t &jcp,
+            int tile_block, int nb_ic, int nb_oc),
+        int (*get_gemm_size)(jit_conv_winograd_conf_t &jcp,
+            int tile_block_ur, int nb_ic, int nb_oc),
+        int (*get_thread_number)(jit_conv_winograd_conf_t &jcp,
+            int tile_block, int nb_ic, int nb_oc))
+{
+    const float C1_min = .2, C1_0 = .5, C1_max = .8;
+    const float C2_min = .2, C2_0 = .5, C2_max = .8;
+    const int T0 = 12, T_min = 1;
+
+    int ic_simd_block = 16, ic_block = 0, nb_ic = 0;
+    int oc_simd_block = 16, oc_block = 0, nb_oc = 0;
+    int tile_block_ur = 0,  nb_tile_block_ur = 0, tile_block = 0;
+
+    auto set_params = [&](jit_conv_winograd_conf_t &jcp) {
+        jcp.tile_block_ur = tile_block_ur;
+        jcp.nb_tile_block_ur = nb_tile_block_ur;
+        jcp.tile_block = tile_block;
+        jcp.ic_simd_block = ic_simd_block;
+        jcp.ic_block = ic_block;
+        jcp.nb_ic = nb_ic;
+        jcp.oc_simd_block = oc_simd_block;
+        jcp.oc_block = oc_block;
+        jcp.nb_oc = nb_oc;
+    };
+
+    for (float C1 = C1_0, C2 = C2_0; C1 >= C1_min, C2 >= C2_min;
+            C1 -= .1, C2 -= .1) {
+    for (int T = T0; T >= T_min; --T) {
+    if (reduce_ic) {
+        FOREACH_INC(tile_block, 1, jcp.ntiles / min_tile_block_ur, jcp.ntiles) {
+        FOREACH_INC(nb_ic, 1, jcp.ic / ic_simd_block, jcp.ic / ic_simd_block) {
+        FOREACH_DEC(tile_block_ur, min_tile_block_ur,
+                max_tile_block_ur, jcp.ntiles / tile_block) {
+        FOREACH_DEC(nb_oc, 1, jcp.oc / oc_simd_block, jcp.oc / oc_simd_block) {
+            int thread_size = get_thread_size(jcp, tile_block, nb_ic, nb_oc);
+            int thread_number = get_thread_number(jcp, tile_block, nb_ic, nb_oc);
+            if (in_range(thread_size, C2 * L2_cache_size, C2_max * L2_cache_size)
+                    && (thread_number > T * omp_get_max_threads())) {
+                int gemm_size = get_gemm_size(jcp, tile_block_ur, nb_ic, nb_oc);
+                if (in_range(gemm_size, C1 * L1_cache_size,
+                            C1_max * L1_cache_size)) {
+                    nb_tile_block_ur = jcp.ntiles / tile_block / tile_block_ur;
+                    oc_block = jcp.oc / oc_simd_block / nb_oc;
+                    ic_block = jcp.ic / ic_simd_block / nb_ic;
+                    set_params(jcp);
+                    printf("got thread_size=%d, thread_number=%d, gemm_size=%d\n",
+                            thread_size, thread_number, gemm_size);
+                    return true;
+                }
+            }
+        } } } }
+    } else {
+        FOREACH_INC(tile_block, 1, jcp.ntiles / min_tile_block_ur, jcp.ntiles) {
+        FOREACH_INC(nb_oc, 1, jcp.oc / oc_simd_block, jcp.oc / oc_simd_block) {
+        FOREACH_DEC(tile_block_ur, min_tile_block_ur,
+                max_tile_block_ur, jcp.ntiles / tile_block) {
+        FOREACH_DEC(nb_ic, 1, jcp.ic / ic_simd_block, jcp.ic / ic_simd_block) {
+            int thread_size = get_thread_size(jcp, tile_block, nb_ic, nb_oc);
+            int thread_number = get_thread_number(jcp, tile_block, nb_ic, nb_oc);
+            if (in_range(thread_size, C2 * L2_cache_size, C2_max * L2_cache_size)
+                    && (thread_number > T * omp_get_max_threads())) {
+                int gemm_size = get_gemm_size(jcp, tile_block_ur, nb_ic, nb_oc);
+                if (in_range(gemm_size, C1 * L1_cache_size,
+                            C1_max * L1_cache_size)) {
+                    nb_tile_block_ur = jcp.ntiles / tile_block / tile_block_ur;
+                    oc_block = jcp.oc / oc_simd_block / nb_oc;
+                    ic_block = jcp.ic / ic_simd_block / nb_ic;
+                    set_params(jcp);
+                    printf("got thread_size=%d, thread_number=%d, gemm_size=%d\n",
+                            thread_size, thread_number, gemm_size);
+                    return true;
+                }
+            }
+        }}}}
+    }}} 
+
+    return false;
+}
 
 
 status_t set_wsched_DATA_W_SGDt(jit_conv_winograd_conf_t &jcp)
@@ -735,10 +762,14 @@ status_t set_wsched_DATA_W_SGDt(jit_conv_winograd_conf_t &jcp)
             + (jcp.ic / nb_ic) * tile_block_ur * sizeof(float)
             + (jcp.ic / nb_ic) * (jcp.oc / nb_oc) * sizeof(float);
     };
+    auto get_thread_number = [](jit_conv_winograd_conf_t &jcp,
+            int tile_block)->int {
+        return tile_block;
+    };
 
     if (jcp.dimK == jcp.ic) { // FWD
         if (set_wsched_SGDt(jcp, true, true, 12, jcp.nb_reg, true,
-                    get_thread_size, get_gemm_size)) {
+                    get_thread_size, get_gemm_size, get_thread_number)) {
             jcp.dimN_reg_block = jcp.tile_block_ur;
             jcp.dimN_block = jcp.nb_tile_block_ur;
             jcp.dimN_nb_block = jcp.tile_block;
@@ -755,7 +786,7 @@ status_t set_wsched_DATA_W_SGDt(jit_conv_winograd_conf_t &jcp)
     } else { // BWD-Data
         assert(jcp.dimK == jcp.oc);
         if (set_wsched_SGDt(jcp, false, true, 12, jcp.nb_reg, true,
-                    get_thread_size, get_gemm_size)) {
+                    get_thread_size, get_gemm_size, get_thread_number)) {
             jcp.dimN_reg_block = jcp.tile_block_ur;
             jcp.dimN_block = jcp.nb_tile_block_ur;
             jcp.dimN_nb_block = jcp.tile_block;
@@ -817,152 +848,72 @@ status_t set_wsched_DATA_W_SGit_D(jit_conv_winograd_conf_t &jcp)
 
 status_t set_wsched_DATA_W_S_G_D(jit_conv_winograd_conf_t &jcp)
 {
-    /*
-     Parameter selection: WSCHED_DATA_W_S_G_D
-
-     [1] L1_cache condition with stores
-     [dimM_block][dimN_reg_block][simd_w]
-     + [dimM_block][dimK_block][simd_w][simd_w]
-     + [dimK_block][dimN_reg_block][simd_w] < C * L1_cache_size
-
-     [1bis] L1_cache condition with non-temporal stores
-     + [dimM_block][dimK_block][simd_w][simd_w]
-     + [dimK_block][dimN_reg_block][simd_w] < C * L1_cache_size
-
-     [2] L2 cache condition
-     [nb_dimN_reg_block][dimM_block][dimN_reg_block][simd_w]
-     + [dimK_nb_block][dimM_block][dimK_block][simd_w][simd_w]
-     + [nb_dimN_reg_block][dimK_nb_block][dimK_block][dimN_reg_block][simd_w]
-     < C * L2_cache_size
-
-     with C~1/2. C is here to prevent the HW prefetcher from evicting the needed
-     data.
-
-     0) pick dimN_reg_block such that it is just above what is needed
-     ot cover load latencies. Ideally, it should be bigger than 14 to
-     hide latencies.
-
-     1) pick dimK_block. Assuming jcp.dimM_block=1, Check if [1bis]
-     holds with dimK_block = dimK / simd_w.
-
-       i.  If it does, (with the current POR topologies, it should
-       almost always be the case)
-
-         a. pick dimK_block=dimK/simd_w as it enables to stream the
-         output of the GEMM and save some bandwidth for reading and
-         will save some work for the prefetcher.
-
-         b. pick dimM_block as big as possible such that:
-           - [1bis] holds
-
-         c. pick nb_dimN_reg_block such that [2] holds
-
-       ii. If it does not, it is not clear what is the best tradeoff:
-          a. maximize dimK_block to minimize the number of writes?
-          b. maximize dimM_block to maximize L1 cache reuse
-          c. find the best (dimM_block, dimK_block couple) depending on
-            the number of use-per-load and write instructions? What
-            would be the weight to put to each?
-          For now, we will stick with a., but it is worth
-          investigating c. Note that this will come with some
-          maintenance burden as the weights will likely be
-          architecture dependant
-   */
-
-    //******************* Choosing dimN_reg_block *******************//
-    // Fix issue when N (ex. mb1ih28oh28) is small. And choose a bigger
-    // dimN_reg_block  -wxy
-#define MIN_REQUIRED_DIMN_REG_BLOCK 13
-    auto test_cond_dimN_reg_block = [](jit_conv_winograd_conf_t jcp,
-            int dimN_reg_block, int current_best) {
-        return (dimN_reg_block >= MIN_REQUIRED_DIMN_REG_BLOCK)
-            && (dimN_reg_block <= jcp.nb_reg)
-            && (dimN_reg_block < current_best);
+    auto get_gemm_size = [](jit_conv_winograd_conf_t &jcp,
+            int tile_block_ur, int nb_ic, int nb_oc)->int {
+        return (jcp.oc / nb_oc) * tile_block_ur * sizeof(float)
+            + (jcp.ic / nb_ic) * tile_block_ur * sizeof(float)
+            + (jcp.ic / nb_ic) * (jcp.oc / nb_oc) * sizeof(float);
     };
-    jcp.dimN_reg_block = get_max_divisor_satisfying_cond(
-            jcp, jcp.dimN, jcp.dimN, test_cond_dimN_reg_block);
 
-    if (jcp.dimN_reg_block >= jcp.nb_reg) {
-        auto test_cond_dimN_reg_block = [](jit_conv_winograd_conf_t jcp,
-                int dimN_reg_block, int current_best) {
-            return (dimN_reg_block < jcp.nb_reg)
-                && (dimN_reg_block > current_best);
+    if (jcp.dimK == jcp.ic) { // FWD
+        auto get_thread_size = [](jit_conv_winograd_conf_t &jcp,
+                int tile_block, int nb_ic, int nb_oc)->int {
+            return (jcp.oc / nb_oc) * (jcp.ntiles / tile_block) * sizeof(float)
+                + jcp.ic * (jcp.ntiles / tile_block) * sizeof(float)
+                + jcp.ic * (jcp.oc / nb_oc) * sizeof(float);
+        };
+        auto get_thread_number = [](jit_conv_winograd_conf_t &jcp,
+                int tile_block, int nb_ic, int nb_oc) {
+            return tile_block * nb_oc;
         };
 
-        jcp.dimN_reg_block = get_divisor_satisfying_cond(
-                jcp, jcp.dimN, 1, test_cond_dimN_reg_block);
+        if (set_wsched_S_G_D(jcp, true, 12, jcp.nb_reg,
+                    get_thread_size, get_gemm_size, get_thread_number)) {
+            jcp.dimN_reg_block = jcp.tile_block_ur;
+            jcp.dimN_block = jcp.nb_tile_block_ur;
+            jcp.dimN_nb_block = jcp.tile_block;
+            jcp.dimK_reg_block = jcp.ic_simd_block;
+            jcp.dimK_block = jcp.ic_block;
+            jcp.dimK_nb_block = jcp.nb_ic;
+            jcp.dimM_simd_block = jcp.oc_simd_block;
+            jcp.dimM_block = jcp.oc_block;
+            jcp.dimM_nb_block = jcp.nb_oc;
+            jcp.sched_policy = WSCHED_DATA_W_S_G_D;
+            printf("set DATA_W_S_G_D\n");
+
+            return status::success;
+        }
+    } else { // BWD-Data
+        assert(jcp.dimK == jcp.oc);
+        auto get_thread_size = [](jit_conv_winograd_conf_t &jcp,
+                int tile_block, int nb_ic, int nb_oc)->int {
+            return jcp.oc * (jcp.ntiles / tile_block) * sizeof(float)
+                + (jcp.ic / nb_ic) * (jcp.ntiles / tile_block) * sizeof(float)
+                + (jcp.ic / nb_ic) * jcp.oc * sizeof(float);
+        };
+        auto get_thread_number = [](jit_conv_winograd_conf_t &jcp,
+                int tile_block, int nb_ic, int nb_oc) {
+            return tile_block * nb_ic;
+        };
+
+        if (set_wsched_S_G_D(jcp, false, 12, jcp.nb_reg,
+                    get_thread_size, get_gemm_size, get_thread_number)) {
+            jcp.dimN_reg_block = jcp.tile_block_ur;
+            jcp.dimN_block = jcp.nb_tile_block_ur;
+            jcp.dimN_nb_block = jcp.tile_block;
+            jcp.dimK_reg_block = jcp.oc_simd_block;
+            jcp.dimK_block = jcp.oc_block;
+            jcp.dimK_nb_block = jcp.nb_oc;
+            jcp.dimM_simd_block = jcp.ic_simd_block;
+            jcp.dimM_block = jcp.ic_block;
+            jcp.dimM_nb_block = jcp.nb_ic;
+            jcp.sched_policy = WSCHED_DATA_W_S_G_D;
+            printf("set DATA_W_S_G_D\n");
+            return status::success;
+        }
     }
 
-    //jcp.dimN_reg_block = 7; //wxy
-
-    //********************* Choosing dimK_block **********************//
-    auto test_cond1_dimK_block = [](
-            jit_conv_winograd_conf_t jcp, int dimK_block, int current_best) {
-        return check_cond1(jcp.dimN_reg_block, dimK_block, jcp.dimK_reg_block,
-                1, jcp.dimM_simd_block, .75f)
-            && (dimK_block > current_best);
-    };
-
-    auto test_cond1_bis_dimK_block = [](
-            jit_conv_winograd_conf_t jcp, int dimK_block, int current_best) {
-        return check_cond1_bis(jcp.dimN_reg_block, dimK_block,
-                jcp.dimK_reg_block, 1, jcp.dimM_simd_block, .9f)
-            && (dimK_block > current_best);
-    };
-
-    jcp.dimK_block = get_divisor_satisfying_cond(
-            jcp, jcp.dimK / jcp.dimK_reg_block, 1, test_cond1_bis_dimK_block);
-    // If we are not able to use streams, we fall back to condition [1]
-    if (jcp.dimK_block < jcp.dimK / jcp.dimK_reg_block)
-        jcp.dimK_block = get_divisor_satisfying_cond(
-                jcp, jcp.dimK / jcp.dimK_reg_block, 1, test_cond1_dimK_block);
-    //jcp.dimK_block = 2; //wxy
-    jcp.dimK_nb_block = (jcp.dimK / jcp.dimK_reg_block) / jcp.dimK_block;
-
-    //********************* Choosing dimM_block **********************//
-    //jcp.dimM_simd_block = 16;
-    /*XXX: Why C=0.5 here but C=0.75 for dimK_block?*/
-    auto test_cond1_dimM_block = [](
-            jit_conv_winograd_conf_t jcp, int dimM_block, int current_best) {
-        return check_cond1(jcp.dimN_reg_block, jcp.dimK_block,
-                jcp.dimK_reg_block, dimM_block, jcp.dimM_simd_block, .5f)
-            && (dimM_block > current_best);
-    };
-
-    auto test_cond1_bis_dimM_block = [](
-            jit_conv_winograd_conf_t jcp, int dimM_block, int current_best) {
-        return check_cond1_bis(jcp.dimN_reg_block, jcp.dimK_block,
-                jcp.dimK_reg_block, dimM_block, jcp.dimM_simd_block, .3f)
-            && (dimM_block > current_best);
-    };
-
-    if (jcp.dimK_block < jcp.dimK / jcp.dimK_reg_block)
-        jcp.dimM_block = get_divisor_satisfying_cond(
-                jcp, jcp.dimM / jcp.dimM_simd_block, 1, test_cond1_dimM_block);
-    else
-        jcp.dimM_block = get_divisor_satisfying_cond(jcp,
-                jcp.dimM / jcp.dimM_simd_block, 1, test_cond1_bis_dimM_block);
-    //jcp.dimM_block = 2; //wxy
-    jcp.dimM_nb_block = (jcp.dimM / jcp.dimM_simd_block) / jcp.dimM_block;
-
-    //******************* Choosing dimN_block *******************//
-    auto test_cond2_dimN_block = [](
-            jit_conv_winograd_conf_t jcp, int dimN_block, int current_best) {
-        return check_cond2(dimN_block, jcp.dimN_reg_block, jcp.dimK_nb_block,
-                jcp.dimK_block, jcp.dimK_reg_block, jcp.dimM_block,
-                jcp.dimM_simd_block, .6f)
-            && (dimN_block > current_best);
-    };
-
-    jcp.dimN_block = get_divisor_satisfying_cond(
-            jcp, jcp.dimN / jcp.dimN_reg_block, 1, test_cond2_dimN_block);
-    //jcp.dimN_block = 16; //wxy
-    jcp.dimN_nb_block = jcp.dimN / (jcp.dimN_reg_block * jcp.dimN_block);
-
-    jcp.sched_policy = WSCHED_DATA_W_S_G_D;
-    printf("set DATA_W_S_G_D\n");
-
-    return status::success;
+    return status::unimplemented;
 }
 
 status_t _jit_avx512_common_conv_winograd_data_kernel_f32::init_conf_kernel(
@@ -1061,6 +1012,13 @@ status_t jit_avx512_common_conv_winograd_bwd_data_kernel_f32::init_conf(
     jcp.nb_tile_block_ur = jcp.dimN_block;
     jcp.tile_block = jcp.dimN_nb_block;
     jcp.tile_4fma_padding = 0; // only relevant for backward weights
+
+    printf("ic_simd_block=%d, ic_block=%d, nb_ic=%d\n",
+            jcp.ic_simd_block, jcp.ic_block, jcp.nb_ic);
+    printf("oc_simd_block=%d, oc_block=%d, nb_oc=%d\n",
+            jcp.oc_simd_block, jcp.oc_block, jcp.nb_oc);
+    printf("tile_block_ur=%d, nb_tile_block_ur=%d, tile_block=%d\n",
+            jcp.tile_block_ur, jcp.nb_tile_block_ur, jcp.tile_block);
 
     return res;
 }
@@ -1370,9 +1328,13 @@ status_t set_wsched_WEI_SDGt_W(jit_conv_winograd_conf_t &jcp)
             + (jcp.ic / nb_ic) * (jcp.ntiles / tile_block) * sizeof(float)
             + (jcp.ic / nb_ic) * (jcp.oc / nb_oc) * sizeof(float);
     };
+    auto get_thread_number = [](jit_conv_winograd_conf_t &jcp,
+            int tile_block)->int {
+        return tile_block;
+    };
 
     if (set_wsched_SGDt(jcp, false, false, 4, 64, false,
-                get_thread_size, get_gemm_size)) {
+                get_thread_size, get_gemm_size, get_thread_number)) {
         jcp.dimK_reg_block = jcp.tile_block_ur;
         jcp.dimK_block = jcp.nb_tile_block_ur;
         jcp.dimK_nb_block = jcp.tile_block;
@@ -1418,8 +1380,13 @@ status_t set_wsched_WEI_SDGot_W(jit_conv_winograd_conf_t &jcp)
             + (jcp.ic / nb_ic) * (jcp.ntiles / tile_block) * sizeof(float)
             + (jcp.ic / nb_ic) * (jcp.oc / nb_oc) * sizeof(float);
     };
+    auto get_thread_number = [](jit_conv_winograd_conf_t &jcp,
+            int tile_block, int nb_oc)->int {
+        return tile_block;
+    };
 
-    if (set_wsched_SGDot(jcp, 4, 64, get_thread_size, get_gemm_size)) {
+    if (set_wsched_SGDot(jcp, 4, 64,
+                get_thread_size, get_gemm_size, get_thread_number)) {
         jcp.dimK_reg_block = jcp.tile_block_ur;
         jcp.dimK_block = jcp.nb_tile_block_ur;
         jcp.dimK_nb_block = jcp.tile_block;
@@ -1446,8 +1413,13 @@ status_t set_wsched_WEI_S_D_Giot_W(jit_conv_winograd_conf_t &jcp)
             + (jcp.ic / nb_ic) * (jcp.ntiles / tile_block) * sizeof(float)
             + (jcp.ic / nb_ic) * (jcp.oc / nb_oc) * sizeof(float);
     };
+    auto get_thread_number = [](jit_conv_winograd_conf_t &jcp,
+            int tile_block, int nb_ic, int nb_oc)->int {
+        return tile_block * nb_ic * nb_oc;
+    };
 
-    if (set_wsched_S_D_Giot(jcp, 8, 64, get_gemm_size)) {
+    if (set_wsched_S_D_Giot(jcp, 8, 64,
+                get_gemm_size, get_thread_number)) {
         jcp.dimK_reg_block = jcp.tile_block_ur;
         jcp.dimK_block = jcp.nb_tile_block_ur;
         jcp.dimK_nb_block = jcp.tile_block;
