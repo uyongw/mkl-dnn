@@ -1741,7 +1741,7 @@ _execute_forward_W_S_G_D()
         // W_S_Gteo_D
 #pragma omp barrier
 ////////////////////////// New GEMM //////////////////////////
-#pragma omp for collapse(4) nowait schedule(static)
+#pragma omp for collapse(5) nowait schedule(static)
         for (int tile_block = 0; tile_block < jcp.tile_block; tile_block++) {
             for (int oj = 0; oj < alpha; oj++) {
                 for (int oi = 0; oi < alpha; oi++) {
@@ -2272,8 +2272,8 @@ execute_backward_weights()
     case WSCHED_WEI_SDGit_W:
         _execute_backward_weights_SDGit_W();
         break;
-    case WSCHED_WEI_SDGot_W:
-        _execute_backward_weights_SDGot_W();
+    case WSCHED_WEI_SDGtWo:
+        _execute_backward_weights_SDGtWo();
         break;
     case WSCHED_WEI_SDGt_W:
         _execute_backward_weights_SDGt_W();
@@ -2353,7 +2353,7 @@ _execute_backward_weights_S_D_G_W()
 
 #pragma omp barrier
 
-#pragma omp for nowait collapse(4) schedule(static) //wxy
+#pragma omp for nowait collapse(4) schedule(static)
         for (int ifm1 = 0; ifm1 < jcp.nb_ic; ifm1++) {
             for (int oj = 0; oj < jcp.alpha; oj++) {
                 for (int oi = 0; oi < jcp.alpha; oi++) {
@@ -2749,7 +2749,7 @@ _execute_backward_weights_SDGit_W()
 }
 
 void jit_avx512_common_convolution_winograd_bwd_weights_t::
-_execute_backward_weights_SDGot_W()
+_execute_backward_weights_SDGtWo()
 {
     const int simd_w = 16;
     const int alpha = 6;
@@ -2836,31 +2836,15 @@ _execute_backward_weights_SDGot_W()
             }
             th_counter++;
         }
-
         // Reduce diff-weights
         {
-            const int K = 16;
-            const int J = jcp.oc_block * jcp.oc_simd_block
-                * jcp.ic * jcp.alpha * jcp.alpha / (K * simd_w);
-            array_offset_calculator<float, 4> Ut(
-                    (float *)(base_ptr + up_offset_), 0, J, K, simd_w);
-
-            int n = num_th;
-            while (n > 1) {
-                int o = (n + 1) / 2;
-#pragma omp parallel
-#pragma omp for collapse(2)
-                for (int i = 0; i < n / 2; i++) {
-                    for (int j = 0; j < J; j++) {
-                        for (int k = 0; k < K; k++) {
-#pragma omp simd
-                            for (int v = 0; v < simd_w; v++)
-                                Ut(n % 2 + i, j, k, v) += Ut(o + i, j, k, v);
-                        }
-                    }
-                }
-                n = o;
+            float *output = (float *)(base_ptr + up_offset_);
+            size_t nelems = jcp.ic * (jcp.oc / jcp.nb_oc) * jcp.alpha * jcp.alpha;
+            float *input_ptrs[num_th];
+            for (int i = 0; i < num_th; i++) {
+                input_ptrs[i] = output + nelems * i;
             }
+            array_sum(num_th, output, nelems, input_ptrs);
         }
 
 #pragma omp parallel

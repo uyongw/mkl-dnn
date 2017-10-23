@@ -71,7 +71,7 @@ enum {
     WSCHED_WEI_S_D_G_W,
     WSCHED_WEI_S_D_Giot_W,
     WSCHED_WEI_SDGit_W,
-    WSCHED_WEI_SDGot_W,
+    WSCHED_WEI_SDGtWo,
     WSCHED_WEI_SDGt_W,
 };
 

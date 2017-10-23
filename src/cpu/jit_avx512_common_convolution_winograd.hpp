@@ -68,7 +68,7 @@ inline void allocate_winograd_scratchpad(const jit_conv_winograd_conf_t &jcp,
         mp_size = omp_get_max_threads() * jcp.alpha * jcp.alpha
             * (jcp.nb_tile_block_ur * jcp.tile_block_ur + jcp.tile_4fma_padding)
             * jcp.oc * jcp.tile_4fma * sizeof(float);
-    } else if (jcp.sched_policy == WSCHED_WEI_SDGot_W) {
+    } else if (jcp.sched_policy == WSCHED_WEI_SDGtWo) {
         up_size = omp_get_max_threads() * jcp.alpha * jcp.alpha
             * jcp.oc_block * jcp.oc_simd_block * jcp.ic * sizeof(float);
         vp_size = jcp.alpha * jcp.alpha
@@ -404,7 +404,7 @@ private:
     void _execute_backward_weights_S_D_G_W();
     void _execute_backward_weights_S_D_Giot_W();
     void _execute_backward_weights_SDGit_W();
-    void _execute_backward_weights_SDGot_W();
+    void _execute_backward_weights_SDGtWo();
     void _execute_backward_weights_SDGt_W();
 
     pd_t conf_;
