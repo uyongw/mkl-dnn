@@ -34,7 +34,7 @@ inline void allocate_winograd_scratchpad(const jit_conv_winograd_conf_t &jcp,
         size_t &mp_offset, size_t &bp_offset,
         scratchpad_t *&winograd_scratchpad)
 {
-    size_t up_size = 0, vp_size = 0, mp_size = 0, bp_size;
+    size_t up_size = 0, vp_size = 0, mp_size = 0, bp_size = 0;
     if (jcp.sched_policy == WSCHED_DATA_W_SGDt) {
         up_size = jcp.alpha * jcp.alpha * jcp.ic * jcp.oc * sizeof(float);
         vp_size = omp_get_max_threads() * jcp.alpha * jcp.alpha
