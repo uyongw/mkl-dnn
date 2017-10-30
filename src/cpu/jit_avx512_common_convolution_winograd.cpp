@@ -650,8 +650,9 @@ void weight_transform_fwd(jit_conv_winograd_conf_t conv, float *wp, float *twp)
             conv.kh, conv.kw,
             ic_simd_block, oc_simd_block);
     array_offset_calculator<float, 8> output(twp,
+            conv.nb_oc,
             alpha, alpha,
-            conv.nb_oc, conv.nb_ic,
+            conv.nb_ic,
             conv.oc_block, conv.ic_block,
             ic_simd_block, oc_simd_block);
     float Fw[alpha][alpha][simd_w][simd_w];
@@ -675,7 +676,7 @@ void weight_transform_fwd(jit_conv_winograd_conf_t conv, float *wp, float *twp)
             for (int v1 = 0; v1 < simd_w; v1++) {
 #pragma omp simd
                 for (int v2 = 0; v2 < simd_w; v2++) {
-                    output(j, i, 0, 0, 0, 0, v1, v2) = Fw[j][i][v1][v2];
+                    output(0, j, i, 0, 0, 0, v1, v2) = Fw[j][i][v1][v2];
                 }
             }
         }
@@ -1715,8 +1716,9 @@ _execute_forward_W_S_G_D()
             jcp.nb_tile_block_ur, jcp.oc_block,
             jcp.tile_block_ur, simd_w);
     array_offset_calculator<float, 8> U((float *)(base_ptr + up_offset_),
+            jcp.nb_oc,
             alpha, alpha,
-            jcp.nb_oc, jcp.nb_ic,
+            jcp.nb_ic,
             jcp.oc_block, jcp.ic_block,
             simd_w, simd_w);
     array_offset_calculator<float, 8> V((float *)(base_ptr + vp_offset_),
@@ -1748,7 +1750,7 @@ _execute_forward_W_S_G_D()
                                 &(weights(ofm1 * jcp.oc_block + ofm2,
                                         ifm1 * jcp.ic_block + ifm2,
                                         0, 0, 0, 0)),
-                                &(U(0, 0, ofm1, ifm1, ofm2, ifm2, 0, 0)));
+                                &(U(ofm1, 0, 0, ifm1, ofm2, ifm2, 0, 0)));
                     }
                 }
             }
@@ -1770,8 +1772,7 @@ _execute_forward_W_S_G_D()
                                             oj, oi,
                                             nb_tile_block_ur, 0,
                                             0, 0)),
-                                    (const float *)&(U(oj, oi,
-                                            ofm1, 0,
+                                    (const float *)&(U(ofm1, oj, oi, 0,
                                             0, 0, 0, 0)),
                                     (const float *)&(V(tile_block, oj, oi,
                                             nb_tile_block_ur, 0,
@@ -1782,8 +1783,7 @@ _execute_forward_W_S_G_D()
                                                 oj, oi,
                                                 nb_tile_block_ur, 0,
                                                 0, 0)),
-                                        (const float *)&(U(oj, oi,
-                                                ofm1, ifm1,
+                                        (const float *)&(U(ofm1, oj, oi, ifm1,
                                                 0, 0, 0, 0)),
                                         (const float *)&(V(tile_block, oj, oi,
                                                 nb_tile_block_ur, ifm1,
@@ -1834,8 +1834,9 @@ _execute_forward_W_S_GDot()
 
     char *base_ptr = scratchpad_buffer_->get();
     array_offset_calculator<float, 8> U((float *)(base_ptr + up_offset_),
+            jcp.nb_oc,
             alpha, alpha,
-            jcp.nb_oc, jcp.nb_ic,
+            jcp.nb_ic,
             jcp.oc_block, jcp.ic_block,
             simd_w, simd_w);
 
@@ -1858,7 +1859,7 @@ _execute_forward_W_S_GDot()
                             &(weights(ofm1 * jcp.oc_block + ofm2,
                                     ifm1 * jcp.ic_block + ifm2,
                                     0, 0, 0, 0)),
-                            &(U(0, 0, ofm1, ifm1, ofm2, ifm2, 0, 0)));
+                            &(U(ofm1, 0, 0, ifm1, ofm2, ifm2, 0, 0)));
                 }
             }
         }
@@ -1891,16 +1892,16 @@ _execute_forward_W_S_GDot()
                         kernel_->gemm_loop_ker_first_iter(
                                 (float *)&(M(ithr, oj, oi,
                                         nb_tile_block_ur, 0, 0, 0)),
-                                (const float *)&(U(oj, oi,
-                                        ofm1, 0, 0, 0, 0, 0)),
+                                (const float *)&(U(ofm1, oj, oi,
+                                        0, 0, 0, 0, 0)),
                                 (const float *)&(V(tile_block, oj, oi,
                                         nb_tile_block_ur, 0, 0, 0, 0)));
                         for (int ifm1 = 1; ifm1 < jcp.nb_ic; ifm1++) {
                             kernel_->gemm_loop_ker(
                                     (float *)&(M(ithr, oj, oi,
                                             nb_tile_block_ur, 0, 0, 0)),
-                                    (const float *)&(U(oj, oi,
-                                            ofm1, ifm1, 0, 0, 0, 0)),
+                                    (const float *)&(U(ofm1, oj, oi,
+                                            ifm1, 0, 0, 0, 0)),
                                     (const float *)&(V(tile_block, oj, oi,
                                             nb_tile_block_ur, ifm1, 0, 0, 0)));
                         }
@@ -1942,8 +1943,9 @@ _execute_forward_W_SGDt()
 
     char *base_ptr = scratchpad_buffer_->get();
     array_offset_calculator<float, 8> U((float *)(base_ptr + up_offset_),
+            jcp.nb_oc,
             alpha, alpha,
-            jcp.nb_oc, jcp.nb_ic,
+            jcp.nb_ic,
             jcp.oc_block, jcp.ic_block,
             simd_w, simd_w);
 
@@ -1968,7 +1970,7 @@ _execute_forward_W_SGDt()
                             &(weights(ofm1 * jcp.oc_block + ofm2,
                                     ifm1 * jcp.ic_block + ifm2,
                                     0, 0, 0, 0)),
-                            &(U(0, 0, ofm1, ifm1, ofm2, ifm2, 0, 0)));
+                            &(U(ofm1, 0, 0, ifm1, ofm2, ifm2, 0, 0)));
                 }
             }
         }
@@ -1996,7 +1998,7 @@ _execute_forward_W_SGDt()
                         kernel_->gemm_loop_ker_first_iter(
                                 (float *)&(M(ithr, ofm1, oj, oi,
                                         nb_tile_block_ur, 0, 0, 0)),
-                                (const float *)&(U(oj, oi, ofm1, 0,
+                                (const float *)&(U(ofm1, oj, oi, 0,
                                         0, 0, 0, 0)),
                                 (const float *)&(V(ithr, oj, oi,
                                         nb_tile_block_ur, 0, 0, 0, 0)));
@@ -2004,7 +2006,7 @@ _execute_forward_W_SGDt()
                             kernel_->gemm_loop_ker(
                                     (float *)&(M(ithr, ofm1, oj, oi,
                                             nb_tile_block_ur, 0, 0, 0)),
-                                    (const float *)&(U(oj, oi, ofm1, ifm1,
+                                    (const float *)&(U(ofm1, oj, oi, ifm1,
                                             0, 0, 0, 0)),
                                     (const float *)&(V(ithr, oj, oi,
                                             nb_tile_block_ur, ifm1, 0, 0, 0)));
