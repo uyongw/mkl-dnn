@@ -36,6 +36,8 @@ using namespace mkldnn::impl::status;
 using namespace mkldnn::impl::memory_format;
 using namespace mkldnn::impl::utils;
 
+extern int LLC_data_size;
+
 template <typename Telem, size_t Tdims>
 struct array_offset_calculator {
     template <typename... Targs>
@@ -556,7 +558,7 @@ void src_transform_fwd_tile(int tile_block, jit_conv_winograd_conf_t conv,
 }
 
 void src_transform_fwd(int image, jit_conv_winograd_conf_t conv,
-        float *inp, float *tinp)
+        float *inp, float *tinp, bool streamout = true)
 {
     const int simd_w = 16;
     const int alpha = 6;
@@ -615,12 +617,15 @@ void src_transform_fwd(int image, jit_conv_winograd_conf_t conv,
 
             for (int j = 0; j < alpha; j++) {
                 for (int i = 0; i < alpha; i++) {
-                    stream_ps(
-                            &(output(
-                                    tile_block, j, i,
-                                    nb_tile_block_ur, 0, 0,
-                                    tile_block_ur, 0)),
-                            Iw[j][i]);
+                    if (streamout)
+                        stream_ps(&(output(tile_block, j, i,
+                                        nb_tile_block_ur, 0, 0,
+                                        tile_block_ur, 0)), Iw[j][i]);
+                    else
+                        store_ps(&(output(tile_block, j, i,
+                                        nb_tile_block_ur, 0, 0,
+                                        tile_block_ur, 0)), Iw[j][i]);
+
                 }
             }
             tile_block_ur++;
@@ -752,7 +757,7 @@ void dst_transform_fwd_tile(int tile_block, jit_conv_winograd_conf_t conv,
 
 template <bool with_bias, bool with_relu>
 void dst_transform_fwd(int image, jit_conv_winograd_conf_t conv, float *toutp,
-        float *outp, float *bias)
+        float *outp, float *bias, bool streamout = true)
 {
     const int simd_w = 16;
     const int alpha = 6;
@@ -807,7 +812,10 @@ void dst_transform_fwd(int image, jit_conv_winograd_conf_t conv, float *toutp,
                                              : O[j][i][v];
 
                             }
-                            stream_ps(&(output(0, ydim, xdim, 0)), O[j][i]);
+                            if (streamout)
+                                stream_ps(&(output(0, ydim, xdim, 0)), O[j][i]);
+                            else
+                                store_ps(&(output(0, ydim, xdim, 0)), O[j][i]);
                         }
                     }
                 }
@@ -825,7 +833,7 @@ void dst_transform_fwd(int image, jit_conv_winograd_conf_t conv, float *toutp,
     }
 }
 void diff_dst_transform_bwd_data( int image, jit_conv_winograd_conf_t conv,
-        float *inp, float *tinp)
+        float *inp, float *tinp, bool streamout = true)
 {
     const int simd_w = 16;
     const int alpha = 6;
@@ -891,11 +899,13 @@ void diff_dst_transform_bwd_data( int image, jit_conv_winograd_conf_t conv,
 
             for (int j = 0; j < alpha; j++) {
                 for (int i = 0; i < alpha; i++) {
-                    stream_ps(
-                            &(output(tile_block, j, i, nb_tile_block_ur,
-                                    0, 0, tile_block_ur, 0)),
-                            Iw[j][i]);
-                }
+                    if (streamout)
+                        stream_ps(&(output(tile_block, j, i, nb_tile_block_ur,
+                                        0, 0, tile_block_ur, 0)), Iw[j][i]);
+                    else
+                        store_ps(&(output(tile_block, j, i, nb_tile_block_ur,
+                                        0, 0, tile_block_ur, 0)), Iw[j][i]);
+               }
             }
             tile_block_ur++;
             if (tile_block_ur >= conv.tile_block_ur) {
@@ -1031,7 +1041,7 @@ void weight_transform_bwd_data(jit_conv_winograd_conf_t conv,
 }
 
 void diff_src_transform_bwd_data(int image, jit_conv_winograd_conf_t conv,
-        float *toutp, float *outp)
+        float *toutp, float *outp, bool streamout = true)
 {
     const int simd_w = 16;
     const int alpha = 6;
@@ -1078,9 +1088,10 @@ void diff_src_transform_bwd_data(int image, jit_conv_winograd_conf_t conv,
                     for (int i = 0; i < tile_size; i++) {
                         int xdim = ti * tile_size + i;
                         if (xdim < conv.iw) {
-                            stream_ps(
-                                    &(output(0, 0, ydim, xdim, 0)),
-                                    O[j][i]);
+                            if (streamout)
+                                stream_ps(&(output(0, 0, ydim, xdim, 0)), O[j][i]);
+                            else
+                                store_ps(&(output(0, 0, ydim, xdim, 0)), O[j][i]);
                         }
                     }
                 }
@@ -1726,6 +1737,9 @@ _execute_forward_W_S_G_D()
             jcp.nb_tile_block_ur, jcp.nb_ic,
             jcp.ic_block, jcp.tile_block_ur, simd_w);
 
+    bool V_streamout = jcp.ntiles * jcp.ic * alpha * alpha * sizeof(float)
+        > 2 * LLC_data_size ? true : false;
+
 #pragma omp parallel
     {
 ////////////////////  New src_transform //////////////////////
@@ -1735,7 +1749,7 @@ _execute_forward_W_S_G_D()
                 for (int ifm2 = 0; ifm2 < jcp.ic_block; ifm2++) {
                     src_transform_fwd(img, jcp,
                             &(src(img, ifm1 * jcp.ic_block + ifm2, 0, 0, 0)),
-                            &(V(0, 0, 0, 0, ifm1, ifm2, 0, 0)));
+                            &(V(0, 0, 0, 0, ifm1, ifm2, 0, 0)), V_streamout);
                 }
             }
         }
@@ -1804,7 +1818,7 @@ _execute_forward_W_S_G_D()
                     output_transform(img, jcp,
                             &(M(0, ofm1, 0, 0, 0, ofm2, 0, 0)),
                             &(dst(img, ofm1 * jcp.oc_block + ofm2, 0, 0, 0)),
-                            &(bias(ofm1 * jcp.oc_block + ofm2, 0)));
+                            &(bias(ofm1 * jcp.oc_block + ofm2, 0)), true);
                 }
             }
         }
@@ -2091,6 +2105,9 @@ _execute_backward_data_W_S_G_D()
             jcp.nb_tile_block_ur, jcp.nb_oc,
             jcp.oc_block, jcp.tile_block_ur, simd_w);
 
+    bool M_streamout = jcp.ntiles * jcp.oc * alpha * alpha * sizeof(float)
+        > 2 * LLC_data_size ? true : false;
+
 #pragma omp parallel
     {
 //******************** New dst_transform ********************//
@@ -2101,7 +2118,7 @@ _execute_backward_data_W_S_G_D()
                     diff_dst_transform_bwd_data(img, jcp,
                             &(diff_dst(img, ofm1 * jcp.oc_block + ofm2,
                                     0, 0, 0)),
-                            &(M(0, 0, 0, 0, ofm1, ofm2, 0, 0)));
+                            &(M(0, 0, 0, 0, ofm1, ofm2, 0, 0)), M_streamout);
                 }
             }
         }

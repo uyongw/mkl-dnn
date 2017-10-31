@@ -38,6 +38,7 @@ using namespace Xbyak;
 
 int L1_cache_size = get_cache_size(1, true);
 int L2_cache_size = get_cache_size(2, true);
+int LLC_data_size = get_cache_size(3, false); // TODO: SKX only
 
 // the test funtion takes jcp, the candidate and the current best.
 // it  returns true if the new candidate is better
@@ -299,7 +300,9 @@ void _jit_avx512_common_conv_winograd_data_kernel_f32::gemm_loop_generate(
                 // In W_SGD or W_S_GD, output will be reused. -wxy
                 if (jcp.dimK_nb_block == 1
                         && (jcp.sched_policy == WSCHED_DATA_W_S_G_D
-                            || jcp.sched_policy == WSCHED_DATA_W_SGit_D))
+                            || jcp.sched_policy == WSCHED_DATA_W_SGit_D)
+                        && (jcp.dimN * jcp.dimM * jcp.alpha * jcp.alpha
+                            * sizeof(float) > 2 * LLC_data_size))
                     vmovntps(zword[reg_dstC + 64 * tile], zmm);
                 else
                     vmovups(zword[reg_dstC + 64 * tile], zmm);
