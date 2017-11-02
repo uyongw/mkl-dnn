@@ -475,6 +475,8 @@ bool __set_wsched_DATA_W_SGDt(jit_conv_winograd_conf_t &jcp,
     for (int T = T0; T >= T_min; --T) {
         FOREACH_DEC(tile_block_ur, min_tile_block_ur,
                 max_tile_block_ur, jcp.ntiles) {
+            //Que: calculating thread size based on ntiles/tile_block_ur is confusing .
+            // It should be something like tile_block_ur * k ? - sg
             int thread_size = get_thread_size(jcp, jcp.ntiles / tile_block_ur);
             int thread_number = get_thread_number(jcp,
                     jcp.ntiles / tile_block_ur);
@@ -726,7 +728,7 @@ bool __set_wsched_DATA_W_S_G_D(jit_conv_winograd_conf_t &jcp,
                 }
             }
         }}}}
-    }}} 
+    }}}
 
     return false;
 }
