@@ -1525,6 +1525,13 @@ status_t set_wsched_WEI_S_D_Giot_W(jit_conv_winograd_conf_t &jcp)
         return (jcp.ic / nb_ic) * (jcp.ntiles / tile_block) * sizeof(float);
     };
 
+    // Bail out if expanded-U too large
+#define MAX_EXPANDED_U_SIZE (512 * 1024 * 1024)
+    int expanded_U_size = omp_get_max_threads()
+        * jcp.oc * jcp.ic * jcp.alpha * jcp.alpha * sizeof(float);
+    if (expanded_U_size > MAX_EXPANDED_U_SIZE)
+        return status::unimplemented;
+
     if (__set_wsched_WEI_S_D_Giot_W(jcp, 8, 64,
                 get_thread_number, get_thread_size,
                 get_L1_reuse, get_L2_reuse)) {

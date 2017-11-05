@@ -72,8 +72,12 @@ inline void allocate_winograd_scratchpad(const jit_conv_winograd_conf_t &jcp,
             * jcp.oc_simd_block * jcp.oc_block * jcp.tile_4fma * sizeof(float);
         bp_size = omp_get_max_threads() * jcp.oc * sizeof(float);
     } else if (jcp.sched_policy == WSCHED_WEI_S_D_Giot_W) {
+#ifdef CONV_BWDW_GIOT_SCRATCHPAD_U_MEM
         up_size = omp_get_max_threads() * jcp.alpha * jcp.alpha
             * jcp.ic * jcp.oc * sizeof(float);
+#else
+        up_size = 0;
+#endif
         vp_size = jcp.alpha * jcp.alpha
             * (jcp.itiles * jcp.jtiles + jcp.tile_4fma_padding)
             * jcp.ic * jcp.mb * sizeof(float);

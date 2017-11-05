@@ -38,6 +38,32 @@ using namespace mkldnn::impl::utils;
 
 extern int LLC_data_size;
 
+// TODO: move to utils
+// Alloc zero-filled pages
+#define PAGE_SIZE (2 * 1024 * 1024)
+class Mmap {
+public:
+	static char *alloc(size_t size)
+	{
+		const size_t align = PAGE_SIZE - 1;
+		size = (size + align) & ~align;
+#ifdef MAP_ANONYMOUS
+		const int mode = MAP_PRIVATE | MAP_ANONYMOUS;
+#elif defined(MAP_ANON)
+		const int mode = MAP_PRIVATE | MAP_ANON;
+#endif
+		void *p = mmap(NULL, size, PROT_READ | PROT_WRITE, mode, -1, 0);
+
+		return (p == MAP_FAILED) ? nullptr : (char*)p;
+	}
+
+	static void free(char *p, size_t size)
+	{
+		if (p == 0) return;
+		munmap((void*)p, size);
+	}
+};
+
 template <typename Telem, size_t Tdims>
 struct array_offset_calculator {
     template <typename... Targs>
@@ -2485,7 +2511,7 @@ _execute_backward_weights_S_D_Giot_W()
     const int simd_w = 16;
     const int alpha = 6;
     const auto &jcp = kernel_->jcp;
-    int nthreads;
+    int nthreads = omp_get_max_threads();
 
     auto diff_src_transform_bwd_weights_ver = jcp.ver == ver_4fma ?
             diff_src_transform_bwd_weights<true> :
@@ -2504,15 +2530,21 @@ _execute_backward_weights_S_D_Giot_W()
             (float *)this->memory(1), jcp.oc/simd_w, simd_w);
 
     char *base_ptr = scratchpad_buffer_->get();
+    int U_nb_elems = jcp.oc * jcp.ic * jcp.alpha * jcp.alpha;
+#ifdef CONV_BWDW_GIOT_SCRATCHPAD_U_MEM
+    char *U_ptr = base_ptr + up_offset_;
+#else
+    int U_size = U_nb_elems * nthreads * sizeof(float);
+    char *U_ptr = (char*)Mmap::alloc(U_size);
+#endif
 
-    array_offset_calculator<float, 8> U((float *)(base_ptr + up_offset_),
+    array_offset_calculator<float, 8> U((float *)(U_ptr),
             jcp.nb_ic, jcp.nb_oc,
             jcp.alpha, jcp.alpha,
             jcp.oc_block, jcp.ic_block,
             jcp.ic_simd_block, jcp.oc_simd_block);
 
-    array_offset_calculator<float, 9> Us(
-            (float *)(base_ptr + up_offset_),
+    array_offset_calculator<float, 9> Us((float *)(U_ptr),
             0, jcp.nb_ic, jcp.nb_oc,
             jcp.alpha, jcp.alpha,
             jcp.oc_block, jcp.ic_block,
@@ -2535,10 +2567,18 @@ _execute_backward_weights_S_D_Giot_W()
             omp_get_max_threads(),
             jcp.oc);
 
-#pragma omp parallel
+#pragma omp parallel proc_bind(close)
     {
+#ifdef CONV_BWDW_GIOT_SCRATCHPAD_U_MEM
+#pragma omp for nowait
+        // Reset Us to zeros
+        for (int ithr = 0; ithr < nthreads; ++ithr) {
+            float *ptr = (float *)&(Us(ithr, 0, 0, 0, 0, 0, 0, 0, 0));
+            for (int i = 0; i < U_nb_elems; ++i)
+                ptr[i] = 0.0f;
+        }
+#endif
         if (jcp.with_bias) {
-            nthreads = omp_get_max_threads();
 #pragma omp for nowait collapse(2)
             for (int ithr = 0; ithr < nthreads; ithr++) {
                 for (int ofm = 0; ofm < jcp.oc; ofm++) {
@@ -2589,7 +2629,7 @@ _execute_backward_weights_S_D_Giot_W()
 
     int th_counter = 0;
     int num_th = 0;
-#pragma omp parallel firstprivate(th_counter)
+#pragma omp parallel firstprivate(th_counter) proc_bind(close)
 #pragma omp for nowait collapse(5)
     for (int ifm1 = 0; ifm1 < jcp.nb_ic; ifm1++) {
         for (int ofm1 = 0; ofm1 < jcp.nb_oc; ofm1++) {
@@ -2599,7 +2639,7 @@ _execute_backward_weights_S_D_Giot_W()
                             tile_block++) {
                         int ithr = omp_get_thread_num();
                         num_th = omp_get_num_threads();
-                        if (th_counter == 0)
+                        if (th_counter == 0 || tile_block == 0) {
                             kernel_->gemm_loop_ker_first_iter(
                                     (float *)&(Us(ithr, ifm1, ofm1,
                                             oj, oi, 0, 0, 0, 0)),
@@ -2607,7 +2647,7 @@ _execute_backward_weights_S_D_Giot_W()
                                             tile_block, 0, 0, 0, 0)),
                                     (const float *)&(V(ifm1, oj, oi,
                                             tile_block, 0, 0, 0, 0)));
-                        else {
+                        } else {
                             kernel_->gemm_loop_ker(
                                     (float *)&(Us(ithr, ifm1, ofm1,
                                             oj, oi, 0, 0, 0, 0)),
@@ -2625,7 +2665,7 @@ _execute_backward_weights_S_D_Giot_W()
 
     // Reduce diff-weights
     {
-        float *output = (float *)(base_ptr + up_offset_);
+        float *output = (float *)(U_ptr);
         size_t nelems = jcp.ic * jcp.oc * jcp.alpha * jcp.alpha;
         float *input_ptrs[num_th];
         for (int i = 0; i < num_th; i++) {
@@ -2664,6 +2704,10 @@ _execute_backward_weights_S_D_Giot_W()
             }
         }
     }
+
+#ifndef CONV_BWDW_GIOT_SCRATCHPAD_U_MEM
+    Mmap::free(U_ptr, U_size);
+#endif
 }
 
 void jit_avx512_common_convolution_winograd_bwd_weights_t::
@@ -2817,7 +2861,7 @@ _execute_backward_weights_SDGtWo()
                 for (int ithr = 0; ithr < num_th; ithr++) {
                     float* base_bias_ptr = &(diff_bias(ofm1, ofm2, 0));
                     float* base_bias_prv_ptr = &(diff_bias_prv(
-                                ithr * jcp.oc_block + ofm2 * simd_w));
+                                ithr * jcp.oc_block * simd_w + ofm2 * simd_w));
 #pragma omp simd
                     for (int ofm3 = 0; ofm3 < simd_w; ofm3++) {
                         base_bias_ptr[ofm3] += base_bias_prv_ptr[ofm3];
