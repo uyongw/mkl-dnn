@@ -1330,7 +1330,7 @@ bool __set_wsched_WEI_SDGtWo(jit_conv_winograd_conf_t &jcp,
     const float C1_min = .1, C1_0 = .4, C1_max = .5;
     const float C2_min = .1, C2_0 = .4, C2_max = .6;
     const float TC2_min = .1, TC2_0 = .7, TC2_max = 1.6;
-    const int max_nb_oc = 2; // Limit the # of sequential execution
+    const int max_nb_oc = 4; // Limit the # of sequential execution
     const int T0 = 12, T_min = 8;
 
     int ic_simd_block = 16, ic_block = 0, nb_ic = 0;
@@ -1353,7 +1353,7 @@ bool __set_wsched_WEI_SDGtWo(jit_conv_winograd_conf_t &jcp,
     for (float C1 = C1_0, C2 = C2_0, TC2 = TC2_0;
             C1 > C1_min, C2 > C2_min, TC2 > TC2_min;
             C1 -= .02, C2 -= .02, TC2 -= .04) {
-        FOREACH_INC(nb_oc, 1, max_nb_oc, jcp.oc / oc_simd_block) {
+        FOREACH_INC(nb_oc, 2, max_nb_oc, jcp.oc / oc_simd_block) {
         FOREACH_DEC(tile_block, 1, jcp.ntiles / min_tile_block_ur, jcp.ntiles) {
         FOREACH_INC(tile_block_ur, min_tile_block_ur,
                 max_tile_block_ur, jcp.ntiles / tile_block) {
