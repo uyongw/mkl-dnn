@@ -1746,19 +1746,18 @@ _execute_forward_W_S_G_D()
     array_offset_calculator<float, 2> bias((float *)this->input_memory(2),
             jcp.oc/simd_w, simd_w);
 
-    char *base_ptr = scratchpad_buffer_->get();
-    array_offset_calculator<float, 8> M((float *)(base_ptr + mp_offset_),
+    array_offset_calculator<float, 8> M((float *)(wsp_.mp),
             jcp.tile_block, jcp.nb_oc,
             alpha, alpha,
             jcp.nb_tile_block_ur, jcp.oc_block,
             jcp.tile_block_ur, simd_w);
-    array_offset_calculator<float, 8> U((float *)(base_ptr + up_offset_),
+    array_offset_calculator<float, 8> U((float *)(wsp_.up),
             jcp.nb_oc,
             alpha, alpha,
             jcp.nb_ic,
             jcp.oc_block, jcp.ic_block,
             simd_w, simd_w);
-    array_offset_calculator<float, 8> V((float *)(base_ptr + vp_offset_),
+    array_offset_calculator<float, 8> V((float *)(wsp_.vp),
             jcp.tile_block, alpha, alpha,
             jcp.nb_tile_block_ur, jcp.nb_ic,
             jcp.ic_block, jcp.tile_block_ur, simd_w);
@@ -1872,20 +1871,19 @@ _execute_forward_W_S_GDot()
     array_offset_calculator<float, 2> bias((float *)this->input_memory(2),
             jcp.oc/simd_w, simd_w);
 
-    char *base_ptr = scratchpad_buffer_->get();
-    array_offset_calculator<float, 8> U((float *)(base_ptr + up_offset_),
+    array_offset_calculator<float, 8> U((float *)(wsp_.up),
             jcp.nb_oc,
             alpha, alpha,
             jcp.nb_ic,
             jcp.oc_block, jcp.ic_block,
             simd_w, simd_w);
 
-    array_offset_calculator<float, 8> V((float *)(base_ptr + vp_offset_),
+    array_offset_calculator<float, 8> V((float *)(wsp_.vp),
             jcp.tile_block, alpha, alpha,
             jcp.nb_tile_block_ur, jcp.nb_ic,
             jcp.ic_block, jcp.tile_block_ur, simd_w);
 
-    array_offset_calculator<float, 7> M((float *)(base_ptr + mp_offset_ ),
+    array_offset_calculator<float, 7> M((float *)(wsp_.mp ),
             0, alpha, alpha, jcp.nb_tile_block_ur, jcp.oc_block,
             jcp.tile_block_ur, simd_w);
 
@@ -1981,22 +1979,19 @@ _execute_forward_W_SGDt()
     array_offset_calculator<float, 2> bias((float *)this->input_memory(2),
             jcp.oc/simd_w, simd_w);
 
-    char *base_ptr = scratchpad_buffer_->get();
-    array_offset_calculator<float, 8> U((float *)(base_ptr + up_offset_),
+    array_offset_calculator<float, 8> U((float *)(wsp_.up),
             jcp.nb_oc,
             alpha, alpha,
             jcp.nb_ic,
             jcp.oc_block, jcp.ic_block,
             simd_w, simd_w);
 
-    array_offset_calculator<float, 8> M(
-            (float *)(base_ptr + mp_offset_),
+    array_offset_calculator<float, 8> M((float *)(wsp_.mp),
             0, jcp.nb_oc, alpha, alpha,
             jcp.nb_tile_block_ur, jcp.oc_block,
             jcp.tile_block_ur, simd_w);
 
-    array_offset_calculator<float, 8> V(
-            (float *)(base_ptr + vp_offset_),
+    array_offset_calculator<float, 8> V((float *)(wsp_.vp),
             0, alpha, alpha, jcp.nb_tile_block_ur, jcp.nb_ic,
             jcp.ic_block, jcp.tile_block_ur, simd_w);
 
@@ -2115,18 +2110,17 @@ _execute_backward_data_W_S_G_D()
     array_offset_calculator<float, 6> weights((float *)this->input_memory(1),
             jcp.oc/simd_w, jcp.ic/simd_w, jcp.kh, jcp.kw, simd_w, simd_w);
 
-    char *base_ptr = scratchpad_buffer_->get();
-    array_offset_calculator<float, 8> U((float *)(base_ptr + up_offset_),
+    array_offset_calculator<float, 8> U((float *)(wsp_.up),
             alpha, alpha,
             jcp.nb_ic, jcp.nb_oc,
             jcp.ic_block, jcp.oc_block,
             simd_w, simd_w);
-    array_offset_calculator<float, 8> V((float *)(base_ptr + vp_offset_),
+    array_offset_calculator<float, 8> V((float *)(wsp_.vp),
             jcp.tile_block, jcp.nb_ic,
             alpha, alpha,
             jcp.nb_tile_block_ur, jcp.ic_block,
             jcp.tile_block_ur, simd_w);
-    array_offset_calculator<float, 8> M((float *)(base_ptr + mp_offset_),
+    array_offset_calculator<float, 8> M((float *)(wsp_.mp),
             jcp.tile_block, alpha, alpha,
             jcp.nb_tile_block_ur, jcp.nb_oc,
             jcp.oc_block, jcp.tile_block_ur, simd_w);
@@ -2232,22 +2226,19 @@ _execute_backward_data_W_SGDt()
     array_offset_calculator<float, 6> weights((float *)this->input_memory(1),
             jcp.oc/simd_w, jcp.ic/simd_w, jcp.kh, jcp.kw, simd_w, simd_w);
 
-    char *base_ptr = scratchpad_buffer_->get();
-    array_offset_calculator<float, 8> U((float *)(base_ptr + up_offset_),
+    array_offset_calculator<float, 8> U((float *)(wsp_.up),
             alpha, alpha,
             jcp.nb_ic, jcp.nb_oc,
             jcp.ic_block, jcp.oc_block,
             simd_w, simd_w);
 
-    array_offset_calculator<float, 8> V(
-            (float *)(base_ptr + vp_offset_),
+    array_offset_calculator<float, 8> V((float *)(wsp_.vp),
             0, jcp.nb_ic,
             alpha, alpha,
             jcp.nb_tile_block_ur, jcp.ic_block,
             jcp.tile_block_ur, simd_w);
 
-    array_offset_calculator<float, 8> M(
-            (float *)(base_ptr + mp_offset_),
+    array_offset_calculator<float, 8> M((float *)(wsp_.mp),
             0, alpha, alpha,
             jcp.nb_tile_block_ur, jcp.nb_oc,
             jcp.oc_block, jcp.tile_block_ur, simd_w);
@@ -2367,27 +2358,25 @@ _execute_backward_weights_S_D_G_W()
     array_offset_calculator<float, 2> diff_bias(
             (float *)this->memory(1), jcp.oc/simd_w, simd_w);
 
-    char *base_ptr = scratchpad_buffer_->get();
-    array_offset_calculator<float, 8> U((float *)(base_ptr + up_offset_),
+    array_offset_calculator<float, 8> U((float *)(wsp_.up),
             jcp.nb_ic, jcp.nb_oc,
             jcp.alpha, jcp.alpha,
             jcp.oc_block, jcp.ic_block,
             jcp.ic_simd_block, jcp.oc_simd_block);
 
-    array_offset_calculator<float, 8> M((float *)(base_ptr + mp_offset_),
+    array_offset_calculator<float, 8> M((float *)(wsp_.mp),
             jcp.nb_oc, jcp.alpha, jcp.alpha,
             jcp.tile_block, jcp.oc_block,
             jcp.nb_tile_block_ur, jcp.tile_block_ur * jcp.tile_4fma,
             jcp.oc_simd_block);
 
-    array_offset_calculator<float, 8> V((float *)(base_ptr + vp_offset_),
+    array_offset_calculator<float, 8> V((float *)(wsp_.vp),
             jcp.nb_ic, jcp.alpha, jcp.alpha,
             jcp.tile_block, jcp.ic_block,
             jcp.nb_tile_block_ur, jcp.tile_block_ur,
             jcp.ic_simd_block * jcp.tile_4fma);
 
-    array_offset_calculator<float, 2> diff_bias_prv(
-            (float *)(base_ptr + bp_offset_),
+    array_offset_calculator<float, 2> diff_bias_prv((float *)(wsp_.bp),
             omp_get_max_threads(),
             jcp.oc);
 
@@ -2529,10 +2518,9 @@ _execute_backward_weights_S_D_Giot_W()
     array_offset_calculator<float, 2> diff_bias(
             (float *)this->memory(1), jcp.oc/simd_w, simd_w);
 
-    char *base_ptr = scratchpad_buffer_->get();
     int U_nb_elems = jcp.oc * jcp.ic * jcp.alpha * jcp.alpha;
 #ifdef CONV_BWDW_GIOT_SCRATCHPAD_U_MEM
-    char *U_ptr = base_ptr + up_offset_;
+    char *U_ptr = wsp_.up;
 #else
     int U_size = U_nb_elems * nthreads * sizeof(float);
     char *U_ptr = (char*)Mmap::alloc(U_size);
@@ -2550,20 +2538,19 @@ _execute_backward_weights_S_D_Giot_W()
             jcp.oc_block, jcp.ic_block,
             jcp.ic_simd_block, jcp.oc_simd_block);
 
-    array_offset_calculator<float, 8> M((float *)(base_ptr + mp_offset_),
+    array_offset_calculator<float, 8> M((float *)(wsp_.mp),
             jcp.nb_oc, jcp.alpha, jcp.alpha,
             jcp.tile_block, jcp.oc_block,
             jcp.nb_tile_block_ur, jcp.tile_block_ur * jcp.tile_4fma,
             jcp.oc_simd_block);
 
-    array_offset_calculator<float, 8> V((float *)(base_ptr + vp_offset_),
+    array_offset_calculator<float, 8> V((float *)(wsp_.vp),
             jcp.nb_ic, jcp.alpha, jcp.alpha,
             jcp.tile_block, jcp.ic_block,
             jcp.nb_tile_block_ur, jcp.tile_block_ur,
             jcp.ic_simd_block * jcp.tile_4fma);
 
-    array_offset_calculator<float, 2> diff_bias_prv(
-            (float *)(base_ptr + bp_offset_),
+    array_offset_calculator<float, 2> diff_bias_prv((float *)(wsp_.bp),
             omp_get_max_threads(),
             jcp.oc);
 
@@ -2733,29 +2720,24 @@ _execute_backward_weights_SDGtWo()
     array_offset_calculator<float, 3> diff_bias(
             (float *)this->memory(1), jcp.nb_oc, jcp.oc_block, simd_w);
 
-    char *base_ptr = scratchpad_buffer_->get();
-    array_offset_calculator<float, 8> Us(
-            (float *)(base_ptr + up_offset_),
+    array_offset_calculator<float, 8> Us((float *)(wsp_.up),
             0, jcp.nb_ic, jcp.alpha, jcp.alpha,
             jcp.oc_block, jcp.ic_block,
             jcp.ic_simd_block, jcp.oc_simd_block);
 
-    array_offset_calculator<float, 7> M(
-            (float *)(base_ptr + mp_offset_),
+    array_offset_calculator<float, 7> M((float *)(wsp_.mp),
             0, jcp.alpha, jcp.alpha,
             jcp.oc_block,
             jcp.nb_tile_block_ur, jcp.tile_block_ur * jcp.tile_4fma,
             jcp.oc_simd_block);
 
-    array_offset_calculator<float, 8> V(
-            (float *)(base_ptr + vp_offset_),
+    array_offset_calculator<float, 8> V((float *)(wsp_.vp),
             0, jcp.nb_ic, jcp.alpha, jcp.alpha,
             jcp.ic_block,
             jcp.nb_tile_block_ur, jcp.tile_block_ur,
             jcp.ic_simd_block * jcp.tile_4fma);
 
-    array_offset_calculator<float, 2> diff_bias_prv(
-            (float *)(base_ptr + bp_offset_),
+    array_offset_calculator<float, 2> diff_bias_prv((float *)(wsp_.bp),
             omp_get_max_threads(),
             jcp.oc / jcp.nb_oc);
 
@@ -2832,7 +2814,7 @@ _execute_backward_weights_SDGtWo()
         }
         // Reduce diff-weights
         {
-            float *output = (float *)(base_ptr + up_offset_);
+            float *output = (float *)(wsp_.up);
             size_t nelems = jcp.ic * (jcp.oc / jcp.nb_oc) * jcp.alpha * jcp.alpha;
             float *input_ptrs[num_th];
             for (int i = 0; i < num_th; i++) {
@@ -2895,34 +2877,29 @@ _execute_backward_weights_SDGt_W()
     array_offset_calculator<float, 2> diff_bias(
             (float *)this->memory(1), jcp.oc/simd_w, simd_w);
 
-    char *base_ptr = scratchpad_buffer_->get();
-    array_offset_calculator<float, 8> U((float *)(base_ptr + up_offset_),
+    array_offset_calculator<float, 8> U((float *)(wsp_.up),
             jcp.nb_oc, jcp.nb_ic,
             jcp.alpha, jcp.alpha,
             jcp.oc_block, jcp.ic_block,
             jcp.ic_simd_block, jcp.oc_simd_block);
 
-    array_offset_calculator<float, 9> Us(
-            (float *)(base_ptr + up_offset_),
+    array_offset_calculator<float, 9> Us((float *)(wsp_.up),
             0, jcp.nb_oc, jcp.nb_ic,
             jcp.alpha, jcp.alpha,
             jcp.oc_block, jcp.ic_block,
             jcp.ic_simd_block, jcp.oc_simd_block);
 
-    array_offset_calculator<float, 8> M(
-            (float *)(base_ptr + mp_offset_),
+    array_offset_calculator<float, 8> M((float *)(wsp_.mp),
             0, jcp.nb_oc, jcp.alpha, jcp.alpha, jcp.oc_block,
             jcp.nb_tile_block_ur, jcp.tile_block_ur * jcp.tile_4fma,
             jcp.oc_simd_block);
 
-    array_offset_calculator<float, 8> V(
-            (float *)(base_ptr + vp_offset_),
+    array_offset_calculator<float, 8> V((float *)(wsp_.vp),
             0, jcp.nb_ic, jcp.alpha, jcp.alpha, jcp.ic_block,
             jcp.nb_tile_block_ur, jcp.tile_block_ur,
             jcp.ic_simd_block * jcp.tile_4fma);
 
-    array_offset_calculator<float, 2> diff_bias_prv(
-            (float *)(base_ptr + bp_offset_),
+    array_offset_calculator<float, 2> diff_bias_prv((float *)(wsp_.bp),
             omp_get_max_threads(),
             jcp.oc);
 
@@ -3007,7 +2984,7 @@ _execute_backward_weights_SDGt_W()
 
     // Reduce diff-weights
     {
-        float *output = (float *)(base_ptr + up_offset_);
+        float *output = (float *)(wsp_.up);
         size_t nelems = jcp.ic * jcp.oc * jcp.alpha * jcp.alpha;
         float *input_ptrs[num_th];
         for (int i = 0; i < num_th; i++) {

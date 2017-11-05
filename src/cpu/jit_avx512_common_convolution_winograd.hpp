@@ -28,14 +28,40 @@ namespace mkldnn {
 namespace impl {
 namespace cpu {
 
-namespace {
+namespace winograd {
+
+struct winograd_sp_t {
+    char *up = nullptr;
+    char *vp = nullptr;
+    char *mp = nullptr;
+    char *bp = nullptr;
+};
+
 inline void allocate_winograd_scratchpad(const jit_conv_winograd_conf_t &jcp,
-        size_t &up_offset, size_t &vp_offset,
-        size_t &mp_offset, size_t &bp_offset,
-        scratchpad_t *&winograd_scratchpad)
+        winograd_sp_t &wsp, scratchpad_t *&winograd_scratchpad)
 {
+    auto walloc = [](winograd_sp_t &wsp,
+            size_t up_size, size_t vp_size, size_t mp_size, size_t bp_size,
+            scratchpad_t *&winograd_scratchpad) {
+        /* Allocating memory buffers on a page boundary reduces TLB/page misses */
+        const size_t page_size = 2097152;
+        size_t up_offset = 0;
+        size_t vp_offset = utils::rnd_up(up_size, page_size);
+        size_t mp_offset = vp_offset + utils::rnd_up(vp_size, page_size);
+        size_t bp_offset = mp_offset + utils::rnd_up(mp_size, page_size);
+        winograd_scratchpad = create_scratchpad(bp_offset + bp_size);
+
+        wsp.up = winograd_scratchpad->get() + up_offset;
+        wsp.vp = winograd_scratchpad->get() + vp_offset;
+        wsp.mp = winograd_scratchpad->get() + mp_offset;
+        wsp.bp = winograd_scratchpad->get() + bp_offset;
+    };
+
+
     size_t up_size = 0, vp_size = 0, mp_size = 0, bp_size = 0;
-    if (jcp.sched_policy == WSCHED_DATA_W_SGDt) {
+
+    switch (jcp.sched_policy) {
+    case WSCHED_DATA_W_SGDt:
         up_size = jcp.alpha * jcp.alpha * jcp.ic * jcp.oc * sizeof(float);
         vp_size = omp_get_max_threads() * jcp.alpha * jcp.alpha
             * (jcp.nb_tile_block_ur * jcp.tile_block_ur + jcp.tile_4fma_padding)
@@ -43,7 +69,9 @@ inline void allocate_winograd_scratchpad(const jit_conv_winograd_conf_t &jcp,
         mp_size = omp_get_max_threads() * jcp.alpha * jcp.alpha
             * (jcp.nb_tile_block_ur * jcp.tile_block_ur + jcp.tile_4fma_padding)
             * jcp.oc * jcp.tile_4fma * sizeof(float);
-    } else if (jcp.sched_policy == WSCHED_DATA_W_S_GDot) {
+        walloc(wsp, up_size, vp_size, mp_size, bp_size, winograd_scratchpad);
+        break;
+    case WSCHED_DATA_W_S_GDot:
         up_size = jcp.alpha * jcp.alpha * jcp.ic * jcp.oc * sizeof(float);
         vp_size = jcp.alpha * jcp.alpha
             * (jcp.itiles * jcp.jtiles + jcp.tile_4fma_padding)
@@ -51,7 +79,9 @@ inline void allocate_winograd_scratchpad(const jit_conv_winograd_conf_t &jcp,
         mp_size = omp_get_max_threads() * jcp.alpha * jcp.alpha
             * (jcp.nb_tile_block_ur * jcp.tile_block_ur + jcp.tile_4fma_padding)
             * jcp.oc_simd_block * jcp.oc_block * jcp.tile_4fma * sizeof(float);
-    } else if (jcp.sched_policy == WSCHED_WEI_SDGt_W) {
+        walloc(wsp, up_size, vp_size, mp_size, bp_size, winograd_scratchpad);
+        break;
+    case WSCHED_WEI_SDGt_W:
         up_size = omp_get_max_threads() * jcp.alpha * jcp.alpha
             * jcp.ic * jcp.oc * sizeof(float);
         vp_size = omp_get_max_threads() * jcp.alpha * jcp.alpha
@@ -61,7 +91,9 @@ inline void allocate_winograd_scratchpad(const jit_conv_winograd_conf_t &jcp,
             * (jcp.nb_tile_block_ur * jcp.tile_block_ur + jcp.tile_4fma_padding)
             * jcp.oc * jcp.tile_4fma * sizeof(float);
         bp_size = omp_get_max_threads() * jcp.oc * sizeof(float);
-    } else if (jcp.sched_policy == WSCHED_WEI_SDGtWo) {
+        walloc(wsp, up_size, vp_size, mp_size, bp_size, winograd_scratchpad);
+        break;
+    case WSCHED_WEI_SDGtWo:
         up_size = omp_get_max_threads() * jcp.alpha * jcp.alpha
             * jcp.oc_block * jcp.oc_simd_block * jcp.ic * sizeof(float);
         vp_size = jcp.alpha * jcp.alpha
@@ -71,7 +103,9 @@ inline void allocate_winograd_scratchpad(const jit_conv_winograd_conf_t &jcp,
             * (jcp.nb_tile_block_ur * jcp.tile_block_ur + jcp.tile_4fma_padding)
             * jcp.oc_simd_block * jcp.oc_block * jcp.tile_4fma * sizeof(float);
         bp_size = omp_get_max_threads() * jcp.oc * sizeof(float);
-    } else if (jcp.sched_policy == WSCHED_WEI_S_D_Giot_W) {
+        walloc(wsp, up_size, vp_size, mp_size, bp_size, winograd_scratchpad);
+        break;
+    case WSCHED_WEI_S_D_Giot_W:
 #ifdef CONV_BWDW_GIOT_SCRATCHPAD_U_MEM
         up_size = omp_get_max_threads() * jcp.alpha * jcp.alpha
             * jcp.ic * jcp.oc * sizeof(float);
@@ -85,9 +119,9 @@ inline void allocate_winograd_scratchpad(const jit_conv_winograd_conf_t &jcp,
             * (jcp.itiles * jcp.jtiles + jcp.tile_4fma_padding)
             * jcp.oc * jcp.mb * sizeof(float);
         bp_size = omp_get_max_threads() * jcp.oc * sizeof(float);
-    } else {
-        assert(jcp.sched_policy == WSCHED_DATA_W_S_G_D
-                || jcp.sched_policy == WSCHED_WEI_S_D_G_W);
+        walloc(wsp, up_size, vp_size, mp_size, bp_size, winograd_scratchpad);
+        break;
+    case WSCHED_DATA_W_S_G_D:
         up_size = jcp.alpha * jcp.alpha * jcp.ic * jcp.oc * sizeof(float);
         vp_size = jcp.alpha * jcp.alpha
             * (jcp.itiles * jcp.jtiles + jcp.tile_4fma_padding)
@@ -95,18 +129,23 @@ inline void allocate_winograd_scratchpad(const jit_conv_winograd_conf_t &jcp,
         mp_size = jcp.alpha * jcp.alpha
             * (jcp.itiles * jcp.jtiles + jcp.tile_4fma_padding)
             * jcp.oc * jcp.mb * sizeof(float);
-        if (jcp.sched_policy == WSCHED_WEI_S_D_G_W)
-            bp_size = omp_get_max_threads() * jcp.oc * sizeof(float);
+        walloc(wsp, up_size, vp_size, mp_size, bp_size, winograd_scratchpad);
+        break;
+    case WSCHED_WEI_S_D_G_W:
+        up_size = jcp.alpha * jcp.alpha * jcp.ic * jcp.oc * sizeof(float);
+        vp_size = jcp.alpha * jcp.alpha
+            * (jcp.itiles * jcp.jtiles + jcp.tile_4fma_padding)
+            * jcp.ic * jcp.mb * sizeof(float);
+        mp_size = jcp.alpha * jcp.alpha
+            * (jcp.itiles * jcp.jtiles + jcp.tile_4fma_padding)
+            * jcp.oc * jcp.mb * sizeof(float);
+        bp_size = omp_get_max_threads() * jcp.oc * sizeof(float);
+        walloc(wsp, up_size, vp_size, mp_size, bp_size, winograd_scratchpad);
+        break;
+    default:
+        assert(!"Unknown Winograd schedule policy!");
+        break;
     }
-
-    /* Allocating memory buffers on a page boundary reduces TLB/page misses */
-    const size_t page_size = 2097152;
-    up_offset = 0;
-    vp_offset = utils::rnd_up(up_size, page_size);
-    mp_offset = vp_offset + utils::rnd_up(vp_size, page_size);
-    bp_offset = mp_offset + utils::rnd_up(mp_size, page_size);
-
-    winograd_scratchpad = create_scratchpad(bp_offset + bp_size);
 }
 }
 
@@ -170,17 +209,11 @@ struct _jit_avx512_common_convolution_winograd_fwd_t : public cpu_primitive_t {
         : cpu_primitive_t(&conf_, inputs, outputs)
         , conf_(*pd)
         , kernel_(nullptr)
-        , up_offset_(0)
-        , vp_offset_(0)
-        , mp_offset_(0)
         , scratchpad_buffer_(nullptr)
     {
         const auto &jcp = conf_.jcp_;
         kernel_ = new jit_avx512_common_conv_winograd_fwd_kernel_f32(conf_.jcp_);
-        size_t dummy_bp_offset;
-        allocate_winograd_scratchpad(
-                jcp, up_offset_, vp_offset_, mp_offset_,
-                dummy_bp_offset, scratchpad_buffer_);
+        allocate_winograd_scratchpad(jcp, wsp_, scratchpad_buffer_);
     }
 
     ~_jit_avx512_common_convolution_winograd_fwd_t()
@@ -205,13 +238,11 @@ private:
     void _execute_forward_W_SGDt();
 
     pd_t conf_;
+    winograd::winograd_sp_t wsp_;
     jit_avx512_common_conv_winograd_fwd_kernel_f32 *kernel_;
 
     // Buffer required to store transforms in the frequency domain
     scratchpad_t *scratchpad_buffer_;
-    size_t up_offset_;
-    size_t vp_offset_;
-    size_t mp_offset_;
 };
 
 using jit_avx512_common_convolution_winograd_fwd_t
@@ -274,17 +305,11 @@ struct jit_avx512_common_convolution_winograd_bwd_data_t
         : cpu_primitive_t(&conf_, inputs, outputs)
         , conf_(*pd)
         , kernel_(nullptr)
-        , up_offset_(0)
-        , vp_offset_(0)
-        , mp_offset_(0)
         , scratchpad_buffer_(nullptr)
     {
         const auto &jcp = conf_.jcp_;
         kernel_ = new jit_avx512_common_conv_winograd_bwd_data_kernel_f32(jcp);
-        size_t dummy_bp_offset;
-        allocate_winograd_scratchpad(
-                jcp, up_offset_, vp_offset_, mp_offset_,
-                dummy_bp_offset, scratchpad_buffer_);
+        allocate_winograd_scratchpad(jcp, wsp_, scratchpad_buffer_);
     }
 
     ~jit_avx512_common_convolution_winograd_bwd_data_t()
@@ -310,13 +335,11 @@ private:
     void _execute_backward_data_W_SGDt();
 
     pd_t conf_;
+    winograd::winograd_sp_t wsp_;
     jit_avx512_common_conv_winograd_bwd_data_kernel_f32 *kernel_;
 
     // Buffer required to store transforms in the frequency domain
     scratchpad_t *scratchpad_buffer_;
-    size_t up_offset_;
-    size_t vp_offset_;
-    size_t mp_offset_;
 };
 
 struct jit_avx512_common_convolution_winograd_bwd_weights_t
@@ -376,17 +399,12 @@ struct jit_avx512_common_convolution_winograd_bwd_weights_t
         : cpu_primitive_t(&conf_, inputs, outputs)
         , conf_(*pd)
         , kernel_(nullptr)
-        , up_offset_(0)
-        , vp_offset_(0)
-        , mp_offset_(0)
-        , bp_offset_(0)
         , scratchpad_buffer_(nullptr)
     {
         auto jcp = conf_.jcp_;
         kernel_ = new jit_avx512_common_conv_winograd_bwd_weights_kernel_f32(
                 conf_.jcp_);
-        allocate_winograd_scratchpad(
-                jcp, up_offset_, vp_offset_, mp_offset_, bp_offset_, scratchpad_buffer_);
+        allocate_winograd_scratchpad(jcp, wsp_, scratchpad_buffer_);
     }
 
     ~jit_avx512_common_convolution_winograd_bwd_weights_t()
@@ -414,14 +432,11 @@ private:
     void _execute_backward_weights_SDGt_W();
 
     pd_t conf_;
+    winograd::winograd_sp_t wsp_;
     jit_avx512_common_conv_winograd_bwd_weights_kernel_f32 *kernel_;
 
     // Buffer required to store transforms in the frequency domain
     scratchpad_t *scratchpad_buffer_;
-    size_t up_offset_;
-    size_t vp_offset_;
-    size_t mp_offset_;
-    size_t bp_offset_;
 };
 }
 }
