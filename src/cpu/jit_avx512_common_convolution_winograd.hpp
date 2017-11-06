@@ -35,6 +35,38 @@ struct winograd_sp_t {
     char *vp = nullptr;
     char *mp = nullptr;
     char *bp = nullptr;
+    size_t up_size = 0;
+    size_t vp_size = 0;
+    size_t mp_size = 0;
+    size_t bp_size = 0;
+    int nthreads = 0;
+};
+
+#define PAGE_SIZE (2 * 1024 * 1024)
+// TODO: move to utils
+// Alloc zero-filled pages
+class Mmap {
+public:
+	static char *alloc(size_t size)
+	{
+        const size_t page_size = PAGE_SIZE;
+		const size_t align = page_size - 1;
+		size = (size + align) & ~align;
+#ifdef MAP_ANONYMOUS
+		const int mode = MAP_PRIVATE | MAP_ANONYMOUS;
+#elif defined(MAP_ANON)
+		const int mode = MAP_PRIVATE | MAP_ANON;
+#endif
+		void *p = mmap(NULL, size, PROT_READ | PROT_WRITE, mode, -1, 0);
+
+		return (p == MAP_FAILED) ? nullptr : (char*)p;
+	}
+
+	static void free(char *p, size_t size)
+	{
+		if (p == 0) return;
+		munmap((void*)p, size);
+	}
 };
 
 inline void allocate_winograd_scratchpad(const jit_conv_winograd_conf_t &jcp,
@@ -42,9 +74,9 @@ inline void allocate_winograd_scratchpad(const jit_conv_winograd_conf_t &jcp,
 {
     auto walloc = [](winograd_sp_t &wsp,
             size_t up_size, size_t vp_size, size_t mp_size, size_t bp_size,
-            scratchpad_t *&winograd_scratchpad) {
+            scratchpad_t *&winograd_scratchpad, int nthreads) {
         /* Allocating memory buffers on a page boundary reduces TLB/page misses */
-        const size_t page_size = 2097152;
+        const size_t page_size = PAGE_SIZE;
         size_t up_offset = 0;
         size_t vp_offset = utils::rnd_up(up_size, page_size);
         size_t mp_offset = vp_offset + utils::rnd_up(vp_size, page_size);
@@ -55,71 +87,84 @@ inline void allocate_winograd_scratchpad(const jit_conv_winograd_conf_t &jcp,
         wsp.vp = winograd_scratchpad->get() + vp_offset;
         wsp.mp = winograd_scratchpad->get() + mp_offset;
         wsp.bp = winograd_scratchpad->get() + bp_offset;
+        wsp.up_size = up_size;
+        wsp.vp_size = vp_size;
+        wsp.mp_size = mp_size;
+        wsp.bp_size = bp_size;
+        wsp.nthreads = nthreads;
     };
 
-
     size_t up_size = 0, vp_size = 0, mp_size = 0, bp_size = 0;
+    int nthreads = omp_get_max_threads();
 
     switch (jcp.sched_policy) {
     case WSCHED_DATA_W_SGDt:
         up_size = jcp.alpha * jcp.alpha * jcp.ic * jcp.oc * sizeof(float);
-        vp_size = omp_get_max_threads() * jcp.alpha * jcp.alpha
+        vp_size = nthreads * jcp.alpha * jcp.alpha
             * (jcp.nb_tile_block_ur * jcp.tile_block_ur + jcp.tile_4fma_padding)
             * jcp.ic * jcp.tile_4fma * sizeof(float);
-        mp_size = omp_get_max_threads() * jcp.alpha * jcp.alpha
+        mp_size = nthreads * jcp.alpha * jcp.alpha
             * (jcp.nb_tile_block_ur * jcp.tile_block_ur + jcp.tile_4fma_padding)
             * jcp.oc * jcp.tile_4fma * sizeof(float);
-        walloc(wsp, up_size, vp_size, mp_size, bp_size, winograd_scratchpad);
+        walloc(wsp, up_size, vp_size, mp_size, bp_size,
+                winograd_scratchpad, nthreads);
         break;
     case WSCHED_DATA_W_S_GDot:
         up_size = jcp.alpha * jcp.alpha * jcp.ic * jcp.oc * sizeof(float);
         vp_size = jcp.alpha * jcp.alpha
             * (jcp.itiles * jcp.jtiles + jcp.tile_4fma_padding)
             * jcp.ic * jcp.mb * sizeof(float);
-        mp_size = omp_get_max_threads() * jcp.alpha * jcp.alpha
+        mp_size = nthreads * jcp.alpha * jcp.alpha
             * (jcp.nb_tile_block_ur * jcp.tile_block_ur + jcp.tile_4fma_padding)
             * jcp.oc_simd_block * jcp.oc_block * jcp.tile_4fma * sizeof(float);
-        walloc(wsp, up_size, vp_size, mp_size, bp_size, winograd_scratchpad);
+        walloc(wsp, up_size, vp_size, mp_size, bp_size,
+                winograd_scratchpad, nthreads);
         break;
     case WSCHED_WEI_SDGt_W:
-        up_size = omp_get_max_threads() * jcp.alpha * jcp.alpha
+        up_size = nthreads * jcp.alpha * jcp.alpha
             * jcp.ic * jcp.oc * sizeof(float);
-        vp_size = omp_get_max_threads() * jcp.alpha * jcp.alpha
+        vp_size = nthreads * jcp.alpha * jcp.alpha
             * (jcp.nb_tile_block_ur * jcp.tile_block_ur + jcp.tile_4fma_padding)
             * jcp.ic * jcp.tile_4fma * sizeof(float);
-        mp_size = omp_get_max_threads() * jcp.alpha * jcp.alpha
+        mp_size = nthreads * jcp.alpha * jcp.alpha
             * (jcp.nb_tile_block_ur * jcp.tile_block_ur + jcp.tile_4fma_padding)
             * jcp.oc * jcp.tile_4fma * sizeof(float);
-        bp_size = omp_get_max_threads() * jcp.oc * sizeof(float);
-        walloc(wsp, up_size, vp_size, mp_size, bp_size, winograd_scratchpad);
+        bp_size = nthreads * jcp.oc * sizeof(float);
+        walloc(wsp, up_size, vp_size, mp_size, bp_size,
+                winograd_scratchpad, nthreads);
         break;
     case WSCHED_WEI_SDGtWo:
-        up_size = omp_get_max_threads() * jcp.alpha * jcp.alpha
+        up_size = nthreads * jcp.alpha * jcp.alpha
             * jcp.oc_block * jcp.oc_simd_block * jcp.ic * sizeof(float);
         vp_size = jcp.alpha * jcp.alpha
             * (jcp.itiles * jcp.jtiles + jcp.tile_4fma_padding)
             * jcp.ic * jcp.mb * sizeof(float);
-        mp_size = omp_get_max_threads() * jcp.alpha * jcp.alpha
+        mp_size = nthreads * jcp.alpha * jcp.alpha
             * (jcp.nb_tile_block_ur * jcp.tile_block_ur + jcp.tile_4fma_padding)
             * jcp.oc_simd_block * jcp.oc_block * jcp.tile_4fma * sizeof(float);
-        bp_size = omp_get_max_threads() * jcp.oc * sizeof(float);
-        walloc(wsp, up_size, vp_size, mp_size, bp_size, winograd_scratchpad);
+        bp_size = nthreads * jcp.oc * sizeof(float);
+        walloc(wsp, up_size, vp_size, mp_size, bp_size,
+                winograd_scratchpad, nthreads);
         break;
     case WSCHED_WEI_S_D_Giot_W:
-#ifdef CONV_BWDW_GIOT_SCRATCHPAD_U_MEM
-        up_size = omp_get_max_threads() * jcp.alpha * jcp.alpha
-            * jcp.ic * jcp.oc * sizeof(float);
-#else
         up_size = 0;
-#endif
         vp_size = jcp.alpha * jcp.alpha
             * (jcp.itiles * jcp.jtiles + jcp.tile_4fma_padding)
             * jcp.ic * jcp.mb * sizeof(float);
         mp_size = jcp.alpha * jcp.alpha
             * (jcp.itiles * jcp.jtiles + jcp.tile_4fma_padding)
             * jcp.oc * jcp.mb * sizeof(float);
-        bp_size = omp_get_max_threads() * jcp.oc * sizeof(float);
-        walloc(wsp, up_size, vp_size, mp_size, bp_size, winograd_scratchpad);
+        bp_size = nthreads * jcp.oc * sizeof(float);
+        walloc(wsp, up_size, vp_size, mp_size, bp_size,
+                winograd_scratchpad, nthreads);
+
+        // Note: up is allocated outside of scratchpad:
+        // 1. mmap to ensure zero-filled
+        // 2. reused only by same layer, same footmark for each iteration
+        up_size = (nthreads + 1) * jcp.alpha * jcp.alpha
+            * jcp.ic * jcp.oc * sizeof(float);
+        wsp.up = (char*)Mmap::alloc(up_size);
+        wsp.up_size = up_size;
         break;
     case WSCHED_DATA_W_S_G_D:
         up_size = jcp.alpha * jcp.alpha * jcp.ic * jcp.oc * sizeof(float);
@@ -129,7 +174,8 @@ inline void allocate_winograd_scratchpad(const jit_conv_winograd_conf_t &jcp,
         mp_size = jcp.alpha * jcp.alpha
             * (jcp.itiles * jcp.jtiles + jcp.tile_4fma_padding)
             * jcp.oc * jcp.mb * sizeof(float);
-        walloc(wsp, up_size, vp_size, mp_size, bp_size, winograd_scratchpad);
+        walloc(wsp, up_size, vp_size, mp_size, bp_size,
+                winograd_scratchpad, nthreads);
         break;
     case WSCHED_WEI_S_D_G_W:
         up_size = jcp.alpha * jcp.alpha * jcp.ic * jcp.oc * sizeof(float);
@@ -139,8 +185,9 @@ inline void allocate_winograd_scratchpad(const jit_conv_winograd_conf_t &jcp,
         mp_size = jcp.alpha * jcp.alpha
             * (jcp.itiles * jcp.jtiles + jcp.tile_4fma_padding)
             * jcp.oc * jcp.mb * sizeof(float);
-        bp_size = omp_get_max_threads() * jcp.oc * sizeof(float);
-        walloc(wsp, up_size, vp_size, mp_size, bp_size, winograd_scratchpad);
+        bp_size = nthreads * jcp.oc * sizeof(float);
+        walloc(wsp, up_size, vp_size, mp_size, bp_size,
+                winograd_scratchpad, nthreads);
         break;
     default:
         assert(!"Unknown Winograd schedule policy!");
@@ -409,6 +456,9 @@ struct jit_avx512_common_convolution_winograd_bwd_weights_t
 
     ~jit_avx512_common_convolution_winograd_bwd_weights_t()
     {
+        auto jcp = conf_.jcp_;
+        if (jcp.sched_policy == WSCHED_WEI_S_D_Giot_W)
+            winograd::Mmap::free(wsp_.up, wsp_.up_size);
         delete kernel_;
         delete scratchpad_buffer_;
     };
