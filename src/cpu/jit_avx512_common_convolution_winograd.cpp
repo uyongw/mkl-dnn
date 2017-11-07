@@ -1889,7 +1889,7 @@ _execute_forward_W_S_GDot()
         }
     }
 
-#pragma omp parallel
+#pragma omp parallel num_threads(wsp_.nthreads)
 #pragma omp for collapse(2)
     for (int tile_block = 0; tile_block < jcp.tile_block; tile_block++) {
         for (int ofm1 = 0; ofm1 < jcp.nb_oc; ofm1++) {
@@ -1985,7 +1985,7 @@ _execute_forward_W_SGDt()
         }
     }
 
-#pragma omp parallel for
+#pragma omp parallel for num_threads(wsp_.nthreads)
     for (int tile_block = 0; tile_block < jcp.tile_block; tile_block++) {
         int ithr = omp_get_thread_num();
 
@@ -2233,7 +2233,7 @@ _execute_backward_data_W_SGDt()
         }
     }
 
-#pragma omp parallel for
+#pragma omp parallel for num_threads(wsp_.nthreads)
     for (int tile_block = 0; tile_block < jcp.tile_block; tile_block++) {
         int ithr = omp_get_thread_num();
 
@@ -2314,7 +2314,7 @@ _execute_backward_weights_S_D_G_W()
     const int simd_w = 16;
     const int alpha = 6;
     const auto &jcp = kernel_->jcp;
-    int nthreads;
+    int nthreads = wsp_.nthreads;
 
     auto diff_src_transform_bwd_weights_ver = jcp.ver == ver_4fma ?
             diff_src_transform_bwd_weights<true> :
@@ -2351,13 +2351,11 @@ _execute_backward_weights_S_D_G_W()
             jcp.ic_simd_block * jcp.tile_4fma);
 
     array_offset_calculator<float, 2> diff_bias_prv((float *)(wsp_.bp),
-            omp_get_max_threads(),
-            jcp.oc);
+            nthreads, jcp.oc);
 
-#pragma omp parallel
+#pragma omp parallel num_threads(wsp_.nthreads)
     {
         if (jcp.with_bias) {
-            nthreads = omp_get_num_threads();
 #pragma omp for nowait collapse(2)
             for (int ithr = 0; ithr < nthreads; ithr++) {
                 for (int ofm = 0; ofm < jcp.oc; ofm++) {
@@ -2655,6 +2653,7 @@ _execute_backward_weights_SDGtWo()
     const int simd_w = 16;
     const int alpha = 6;
     const auto &jcp = kernel_->jcp;
+    int nthreads = omp_get_max_threads();
 
     auto diff_src_transform_bwd_weights_ver_tile = jcp.ver == ver_4fma ?
             diff_src_transform_bwd_weights_tile<true> :
@@ -2690,19 +2689,16 @@ _execute_backward_weights_SDGtWo()
             jcp.ic_simd_block * jcp.tile_4fma);
 
     array_offset_calculator<float, 2> diff_bias_prv((float *)(wsp_.bp),
-            omp_get_max_threads(),
-            jcp.oc / jcp.nb_oc);
+            nthreads, jcp.oc / jcp.nb_oc);
 
     for (int ofm1 = 0; ofm1 < jcp.nb_oc; ++ofm1) {
         int th_counter = 0;
-        int num_th = 0;
 
 #pragma omp parallel
         {
             if (jcp.with_bias) {
-                int max_threads = omp_get_max_threads();
 #pragma omp for nowait collapse(2)
-                for (int ithr = 0; ithr < max_threads; ithr++) {
+                for (int ithr = 0; ithr < nthreads; ithr++) {
                     for (int ofm = 0; ofm < jcp.oc / jcp.nb_oc; ofm++) {
                         diff_bias_prv(ithr, ofm) = 0.0f;
                     }
@@ -2716,11 +2712,10 @@ _execute_backward_weights_SDGtWo()
             }
         }
 
-#pragma omp parallel firstprivate(th_counter)
+#pragma omp parallel firstprivate(th_counter) num_threads(wsp_.nthreads)
 #pragma omp for nowait collapse(1)
         for (int tile_block = 0; tile_block < jcp.tile_block; tile_block++) {
             int ithr = omp_get_thread_num();
-            num_th = omp_get_num_threads();
             for (int ifm1 = 0; ifm1 < jcp.nb_ic; ++ifm1) {
                 for (int ifm2 = 0; ifm2 < jcp.ic_block; ++ifm2) {
                     diff_src_transform_bwd_weights_ver_tile(tile_block, jcp,
@@ -2768,11 +2763,11 @@ _execute_backward_weights_SDGtWo()
         {
             float *output = (float *)(wsp_.up);
             size_t nelems = jcp.ic * (jcp.oc / jcp.nb_oc) * jcp.alpha * jcp.alpha;
-            float *input_ptrs[num_th];
-            for (int i = 0; i < num_th; i++) {
+            float *input_ptrs[nthreads];
+            for (int i = 0; i < nthreads; i++) {
                 input_ptrs[i] = output + nelems * i;
             }
-            array_sum(num_th, output, nelems, input_ptrs);
+            array_sum(nthreads, output, nelems, input_ptrs);
         }
 
 #pragma omp parallel
@@ -2792,7 +2787,7 @@ _execute_backward_weights_SDGtWo()
         if (jcp.with_bias) {
 #pragma omp for
             for (int ofm2 = 0; ofm2 < jcp.oc_block; ofm2++) {
-                for (int ithr = 0; ithr < num_th; ithr++) {
+                for (int ithr = 0; ithr < nthreads; ithr++) {
                     float* base_bias_ptr = &(diff_bias(ofm1, ofm2, 0));
                     float* base_bias_prv_ptr = &(diff_bias_prv(
                                 ithr * jcp.oc_block * simd_w + ofm2 * simd_w));
@@ -2812,6 +2807,7 @@ _execute_backward_weights_SDGt_W()
     const int simd_w = 16;
     const int alpha = 6;
     const auto &jcp = kernel_->jcp;
+    int nthreads = omp_get_max_threads();
 
     auto diff_src_transform_bwd_weights_ver_tile = jcp.ver == ver_4fma ?
             diff_src_transform_bwd_weights_tile<true> :
@@ -2852,8 +2848,7 @@ _execute_backward_weights_SDGt_W()
             jcp.ic_simd_block * jcp.tile_4fma);
 
     array_offset_calculator<float, 2> diff_bias_prv((float *)(wsp_.bp),
-            omp_get_max_threads(),
-            jcp.oc);
+            nthreads, jcp.oc);
 
 
 #pragma omp parallel
@@ -2876,12 +2871,10 @@ _execute_backward_weights_SDGt_W()
     }
 
     int th_counter = 0;
-    int num_th = 0;
-#pragma omp parallel firstprivate(th_counter)
+#pragma omp parallel firstprivate(th_counter) num_threads(wsp_.nthreads)
 #pragma omp for nowait collapse(1)
     for (int tile_block = 0; tile_block < jcp.tile_block; tile_block++) {
         int ithr = omp_get_thread_num();
-        num_th = omp_get_num_threads();
 
         for (int ifm1 = 0; ifm1 < jcp.nb_ic; ++ifm1) {
             for (int ifm2 = 0; ifm2 < jcp.ic_block; ++ifm2) {
@@ -2938,11 +2931,11 @@ _execute_backward_weights_SDGt_W()
     {
         float *output = (float *)(wsp_.up);
         size_t nelems = jcp.ic * jcp.oc * jcp.alpha * jcp.alpha;
-        float *input_ptrs[num_th];
-        for (int i = 0; i < num_th; i++) {
+        float *input_ptrs[nthreads];
+        for (int i = 0; i < nthreads; i++) {
             input_ptrs[i] = output + nelems * i;
         }
-        array_sum(num_th, output, nelems, input_ptrs);
+        array_sum(nthreads, output, nelems, input_ptrs);
     }
 
 #pragma omp parallel
@@ -2964,7 +2957,7 @@ _execute_backward_weights_SDGt_W()
     if (jcp.with_bias) {
 #pragma omp for
         for (int ofm1 = 0; ofm1 < jcp.oc / simd_w; ofm1++) {
-            for (int ithr = 0; ithr < num_th; ithr++) {
+            for (int ithr = 0; ithr < nthreads; ithr++) {
                 float* base_bias_ptr = &(diff_bias(ofm1, 0));
                 float* base_bias_prv_ptr = &(diff_bias_prv(
                             ithr * jcp.oc + ofm1 * simd_w));
