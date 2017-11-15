@@ -177,6 +177,10 @@ inline unsigned int get_cache_size(int level, bool per_core = true){
         return 0;
 }
 
+inline unsigned int get_num_processors(){
+    return cpu.num_processors ? cpu.num_processors : 1;
+}
+
 }
 
 // TODO (Roma): move all_same to a more appropriate location
