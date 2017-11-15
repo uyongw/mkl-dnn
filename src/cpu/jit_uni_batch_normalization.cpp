@@ -37,7 +37,11 @@ namespace {
 using namespace Xbyak;
 namespace barrier = simple_barrier;
 
+#define  BN_BLOCKING_ALWAYS    (0)
+#define  BN_BLOCKING_ENABLE    (1)
+
 typedef float data_t;
+static long g_llc_size = 0;
 
 template <cpu_isa_t isa>
 struct jit_bnorm_t: public jit_generator {
@@ -778,6 +782,14 @@ struct uni_bnorm_driver_t: public c_compatible {
             for (int i = 0; i < num_barriers; ++i)
                 barrier::ctx_init(&barriers_[i]);
         }
+        if (BN_BLOCKING_ENABLE && !g_llc_size) {
+            g_llc_size = get_cache_size(3, false) * get_num_processors();
+            if (g_llc_size > 40*1024*1024)
+                g_llc_size -= 16*1024*1024;
+#if defined(VERBOSE_INFO)
+            fprintf(stderr, "[exec]llc_size: %ld\n", g_llc_size);
+#endif
+        }
     }
     ~uni_bnorm_driver_t() { free(buf_); free(barriers_); }
 
@@ -789,6 +801,18 @@ struct uni_bnorm_driver_t: public c_compatible {
         size_t H = bdesc_->H();
         size_t W = bdesc_->W();
         size_t img_size = C * H * W;
+
+#if defined(VERBOSE_INFO)
+        if(ithr==0)
+            fprintf(stderr, "[exec]bn: NCHW(%ld,%ld,%ld,%ld)\n", N, C, H, W);
+#endif
+        if(canBlockEnabled()) {
+#if defined(VERBOSE_INFO)
+        if(ithr==0)
+            fprintf(stderr, "[exec]bn exec block path enabled\n");
+#endif
+            return exec_block(ithr, nthr, src, diff_src, dst,diff_dst, scale_shift, diff_scale_shift, mean, var);
+        }
 
         typename jit_bnorm_t<isa>::call_params_t p;
 
@@ -836,6 +860,118 @@ struct uni_bnorm_driver_t: public c_compatible {
         if (p.soff_max != 0 && p.coff_max != 0) ker_(&p);
     }
 
+    inline bool canBlockEnabled() {
+        size_t N = bdesc_->MB();
+        size_t C = bdesc_->C();
+        size_t H = bdesc_->H();
+        size_t W = bdesc_->W();
+        if(BN_BLOCKING_ALWAYS || (BN_BLOCKING_ENABLE && (bdesc_->is_fwd() ? N*C*H*W*sizeof(data_t) : (N*C*H*W*sizeof(data_t)) << 1) >= g_llc_size)) {
+            return true;
+        }
+        return false;
+    }
+
+    // div whole task accord to C(16c) into blocks, futher div each block accord to N to available core#.
+    void exec_block(int ithr, int nthr, const data_t *src, data_t *diff_src,
+            data_t *dst, const data_t *diff_dst, const data_t *scale_shift,
+            data_t *diff_scale_shift, const data_t *mean, const data_t *var) {
+        size_t N = bdesc_->MB();
+        size_t C = bdesc_->C();
+        size_t H = bdesc_->H();
+        size_t W = bdesc_->W();
+        size_t img_size = C * H * W;
+
+        typename jit_bnorm_t<isa>::call_params_t p;
+
+        p.eps = bdesc_->desc()->batch_norm_epsilon;
+        p.one = 1.;
+        p.spat_size = H*W;
+        p.chan_size = 1. * N * p.spat_size; // all batch. all value of same channel in mini-batch, non 16 C mode.
+
+        size_t C_blks = C / simd_w;
+
+        int C_ithr{0}, C_nthr{0}, N_ithr{0}, N_nthr{0};
+        size_t C_blk_s{0}, C_blk_e{0}, N_s{0}, N_e{0};
+        int c_bksPerIter, iters;
+
+        inCache_computing_balance(nthr, C_blks, c_bksPerIter, iters);
+#if defined(VERBOSE_INFO)
+        if(ithr==0) fprintf(stderr, "[exec] c_bksPerIter:%d iters:%d \n", c_bksPerIter,iters);
+#endif
+
+        //balance in each iter.
+        thread_balance_for_block(ithr, nthr, c_bksPerIter, C_ithr, C_nthr, C_blk_s, C_blk_e,
+            N_ithr, N_nthr, N_s, N_e);
+        p.N_ithr = N_ithr;
+        p.N_nthr = N_nthr;
+
+        int it, last_iter_blks = C_blks - (iters - 1) * c_bksPerIter;
+        //replace C_blk_s with global C_blk_s
+        size_t global_C_blk_s;
+        size_t global_barriers_per_iter = C_nthr;
+        for(it=0; it<iters; it++) { // each thread need work for each blocks, in each block it need to sync.
+            if (it == iters-1 && iters > 1) {
+                C_blk_s = C_blk_e = N_s = N_e = 0;
+                thread_balance_for_block(ithr, nthr, last_iter_blks, C_ithr, C_nthr, C_blk_s, C_blk_e,
+                    N_ithr, N_nthr, N_s, N_e);
+                p.N_ithr = N_ithr;
+                p.N_nthr = N_nthr;
+            }
+
+#if defined(VERBOSE_INFO)
+            if(ithr==0) {
+                fprintf(stderr, "[exec] nthr: %d	N_nthr:%d  C_nthr:%d \n",nthr,N_nthr,C_nthr);
+                fprintf(stderr, "[exec] C_ithr:%d C_nthr:%d C_blk_s:%ld C_blk_e:%ld N_ithr:%d N_nthr:%d N_s:%ld N_e:%ld\n",
+                    C_ithr, C_nthr, C_blk_s, C_blk_e,	 N_ithr, N_nthr, N_s, N_e);
+            }
+#endif
+
+            global_C_blk_s = (C_blk_s == -1) ? -1 : it * c_bksPerIter + C_blk_s;
+
+            //follow two arg are encoded into coff_max and soff_max, then to control when to finish the computing.
+            size_t C_blks_thr = C_blk_e - C_blk_s;// C num of this thread.
+            size_t N_thr = N_e - N_s; // N num of this thread.
+            size_t coff_base = global_C_blk_s * simd_w; // channel idx begin non 16C mode.
+            size_t soff_base = global_C_blk_s * p.spat_size * simd_w + N_s * img_size; // spat offset. non 16c mode.
+
+            p.coff_max = C_blks_thr * simd_w; // channel idx, non 16c mode, from  0.
+            p.mean = (use_tmp_stats_ ? sbuf_ : mean) + coff_base;
+            p.var = (use_tmp_stats_ ? sbuf_ + C : var) + coff_base;
+            p.scale_shift = scale_shift + coff_base;
+            p.diff_scale_shift = (use_tmp_diff_scale_shift_
+                ? pbuf_ : diff_scale_shift) + coff_base;
+
+            p.soff_max = N_thr * img_size; // spat offset., NCHW, non  16c mode.
+            p.src = src + soff_base;
+            p.dst = dst + soff_base;
+            p.diff_src = diff_src + soff_base;
+            p.diff_dst = diff_dst + soff_base;
+
+            p.mb_stride_Bc = img_size - p.coff_max * p.spat_size; // how many buffer there to stride to next n
+
+            p.rbuf1 = rbuf_ + (global_C_blk_s * N_nthr + p.N_ithr * C_blks_thr) * simd_w;
+            p.rbuf2 = p.rbuf1 + C * N_nthr; //end buffer.
+
+            p.barrier = barriers_ + C_ithr + it  *global_barriers_per_iter; // a barrie for each  C thread.  two 16c may share a single barrier. as they are computed at same time.
+            if (p.soff_max != 0 && p.coff_max != 0) ker_(&p);
+        }
+    }
+
+    /* how many iterations are needed, and how many jobs each iteration do. */
+    inline void inCache_computing_balance(int nthr, size_t C_blks, int &c_blksPerIter, int &iters) {
+        const size_t N = bdesc_->MB();
+        const size_t H = bdesc_->H();
+        const size_t W = bdesc_->W();
+        size_t sizeBasicBlock = bdesc_->is_fwd() ? N * H * W * simd_w * sizeof(data_t) : (N * H * W * simd_w * sizeof(data_t)) << 1;
+
+        c_blksPerIter = g_llc_size / sizeBasicBlock;
+
+        if(c_blksPerIter == 0) c_blksPerIter = 1;
+        if(c_blksPerIter > C_blks) c_blksPerIter = C_blks;
+
+        iters = (C_blks + c_blksPerIter - 1) / c_blksPerIter;
+    }
+
 private:
     inline void thread_balance(int ithr, int nthr, size_t C_blks, int &C_ithr,
             int &C_nthr, size_t &C_blk_s, size_t &C_blk_e, int &N_ithr,
@@ -850,6 +986,31 @@ private:
         } else {
             C_nthr = math::gcd(nthr, (int)C_blks);
             N_nthr = nstl::min((int)N, nthr / C_nthr);
+            if (ithr < C_nthr * N_nthr) {
+                N_ithr = ithr % N_nthr;
+                C_ithr = ithr / N_nthr;
+                balance211(C_blks, C_nthr, C_ithr, C_blk_s, C_blk_e);
+                balance211(N, N_nthr, N_ithr, N_s, N_e);
+            } else {
+                N_ithr = C_ithr = -ithr;
+                N_s = N_e = C_blk_s = C_blk_e = -1;
+            }
+        }
+    }
+
+    inline void thread_balance_for_block(int ithr, int nthr, size_t C_blks, int &C_ithr,
+            int &C_nthr, size_t &C_blk_s, size_t &C_blk_e, int &N_ithr,
+            int &N_nthr, size_t &N_s, size_t &N_e) const {
+        const size_t N = bdesc_->MB();
+        if (nthr <= (int)C_blks || !syncable_) {
+            C_ithr = ithr; C_nthr = nthr;
+            N_ithr = 0; N_nthr = 1;
+            N_s = 0; N_e = N;
+            C_ithr = ithr; C_nthr = nthr;
+            balance211(C_blks, C_nthr, C_ithr, C_blk_s, C_blk_e);
+        } else {
+            N_nthr = nstl::min((int)N, nthr);
+            C_nthr = nstl::min((int)C_blks, nthr / N_nthr);
             if (ithr < C_nthr * N_nthr) {
                 N_ithr = ithr % N_nthr;
                 C_ithr = ithr / N_nthr;
