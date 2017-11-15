@@ -59,6 +59,9 @@ struct jit_bnorm_t: public jit_generator {
         const data_t *rbuf1, *rbuf2;
         barrier::ctx_t *barrier;
     };
+    /*used when fuse with ReLU layer.*/
+    unsigned with_relu;
+    double negative_slope;
 
     /* cpu specific part */
     using Vmm = typename utils::conditional3<isa == sse42, Xmm,
@@ -497,8 +500,33 @@ struct jit_bnorm_t: public jit_generator {
                 uni_vmovups(vgamma, gamma_ptr());
                 uni_vmovups(vbeta, beta_ptr());
             }
+            /* prepare the zero and theta register. :  vmm5*/
+            Vmm  vmm_slope;
+            if(with_relu) {
+                if(avx512_common) {
+                    assert(unroll_blocks<=4); 
+                    assert(unroll_regs<=4);
+                }
+                if(!avx512_common) {
+                    assert(unroll_blocks<=1); 
+                    assert(unroll_regs<=1);
+                }
+                if(avx512_common){
+                    vmm_slope=Vmm(5);
+                    /*here need use reg_ctr(reg_tmp) to swap, make sure its safe to use reg_tmp*/
+                    mov(reg_ctr, float2int(negative_slope));
+                    movq(Xmm(5), reg_ctr);
+                    uni_vbroadcastss(vmm_slope, Xmm(5));
+                } else {
+                     vmm_slope=Vmm(2);
+                     /*here need use reg_ctr(reg_tmp) to swap, make sure its safe to use reg_tmp*/
+                     mov(reg_ctr, float2int(negative_slope));
+                     movq(Xmm(2), reg_ctr);
+                     uni_vbroadcastss(vmm_slope, Xmm(2));
+                }
 
-            spat_loop(spat_size, unroll_blocks, unroll_regs,
+            }
+            spat_loop(spat_size, unroll_blocks, unroll_regs/*4:  loop 4 time on vmm0~vmm3.*/,
                     [](size_t base_reg) {UNUSED(base_reg);},
                     [=](size_t base_reg, size_t i) {
                         Vmm v = Vmm(base_reg);
@@ -514,8 +542,90 @@ struct jit_bnorm_t: public jit_generator {
                         if (bdesc_->use_scaleshift()) {
                             uni_vfmadd213ps(v, vgamma, vbeta);
                         }
-                        uni_vmovntps(vmmword[reg_dst + reg_soff + offt],
-                            v);
+                        /*******************************************
+                          *here do Relu logic on forward path:
+                         avx512:
+                            1. register needed. 1const reg(slope) + (2vmm additional registers for each unloop)*(unroll_regs)
+                                1+2*4=9; 
+                              a. BN current, 20~31 but 30 alreay fix used in BN, 
+                              b. BN loop unroll alreay used: 1(one reg each time * 4(unroll_regs)= 4regs 
+                              c. So ReLU logic can use from 4~19.(16)
+                              d. reg mapping:
+                                const:                     
+                                vmm_slope: for mul,  vmm(5)
+
+                                for each unloop: 
+                                vmm_tmp:  for mul, and store the mul result:vmm 6 8 10 12((base_reg+3)*2)
+                                mask: for cmp, store the cmp result:        vmm 7 9 11 13((base_reg+3)*2+1)
+
+                                additional: 
+                                tmp/mask: vmm14 is used to swap. as vmm(0) is needed in sse42 path.
+                            2. how many loop can unroll. 4
+                          avx2/sse4_2
+                            1. register needed. 1const reg(slope) + (2vmm additional registers for each unloop)*(unroll_regs)
+                                1+2*1=3; 
+                              a. BN current, 5~15 fix used in BN, only 0~4 case use
+                              b. BN loop unroll alreay used: 1(one reg each time * 1(unroll_regs)= 1regs 
+                              c. So ReLU logic can use from 1~4.(4)
+                              d. reg mapping:
+                                const:                     
+                                vmm_slope: for mul,  vmm(2)
+
+                                for each unloop: 
+                                vmm_tmp:  for mul, and store the mul result:vmm 3((base_reg+3))
+                                mask: for cmp, store the cmp result:        vmm 4((base_reg+3)+1)
+
+                                additional: 
+                                tmp/mask: vmm1 is used to swap. as vmm(0) is needed in sse42 path.
+                            2. how many loop can unroll. 1                          
+                            3. input: v   out:xmm_tmp
+                          ********************************************/
+                        if(with_relu) {
+                            unsigned char _cmp_gt_os = isa == avx512_common ? 14 : 6;
+                            Vmm  vmm_tmp, vmm_mask; 
+                            if(avx512_common) {
+                              vmm_tmp=Vmm((base_reg+3)*2);
+                              vmm_mask=Vmm((base_reg+3)*2 + 1);
+                            } else {
+                                vmm_tmp=Vmm((base_reg+3));
+                                vmm_mask=Vmm((base_reg+3)+ 1);
+                            }
+                            if (isa == sse42) {
+                                Vmm src=v; 
+                                if(base_reg==0) { /*resv xmm(0), as mask need to be xmm0*/
+                                    src=Vmm(1);
+                                    movups(src, v);
+                                }
+                                Vmm mask = Vmm(0);
+                                
+                                uni_vpxor(vmm_tmp, vmm_tmp, vmm_tmp);
+                                movups(mask, src);
+                                cmpps(mask, vmm_tmp, _cmp_gt_os);
+                                movups(vmm_tmp, src);
+                                mulps(vmm_tmp, vmm_slope);
+                                blendvps(vmm_tmp, src); 
+
+                            } else {
+                            
+                                uni_vpxor(vmm_tmp, vmm_tmp, vmm_tmp);
+                                if (isa == avx2) {
+                                    vcmpgtps(vmm_mask, v, vmm_tmp);
+                                    vmulps(vmm_tmp, v, vmm_slope); 
+                                    vblendvps(vmm_tmp, vmm_tmp, v, vmm_mask);
+                                } else {
+                                    Opmask k_mask = Opmask(1);
+                                    vcmpps(k_mask, v, vmm_tmp, _cmp_gt_os);
+                                    vmulps(vmm_tmp, v, vmm_slope); 
+                                    vblendmps(vmm_tmp | k_mask, vmm_tmp, v);
+                                }
+                            }
+                            /*Relu end.*/
+                            /*write out*/
+                            uni_vmovntps(vmmword[reg_dst + reg_soff + offt], vmm_tmp); 
+                        } else  {
+                            uni_vmovntps(vmmword[reg_dst + reg_soff + offt],
+                                v);
+                        }
                     },
                     [](size_t base_reg) {UNUSED(base_reg);});
 
@@ -729,6 +839,9 @@ struct jit_bnorm_t: public jit_generator {
     }
 
     jit_bnorm_t(const batch_normalization_pd_t *bdesc): bdesc_(bdesc) {
+        with_relu=bdesc_->desc()->with_relu;
+        negative_slope=bdesc_->desc()->negative_slope;
+        //fprintf(stderr,  "<jit_bnorm_t>:with_relu:%d negative_slope:%f\n",with_relu,negative_slope);
         static_assert(isa == sse42 || isa == avx2 || isa == avx512_common
                 || isa == avx512_mic, "unsupported isa");
 
@@ -790,6 +903,8 @@ struct uni_bnorm_driver_t: public c_compatible {
             fprintf(stderr, "[exec]llc_size: %ld\n", g_llc_size);
 #endif
         }
+        with_relu=bdesc_->desc()->with_relu; 
+        negative_slope=bdesc_->desc()->negative_slope; 
     }
     ~uni_bnorm_driver_t() { free(buf_); free(barriers_); }
 
@@ -1033,6 +1148,11 @@ private:
 
     data_t *buf_, *sbuf_, *rbuf_, *pbuf_;
     barrier::ctx_t *barriers_;
+
+    public:
+    /*used when fused with Relu*/
+    unsigned with_relu;
+    double negative_slope;
 };
 
 }

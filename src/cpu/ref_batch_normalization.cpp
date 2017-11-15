@@ -26,6 +26,10 @@ namespace mkldnn {
 namespace impl {
 namespace cpu {
 
+template <typename T, typename A> inline T relu_fwd(T s, A alpha) {
+    return s > 0 ? s : static_cast<T>(s * alpha);
+}
+
 template <impl::data_type_t data_type>
 void ref_batch_normalization_fwd_t<data_type>::execute_forward() {
     auto src = reinterpret_cast<const data_t *>(this->input_memory(0));
@@ -91,6 +95,10 @@ void ref_batch_normalization_fwd_t<data_type>::execute_forward() {
                 auto sv_off = scaleshift_d.off(1, c);
                 dst[d_off] = scaleshift[sm_off] * (src[d_off] - v_mean) * sqrt_variance +
                     scaleshift[sv_off];
+                /*ReLU fused?*/
+                if(with_relu) {
+                    dst[d_off]=relu_fwd(dst[d_off],negative_slope);
+                }
             }
         } else {
             for (int n = 0; n < N; ++n)
@@ -98,6 +106,10 @@ void ref_batch_normalization_fwd_t<data_type>::execute_forward() {
             for (int w = 0; w < W; ++w) {
                 auto d_off = data_d.off(n,c,h,w);
                 dst[d_off] = (src[d_off] - v_mean) * sqrt_variance;
+                /*ReLU fused?*/
+                if(with_relu) {
+                    dst[d_off]=relu_fwd(dst[d_off],negative_slope);
+                }
             }
         }
 
