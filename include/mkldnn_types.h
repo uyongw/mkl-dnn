@@ -603,6 +603,10 @@ typedef struct {
     /** Batch normalization epsilon parameter. */
     double batch_norm_epsilon;
     unsigned flags;
+    /** Used when fuse with ReLU layer, save the ReLU layser info.****/
+    unsigned with_relu;
+    double negative_slope;
+
 } mkldnn_batch_normalization_desc_t;
 
 /** A descriptor of an inner product operation. */

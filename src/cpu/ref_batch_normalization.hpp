@@ -63,7 +63,10 @@ struct ref_batch_normalization_fwd_t: public cpu_primitive_t {
 
     ref_batch_normalization_fwd_t(const pd_t *pd, const input_vector &inputs,
             const output_vector &outputs)
-        : cpu_primitive_t(&conf_, inputs, outputs), conf_(*pd) {}
+        : cpu_primitive_t(&conf_, inputs, outputs), conf_(*pd) {
+        with_relu=pd->desc()->with_relu;
+        negative_slope=pd->desc()->negative_slope;
+    }
     typedef typename prec_traits<data_type>::type data_t;
 
     virtual void execute(event_t *e) {
@@ -74,6 +77,10 @@ struct ref_batch_normalization_fwd_t: public cpu_primitive_t {
 private:
     void execute_forward();
     pd_t conf_;
+    
+    /*used when fuse with ReLU layer.*/
+    unsigned with_relu;
+    double negative_slope;
 };
 
 template <impl::data_type_t data_type>

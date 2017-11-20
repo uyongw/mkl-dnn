@@ -130,6 +130,24 @@ class Cpu {
 		}
 	}
 	static const unsigned int max_number_cache_levels = 10;
+	void setNumProcessors()
+	{
+		bool processors[64] = {0};
+		#pragma omp parallel
+		{
+			unsigned int regs[4], id;
+			getCpuidEx(0xb, 0x1, regs);
+			id = regs[3] >> (regs[0] & 0xf);
+			#pragma omp critical
+			{
+				if (id < 64 && !processors[id])
+				{
+					processors[id] = true;
+					num_processors++;
+				}
+			}
+		}
+	}
 #define value_from_bits(val, base, end) ((val << (sizeof(val)*8-end-1)) >> (sizeof(val)*8-end+base-1))
 	void setCacheHierarchy()
 	{
@@ -176,6 +194,7 @@ public:
 	unsigned int data_cache_size[max_number_cache_levels];
 	unsigned int cores_sharing_data_cache[max_number_cache_levels];
 	unsigned int data_cache_levels;
+	unsigned int num_processors;
 
 	/*
 		data[] = { eax, ebx, ecx, edx }
@@ -346,8 +365,11 @@ public:
 			if (data[2] & (1U << 0)) type_ |= tPREFETCHWT1;
 		}
 		setFamily();
-		if ((type_ & tINTEL) == tINTEL)
+		if ((type_ & tINTEL) == tINTEL) {
 			setCacheHierarchy();
+			num_processors = 0;
+			setNumProcessors();
+		}
 	}
 	void putFamily() const
 	{

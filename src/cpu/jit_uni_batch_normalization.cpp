@@ -37,7 +37,11 @@ namespace {
 using namespace Xbyak;
 namespace barrier = simple_barrier;
 
+#define  BN_BLOCKING_ALWAYS    (0)
+#define  BN_BLOCKING_ENABLE    (1)
+
 typedef float data_t;
+static long g_llc_size = 0;
 
 template <cpu_isa_t isa>
 struct jit_bnorm_t: public jit_generator {
@@ -55,6 +59,9 @@ struct jit_bnorm_t: public jit_generator {
         const data_t *rbuf1, *rbuf2;
         barrier::ctx_t *barrier;
     };
+    /*used when fuse with ReLU layer.*/
+    unsigned with_relu;
+    double negative_slope;
 
     /* cpu specific part */
     using Vmm = typename utils::conditional3<isa == sse42, Xmm,
@@ -493,8 +500,33 @@ struct jit_bnorm_t: public jit_generator {
                 uni_vmovups(vgamma, gamma_ptr());
                 uni_vmovups(vbeta, beta_ptr());
             }
+            /* prepare the zero and theta register. :  vmm5*/
+            Vmm  vmm_slope;
+            if(with_relu) {
+                if(avx512_common) {
+                    assert(unroll_blocks<=4); 
+                    assert(unroll_regs<=4);
+                }
+                if(!avx512_common) {
+                    assert(unroll_blocks<=1); 
+                    assert(unroll_regs<=1);
+                }
+                if(avx512_common){
+                    vmm_slope=Vmm(5);
+                    /*here need use reg_ctr(reg_tmp) to swap, make sure its safe to use reg_tmp*/
+                    mov(reg_ctr, float2int(negative_slope));
+                    movq(Xmm(5), reg_ctr);
+                    uni_vbroadcastss(vmm_slope, Xmm(5));
+                } else {
+                     vmm_slope=Vmm(2);
+                     /*here need use reg_ctr(reg_tmp) to swap, make sure its safe to use reg_tmp*/
+                     mov(reg_ctr, float2int(negative_slope));
+                     movq(Xmm(2), reg_ctr);
+                     uni_vbroadcastss(vmm_slope, Xmm(2));
+                }
 
-            spat_loop(spat_size, unroll_blocks, unroll_regs,
+            }
+            spat_loop(spat_size, unroll_blocks, unroll_regs/*4:  loop 4 time on vmm0~vmm3.*/,
                     [](size_t base_reg) {UNUSED(base_reg);},
                     [=](size_t base_reg, size_t i) {
                         Vmm v = Vmm(base_reg);
@@ -510,8 +542,90 @@ struct jit_bnorm_t: public jit_generator {
                         if (bdesc_->use_scaleshift()) {
                             uni_vfmadd213ps(v, vgamma, vbeta);
                         }
-                        uni_vmovntps(vmmword[reg_dst + reg_soff + offt],
-                            v);
+                        /*******************************************
+                          *here do Relu logic on forward path:
+                         avx512:
+                            1. register needed. 1const reg(slope) + (2vmm additional registers for each unloop)*(unroll_regs)
+                                1+2*4=9; 
+                              a. BN current, 20~31 but 30 alreay fix used in BN, 
+                              b. BN loop unroll alreay used: 1(one reg each time * 4(unroll_regs)= 4regs 
+                              c. So ReLU logic can use from 4~19.(16)
+                              d. reg mapping:
+                                const:                     
+                                vmm_slope: for mul,  vmm(5)
+
+                                for each unloop: 
+                                vmm_tmp:  for mul, and store the mul result:vmm 6 8 10 12((base_reg+3)*2)
+                                mask: for cmp, store the cmp result:        vmm 7 9 11 13((base_reg+3)*2+1)
+
+                                additional: 
+                                tmp/mask: vmm14 is used to swap. as vmm(0) is needed in sse42 path.
+                            2. how many loop can unroll. 4
+                          avx2/sse4_2
+                            1. register needed. 1const reg(slope) + (2vmm additional registers for each unloop)*(unroll_regs)
+                                1+2*1=3; 
+                              a. BN current, 5~15 fix used in BN, only 0~4 case use
+                              b. BN loop unroll alreay used: 1(one reg each time * 1(unroll_regs)= 1regs 
+                              c. So ReLU logic can use from 1~4.(4)
+                              d. reg mapping:
+                                const:                     
+                                vmm_slope: for mul,  vmm(2)
+
+                                for each unloop: 
+                                vmm_tmp:  for mul, and store the mul result:vmm 3((base_reg+3))
+                                mask: for cmp, store the cmp result:        vmm 4((base_reg+3)+1)
+
+                                additional: 
+                                tmp/mask: vmm1 is used to swap. as vmm(0) is needed in sse42 path.
+                            2. how many loop can unroll. 1                          
+                            3. input: v   out:xmm_tmp
+                          ********************************************/
+                        if(with_relu) {
+                            unsigned char _cmp_gt_os = isa == avx512_common ? 14 : 6;
+                            Vmm  vmm_tmp, vmm_mask; 
+                            if(avx512_common) {
+                              vmm_tmp=Vmm((base_reg+3)*2);
+                              vmm_mask=Vmm((base_reg+3)*2 + 1);
+                            } else {
+                                vmm_tmp=Vmm((base_reg+3));
+                                vmm_mask=Vmm((base_reg+3)+ 1);
+                            }
+                            if (isa == sse42) {
+                                Vmm src=v; 
+                                if(base_reg==0) { /*resv xmm(0), as mask need to be xmm0*/
+                                    src=Vmm(1);
+                                    movups(src, v);
+                                }
+                                Vmm mask = Vmm(0);
+                                
+                                uni_vpxor(vmm_tmp, vmm_tmp, vmm_tmp);
+                                movups(mask, src);
+                                cmpps(mask, vmm_tmp, _cmp_gt_os);
+                                movups(vmm_tmp, src);
+                                mulps(vmm_tmp, vmm_slope);
+                                blendvps(vmm_tmp, src); 
+
+                            } else {
+                            
+                                uni_vpxor(vmm_tmp, vmm_tmp, vmm_tmp);
+                                if (isa == avx2) {
+                                    vcmpgtps(vmm_mask, v, vmm_tmp);
+                                    vmulps(vmm_tmp, v, vmm_slope); 
+                                    vblendvps(vmm_tmp, vmm_tmp, v, vmm_mask);
+                                } else {
+                                    Opmask k_mask = Opmask(1);
+                                    vcmpps(k_mask, v, vmm_tmp, _cmp_gt_os);
+                                    vmulps(vmm_tmp, v, vmm_slope); 
+                                    vblendmps(vmm_tmp | k_mask, vmm_tmp, v);
+                                }
+                            }
+                            /*Relu end.*/
+                            /*write out*/
+                            uni_vmovntps(vmmword[reg_dst + reg_soff + offt], vmm_tmp); 
+                        } else  {
+                            uni_vmovntps(vmmword[reg_dst + reg_soff + offt],
+                                v);
+                        }
                     },
                     [](size_t base_reg) {UNUSED(base_reg);});
 
@@ -725,6 +839,9 @@ struct jit_bnorm_t: public jit_generator {
     }
 
     jit_bnorm_t(const batch_normalization_pd_t *bdesc): bdesc_(bdesc) {
+        with_relu=bdesc_->desc()->with_relu;
+        negative_slope=bdesc_->desc()->negative_slope;
+        //fprintf(stderr,  "<jit_bnorm_t>:with_relu:%d negative_slope:%f\n",with_relu,negative_slope);
         static_assert(isa == sse42 || isa == avx2 || isa == avx512_common
                 || isa == avx512_mic, "unsupported isa");
 
@@ -778,6 +895,16 @@ struct uni_bnorm_driver_t: public c_compatible {
             for (int i = 0; i < num_barriers; ++i)
                 barrier::ctx_init(&barriers_[i]);
         }
+        if (BN_BLOCKING_ENABLE && !g_llc_size) {
+            g_llc_size = get_cache_size(3, false) * get_num_processors();
+            if (g_llc_size > 40*1024*1024)
+                g_llc_size -= 16*1024*1024;
+#if defined(VERBOSE_INFO)
+            fprintf(stderr, "[exec]llc_size: %ld\n", g_llc_size);
+#endif
+        }
+        with_relu=bdesc_->desc()->with_relu; 
+        negative_slope=bdesc_->desc()->negative_slope; 
     }
     ~uni_bnorm_driver_t() { free(buf_); free(barriers_); }
 
@@ -789,6 +916,18 @@ struct uni_bnorm_driver_t: public c_compatible {
         size_t H = bdesc_->H();
         size_t W = bdesc_->W();
         size_t img_size = C * H * W;
+
+#if defined(VERBOSE_INFO)
+        if(ithr==0)
+            fprintf(stderr, "[exec]bn: NCHW(%ld,%ld,%ld,%ld)\n", N, C, H, W);
+#endif
+        if(canBlockEnabled()) {
+#if defined(VERBOSE_INFO)
+        if(ithr==0)
+            fprintf(stderr, "[exec]bn exec block path enabled\n");
+#endif
+            return exec_block(ithr, nthr, src, diff_src, dst,diff_dst, scale_shift, diff_scale_shift, mean, var);
+        }
 
         typename jit_bnorm_t<isa>::call_params_t p;
 
@@ -836,6 +975,118 @@ struct uni_bnorm_driver_t: public c_compatible {
         if (p.soff_max != 0 && p.coff_max != 0) ker_(&p);
     }
 
+    inline bool canBlockEnabled() {
+        size_t N = bdesc_->MB();
+        size_t C = bdesc_->C();
+        size_t H = bdesc_->H();
+        size_t W = bdesc_->W();
+        if(BN_BLOCKING_ALWAYS || (BN_BLOCKING_ENABLE && (bdesc_->is_fwd() ? N*C*H*W*sizeof(data_t) : (N*C*H*W*sizeof(data_t)) << 1) >= g_llc_size)) {
+            return true;
+        }
+        return false;
+    }
+
+    // div whole task accord to C(16c) into blocks, futher div each block accord to N to available core#.
+    void exec_block(int ithr, int nthr, const data_t *src, data_t *diff_src,
+            data_t *dst, const data_t *diff_dst, const data_t *scale_shift,
+            data_t *diff_scale_shift, const data_t *mean, const data_t *var) {
+        size_t N = bdesc_->MB();
+        size_t C = bdesc_->C();
+        size_t H = bdesc_->H();
+        size_t W = bdesc_->W();
+        size_t img_size = C * H * W;
+
+        typename jit_bnorm_t<isa>::call_params_t p;
+
+        p.eps = bdesc_->desc()->batch_norm_epsilon;
+        p.one = 1.;
+        p.spat_size = H*W;
+        p.chan_size = 1. * N * p.spat_size; // all batch. all value of same channel in mini-batch, non 16 C mode.
+
+        size_t C_blks = C / simd_w;
+
+        int C_ithr{0}, C_nthr{0}, N_ithr{0}, N_nthr{0};
+        size_t C_blk_s{0}, C_blk_e{0}, N_s{0}, N_e{0};
+        int c_bksPerIter, iters;
+
+        inCache_computing_balance(nthr, C_blks, c_bksPerIter, iters);
+#if defined(VERBOSE_INFO)
+        if(ithr==0) fprintf(stderr, "[exec] c_bksPerIter:%d iters:%d \n", c_bksPerIter,iters);
+#endif
+
+        //balance in each iter.
+        thread_balance_for_block(ithr, nthr, c_bksPerIter, C_ithr, C_nthr, C_blk_s, C_blk_e,
+            N_ithr, N_nthr, N_s, N_e);
+        p.N_ithr = N_ithr;
+        p.N_nthr = N_nthr;
+
+        int it, last_iter_blks = C_blks - (iters - 1) * c_bksPerIter;
+        //replace C_blk_s with global C_blk_s
+        size_t global_C_blk_s;
+        size_t global_barriers_per_iter = C_nthr;
+        for(it=0; it<iters; it++) { // each thread need work for each blocks, in each block it need to sync.
+            if (it == iters-1 && iters > 1) {
+                C_blk_s = C_blk_e = N_s = N_e = 0;
+                thread_balance_for_block(ithr, nthr, last_iter_blks, C_ithr, C_nthr, C_blk_s, C_blk_e,
+                    N_ithr, N_nthr, N_s, N_e);
+                p.N_ithr = N_ithr;
+                p.N_nthr = N_nthr;
+            }
+
+#if defined(VERBOSE_INFO)
+            if(ithr==0) {
+                fprintf(stderr, "[exec] nthr: %d	N_nthr:%d  C_nthr:%d \n",nthr,N_nthr,C_nthr);
+                fprintf(stderr, "[exec] C_ithr:%d C_nthr:%d C_blk_s:%ld C_blk_e:%ld N_ithr:%d N_nthr:%d N_s:%ld N_e:%ld\n",
+                    C_ithr, C_nthr, C_blk_s, C_blk_e,	 N_ithr, N_nthr, N_s, N_e);
+            }
+#endif
+
+            global_C_blk_s = (C_blk_s == -1) ? -1 : it * c_bksPerIter + C_blk_s;
+
+            //follow two arg are encoded into coff_max and soff_max, then to control when to finish the computing.
+            size_t C_blks_thr = C_blk_e - C_blk_s;// C num of this thread.
+            size_t N_thr = N_e - N_s; // N num of this thread.
+            size_t coff_base = global_C_blk_s * simd_w; // channel idx begin non 16C mode.
+            size_t soff_base = global_C_blk_s * p.spat_size * simd_w + N_s * img_size; // spat offset. non 16c mode.
+
+            p.coff_max = C_blks_thr * simd_w; // channel idx, non 16c mode, from  0.
+            p.mean = (use_tmp_stats_ ? sbuf_ : mean) + coff_base;
+            p.var = (use_tmp_stats_ ? sbuf_ + C : var) + coff_base;
+            p.scale_shift = scale_shift + coff_base;
+            p.diff_scale_shift = (use_tmp_diff_scale_shift_
+                ? pbuf_ : diff_scale_shift) + coff_base;
+
+            p.soff_max = N_thr * img_size; // spat offset., NCHW, non  16c mode.
+            p.src = src + soff_base;
+            p.dst = dst + soff_base;
+            p.diff_src = diff_src + soff_base;
+            p.diff_dst = diff_dst + soff_base;
+
+            p.mb_stride_Bc = img_size - p.coff_max * p.spat_size; // how many buffer there to stride to next n
+
+            p.rbuf1 = rbuf_ + (global_C_blk_s * N_nthr + p.N_ithr * C_blks_thr) * simd_w;
+            p.rbuf2 = p.rbuf1 + C * N_nthr; //end buffer.
+
+            p.barrier = barriers_ + C_ithr + it  *global_barriers_per_iter; // a barrie for each  C thread.  two 16c may share a single barrier. as they are computed at same time.
+            if (p.soff_max != 0 && p.coff_max != 0) ker_(&p);
+        }
+    }
+
+    /* how many iterations are needed, and how many jobs each iteration do. */
+    inline void inCache_computing_balance(int nthr, size_t C_blks, int &c_blksPerIter, int &iters) {
+        const size_t N = bdesc_->MB();
+        const size_t H = bdesc_->H();
+        const size_t W = bdesc_->W();
+        size_t sizeBasicBlock = bdesc_->is_fwd() ? N * H * W * simd_w * sizeof(data_t) : (N * H * W * simd_w * sizeof(data_t)) << 1;
+
+        c_blksPerIter = g_llc_size / sizeBasicBlock;
+
+        if(c_blksPerIter == 0) c_blksPerIter = 1;
+        if(c_blksPerIter > C_blks) c_blksPerIter = C_blks;
+
+        iters = (C_blks + c_blksPerIter - 1) / c_blksPerIter;
+    }
+
 private:
     inline void thread_balance(int ithr, int nthr, size_t C_blks, int &C_ithr,
             int &C_nthr, size_t &C_blk_s, size_t &C_blk_e, int &N_ithr,
@@ -862,6 +1113,31 @@ private:
         }
     }
 
+    inline void thread_balance_for_block(int ithr, int nthr, size_t C_blks, int &C_ithr,
+            int &C_nthr, size_t &C_blk_s, size_t &C_blk_e, int &N_ithr,
+            int &N_nthr, size_t &N_s, size_t &N_e) const {
+        const size_t N = bdesc_->MB();
+        if (nthr <= (int)C_blks || !syncable_) {
+            C_ithr = ithr; C_nthr = nthr;
+            N_ithr = 0; N_nthr = 1;
+            N_s = 0; N_e = N;
+            C_ithr = ithr; C_nthr = nthr;
+            balance211(C_blks, C_nthr, C_ithr, C_blk_s, C_blk_e);
+        } else {
+            N_nthr = nstl::min((int)N, nthr);
+            C_nthr = nstl::min((int)C_blks, nthr / N_nthr);
+            if (ithr < C_nthr * N_nthr) {
+                N_ithr = ithr % N_nthr;
+                C_ithr = ithr / N_nthr;
+                balance211(C_blks, C_nthr, C_ithr, C_blk_s, C_blk_e);
+                balance211(N, N_nthr, N_ithr, N_s, N_e);
+            } else {
+                N_ithr = C_ithr = -ithr;
+                N_s = N_e = C_blk_s = C_blk_e = -1;
+            }
+        }
+    }
+
     const int simd_w = isa == sse42 ? 8 :
         cpu_isa_traits<isa>::vlen / sizeof(data_t);
 
@@ -872,6 +1148,11 @@ private:
 
     data_t *buf_, *sbuf_, *rbuf_, *pbuf_;
     barrier::ctx_t *barriers_;
+
+    public:
+    /*used when fused with Relu*/
+    unsigned with_relu;
+    double negative_slope;
 };
 
 }
