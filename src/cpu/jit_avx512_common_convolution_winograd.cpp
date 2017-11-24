@@ -1628,15 +1628,17 @@ void diff_weights_transform_bwd_weights(jit_conv_winograd_conf_t conv,
     }
 }
 
-// Sum to the first buffer array
 void array_sum(int num_arrs, float *output,
         size_t nelems, float *input_ptrs[], bool reduce_to_first = true)
 {
-    const size_t block_size = 16 * 1024 / sizeof(float);
+    int nthreads = omp_get_max_threads();
+    size_t block_size = (nelems / nthreads / 64) & ~15;
+    if (block_size < 32) block_size = 32;
+
     const size_t blocks_number = nelems / block_size;
     const size_t tail = nelems % block_size;
 
-#pragma omp parallel
+#pragma omp parallel num_threads(nthreads) proc_bind(close)
     {
         const int ithr = omp_get_thread_num();
         const int nthr = omp_get_num_threads();
@@ -1647,13 +1649,13 @@ void array_sum(int num_arrs, float *output,
             size_t start_e = nb * block_size;
             size_t end_e = start_e + block_size;
             if (!reduce_to_first) {
-#               pragma simd
+#pragma omp simd
                 for (size_t e = start_e; e < end_e; e++) {
                     output[e] = input_ptrs[0][e];
                 }
             }
             for (int a = 1; a < num_arrs; a++) {
-#               pragma simd
+#pragma omp simd
                 for (size_t e = start_e; e < end_e; e++) {
                     output[e] += input_ptrs[a][e];
                 }
@@ -1664,13 +1666,13 @@ void array_sum(int num_arrs, float *output,
             size_t start_e = nelems - tail;
             size_t end_e = nelems;
             if (!reduce_to_first) {
-#               pragma simd
+#pragma omp simd
                 for (size_t e = start_e; e < end_e; e++) {
                     output[e] = input_ptrs[0][e];
                 }
             }
             for (int a = 1; a < num_arrs; a++) {
-#               pragma simd
+#pragma omp simd
                 for (size_t e = start_e; e < end_e; e++) {
                     output[e] += input_ptrs[a][e];
                 }
