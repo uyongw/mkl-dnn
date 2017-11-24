@@ -1169,7 +1169,8 @@ void diff_src_transform_bwd_data_tile(int tile_block,
 
 template <bool ver_4fma>
 void diff_src_transform_bwd_weights(int image, jit_conv_winograd_conf_t conv,
-        float *inp, float *tinp, void (*transpose_4fma_ker)(float *, float *))
+        float *inp, float *tinp, void (*transpose_4fma_ker)(float *, float *),
+        bool streamout = true)
 {
     const int simd_w = 16;
     const int alpha = 6;
@@ -1257,11 +1258,12 @@ void diff_src_transform_bwd_weights(int image, jit_conv_winograd_conf_t conv,
             } else {
                 for (int j = 0; j < conv.alpha; j++) {
                     for (int i = 0; i < conv.alpha; i++) {
-                        stream_ps(
-                                &(output(0, j, i,
-                                        tile_block, 0,
-                                        nb_tile_block_ur, tile_block_ur, 0)),
-                                Iw[j][i]);
+                        if (streamout)
+                            stream_ps(&(output(0, j, i, tile_block, 0,
+                                nb_tile_block_ur, tile_block_ur, 0)), Iw[j][i]);
+                        else
+                            store_ps(&(output(0, j, i, tile_block, 0,
+                                nb_tile_block_ur, tile_block_ur, 0)), Iw[j][i]);
 
                     }
                 }
@@ -2355,6 +2357,10 @@ _execute_backward_weights_S_D_G_W()
     array_offset_calculator<float, 2> diff_bias_prv((float *)(wsp_->bp()),
             nthreads, jcp.oc);
 
+
+    bool V_streamout = jcp.ntiles * jcp.ic * alpha * alpha * sizeof(float)
+        > 2.1 * LLC_data_size ? true : false;
+
 #pragma omp parallel num_threads(wsp_->nthreads)
     {
         if (jcp.with_bias) {
@@ -2381,7 +2387,7 @@ _execute_backward_weights_S_D_G_W()
                             &(diff_src(img, ifm1 * jcp.ic_block + ifm2,
                                     0, 0, 0)),
                             &(V(ifm1, 0, 0, 0, ifm2, 0, 0, 0)),
-                            kernel_->transpose_4fma_ker);
+                            kernel_->transpose_4fma_ker, V_streamout);
                 }
             }
         }
@@ -2547,7 +2553,7 @@ _execute_backward_weights_S_D_Giot_W()
                         &(diff_src(img, ifm1 * jcp.ic_block + ifm2,
                                 0, 0, 0)),
                         &(V(ifm1, 0, 0, 0, ifm2, 0, 0, 0)),
-                        kernel_->transpose_4fma_ker);
+                        kernel_->transpose_4fma_ker, true);
             }
         }
     }
