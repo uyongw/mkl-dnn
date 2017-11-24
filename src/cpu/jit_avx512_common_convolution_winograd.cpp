@@ -641,7 +641,8 @@ void src_transform_fwd(int image, jit_conv_winograd_conf_t conv,
     }
 }
 
-void weight_transform_fwd(jit_conv_winograd_conf_t conv, float *wp, float *twp)
+void weight_transform_fwd(jit_conv_winograd_conf_t conv, float *wp, float *twp,
+        bool streamout = true)
 {
     const int simd_w = 16;
     const int alpha = 6;
@@ -679,9 +680,10 @@ void weight_transform_fwd(jit_conv_winograd_conf_t conv, float *wp, float *twp)
     for (int j = 0; j < alpha; j++) {
         for (int i = 0; i < alpha; i++) {
             for (int v1 = 0; v1 < simd_w; v1++) {
-#pragma omp simd
-                for (int v2 = 0; v2 < simd_w; v2++) {
-                    output(0, j, i, 0, 0, 0, v1, v2) = Fw[j][i][v1][v2];
+                if (streamout) {
+                    stream_ps(&output(0, j, i, 0, 0, 0, v1, 0), Fw[j][i][v1]);
+                } else {
+                    store_ps(&output(0, j, i, 0, 0, 0, v1, 0), Fw[j][i][v1]);
                 }
             }
         }
@@ -997,7 +999,7 @@ void diff_dst_transform_bwd_data_tile(int tile_block,
 }
 
 void weight_transform_bwd_data(jit_conv_winograd_conf_t conv,
-        float *wp, float *twp)
+        float *wp, float *twp, bool streamout = true)
 {
     const int simd_w = 16;
     const int alpha = 6;
@@ -1031,9 +1033,10 @@ void weight_transform_bwd_data(jit_conv_winograd_conf_t conv,
     for (int j = 0; j < alpha; j++) {
         for (int i = 0; i < alpha; i++) {
             for (int v = 0; v < 16; v++) {
-#pragma omp simd
-                for (int k = 0; k < 16; k++) {
-                    output(j, i, 0, 0, 0, 0, v, k) = Fw[j][i][v][k];
+                if (streamout) {
+                    stream_ps(&output(j, i, 0, 0, 0, 0, v, 0), Fw[j][i][v]);
+                } else {
+                    store_ps(&output(j, i, 0, 0, 0, 0, v, 0), Fw[j][i][v]);
                 }
             }
         }
@@ -1983,7 +1986,7 @@ _execute_forward_W_SGDt()
                             &(weights(ofm1 * jcp.oc_block + ofm2,
                                     ifm1 * jcp.ic_block + ifm2,
                                     0, 0, 0, 0)),
-                            &(U(ofm1, 0, 0, ifm1, ofm2, ifm2, 0, 0)));
+                            &(U(ofm1, 0, 0, ifm1, ofm2, ifm2, 0, 0)), false);
                 }
             }
         }
@@ -2231,7 +2234,7 @@ _execute_backward_data_W_SGDt()
                             &(weights(ofm1 * jcp.oc_block + ofm2,
                                     ifm1 * jcp.ic_block + ifm2,
                                     0, 0, 0, 0)),
-                            &(U(0, 0, ifm1, ofm1, ifm2, ofm2, 0, 0)));
+                            &(U(0, 0, ifm1, ofm1, ifm2, ofm2, 0, 0)), false);
                 }
             }
         }
