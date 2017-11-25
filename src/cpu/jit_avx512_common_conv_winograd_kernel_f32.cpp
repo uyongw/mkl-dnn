@@ -297,10 +297,9 @@ void _jit_avx512_common_conv_winograd_data_kernel_f32::gemm_loop_generate(
             // We write the results in destination
             for (int tile = 0; tile < jcp.dimN_reg_block; tile++) {
                 Zmm zmm(jcp.zmm_start + tile);
-                // In W_SGD or W_S_GD, output will be reused. -wxy
+                // In W_SGD output will be reused. -wxy
                 if (jcp.dimK_nb_block == 1
-                        && (jcp.sched_policy == WSCHED_DATA_W_S_G_D
-                            || jcp.sched_policy == WSCHED_DATA_W_SGit_D))
+                        && jcp.sched_policy == WSCHED_DATA_W_S_G_D)
                     vmovntps(zword[reg_dstC + 64 * tile], zmm);
                 else
                     vmovups(zword[reg_dstC + 64 * tile], zmm);

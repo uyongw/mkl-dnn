@@ -1881,7 +1881,7 @@ _execute_forward_W_S_G_D_n()
          * jcp.ic * alpha * alpha * sizeof(float)
          > 2.1 * LLC_data_size ? true : false);
 
-    assert(tg_i == 1);
+    assert(jcp.tg_i == 1);
 
     omp_set_nested(1);
 #pragma omp parallel num_threads(nb_tg) proc_bind(spread)
@@ -2275,7 +2275,7 @@ _execute_backward_data_W_S_G_D_n()
          * jcp.oc * alpha * alpha * sizeof(float)
          > 2.1 * LLC_data_size ? true : false);
 
-    assert(tg_o == 1);
+    assert(jcp.tg_o == 1);
 
     omp_set_nested(1);
 #pragma omp parallel num_threads(nb_tg) proc_bind(spread)
