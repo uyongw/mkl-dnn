@@ -51,6 +51,7 @@ enum {
    o: nb_oc
    t: tile_block
    e: element in tile
+   n: nested thread team
 
    Note: 'i' and 'o' are omited if
    i. not comblined with t or
@@ -63,6 +64,7 @@ enum {
 
     /* Forward & backward-data */
     WSCHED_DATA_W_S_G_D,
+    WSCHED_DATA_W_S_G_D_n,
     WSCHED_DATA_W_SGit_D,
     WSCHED_DATA_W_S_GDot,
     WSCHED_DATA_W_SGDt,
@@ -132,6 +134,10 @@ struct jit_conv_winograd_conf_t : public jit_conv_conf_t {
     int tile_block;
     int tile_block_ur;
     int nb_tile_block_ur;
+
+    int tg_i;
+    int tg_o;
+    int tg_t;
 
     bool double_buffering;
     int zmm_start;

@@ -300,9 +300,7 @@ void _jit_avx512_common_conv_winograd_data_kernel_f32::gemm_loop_generate(
                 // In W_SGD or W_S_GD, output will be reused. -wxy
                 if (jcp.dimK_nb_block == 1
                         && (jcp.sched_policy == WSCHED_DATA_W_S_G_D
-                            || jcp.sched_policy == WSCHED_DATA_W_SGit_D)
-                        && (jcp.dimN * jcp.dimM * jcp.alpha * jcp.alpha
-                            * sizeof(float) > 2 * LLC_data_size))
+                            || jcp.sched_policy == WSCHED_DATA_W_SGit_D))
                     vmovntps(zword[reg_dstC + 64 * tile], zmm);
                 else
                     vmovups(zword[reg_dstC + 64 * tile], zmm);
@@ -657,10 +655,8 @@ bool __set_wsched_DATA_W_S_G_D(jit_conv_winograd_conf_t &jcp,
         int (*get_thread_number)(jit_conv_winograd_conf_t &jcp,
             int tile_block, int nb_ic, int nb_oc))
 {
-    //const float C1_min = .1, C1_0 = .7, C1_max = 1.;
     const float C1_min = .1, C1_0 = .7, C1_max = .9;
-    //const float C2_min = .1, C2_0 = .7, C2_max = 1.2;
-    const float C2_min = .1, C2_0 = .7, C2_max = 1.8;
+    const float C2_min = .2, C2_0 = .7, C2_max = 1.2;
     const int T0 = 12, T_min = 2;
 
     int ic_simd_block = 16, ic_block = 0, nb_ic = 0;
@@ -679,8 +675,8 @@ bool __set_wsched_DATA_W_S_G_D(jit_conv_winograd_conf_t &jcp,
         jcp.nb_oc = nb_oc;
     };
 
-    for (float C1 = C1_0, C2 = C2_0; C1 >= C1_min, C2 >= C2_min;
-            C1 -= .02, C2 -= .02) {
+    for (float C2 = C2_0; C2 >= C2_min; C2 -= .02) {
+    for (float C1 = C1_0; C1 >= C1_min; C1 -= .02) {
     for (int T = T0; T >= T_min; --T) {
     if (reduce_ic) {
         FOREACH_INC(tile_block, 1, jcp.ntiles / min_tile_block_ur, jcp.ntiles) {
@@ -728,9 +724,101 @@ bool __set_wsched_DATA_W_S_G_D(jit_conv_winograd_conf_t &jcp,
                 }
             }
         }}}}
-    }}}
+    }}}}
 
     return false;
+}
+
+status_t set_wsched_DATA_W_S_G_D_n(jit_conv_winograd_conf_t &jcp)
+{
+    auto get_gemm_size = [](jit_conv_winograd_conf_t &jcp,
+            int tile_block, int tile_block_ur, int nb_ic, int nb_oc)->int {
+        return (jcp.oc / nb_oc) * tile_block_ur * sizeof(float)
+            + (jcp.ic / nb_ic) * tile_block_ur * sizeof(float)
+            + (jcp.ic / nb_ic) * (jcp.oc / nb_oc) * sizeof(float);
+    };
+
+    if (jcp.dimK == jcp.ic) { // FWD
+        auto get_thread_size = [](jit_conv_winograd_conf_t &jcp,
+                int tile_block, int nb_ic, int nb_oc)->int {
+            return (jcp.oc / nb_oc) * (jcp.ntiles / tile_block) * sizeof(float)
+                + jcp.ic * (jcp.ntiles / tile_block) * sizeof(float)
+                + jcp.ic * (jcp.oc / nb_oc) * sizeof(float);
+        };
+        auto get_thread_number = [](jit_conv_winograd_conf_t &jcp,
+                int tile_block, int nb_ic, int nb_oc) {
+            return jcp.tg_t * jcp.tg_i * jcp.tg_o
+                * tile_block * nb_oc * jcp.alpha * jcp.alpha;
+        };
+
+        int tg_t = 1, tg_i = 1, tg_o = 1;
+        if (jcp.oc > jcp.ntiles) tg_o = 2;
+        else tg_t = 2;
+
+        int mb = jcp.mb, ntiles = jcp.ntiles;
+        jcp.mb = mb / tg_t;
+        jcp.ntiles = ntiles / tg_t;
+
+        int ic = jcp.ic, oc = jcp.oc;
+        jcp.ic = ic / tg_i;
+        jcp.oc = oc / tg_o;
+
+        if (__set_wsched_DATA_W_S_G_D(jcp, true, 12, jcp.nb_reg,
+                    get_thread_size, get_gemm_size, get_thread_number)) {
+            jcp.tg_t = tg_t;
+            jcp.tg_i = tg_i;
+            jcp.tg_o = tg_o;
+
+            jcp.dimN_reg_block = jcp.tile_block_ur;
+            jcp.dimN_block = jcp.nb_tile_block_ur;
+            jcp.dimN_nb_block = jcp.tile_block;
+            jcp.dimK_reg_block = jcp.ic_simd_block;
+            jcp.dimK_block = jcp.ic_block;
+            jcp.dimK_nb_block = jcp.nb_ic;
+            jcp.dimM_simd_block = jcp.oc_simd_block;
+            jcp.dimM_block = jcp.oc_block;
+            jcp.dimM_nb_block = jcp.nb_oc;
+            jcp.sched_policy = WSCHED_DATA_W_S_G_D_n;
+            printf("set DATA_W_S_G_D_n\n");
+
+            return status::success;
+        } else {
+            jcp.mb = mb;
+            jcp.ntiles = ntiles;
+            jcp.ic = ic;
+            jcp.oc = oc;
+        }
+    } else { // BWD-Data
+        assert(jcp.dimK == jcp.oc);
+        auto get_thread_size = [](jit_conv_winograd_conf_t &jcp,
+                int tile_block, int nb_ic, int nb_oc)->int {
+            return jcp.oc * (jcp.ntiles / tile_block) * sizeof(float)
+                + (jcp.ic / nb_ic) * (jcp.ntiles / tile_block) * sizeof(float)
+                + (jcp.ic / nb_ic) * jcp.oc * sizeof(float);
+        };
+        auto get_thread_number = [](jit_conv_winograd_conf_t &jcp,
+                int tile_block, int nb_ic, int nb_oc) {
+            return tile_block * nb_ic;
+        };
+
+        if (__set_wsched_DATA_W_S_G_D(jcp, false, 12, jcp.nb_reg,
+                    get_thread_size, get_gemm_size, get_thread_number)) {
+            jcp.dimN_reg_block = jcp.tile_block_ur;
+            jcp.dimN_block = jcp.nb_tile_block_ur;
+            jcp.dimN_nb_block = jcp.tile_block;
+            jcp.dimK_reg_block = jcp.oc_simd_block;
+            jcp.dimK_block = jcp.oc_block;
+            jcp.dimK_nb_block = jcp.nb_oc;
+            jcp.dimM_simd_block = jcp.ic_simd_block;
+            jcp.dimM_block = jcp.ic_block;
+            jcp.dimM_nb_block = jcp.nb_ic;
+            jcp.sched_policy = WSCHED_DATA_W_S_G_D_n;
+            printf("set DATA_W_S_G_D_n\n");
+            return status::success;
+        }
+    }
+
+    return status::unimplemented;
 }
 
 status_t set_wsched_DATA_W_S_G_D(jit_conv_winograd_conf_t &jcp)
@@ -828,12 +916,18 @@ status_t _jit_avx512_common_conv_winograd_data_kernel_f32::init_conf_kernel(
     // For bwd-weight compatibility
     jcp.tile_4fma = 1;
 
+    // Thread team grouping
+    jcp.tg_i = 1;
+    jcp.tg_o = 1;
+    jcp.tg_t = 1;
+
     jcp.sched_policy = WSCHED_INVALID;
     status_t res;
     if ((res = set_wsched_DATA_W_SGDt(jcp))   == status::success ||
         (res = set_wsched_DATA_W_S_GDot(jcp))  == status::success ||
         (res = set_wsched_DATA_W_SGit_D(jcp))  == status::success ||
-        (res = set_wsched_DATA_W_S_G_D(jcp)) == status::success)
+        (res = set_wsched_DATA_W_S_G_D(jcp)) == status::success ||
+        (res = set_wsched_DATA_W_S_G_D_n(jcp)) == status::success)
         ;
 
     return res;
@@ -1755,6 +1849,10 @@ status_t jit_avx512_common_conv_winograd_bwd_weights_kernel_f32::init_conf(
     else
         jcp.zmm_start = jcp.ver == ver_4fma ? 4 : 1;
     jcp.nb_reg = 32 - jcp.zmm_start;
+
+    jcp.tg_i = 1;
+    jcp.tg_o = 1;
+    jcp.tg_t = 1;
 
     status_t res;
     jcp.sched_policy = WSCHED_INVALID;

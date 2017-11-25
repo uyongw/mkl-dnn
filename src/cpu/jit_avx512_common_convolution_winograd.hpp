@@ -155,6 +155,7 @@ inline void allocate_winograd_workspace(const jit_conv_winograd_conf_t &jcp,
 {
     size_t up_size = 0, vp_size = 0, mp_size = 0, bp_size = 0;
     int nthreads = omp_get_max_threads();
+    int nb_tg = jcp.tg_i * jcp.tg_o * jcp.tg_t;
 
     switch (jcp.sched_policy) {
     case WSCHED_DATA_W_SGDt:
@@ -215,11 +216,13 @@ inline void allocate_winograd_workspace(const jit_conv_winograd_conf_t &jcp,
                 WSP_U_PRIVATE);
         break;
     case WSCHED_DATA_W_S_G_D:
-        up_size = jcp.alpha * jcp.alpha * jcp.ic * jcp.oc * sizeof(float);
-        vp_size = jcp.alpha * jcp.alpha
+    case WSCHED_DATA_W_S_G_D_n:
+        nthreads /= nb_tg;
+        up_size = nb_tg * jcp.alpha * jcp.alpha * jcp.ic * jcp.oc * sizeof(float);
+        vp_size = nb_tg * jcp.alpha * jcp.alpha
             * (jcp.itiles * jcp.jtiles + jcp.tile_4fma_padding)
             * jcp.ic * jcp.mb * sizeof(float);
-        mp_size = jcp.alpha * jcp.alpha
+        mp_size = nb_tg * jcp.alpha * jcp.alpha
             * (jcp.itiles * jcp.jtiles + jcp.tile_4fma_padding)
             * jcp.oc * jcp.mb * sizeof(float);
         wsp = new workspace(up_size, vp_size, mp_size, bp_size, nthreads);
@@ -327,6 +330,7 @@ private:
     void execute_forward();
 
     void _execute_forward_W_S_G_D();
+    void _execute_forward_W_S_G_D_n();
     void _execute_forward_W_S_GDot();
     void _execute_forward_W_SGDt();
 
