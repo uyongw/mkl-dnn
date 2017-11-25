@@ -331,7 +331,6 @@ private:
 
     void _execute_forward_W_S_G_D();
     void _execute_forward_W_S_G_D_n();
-    void _execute_forward_W_S_GDot();
     void _execute_forward_W_SGDt();
 
     pd_t conf_;
@@ -426,6 +425,7 @@ struct jit_avx512_common_convolution_winograd_bwd_data_t
 private:
     void execute_backward_data();
     void _execute_backward_data_W_S_G_D();
+    void _execute_backward_data_W_S_G_D_n();
     void _execute_backward_data_W_SGDt();
 
     pd_t conf_;

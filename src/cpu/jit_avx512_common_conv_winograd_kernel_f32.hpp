@@ -50,7 +50,8 @@ struct _jit_avx512_common_conv_winograd_data_kernel_f32 : public jit_generator {
             const memory_desc_wrapper &dst_d);
 
     static status_t init_conf_kernel(
-            jit_conv_winograd_conf_t &jcp, int dimM, int dimN, int dimK);
+            jit_conv_winograd_conf_t &jcp, int dimM, int dimN, int dimK,
+            bool prop_forward);
 
     jit_conv_winograd_conf_t jcp;
     void (*gemm_loop_ker)(float *, const float *, const float *);
