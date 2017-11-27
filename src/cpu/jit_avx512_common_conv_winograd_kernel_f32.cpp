@@ -1516,7 +1516,7 @@ bool __set_wsched_WEI_S_D_Giot_W(jit_conv_winograd_conf_t &jcp,
 
 {
     const float C1_min = .2, C1_0 = .4, C1_max = .9;
-    const float C2_min = .1, C2_0 = .4, C2_max = .9;
+    const float C2_min = .1, C2_0 = .4, C2_max = 1.2;
     const int T0 = 16, T_min = 12;
 
     int ic_simd_block = 16, ic_block = 0, nb_ic = 0;
