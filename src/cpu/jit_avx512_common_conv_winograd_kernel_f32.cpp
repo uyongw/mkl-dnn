@@ -699,7 +699,7 @@ status_t set_wsched_DATA_W_S_G_D_n(jit_conv_winograd_conf_t &jcp, bool prop_forw
     int tg_t = 1, tg_i = 1, tg_o = 1;
     int mb = jcp.mb, ntiles = jcp.ntiles;
     int ic = jcp.ic, oc = jcp.oc;
-    int nb_tg = 2; // TODO: # of sockets
+    int nb_tg = get_num_processors(); // # of sockets
 
     if (prop_forward) { // FWD
         auto get_thread_size = [](jit_conv_winograd_conf_t &jcp,
@@ -1760,7 +1760,7 @@ status_t set_wsched_WEI_S_D_G_W_n(jit_conv_winograd_conf_t &jcp)
     int tg_t = 1, tg_i = 1, tg_o = 1;
     int mb = jcp.mb, ntiles = jcp.ntiles;
     int ic = jcp.ic, oc = jcp.oc;
-    int nb_tg = 2; // TODO: # of sockets
+    int nb_tg = get_num_processors(); // # of sockets
 
     if (jcp.oc >= jcp.ntiles)
         tg_o = nb_tg;
