@@ -27,7 +27,7 @@ struct scratchpad_t {
     virtual char *get() const = 0;
 };
 
-scratchpad_t *create_scratchpad(size_t size);
+scratchpad_t *create_scratchpad(size_t size, unsigned long eigen = 0);
 
 }
 }

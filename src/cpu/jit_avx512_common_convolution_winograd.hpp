@@ -29,7 +29,7 @@ namespace impl {
 namespace cpu {
 
 #define PAGE_SIZE (2 * 1024 * 1024)
-// TODO: move to utils
+// TODO: remove workspace and mmap facility. No use now.
 // Alloc zero-filled pages
 class Mmap {
 public:
@@ -70,6 +70,7 @@ public:
     {
         const size_t page_size = PAGE_SIZE;
         size_t total_sp_size = 0;
+        unsigned long eigen = 0;
 
         if (flags_ & WSP_U_PRIVATE) {
             up_ = (char*)Mmap::alloc(up_size_);
@@ -95,7 +96,13 @@ public:
             bp_offset_ = total_sp_size;
             total_sp_size += bp_size;
         }
-        scratchpad_ = create_scratchpad(total_sp_size);
+        if (get_num_processors() > 1) {
+            // TODO: Improve eigen, consider sched_policy,
+            // ic, oc and ntiles
+            eigen = up_size + vp_size + mp_size + bp_size;
+        }
+
+        scratchpad_ = create_scratchpad(total_sp_size, eigen);
     }
 
     ~workspace() {
