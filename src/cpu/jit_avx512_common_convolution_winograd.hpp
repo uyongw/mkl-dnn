@@ -228,14 +228,20 @@ inline void allocate_winograd_workspace(const jit_conv_winograd_conf_t &jcp,
         wsp = new workspace(up_size, vp_size, mp_size, bp_size, nthreads);
         break;
     case WSCHED_WEI_S_D_G_W:
-        up_size = jcp.alpha * jcp.alpha * jcp.ic * jcp.oc * sizeof(float);
-        vp_size = jcp.alpha * jcp.alpha
+    case WSCHED_WEI_S_D_G_W_n:
+        nthreads /= nb_tg;
+        up_size = nb_tg * jcp.alpha * jcp.alpha * jcp.ic * jcp.oc * sizeof(float);
+        if (jcp.tg_t > 0) {
+            up_size += nb_tg * jcp.tg_i * jcp.ic * jcp.tg_o * jcp.oc
+                * jcp.kh * jcp.kw * sizeof(float);
+        }
+        vp_size = nb_tg * jcp.alpha * jcp.alpha
             * (jcp.itiles * jcp.jtiles + jcp.tile_4fma_padding)
             * jcp.ic * jcp.mb * sizeof(float);
-        mp_size = jcp.alpha * jcp.alpha
+        mp_size = nb_tg * jcp.alpha * jcp.alpha
             * (jcp.itiles * jcp.jtiles + jcp.tile_4fma_padding)
             * jcp.oc * jcp.mb * sizeof(float);
-        bp_size = nthreads * jcp.oc * sizeof(float);
+        bp_size = nb_tg * nthreads * jcp.oc * sizeof(float);
         wsp = new workspace(up_size, vp_size, mp_size, bp_size, nthreads);
         break;
     default:
@@ -518,6 +524,7 @@ struct jit_avx512_common_convolution_winograd_bwd_weights_t
 private:
     void execute_backward_weights();
     void _execute_backward_weights_S_D_G_W();
+    void _execute_backward_weights_S_D_G_W_n();
     void _execute_backward_weights_S_D_Giot_W();
     void _execute_backward_weights_SDGtWo();
     void _execute_backward_weights_SDGt_W();

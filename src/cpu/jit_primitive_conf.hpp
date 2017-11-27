@@ -71,6 +71,7 @@ enum {
 
     /* Backward-weights */
     WSCHED_WEI_S_D_G_W,
+    WSCHED_WEI_S_D_G_W_n,
     WSCHED_WEI_S_D_Giot_W,
     WSCHED_WEI_SDGit_W,
     WSCHED_WEI_SDGtWo,
