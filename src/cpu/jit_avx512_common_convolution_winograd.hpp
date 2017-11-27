@@ -212,8 +212,7 @@ inline void allocate_winograd_workspace(const jit_conv_winograd_conf_t &jcp,
             * (jcp.itiles * jcp.jtiles + jcp.tile_4fma_padding)
             * jcp.oc * jcp.mb * sizeof(float);
         bp_size = nthreads * jcp.oc * sizeof(float);
-        wsp = new workspace(up_size, vp_size, mp_size, bp_size, nthreads,
-                WSP_U_PRIVATE);
+        wsp = new workspace(up_size, vp_size, mp_size, bp_size, nthreads);
         break;
     case WSCHED_DATA_W_S_G_D:
     case WSCHED_DATA_W_S_G_D_n:

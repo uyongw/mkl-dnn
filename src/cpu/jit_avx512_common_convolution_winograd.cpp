@@ -1694,6 +1694,77 @@ void array_sum(int num_arrs, float *output,
     }
 }
 
+void subarray_sum(int num_arrs, float *output, size_t nelems,
+        float *input_ptrs[], size_t input_starts[], size_t input_ends[])
+{
+    using namespace nstl;
+    const size_t block_size = 16 * 1024 / sizeof(float);
+    const size_t blocks_number = nelems / block_size;
+    const size_t tail = nelems % block_size;
+
+#pragma omp parallel
+    {
+        const int ithr = omp_get_thread_num();
+        const int nthr = omp_get_num_threads();
+        size_t start{ 0 }, end{ 0 };
+        balance211(blocks_number, nthr, ithr, start, end);
+
+        for (size_t nb = start; nb < end; ++nb) {
+            size_t start_e = nb * block_size;
+            size_t end_e = start_e + block_size;
+            size_t input_start = max(start_e, min(input_starts[0], end_e));
+            size_t input_end = max(start_e, min(input_ends[0], end_e));
+#pragma omp simd
+            for (size_t e = start_e; e < input_start; e++) {
+                output[e] = 0.f;
+            }
+#pragma omp simd
+            for (size_t e = input_start; e < input_end; e++) {
+                output[e] = input_ptrs[0][e];
+            }
+#pragma omp simd
+            for (size_t e = input_end; e < end_e; e++) {
+                output[e] = 0.f;
+            }
+            for (int a = 1; a < num_arrs; a++) {
+                input_start = max(start_e, min(input_starts[a], end_e));
+                input_end = max(start_e, min(input_ends[a], end_e));
+#pragma omp simd
+                for (size_t e = input_start; e < input_end; e++) {
+                    output[e] += input_ptrs[a][e];
+                }
+            }
+        }
+
+        if (tail != 0 && ithr == nthr - 1) {
+            size_t start_e = nelems - tail;
+            size_t end_e = nelems;
+            size_t input_start = max(start_e, min(input_starts[0], end_e));
+            size_t input_end = max(start_e, min(input_ends[0], end_e));
+#pragma omp simd
+            for (size_t e = start_e; e < input_start; e++) {
+                output[e] = 0.f;
+            }
+#pragma omp simd
+            for (size_t e = input_start; e < input_end; e++) {
+                output[e] = input_ptrs[0][e];
+            }
+#pragma omp simd
+            for (size_t e = input_end; e < end_e; e++) {
+                output[e] = 0.f;
+            }
+            for (int a = 1; a < num_arrs; a++) {
+                input_start = max(start_e, min(input_starts[a], end_e));
+                input_end = max(start_e, min(input_ends[a], end_e));
+#pragma omp simd
+                for (size_t e = start_e; e < end_e; e++) {
+                    output[e] += input_ptrs[a][e];
+                }
+            }
+        }
+    }
+}
+
 template <bool with_relu>
 void _jit_avx512_common_convolution_winograd_fwd_t<with_relu>::execute_forward()
 {
@@ -3032,10 +3103,12 @@ _execute_backward_weights_S_D_Giot_W()
         }
     }
 
+    size_t input_starts[nthreads];
+    size_t input_ends[nthreads];
     int th_counter = 0;
 #pragma omp parallel firstprivate(th_counter) \
     num_threads(wsp_->nthreads) proc_bind(close)
-#pragma omp for nowait collapse(5)
+#pragma omp for nowait collapse(5) schedule(static)
     for (int ifm1 = 0; ifm1 < jcp.nb_ic; ifm1++) {
         for (int ofm1 = 0; ofm1 < jcp.nb_oc; ofm1++) {
             for (int oj = 0; oj < jcp.alpha; oj++) {
@@ -3043,6 +3116,17 @@ _execute_backward_weights_S_D_Giot_W()
                     for (int tile_block = 0; tile_block < jcp.tile_block;
                             tile_block++) {
                         int ithr = omp_get_thread_num();
+                        if (th_counter == 0) {
+                            input_starts[ithr] = (float *)&(Us(ithr, ifm1, ofm1,
+                                oj, oi, 0, 0, 0, 0)) - (float *)&(Us(ithr, 0, 0,
+                                    0, 0, 0, 0, 0, 0));
+                            input_ends[ithr] = input_starts[ithr]
+                                    + jcp.oc_block * jcp.ic_block
+                                      * jcp.ic_simd_block * jcp.oc_simd_block;
+                        } else if (tile_block == 0) {
+                            input_ends[ithr] += jcp.oc_block * jcp.ic_block
+                                * jcp.ic_simd_block * jcp.oc_simd_block;
+                        }
                         if (th_counter == 0 || tile_block == 0) {
                             kernel_->gemm_loop_ker_first_iter(
                                     (float *)&(Us(ithr, ifm1, ofm1,
@@ -3075,7 +3159,8 @@ _execute_backward_weights_S_D_Giot_W()
         for (int i = 0; i < nthreads; i++) {
             input_ptrs[i] = output + nelems * (i + 1);
         }
-        array_sum(nthreads, output, nelems, input_ptrs, false);
+        subarray_sum(nthreads, output, nelems, input_ptrs,
+                input_starts, input_ends);
     }
 
 #pragma omp parallel
