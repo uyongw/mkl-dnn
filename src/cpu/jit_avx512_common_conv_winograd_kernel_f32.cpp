@@ -449,7 +449,7 @@ bool __set_wsched_DATA_W_SGDt(jit_conv_winograd_conf_t &jcp,
     // Consider L2 + L3 together on SKX
     const float C1_min = .1, C1_0 = .7, C1_max = shared_weights ? 1. : 1.;
     const float C2_min = .1, C2_0 = .7, C2_max = shared_weights ? 1.2 : 1.3;
-    const int T_min = 2, T0 = 20;
+    const int T_min = 3, T0 = 20;
 
     int ic_simd_block = 16, ic_block = 0, nb_ic = 0;
     int oc_simd_block = 16, oc_block = 0, nb_oc = 0;
@@ -899,8 +899,8 @@ status_t _jit_avx512_common_conv_winograd_data_kernel_f32::init_conf_kernel(
     jcp.sched_policy = WSCHED_INVALID;
     status_t res;
     if ((res = set_wsched_DATA_W_SGDt(jcp, prop_forward)) == status::success ||
-        (res = set_wsched_DATA_W_S_G_D(jcp, prop_forward)) == status::success ||
-        (res = set_wsched_DATA_W_S_G_D_n(jcp, prop_forward)) == status::success)
+        (res = set_wsched_DATA_W_S_G_D_n(jcp, prop_forward)) == status::success ||
+        (res = set_wsched_DATA_W_S_G_D(jcp, prop_forward)) == status::success)
         ;
 
     return res;
