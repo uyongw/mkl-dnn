@@ -1050,6 +1050,7 @@ void jit_avx512_common_conv_winograd_bwd_weights_kernel_f32::gemm_loop_generate(
     auto inner_loops = [=]() {
         int inc_fma = jcp.ver == ver_4fma ? 4 : 1;
         const int fma_ipc = jcp.ver == ver_4fma ? 1 : 2;
+#if !defined(SKX_OPT)
         prefetcher_t<float> L1_pf(this, reg_srcB, L1,
                 jcp.dimK_reg_block * jcp.dimN_reg_block * jcp.dimK_4fma,
                 jcp.dimK_reg_block * jcp.dimN_reg_block * jcp.dimK_4fma
@@ -1060,6 +1061,7 @@ void jit_avx512_common_conv_winograd_bwd_weights_kernel_f32::gemm_loop_generate(
                 jcp.dimK_reg_block * jcp.dimN_reg_block * jcp.dimK_4fma
                         / inc_fma,
                 fma_ipc);
+#endif
 
         auto load_A = [=](int reg_idx, int offset) {
             for (int i = 0; i < inc_fma; i++) {
@@ -1122,6 +1124,7 @@ void jit_avx512_common_conv_winograd_bwd_weights_kernel_f32::gemm_loop_generate(
                             for (int dimN_reg_block = 0;
                                     dimN_reg_block < jcp.dimN_reg_block;
                                     ++dimN_reg_block) {
+#if !defined(SKX_OPT)
                                 L1_pf.prefetch(srcB_offset / inc_fma
                                         + dimK_4fma / inc_fma
                                                 * jcp.dimN_reg_block
@@ -1130,6 +1133,7 @@ void jit_avx512_common_conv_winograd_bwd_weights_kernel_f32::gemm_loop_generate(
                                         + dimK_4fma / inc_fma
                                                 * jcp.dimN_reg_block
                                         + dimN_reg_block);
+#endif
                                 if (jcp.ver == ver_4fma) {
                                     int srcB_trans_offset = (dimK_4fma / 4) * 64
                                             + dimK_4fma % 4;
