@@ -28,6 +28,14 @@
 #define pragma_unroll
 #endif
 
+#if _OPENMP >= 201307 // need OpenMP 4.0
+#define BIND_SPREAD proc_bind(spread)
+#define BIND_CLOSE proc_bind(close)
+#else
+#define BIND_SPREAD
+#define BIND_CLOSE
+#endif
+
 namespace mkldnn {
 namespace impl {
 namespace cpu {
@@ -1651,7 +1659,7 @@ void array_sum(int num_arrs, float *output,
     const size_t blocks_number = nelems / block_size;
     const size_t tail = nelems % block_size;
 
-#pragma omp parallel num_threads(nthreads) proc_bind(close)
+#pragma omp parallel num_threads(nthreads) BIND_CLOSE
     {
         const int ithr = omp_get_thread_num();
         const int nthr = omp_get_num_threads();
@@ -1960,13 +1968,13 @@ _execute_forward_W_S_G_D_n()
     assert(jcp.tg_i == 1);
 
     omp_set_nested(1);
-#pragma omp parallel num_threads(nb_tg) proc_bind(spread)
+#pragma omp parallel num_threads(nb_tg) BIND_SPREAD
 #pragma omp for nowait collapse(3)
     for (int tg_t = 0; tg_t < jcp.tg_t; tg_t++) {
     for (int tg_o = 0; tg_o < jcp.tg_o; tg_o++) {
     for (int tg_i = 0; tg_i < jcp.tg_i; tg_i++) {
         int tg = tg_t * jcp.tg_o * jcp.tg_i + tg_o * jcp.tg_i + tg_i;
-#pragma omp parallel num_threads(nthreads) proc_bind(close)
+#pragma omp parallel num_threads(nthreads) BIND_CLOSE
         {
 #pragma omp for nowait collapse(3)
             for (int img = 0; img < jcp.mb; img++) {
@@ -2354,13 +2362,13 @@ _execute_backward_data_W_S_G_D_n()
     assert(jcp.tg_o == 1);
 
     omp_set_nested(1);
-#pragma omp parallel num_threads(nb_tg) proc_bind(spread)
+#pragma omp parallel num_threads(nb_tg) BIND_SPREAD
 #pragma omp for nowait collapse(3)
     for (int tg_t = 0; tg_t < jcp.tg_t; tg_t++) {
     for (int tg_i = 0; tg_i < jcp.tg_i; tg_i++) {
     for (int tg_o = 0; tg_o < jcp.tg_o; tg_o++) {
         int tg = tg_t * jcp.tg_o * jcp.tg_i + tg_i * jcp.tg_o + tg_o;
-#pragma omp parallel num_threads(nthreads) proc_bind(close)
+#pragma omp parallel num_threads(nthreads) BIND_CLOSE
         {
 #pragma omp for collapse(3) nowait
             for (int img = 0; img < jcp.mb; img++) {
@@ -2801,13 +2809,13 @@ _execute_backward_weights_S_D_G_W_n()
         > 2.1 * LLC_data_size ? true : false);
 
     omp_set_nested(1);
-#pragma omp parallel num_threads(nb_tg) proc_bind(spread)
+#pragma omp parallel num_threads(nb_tg) BIND_SPREAD
 #pragma omp for nowait collapse(3)
     for (int tg_t = 0; tg_t < jcp.tg_t; tg_t++) {
     for (int tg_o = 0; tg_o < jcp.tg_o; tg_o++) {
     for (int tg_i = 0; tg_i < jcp.tg_i; tg_i++) {
         int tg = tg_t * jcp.tg_o * jcp.tg_i + tg_o * jcp.tg_i + tg_i;
-#pragma omp parallel num_threads(nthreads) proc_bind(close)
+#pragma omp parallel num_threads(nthreads) BIND_CLOSE
         {
             if (jcp.with_bias) {
 #pragma omp for nowait collapse(2)
@@ -3107,7 +3115,7 @@ _execute_backward_weights_S_D_Giot_W()
     size_t input_ends[nthreads];
     int th_counter = 0;
 #pragma omp parallel firstprivate(th_counter) \
-    num_threads(wsp_->nthreads) proc_bind(close)
+    num_threads(wsp_->nthreads) BIND_CLOSE
 #pragma omp for nowait collapse(5) schedule(static)
     for (int ifm1 = 0; ifm1 < jcp.nb_ic; ifm1++) {
         for (int ofm1 = 0; ofm1 < jcp.nb_oc; ofm1++) {

@@ -126,8 +126,15 @@ private:
     eigen_buffer_t(size_t size) = delete;
 };
 
+
+#if defined(__INTEL_COMPILER)
 std::vector<eigen_buffer_t*> eigen_buffers;
 #pragma omp threadprivate(eigen_buffers)
+#else
+extern std::vector<eigen_buffer_t*> eigen_buffers;
+#pragma omp threadprivate(eigen_buffers)
+std::vector<eigen_buffer_t*> eigen_buffers;
+#endif
 
 /*
   Implementation of the scratchpad_t interface that combine
@@ -141,8 +148,10 @@ struct collected_scratchpad_t : public scratchpad_t {
             }
         }
 
-        if (eigen_buffer_ == nullptr)
+        if (eigen_buffer_ == nullptr) {
             eigen_buffer_ = new eigen_buffer_t(size, eigen);
+            eigen_buffers.push_back(eigen_buffer_);
+        }
         assert(eigen_buffer_ != nullptr);
     }
 
