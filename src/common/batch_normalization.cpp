@@ -43,6 +43,11 @@ status_t bnrm_desc_init(batch_normalization_desc_t *bnrm_desc,
     bd.primitive_kind = primitive_kind::batch_normalization;
     bd.prop_kind = prop_kind;
 
+    bd.stats_batch_size = bnrm_desc->stats_batch_size;
+    if (!bd.stats_batch_size)
+        bd.stats_batch_size = data_desc->dims[0];
+    assert(data_desc->dims[0] % bd.stats_batch_size == 0);
+
     bd.data_desc = *data_desc;
     bd.diff_data_desc = zero_md();
     if ( one_of(bd.prop_kind,backward_data, backward) )

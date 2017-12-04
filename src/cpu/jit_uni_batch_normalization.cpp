@@ -39,6 +39,8 @@ namespace barrier = simple_barrier;
 
 #define  BN_BLOCKING_ALWAYS    (0)
 #define  BN_BLOCKING_ENABLE    (1)
+#define  NUM_STATS_GROUPS(N, G) ( N / G )
+// #define  VERBOSE_INFO
 
 typedef float data_t;
 static long g_llc_size = 0;
@@ -876,9 +878,10 @@ struct uni_bnorm_driver_t: public c_compatible {
         use_tmp_diff_scale_shift_ = false
             || (bdesc_->is_bwd() && !bdesc_->use_scaleshift())
             || bdesc_->desc()->prop_kind == prop_kind::backward_data;
-        int num_sbufs = 2 * use_tmp_stats_;
-        int num_pbufs = 2 * use_tmp_diff_scale_shift_;
-        int num_rbufs = bdesc_->is_fwd() ? 1 : 2;
+
+        int num_sbufs = 2 * use_tmp_stats_ * NUM_STATS_GROUPS((bdesc_->MB()), (bdesc_->desc()->stats_batch_size));
+        int num_pbufs = 2 * use_tmp_diff_scale_shift_ * NUM_STATS_GROUPS((bdesc_->MB()), (bdesc_->desc()->stats_batch_size));
+        int num_rbufs = (bdesc_->is_fwd() ? 1 : 2) * NUM_STATS_GROUPS((bdesc_->MB()), (bdesc_->desc()->stats_batch_size));
 
         int buf_size =
             (num_sbufs + num_pbufs + num_rbufs * bdesc_->MB()) * bdesc_->C();
@@ -888,7 +891,7 @@ struct uni_bnorm_driver_t: public c_compatible {
         pbuf_ = sbuf_ + num_sbufs * bdesc_->C();
         rbuf_ = pbuf_ + num_pbufs * bdesc_->C();
 
-        int num_barriers = bdesc_->C() / simd_w;
+        int num_barriers = bdesc_->C() * NUM_STATS_GROUPS((bdesc_->MB()), (bdesc_->desc()->stats_batch_size)) / simd_w;
         if (syncable_) {
             barriers_ = (barrier::ctx_t *)malloc(
                     num_barriers * sizeof(barrier::ctx_t), 64);
@@ -910,7 +913,7 @@ struct uni_bnorm_driver_t: public c_compatible {
 
     void exec(int ithr, int nthr, const data_t *src, data_t *diff_src,
             data_t *dst, const data_t *diff_dst, const data_t *scale_shift,
-            data_t *diff_scale_shift, const data_t *mean, const data_t *var) {
+            data_t *diff_scale_shift, const data_t *mean, const data_t *var, size_t ithr_igroup) {
         size_t N = bdesc_->MB();
         size_t C = bdesc_->C();
         size_t H = bdesc_->H();
@@ -926,7 +929,7 @@ struct uni_bnorm_driver_t: public c_compatible {
         if(ithr==0)
             fprintf(stderr, "[exec]bn exec block path enabled\n");
 #endif
-            return exec_block(ithr, nthr, src, diff_src, dst,diff_dst, scale_shift, diff_scale_shift, mean, var);
+            return exec_block(ithr, nthr, src, diff_src, dst,diff_dst, scale_shift, diff_scale_shift, mean, var, ithr_igroup);
         }
 
         typename jit_bnorm_t<isa>::call_params_t p;
@@ -934,7 +937,7 @@ struct uni_bnorm_driver_t: public c_compatible {
         p.eps = bdesc_->desc()->batch_norm_epsilon;
         p.one = 1.;
         p.spat_size = H*W;
-        p.chan_size = 1. * N * p.spat_size;
+        p.chan_size = 1. * bdesc_->desc()->stats_batch_size * p.spat_size;
 
         size_t C_blks = C / simd_w;
 
@@ -946,18 +949,20 @@ struct uni_bnorm_driver_t: public c_compatible {
         p.N_ithr = N_ithr;
         p.N_nthr = N_nthr;
 
+        size_t global_N_s = (N_s == -1) ? -1 : ithr_igroup * bdesc_->desc()->stats_batch_size + N_s;
+
         size_t C_blks_thr = C_blk_e - C_blk_s;
         size_t N_thr = N_e - N_s;
 
-        size_t coff_base = C_blk_s * simd_w;
-        size_t soff_base = C_blk_s * p.spat_size * simd_w + N_s * img_size;
+        size_t coff_base = C_blk_s * simd_w + C * ithr_igroup;
+        size_t soff_base = C_blk_s * p.spat_size * simd_w + global_N_s * img_size;
 
         p.coff_max = C_blks_thr * simd_w;
-        p.mean = (use_tmp_stats_ ? sbuf_ : mean) + coff_base;
-        p.var = (use_tmp_stats_ ? sbuf_ + C : var) + coff_base;
-        p.scale_shift = scale_shift + coff_base;
+        p.mean = (use_tmp_stats_ ? sbuf_ + C * ithr_igroup : mean) + coff_base;
+        p.var = (use_tmp_stats_ ? sbuf_ + C * (1 + ithr_igroup) : var) + coff_base;
+        p.scale_shift = scale_shift + coff_base + C * ithr_igroup;
         p.diff_scale_shift = (use_tmp_diff_scale_shift_
-                ? pbuf_ : diff_scale_shift) + coff_base;
+                ? pbuf_ : diff_scale_shift) + coff_base + C * ithr_igroup;
 
         p.soff_max = N_thr * img_size;
         p.src = src + soff_base;
@@ -967,10 +972,10 @@ struct uni_bnorm_driver_t: public c_compatible {
 
         p.mb_stride_Bc = img_size - p.coff_max * p.spat_size;
 
-        p.rbuf1 = rbuf_ + (C_blk_s * N_nthr + p.N_ithr * C_blks_thr) * simd_w;
+        p.rbuf1 = rbuf_ + (C_blk_s * N_nthr + p.N_ithr * C_blks_thr) * simd_w + C * N * ithr_igroup;
         p.rbuf2 = p.rbuf1 + C * N_nthr;
 
-        p.barrier = barriers_ + C_ithr;
+        p.barrier = barriers_ + C_ithr + C_blks * ithr_igroup;
 
         if (p.soff_max != 0 && p.coff_max != 0) ker_(&p);
     }
@@ -989,7 +994,7 @@ struct uni_bnorm_driver_t: public c_compatible {
     // div whole task accord to C(16c) into blocks, futher div each block accord to N to available core#.
     void exec_block(int ithr, int nthr, const data_t *src, data_t *diff_src,
             data_t *dst, const data_t *diff_dst, const data_t *scale_shift,
-            data_t *diff_scale_shift, const data_t *mean, const data_t *var) {
+            data_t *diff_scale_shift, const data_t *mean, const data_t *var, size_t ithr_igroup) {
         size_t N = bdesc_->MB();
         size_t C = bdesc_->C();
         size_t H = bdesc_->H();
@@ -1001,7 +1006,7 @@ struct uni_bnorm_driver_t: public c_compatible {
         p.eps = bdesc_->desc()->batch_norm_epsilon;
         p.one = 1.;
         p.spat_size = H*W;
-        p.chan_size = 1. * N * p.spat_size; // all batch. all value of same channel in mini-batch, non 16 C mode.
+        p.chan_size = 1. * bdesc_->desc()->stats_batch_size * p.spat_size; // all batch. all value of same channel in mini-batch, non 16 C mode.
 
         size_t C_blks = C / simd_w;
 
@@ -1011,7 +1016,7 @@ struct uni_bnorm_driver_t: public c_compatible {
 
         inCache_computing_balance(nthr, C_blks, c_bksPerIter, iters);
 #if defined(VERBOSE_INFO)
-        if(ithr==0) fprintf(stderr, "[exec] c_bksPerIter:%d iters:%d \n", c_bksPerIter,iters);
+        if(ithr==0) fprintf(stderr, "[exec] igroup:%ld c_bksPerIter:%d iters:%d \n", ithr_igroup, c_bksPerIter,iters);
 #endif
 
         //balance in each iter.
@@ -1022,7 +1027,7 @@ struct uni_bnorm_driver_t: public c_compatible {
 
         int it, last_iter_blks = C_blks - (iters - 1) * c_bksPerIter;
         //replace C_blk_s with global C_blk_s
-        size_t global_C_blk_s;
+        size_t global_C_blk_s, global_N_s;
         size_t global_barriers_per_iter = C_nthr;
         for(it=0; it<iters; it++) { // each thread need work for each blocks, in each block it need to sync.
             if (it == iters-1 && iters > 1) {
@@ -1042,19 +1047,20 @@ struct uni_bnorm_driver_t: public c_compatible {
 #endif
 
             global_C_blk_s = (C_blk_s == -1) ? -1 : it * c_bksPerIter + C_blk_s;
+            global_N_s = (N_s == -1) ? -1 : ithr_igroup * bdesc_->desc()->stats_batch_size + N_s;
 
             //follow two arg are encoded into coff_max and soff_max, then to control when to finish the computing.
             size_t C_blks_thr = C_blk_e - C_blk_s;// C num of this thread.
             size_t N_thr = N_e - N_s; // N num of this thread.
-            size_t coff_base = global_C_blk_s * simd_w; // channel idx begin non 16C mode.
-            size_t soff_base = global_C_blk_s * p.spat_size * simd_w + N_s * img_size; // spat offset. non 16c mode.
+            size_t coff_base = global_C_blk_s * simd_w + C * ithr_igroup; // channel idx begin non 16C mode.
+            size_t soff_base = global_C_blk_s * p.spat_size * simd_w + global_N_s * img_size; // spat offset. non 16c mode.
 
             p.coff_max = C_blks_thr * simd_w; // channel idx, non 16c mode, from  0.
-            p.mean = (use_tmp_stats_ ? sbuf_ : mean) + coff_base;
-            p.var = (use_tmp_stats_ ? sbuf_ + C : var) + coff_base;
-            p.scale_shift = scale_shift + coff_base;
+            p.mean = (use_tmp_stats_ ? sbuf_ + C * ithr_igroup : mean) + coff_base;
+            p.var = (use_tmp_stats_ ? sbuf_ + C * (1 + ithr_igroup) : var) + coff_base;
+            p.scale_shift = scale_shift + coff_base + C * ithr_igroup;
             p.diff_scale_shift = (use_tmp_diff_scale_shift_
-                ? pbuf_ : diff_scale_shift) + coff_base;
+                ? pbuf_ : diff_scale_shift) + coff_base + C * ithr_igroup;
 
             p.soff_max = N_thr * img_size; // spat offset., NCHW, non  16c mode.
             p.src = src + soff_base;
@@ -1064,10 +1070,10 @@ struct uni_bnorm_driver_t: public c_compatible {
 
             p.mb_stride_Bc = img_size - p.coff_max * p.spat_size; // how many buffer there to stride to next n
 
-            p.rbuf1 = rbuf_ + (global_C_blk_s * N_nthr + p.N_ithr * C_blks_thr) * simd_w;
+            p.rbuf1 = rbuf_ + (global_C_blk_s * N_nthr + p.N_ithr * C_blks_thr) * simd_w + C * N * ithr_igroup;
             p.rbuf2 = p.rbuf1 + C * N_nthr; //end buffer.
 
-            p.barrier = barriers_ + C_ithr + it  *global_barriers_per_iter; // a barrie for each  C thread.  two 16c may share a single barrier. as they are computed at same time.
+            p.barrier = barriers_ + C_ithr + it * global_barriers_per_iter + C_blks * ithr_igroup; // a barrie for each  C thread.  two 16c may share a single barrier. as they are computed at same time.
             if (p.soff_max != 0 && p.coff_max != 0) ker_(&p);
         }
     }
@@ -1091,12 +1097,11 @@ private:
     inline void thread_balance(int ithr, int nthr, size_t C_blks, int &C_ithr,
             int &C_nthr, size_t &C_blk_s, size_t &C_blk_e, int &N_ithr,
             int &N_nthr, size_t &N_s, size_t &N_e) const {
-        const size_t N = bdesc_->MB();
+        const size_t N = bdesc_->desc()->stats_batch_size;
         if (nthr <= (int)C_blks || !syncable_) {
             C_ithr = ithr; C_nthr = nthr;
             N_ithr = 0; N_nthr = 1;
             N_s = 0; N_e = N;
-            C_ithr = ithr; C_nthr = nthr;
             balance211(C_blks, C_nthr, C_ithr, C_blk_s, C_blk_e);
         } else {
             C_nthr = math::gcd(nthr, (int)C_blks);
@@ -1116,12 +1121,11 @@ private:
     inline void thread_balance_for_block(int ithr, int nthr, size_t C_blks, int &C_ithr,
             int &C_nthr, size_t &C_blk_s, size_t &C_blk_e, int &N_ithr,
             int &N_nthr, size_t &N_s, size_t &N_e) const {
-        const size_t N = bdesc_->MB();
+        const size_t N = bdesc_->desc()->stats_batch_size;
         if (nthr <= (int)C_blks || !syncable_) {
             C_ithr = ithr; C_nthr = nthr;
             N_ithr = 0; N_nthr = 1;
             N_s = 0; N_e = N;
-            C_ithr = ithr; C_nthr = nthr;
             balance211(C_blks, C_nthr, C_ithr, C_blk_s, C_blk_e);
         } else {
             N_nthr = nstl::min((int)N, nthr);
@@ -1178,11 +1182,23 @@ void jit_uni_batch_normalization_fwd_t<isa>::execute(event_t *e) {
     auto idx_scale_shift = 1 + 2*conf_.stats_is_src();
     auto scale_shift =
         reinterpret_cast<const data_t *>(this->input_memory(idx_scale_shift));
+    int num = NUM_STATS_GROUPS((conf_.MB()), (conf_.desc()->stats_batch_size));
 
 #   pragma omp parallel
     {
-        bnorm_driver_->exec(omp_get_thread_num(), omp_get_num_threads(), src,
-                nullptr, dst, nullptr, scale_shift, nullptr, mean, var);
+        int ithr = omp_get_thread_num(),
+            nthr_groups = omp_get_num_threads() / num,
+            remainder = omp_get_num_threads() % num;
+        if (ithr < omp_get_num_threads() - remainder) {
+            if (ithr / nthr_groups < num - 1)
+                bnorm_driver_->exec(ithr % nthr_groups, nthr_groups, src,
+                        nullptr, dst, nullptr, scale_shift, nullptr, mean, var, ithr / nthr_groups);
+            else
+                bnorm_driver_->exec(ithr % nthr_groups, nthr_groups + remainder, src,
+                        nullptr, dst, nullptr, scale_shift, nullptr, mean, var, num - 1);
+        } else
+            bnorm_driver_->exec(ithr % nthr_groups + nthr_groups, nthr_groups + remainder, src,
+                    nullptr, dst, nullptr, scale_shift, nullptr, mean, var, num - 1);
     }
     e->set_state(event_t::ready);
 }
@@ -1208,12 +1224,26 @@ void jit_uni_batch_normalization_bwd_t<isa>::execute(event_t *e) {
     auto scale_shift = reinterpret_cast<const data_t *>(this->input_memory(4));
     auto diff_src = reinterpret_cast<data_t*>(this->memory(0));
     auto diff_scale_shift = reinterpret_cast<data_t *>(this->memory(1));
+    int num = NUM_STATS_GROUPS((conf_.MB()), (conf_.desc()->stats_batch_size));
 
 #   pragma omp parallel
     {
-        bnorm_driver_->exec(omp_get_thread_num(), omp_get_num_threads(), src,
-                diff_src, nullptr, diff_dst, scale_shift, diff_scale_shift,
-                mean, var);
+        int ithr = omp_get_thread_num(),
+            nthr_groups = omp_get_num_threads() / num,
+            remainder = omp_get_num_threads() % num;
+        if (ithr < omp_get_num_threads() - remainder) {
+            if (ithr / nthr_groups < num - 1)
+                bnorm_driver_->exec(ithr % nthr_groups, nthr_groups, src,
+                        diff_src, nullptr, diff_dst, scale_shift, diff_scale_shift,
+                        mean, var, ithr / nthr_groups);
+            else
+                bnorm_driver_->exec(ithr % nthr_groups, nthr_groups + remainder, src,
+                        diff_src, nullptr, diff_dst, scale_shift, diff_scale_shift,
+                        mean, var, num - 1);
+        } else
+            bnorm_driver_->exec(ithr % nthr_groups + nthr_groups, nthr_groups + remainder, src,
+                    diff_src, nullptr, diff_dst, scale_shift, diff_scale_shift,
+                    mean, var, num - 1);
     }
     e->set_state(event_t::ready);
 }

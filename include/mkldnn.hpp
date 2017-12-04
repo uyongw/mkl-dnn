@@ -424,8 +424,8 @@ struct memory: public primitive  {
 
         /// Returns the number of bytes required to allocate the memory described
         /// including the padding area.
-        size_t get_size() const {
-             return mkldnn_memory_primitive_desc_get_size(get());
+        size_t get_size(int mul = 1) const {
+             return mkldnn_memory_primitive_desc_get_size(get()) * mul;
         }
 
         bool operator==(const primitive_desc &other) const {
@@ -470,6 +470,33 @@ struct memory: public primitive  {
 #endif /* _WIN32 */
         };
         _handle.reset(_malloc(adesc.get_size(), 4096), _free);
+        set_data_handle(_handle.get());
+    }
+
+    memory(const primitive_desc &adesc, int mul) {
+        mkldnn_primitive_t result;
+        error::wrap_c_api(
+                mkldnn_primitive_create(&result, adesc.get(), nullptr, nullptr),
+                "could not create a memory primitive");
+        reset(result);
+        auto _malloc = [](size_t size, int alignment) {
+            void *ptr;
+#ifdef _WIN32
+            ptr = _aligned_malloc(size, alignment);
+            int rc = ((ptr)? 0 : errno);
+#else
+            int rc = ::posix_memalign(&ptr, alignment, size);
+#endif /* _WIN32 */
+            return (rc == 0) ? (char*)ptr : nullptr;
+        };
+        auto _free = [](char* p) {
+#ifdef _WIN32
+            _aligned_free((void*)p);
+#else
+            ::free((void*)p);
+#endif /* _WIN32 */
+        };
+        _handle.reset(_malloc(adesc.get_size(mul), 4096), _free);
         set_data_handle(_handle.get());
     }
 
@@ -1849,7 +1876,8 @@ struct batch_normalization_forward : public primitive {
         mkldnn_batch_normalization_desc_t data;
         template <typename T>
         desc(prop_kind aprop_kind, const memory::desc &src_desc, T epsilon,
-                unsigned flags) {
+                unsigned flags, int stats_batch_size = 0) {
+            data.stats_batch_size = stats_batch_size;
             error::wrap_c_api(
                     mkldnn_batch_normalization_forward_desc_init(&data,
                         mkldnn::convert_to_c(aprop_kind), &src_desc.data,
@@ -2018,7 +2046,8 @@ struct batch_normalization_backward : public primitive {
         mkldnn_batch_normalization_desc_t data;
         template <typename T>
         desc(prop_kind aprop_kind, const memory::desc &diff_data_desc,
-                const memory::desc &data_desc, T epsilon, unsigned flags) {
+                const memory::desc &data_desc, T epsilon, unsigned flags, int stats_batch_size = 0) {
+            data.stats_batch_size = stats_batch_size;
             error::wrap_c_api(
                     mkldnn_batch_normalization_backward_desc_init(&data,
                         mkldnn::convert_to_c(aprop_kind),

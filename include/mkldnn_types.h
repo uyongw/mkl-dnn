@@ -606,6 +606,7 @@ typedef struct {
     /** Used when fuse with ReLU layer, save the ReLU layser info.****/
     unsigned with_relu;
     double negative_slope;
+    int stats_batch_size;
 
 } mkldnn_batch_normalization_desc_t;
 
