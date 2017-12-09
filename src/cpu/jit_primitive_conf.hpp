@@ -124,7 +124,7 @@ struct jit_conv_conf_t {
 
 struct jit_conv_winograd_conf_t : public jit_conv_conf_t {
     //alpha determines the tile size
-    static const int alpha = 6;
+    int alpha;
     int itiles;
     int jtiles;
     int ntiles;

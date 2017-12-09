@@ -338,6 +338,7 @@ status_t _jit_avx512_common_conv_winograd_data_kernel_f32::init_conf_common(
 
     const bool with_groups = weights_d.ndims() == src_d.ndims() + 1;
     const int simd_w = 16;
+    jcp.alpha = 6; // TODO: param select
 
     jcp.ngroups = with_groups ? weights_d.dims()[0] : 1;
     jcp.mb = src_d.dims()[0];
@@ -1818,6 +1819,7 @@ status_t jit_avx512_common_conv_winograd_bwd_weights_kernel_f32::init_conf(
 
     const bool with_groups = diff_weights_d.ndims() == src_d.ndims() + 1;
     const int simd_w = 16;
+    jcp.alpha = 6; // TODO: param select
 
     jcp.ngroups = with_groups ? diff_weights_d.dims()[0] : 1;
     jcp.mb = src_d.dims()[0];

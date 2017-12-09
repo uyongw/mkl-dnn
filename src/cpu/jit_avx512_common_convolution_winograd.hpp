@@ -334,16 +334,28 @@ struct _jit_avx512_common_convolution_winograd_fwd_t : public cpu_primitive_t {
 
     virtual void execute(event_t *e)
     {
-        execute_forward();
+        const auto &jcp = conf_.jcp_;
+
+        switch (jcp.alpha) {
+        case 4:
+            execute_forward<4>();
+            break;
+        case 6:
+            execute_forward<6>();
+            break;
+        default:
+            assert(!"invalid alpha");
+            break;
+        }
         e->set_state(event_t::ready);
     }
 
 private:
-    void execute_forward();
+    template<const int alpha> void execute_forward();
 
-    void _execute_forward_W_S_G_D();
-    void _execute_forward_W_S_G_D_n();
-    void _execute_forward_W_SGDt();
+    template<const int alpha> void _execute_forward_W_S_G_D();
+    template<const int alpha> void _execute_forward_W_S_G_D_n();
+    template<const int alpha> void _execute_forward_W_SGDt();
 
     pd_t conf_;
     winograd::workspace *wsp_;
@@ -427,18 +439,31 @@ struct jit_avx512_common_convolution_winograd_bwd_data_t
 
     virtual void execute(event_t *e)
     {
-        switch (conf_.desc()->prop_kind) {
-        case prop_kind::backward_data: execute_backward_data(); break;
-        default: assert(!"invalid prop_kind");
+        const auto &jcp = conf_.jcp_;
+        if (conf_.desc()->prop_kind == prop_kind::backward_data) {
+            switch (jcp.alpha) {
+            case 4:
+                execute_backward_data<4>();
+                break;
+            case 6:
+                execute_backward_data<6>();
+                break;
+            default:
+                assert(!"invalid alpha");
+                break;
+            }
+
+        } else {
+            assert(!"invalid prop_kind");
         }
         e->set_state(event_t::ready);
     }
 
 private:
-    void execute_backward_data();
-    void _execute_backward_data_W_S_G_D();
-    void _execute_backward_data_W_S_G_D_n();
-    void _execute_backward_data_W_SGDt();
+    template<const int alpha> void execute_backward_data();
+    template<const int alpha> void _execute_backward_data_W_S_G_D();
+    template<const int alpha> void _execute_backward_data_W_S_G_D_n();
+    template<const int alpha> void _execute_backward_data_W_SGDt();
 
     pd_t conf_;
     winograd::workspace *wsp_;
@@ -520,20 +545,33 @@ struct jit_avx512_common_convolution_winograd_bwd_weights_t
 
     virtual void execute(event_t *e)
     {
-        switch (conf_.desc()->prop_kind) {
-        case prop_kind::backward_weights: execute_backward_weights(); break;
-        default: assert(!"invalid prop_kind");
+        const auto &jcp = conf_.jcp_;
+        if (conf_.desc()->prop_kind == prop_kind::backward_weights) {
+            switch (jcp.alpha) {
+            case 4:
+                execute_backward_weights<4>();
+                break;
+            case 6:
+                execute_backward_weights<6>();
+                break;
+            default:
+                assert(!"invalid alpha");
+                break;
+            }
+
+        } else {
+            assert(!"invalid prop_kind");
         }
         e->set_state(event_t::ready);
     }
 
 private:
-    void execute_backward_weights();
-    void _execute_backward_weights_S_D_G_W();
-    void _execute_backward_weights_S_D_G_W_n();
-    void _execute_backward_weights_S_D_Giot_W();
-    void _execute_backward_weights_SDGtWo();
-    void _execute_backward_weights_SDGt_W();
+    template<const int alpha> void execute_backward_weights();
+    template<const int alpha> void _execute_backward_weights_S_D_G_W();
+    template<const int alpha> void _execute_backward_weights_S_D_G_W_n();
+    template<const int alpha> void _execute_backward_weights_S_D_Giot_W();
+    template<const int alpha> void _execute_backward_weights_SDGtWo();
+    template<const int alpha> void _execute_backward_weights_SDGt_W();
 
     pd_t conf_;
     winograd::workspace *wsp_;
