@@ -340,6 +340,9 @@ struct _jit_avx512_common_convolution_winograd_fwd_t : public cpu_primitive_t {
         case 4:
             execute_forward<4>();
             break;
+        case 5:
+            execute_forward<5>();
+            break;
         case 6:
             execute_forward<6>();
             break;
@@ -444,6 +447,9 @@ struct jit_avx512_common_convolution_winograd_bwd_data_t
             switch (jcp.alpha) {
             case 4:
                 execute_backward_data<4>();
+                break;
+            case 5:
+                execute_backward_data<5>();
                 break;
             case 6:
                 execute_backward_data<6>();
@@ -550,6 +556,9 @@ struct jit_avx512_common_convolution_winograd_bwd_weights_t
             switch (jcp.alpha) {
             case 4:
                 execute_backward_weights<4>();
+                break;
+            case 5:
+                execute_backward_weights<5>();
                 break;
             case 6:
                 execute_backward_weights<6>();

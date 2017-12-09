@@ -110,6 +110,49 @@ pragma_unroll
     }
 }
 
+void trans_I(float Iw[5][5][16], float I[5][5][16]) //F(3x3, 3x3)
+{
+    float T[5][5][16];
+    float t0[16];
+    float t1[16];
+    float t2[16];
+    float t3[16];
+
+pragma_unroll
+    for (int i = 0; i < 5; i++) {
+#pragma omp simd
+        for (int v = 0; v < 16; v++) {
+            t0[v] = 4.0f * I[0][i][v] - I[2][i][v];
+            t1[v] = 4.0f * I[1][i][v] - I[3][i][v];
+            t2[v] = I[3][i][v] - I[1][i][v];
+            t3[v] = 2.0f * I[0][i][v] - 2.0f * I[2][i][v];
+
+            T[0][i][v] = t0[v] + t1[v];
+            T[1][i][v] = t0[v] - t1[v];
+            T[2][i][v] = t2[v] - t3[v]; //-2.0f * I[0][i][v] - I[1][i][v] + 2.0f * I[2][i][v] + I[3][i][v];
+            T[3][i][v] = t2[v] + t3[v]; //2.0f * I[0][i][v] - I[1][i][v] - 2.0f * I[2][i][v] + I[3][i][v];
+            T[4][i][v] = 4.0f * I[0][i][v] - 5.0f * I[2][i][v] + I[4][i][v];
+        }
+    }
+pragma_unroll
+    for (int i = 0; i < 5; i++) {
+#pragma omp simd
+        for (int v = 0; v < 16; v++) {
+            t0[v] = 4.0f * T[i][0][v] - T[i][2][v];
+            t1[v] = 4.0f * T[i][1][v] - T[i][3][v];
+            t2[v] = T[i][3][v] - T[i][1][v];
+            t3[v] = 2.0f * T[i][0][v] - 2.0f * T[i][2][v];
+
+            Iw[i][0][v] = t0[v] + t1[v];
+            Iw[i][1][v] = t0[v] - t1[v];
+            Iw[i][2][v] = t2[v] - t3[v];
+            Iw[i][3][v] = t2[v] + t3[v];
+            Iw[i][4][v] = 4.0f * T[i][0][v] - 5.0f * T[i][2][v] + T[i][4][v];
+        }
+    }
+
+}
+
 void trans_I(float Iw[6][6][16], float I[6][6][16]) // F(4x4, 3x3)
 {
     float T[6][6][16];
@@ -203,6 +246,53 @@ pragma_unroll
     }
 }
 
+void trans_W(float Fw_[5][5][16][16], float F[3][3][16][16]) // F(3x3, 3x3)
+{
+    const float rcp3 = 1.0f / 3.0f;
+    const float rcp6 = 1.0f / 6.0f;
+    const float rcp12 = 1.0f / 12.0f;
+    float Fw[5][16];
+    float T[5][3][16];
+    float t0[16];
+    float t1[16];
+
+    for (int j = 0; j < 16; j++) {
+pragma_unroll
+        for (int i = 0; i < 3; i++) {
+#pragma omp simd
+            for (int k = 0; k < 16; k++) {
+                t0[k] = rcp6 * F[0][i][j][k] + rcp6 * F[2][i][j][k];
+                t1[k] = rcp12 * F[0][i][j][k] + rcp3 * F[2][i][j][k];
+
+                T[0][i][k] = t0[k] + rcp6 * F[1][i][j][k];
+                T[1][i][k] = t0[k] - rcp6 * F[1][i][j][k];
+                T[2][i][k] = t1[k] + rcp6 * F[1][i][j][k];
+                T[3][i][k] = rcp6 * F[1][i][j][k] - t1[k];
+                T[4][i][k] = F[2][i][j][k];
+            }
+        }
+pragma_unroll
+        for (int i = 0; i < 5; i++) {
+#pragma omp simd
+            for (int k = 0; k < 16; k++) {
+                t0[k] = rcp6 * T[i][0][k] + rcp6 * T[i][2][k];
+                t1[k] = rcp12 * T[i][0][k] + rcp3 * T[i][2][k];
+
+                Fw[0][k] = t0[k] + rcp6 * T[i][1][k];
+                Fw[1][k] = t0[k] - rcp6 * T[i][1][k];
+                Fw[2][k] = t1[k] + rcp6 * T[i][1][k];
+                Fw[3][k] = rcp6 * T[i][1][k] - t1[k];
+                Fw[4][k] = T[i][2][k];
+
+pragma_unroll
+                for (int l = 0; l < 5; l++) {
+                    Fw_[i][l][j][k] = Fw[l][k];
+                }
+            }
+        }
+    }
+}
+
 void trans_W(float Fw_[6][6][16][16], float F[3][3][16][16]) // F(4x4, 3x3)
 {
     const float rcp4 = 1.0f / 4.0f;
@@ -273,6 +363,38 @@ pragma_unroll
         for (int v = 0; v < 16; v++) {
             O[i][0][v] = T[i][0][v] + T[i][1][v] + T[i][2][v];
             O[i][1][v] = T[i][1][v] - T[i][2][v] - T[i][3][v];
+        }
+    }
+}
+
+void trans_O(float Mw[5][5][16], float O[3][3][16]) // F(3x3, 3x3)
+{
+    float T[3][5][16];
+    float t0[16];
+    float t1[16];
+
+pragma_unroll
+    for (int i = 0; i < 5; i++) {
+#pragma omp simd
+        for (int v = 0; v < 16; v++) {
+            t0[v] = Mw[0][i][v] + Mw[1][i][v];
+            t1[v] = Mw[2][i][v] + Mw[3][i][v];
+
+            T[0][i][v] = t0[v] + t1[v];
+            T[1][i][v] = Mw[0][i][v] - Mw[1][i][v] + 2.0f * Mw[2][i][v] - 2.0f * Mw[3][i][v];
+            T[2][i][v] = t0[v] + 4.0f * t1[v] + Mw[4][i][v];
+        }
+    }
+pragma_unroll
+    for (int i = 0; i < 3; i++) {
+#pragma omp simd
+        for (int v = 0; v < 16; v++) {
+            t0[v] = T[i][0][v] + T[i][1][v];
+            t1[v] = T[i][2][v] + T[i][3][v];
+
+            O[i][0][v] = t0[v] + t1[v];
+            O[i][1][v] = T[i][0][v] - T[i][1][v] + 2.0f * T[i][2][v] - 2.0f * T[i][3][v];;
+            O[i][2][v] = t0[v] + t1[v] * 4.0f + T[i][4][v];
         }
     }
 }
@@ -439,6 +561,12 @@ pragma_unroll
     }
 }
 
+
+void trans_I_wu(float Iw[5][5][16], float I[5][5][16]) // F(3x3, 3x3)
+{
+    trans_I(Iw, I);
+}
+
 void trans_I_wu(float Iw[6][6][16], float I[6][6][16]) // F(3x3, 4x4)
 {
     float T[6][6][16];
@@ -514,6 +642,45 @@ pragma_unroll
             Fw[i][1][v] = rcp2 * T[i][0][v] + rcp2 * T[i][1][v];
             Fw[i][2][v] = rcp2 * T[i][0][v] - rcp2 * T[i][1][v];
             Fw[i][3][v] = T[i][1][v];
+        }
+    }
+}
+
+void trans_W_wu(float Fw[5][5][16], float F[3][5][16]) // F(3x3, 3x3)
+{
+    const float rcp3 = 1.0f / 3.0f;
+    const float rcp6 = 1.0f / 6.0f;
+    const float rcp12 = 1.0f / 12.0f;
+    float T[5][3][16];
+    float t0[16];
+    float t1[16];
+
+pragma_unroll
+    for (int i = 0; i < 3; i++) {
+#pragma omp simd
+        for (int k = 0; k < 16; k++) {
+            t0[k] = rcp6 * F[0][i][k] + rcp6 * F[2][i][k];
+            t1[k] = rcp12 * F[0][i][k] + rcp3 * F[2][i][k];
+
+            T[0][i][k] = t0[k] + rcp6 * F[1][i][k];
+            T[1][i][k] = t0[k] - rcp6 * F[1][i][k];
+            T[2][i][k] = t1[k] + rcp6 * F[1][i][k];
+            T[3][i][k] = rcp6 * F[1][i][k] - t1[k];
+            T[4][i][k] = F[2][i][k];
+        }
+    }
+pragma_unroll
+    for (int i = 0; i < 5; i++) {
+#pragma omp simd
+        for (int k = 0; k < 16; k++) {
+            t0[k] = rcp6 * T[i][0][k] + rcp6 * T[i][2][k];
+            t1[k] = rcp12 * T[i][0][k] + rcp3 * T[i][2][k];
+
+            Fw[i][0][k] = t0[k] + rcp6 * T[i][1][k];
+            Fw[i][1][k] = t0[k] - rcp6 * T[i][1][k];
+            Fw[i][2][k] = t1[k] + rcp6 * T[i][1][k];
+            Fw[i][3][k] = rcp6 * T[i][1][k] - t1[k];
+            Fw[i][4][k] = T[i][2][k];
         }
     }
 }
@@ -595,6 +762,48 @@ pragma_unroll
                 M_[0][v] = T[i][0][v] + t0[v];
                 M_[1][v] = T[i][1][v] - T[i][2][v];
                 M_[2][v] = t0[v] + T[i][3][v];
+pragma_unroll
+                for (int k = 0; k < 3; k++) {
+                    M[i][k][j][v] = M_[k][v];
+                }
+            }
+        }
+    }
+}
+
+void trans_O_wu(float Mw[5][5][16][16], float M[3][3][16][16]) // F(3x3, 3x3)
+{
+    float T[3][5][16];
+    float t0[16];
+    float t1[16];
+    float M_[3][16];
+
+    for (int j = 0; j < 16; j++) {
+pragma_unroll
+        for (int i = 0; i < 5; i++) {
+#pragma omp simd
+            for (int v = 0; v < 16; v++) {
+                t0[v] = Mw[0][i][j][v] + Mw[1][i][j][v];
+                t1[v] = Mw[2][i][j][v] + Mw[3][i][j][v];
+
+                T[0][i][v] = t0[v] + t1[v];
+                T[1][i][v] = Mw[0][i][j][v] - Mw[1][i][j][v] +
+                    2.0f * Mw[2][i][j][v] - 2.0f * Mw[3][i][j][v];
+                T[2][i][v] = t0[v] + 4.0f * t1[v] + Mw[4][i][j][v];
+            }
+        }
+pragma_unroll
+        for (int i = 0; i < 3; i++) {
+#pragma omp simd
+            for (int v = 0; v < 16; v++) {
+                t0[v] = T[i][0][v] + T[i][1][v];
+                t1[v] = T[i][2][v] + T[i][3][v];
+
+                M_[0][v] = t0[v] + t1[v];
+                M_[1][v] = T[i][0][v] - T[i][1][v] +
+                    2.0f * T[i][2][v] - 2.0f * T[i][3][v];
+                M_[2][v] = t0[v] + 4.0f * t1[v] + T[i][4][v];
+
 pragma_unroll
                 for (int k = 0; k < 3; k++) {
                     M[i][k][j][v] = M_[k][v];
@@ -2349,39 +2558,56 @@ _execute_forward_W_SGDt()
     }
 }
 
-template void
-_jit_avx512_common_convolution_winograd_fwd_t<true>::execute_forward<4>();
-template void
-_jit_avx512_common_convolution_winograd_fwd_t<false>::execute_forward<4>();
-template void
-_jit_avx512_common_convolution_winograd_fwd_t<true>::_execute_forward_W_S_G_D<4>();
-template void
-_jit_avx512_common_convolution_winograd_fwd_t<false>::_execute_forward_W_S_G_D<4>();
-template void
-_jit_avx512_common_convolution_winograd_fwd_t<true>::_execute_forward_W_S_G_D_n<4>();
-template void
-_jit_avx512_common_convolution_winograd_fwd_t<false>::_execute_forward_W_S_G_D_n<4>();
-template void
-_jit_avx512_common_convolution_winograd_fwd_t<true>::_execute_forward_W_SGDt<4>();
-template void
-_jit_avx512_common_convolution_winograd_fwd_t<false>::_execute_forward_W_SGDt<4>();
+template void _jit_avx512_common_convolution_winograd_fwd_t<true>::
+execute_forward<4>();
+template void _jit_avx512_common_convolution_winograd_fwd_t<false>::
+execute_forward<4>();
+template void _jit_avx512_common_convolution_winograd_fwd_t<true>::
+_execute_forward_W_S_G_D<4>();
+template void _jit_avx512_common_convolution_winograd_fwd_t<false>::
+_execute_forward_W_S_G_D<4>();
+template void _jit_avx512_common_convolution_winograd_fwd_t<true>::
+_execute_forward_W_S_G_D_n<4>();
+template void _jit_avx512_common_convolution_winograd_fwd_t<false>::
+_execute_forward_W_S_G_D_n<4>();
+template void _jit_avx512_common_convolution_winograd_fwd_t<true>::
+_execute_forward_W_SGDt<4>();
+template void _jit_avx512_common_convolution_winograd_fwd_t<false>::
+_execute_forward_W_SGDt<4>();
 
-template void
-_jit_avx512_common_convolution_winograd_fwd_t<true>::execute_forward<6>();
-template void
-_jit_avx512_common_convolution_winograd_fwd_t<false>::execute_forward<6>();
-template void
-_jit_avx512_common_convolution_winograd_fwd_t<true>::_execute_forward_W_S_G_D<6>();
-template void
-_jit_avx512_common_convolution_winograd_fwd_t<false>::_execute_forward_W_S_G_D<6>();
-template void
-_jit_avx512_common_convolution_winograd_fwd_t<true>::_execute_forward_W_S_G_D_n<6>();
-template void
-_jit_avx512_common_convolution_winograd_fwd_t<false>::_execute_forward_W_S_G_D_n<6>();
-template void
-_jit_avx512_common_convolution_winograd_fwd_t<true>::_execute_forward_W_SGDt<6>();
-template void
-_jit_avx512_common_convolution_winograd_fwd_t<false>::_execute_forward_W_SGDt<6>();
+template void _jit_avx512_common_convolution_winograd_fwd_t<true>::
+execute_forward<5>();
+template void _jit_avx512_common_convolution_winograd_fwd_t<false>::
+execute_forward<5>();
+template void _jit_avx512_common_convolution_winograd_fwd_t<true>::
+_execute_forward_W_S_G_D<5>();
+template void _jit_avx512_common_convolution_winograd_fwd_t<false>::
+_execute_forward_W_S_G_D<5>();
+template void _jit_avx512_common_convolution_winograd_fwd_t<true>::
+_execute_forward_W_S_G_D_n<5>();
+template void _jit_avx512_common_convolution_winograd_fwd_t<false>::
+_execute_forward_W_S_G_D_n<5>();
+template void _jit_avx512_common_convolution_winograd_fwd_t<true>::
+_execute_forward_W_SGDt<5>();
+template void _jit_avx512_common_convolution_winograd_fwd_t<false>::
+_execute_forward_W_SGDt<5>();
+
+template void _jit_avx512_common_convolution_winograd_fwd_t<true>::
+execute_forward<6>();
+template void _jit_avx512_common_convolution_winograd_fwd_t<false>::
+execute_forward<6>();
+template void _jit_avx512_common_convolution_winograd_fwd_t<true>::
+_execute_forward_W_S_G_D<6>();
+template void _jit_avx512_common_convolution_winograd_fwd_t<false>::
+_execute_forward_W_S_G_D<6>();
+template void _jit_avx512_common_convolution_winograd_fwd_t<true>::
+_execute_forward_W_S_G_D_n<6>();
+template void _jit_avx512_common_convolution_winograd_fwd_t<false>::
+_execute_forward_W_S_G_D_n<6>();
+template void _jit_avx512_common_convolution_winograd_fwd_t<true>::
+_execute_forward_W_SGDt<6>();
+template void _jit_avx512_common_convolution_winograd_fwd_t<false>::
+_execute_forward_W_SGDt<6>();
 
 template <const int alpha>
 void jit_avx512_common_convolution_winograd_bwd_data_t::execute_backward_data()
@@ -2766,6 +2992,15 @@ template void jit_avx512_common_convolution_winograd_bwd_data_t::
 _execute_backward_data_W_S_G_D_n<4>();
 template void jit_avx512_common_convolution_winograd_bwd_data_t::
 _execute_backward_data_W_SGDt<4>();
+
+template void jit_avx512_common_convolution_winograd_bwd_data_t::
+execute_backward_data<5>();
+template void jit_avx512_common_convolution_winograd_bwd_data_t::
+_execute_backward_data_W_S_G_D<5>();
+template void jit_avx512_common_convolution_winograd_bwd_data_t::
+_execute_backward_data_W_S_G_D_n<5>();
+template void jit_avx512_common_convolution_winograd_bwd_data_t::
+_execute_backward_data_W_SGDt<5>();
 
 template void jit_avx512_common_convolution_winograd_bwd_data_t::
 execute_backward_data<6>();
@@ -3756,6 +3991,19 @@ template void jit_avx512_common_convolution_winograd_bwd_weights_t::
 _execute_backward_weights_SDGtWo<4>();
 template void jit_avx512_common_convolution_winograd_bwd_weights_t::
 _execute_backward_weights_SDGt_W<4>();
+
+template void jit_avx512_common_convolution_winograd_bwd_weights_t::
+execute_backward_weights<5>();
+template void jit_avx512_common_convolution_winograd_bwd_weights_t::
+_execute_backward_weights_S_D_G_W<5>();
+template void jit_avx512_common_convolution_winograd_bwd_weights_t::
+_execute_backward_weights_S_D_G_W_n<5>();
+template void jit_avx512_common_convolution_winograd_bwd_weights_t::
+_execute_backward_weights_S_D_Giot_W<5>();
+template void jit_avx512_common_convolution_winograd_bwd_weights_t::
+_execute_backward_weights_SDGtWo<5>();
+template void jit_avx512_common_convolution_winograd_bwd_weights_t::
+_execute_backward_weights_SDGt_W<5>();
 
 template void jit_avx512_common_convolution_winograd_bwd_weights_t::
 execute_backward_weights<6>();
