@@ -346,6 +346,9 @@ struct _jit_avx512_common_convolution_winograd_fwd_t : public cpu_primitive_t {
         case 6:
             execute_forward<6>();
             break;
+        case 8:
+            execute_forward<8>();
+            break;
         default:
             assert(!"invalid alpha");
             break;
@@ -453,6 +456,9 @@ struct jit_avx512_common_convolution_winograd_bwd_data_t
                 break;
             case 6:
                 execute_backward_data<6>();
+                break;
+            case 8:
+                execute_backward_data<8>();
                 break;
             default:
                 assert(!"invalid alpha");
@@ -562,6 +568,9 @@ struct jit_avx512_common_convolution_winograd_bwd_weights_t
                 break;
             case 6:
                 execute_backward_weights<6>();
+                break;
+            case 8:
+                execute_backward_weights<8>();
                 break;
             default:
                 assert(!"invalid alpha");
