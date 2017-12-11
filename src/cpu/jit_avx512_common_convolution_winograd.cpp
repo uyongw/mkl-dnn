@@ -3413,109 +3413,30 @@ _execute_forward_W_SGDt()
     }
 }
 
-template void _jit_avx512_common_convolution_winograd_fwd_t<true>::
-execute_forward<3>();
-template void _jit_avx512_common_convolution_winograd_fwd_t<false>::
-execute_forward<3>();
-template void _jit_avx512_common_convolution_winograd_fwd_t<true>::
-_execute_forward_W_S_G_D<3>();
-template void _jit_avx512_common_convolution_winograd_fwd_t<false>::
-_execute_forward_W_S_G_D<3>();
-template void _jit_avx512_common_convolution_winograd_fwd_t<true>::
-_execute_forward_W_S_G_D_n<3>();
-template void _jit_avx512_common_convolution_winograd_fwd_t<false>::
-_execute_forward_W_S_G_D_n<3>();
-template void _jit_avx512_common_convolution_winograd_fwd_t<true>::
-_execute_forward_W_SGDt<3>();
-template void _jit_avx512_common_convolution_winograd_fwd_t<false>::
-_execute_forward_W_SGDt<3>();
+#define TEMPLATE_INSTANT_WINOGRAD_FWD(alpha) \
+template void _jit_avx512_common_convolution_winograd_fwd_t<true>:: \
+execute_forward<alpha>(); \
+template void _jit_avx512_common_convolution_winograd_fwd_t<false>:: \
+execute_forward<alpha>(); \
+template void _jit_avx512_common_convolution_winograd_fwd_t<true>:: \
+_execute_forward_W_S_G_D<alpha>(); \
+template void _jit_avx512_common_convolution_winograd_fwd_t<false>:: \
+_execute_forward_W_S_G_D<alpha>(); \
+template void _jit_avx512_common_convolution_winograd_fwd_t<true>:: \
+_execute_forward_W_S_G_D_n<alpha>(); \
+template void _jit_avx512_common_convolution_winograd_fwd_t<false>:: \
+_execute_forward_W_S_G_D_n<alpha>(); \
+template void _jit_avx512_common_convolution_winograd_fwd_t<true>:: \
+_execute_forward_W_SGDt<alpha>(); \
+template void _jit_avx512_common_convolution_winograd_fwd_t<false>:: \
+_execute_forward_W_SGDt<alpha>();
 
-
-template void _jit_avx512_common_convolution_winograd_fwd_t<true>::
-execute_forward<4>();
-template void _jit_avx512_common_convolution_winograd_fwd_t<false>::
-execute_forward<4>();
-template void _jit_avx512_common_convolution_winograd_fwd_t<true>::
-_execute_forward_W_S_G_D<4>();
-template void _jit_avx512_common_convolution_winograd_fwd_t<false>::
-_execute_forward_W_S_G_D<4>();
-template void _jit_avx512_common_convolution_winograd_fwd_t<true>::
-_execute_forward_W_S_G_D_n<4>();
-template void _jit_avx512_common_convolution_winograd_fwd_t<false>::
-_execute_forward_W_S_G_D_n<4>();
-template void _jit_avx512_common_convolution_winograd_fwd_t<true>::
-_execute_forward_W_SGDt<4>();
-template void _jit_avx512_common_convolution_winograd_fwd_t<false>::
-_execute_forward_W_SGDt<4>();
-
-template void _jit_avx512_common_convolution_winograd_fwd_t<true>::
-execute_forward<5>();
-template void _jit_avx512_common_convolution_winograd_fwd_t<false>::
-execute_forward<5>();
-template void _jit_avx512_common_convolution_winograd_fwd_t<true>::
-_execute_forward_W_S_G_D<5>();
-template void _jit_avx512_common_convolution_winograd_fwd_t<false>::
-_execute_forward_W_S_G_D<5>();
-template void _jit_avx512_common_convolution_winograd_fwd_t<true>::
-_execute_forward_W_S_G_D_n<5>();
-template void _jit_avx512_common_convolution_winograd_fwd_t<false>::
-_execute_forward_W_S_G_D_n<5>();
-template void _jit_avx512_common_convolution_winograd_fwd_t<true>::
-_execute_forward_W_SGDt<5>();
-template void _jit_avx512_common_convolution_winograd_fwd_t<false>::
-_execute_forward_W_SGDt<5>();
-
-template void _jit_avx512_common_convolution_winograd_fwd_t<true>::
-execute_forward<6>();
-template void _jit_avx512_common_convolution_winograd_fwd_t<false>::
-execute_forward<6>();
-template void _jit_avx512_common_convolution_winograd_fwd_t<true>::
-_execute_forward_W_S_G_D<6>();
-template void _jit_avx512_common_convolution_winograd_fwd_t<false>::
-_execute_forward_W_S_G_D<6>();
-template void _jit_avx512_common_convolution_winograd_fwd_t<true>::
-_execute_forward_W_S_G_D_n<6>();
-template void _jit_avx512_common_convolution_winograd_fwd_t<false>::
-_execute_forward_W_S_G_D_n<6>();
-template void _jit_avx512_common_convolution_winograd_fwd_t<true>::
-_execute_forward_W_SGDt<6>();
-template void _jit_avx512_common_convolution_winograd_fwd_t<false>::
-_execute_forward_W_SGDt<6>();
-
-template void _jit_avx512_common_convolution_winograd_fwd_t<true>::
-execute_forward<7>();
-template void _jit_avx512_common_convolution_winograd_fwd_t<false>::
-execute_forward<7>();
-template void _jit_avx512_common_convolution_winograd_fwd_t<true>::
-_execute_forward_W_S_G_D<7>();
-template void _jit_avx512_common_convolution_winograd_fwd_t<false>::
-_execute_forward_W_S_G_D<7>();
-template void _jit_avx512_common_convolution_winograd_fwd_t<true>::
-_execute_forward_W_S_G_D_n<7>();
-template void _jit_avx512_common_convolution_winograd_fwd_t<false>::
-_execute_forward_W_S_G_D_n<7>();
-template void _jit_avx512_common_convolution_winograd_fwd_t<true>::
-_execute_forward_W_SGDt<7>();
-template void _jit_avx512_common_convolution_winograd_fwd_t<false>::
-_execute_forward_W_SGDt<7>();
-
-
-template void _jit_avx512_common_convolution_winograd_fwd_t<true>::
-execute_forward<8>();
-template void _jit_avx512_common_convolution_winograd_fwd_t<false>::
-execute_forward<8>();
-template void _jit_avx512_common_convolution_winograd_fwd_t<true>::
-_execute_forward_W_S_G_D<8>();
-template void _jit_avx512_common_convolution_winograd_fwd_t<false>::
-_execute_forward_W_S_G_D<8>();
-template void _jit_avx512_common_convolution_winograd_fwd_t<true>::
-_execute_forward_W_S_G_D_n<8>();
-template void _jit_avx512_common_convolution_winograd_fwd_t<false>::
-_execute_forward_W_S_G_D_n<8>();
-template void _jit_avx512_common_convolution_winograd_fwd_t<true>::
-_execute_forward_W_SGDt<8>();
-template void _jit_avx512_common_convolution_winograd_fwd_t<false>::
-_execute_forward_W_SGDt<8>();
+TEMPLATE_INSTANT_WINOGRAD_FWD(3)
+TEMPLATE_INSTANT_WINOGRAD_FWD(4)
+TEMPLATE_INSTANT_WINOGRAD_FWD(5)
+TEMPLATE_INSTANT_WINOGRAD_FWD(6)
+TEMPLATE_INSTANT_WINOGRAD_FWD(7)
+TEMPLATE_INSTANT_WINOGRAD_FWD(8)
 
 template <const int alpha>
 void jit_avx512_common_convolution_winograd_bwd_data_t::execute_backward_data()
@@ -3892,59 +3813,22 @@ _execute_backward_data_W_SGDt()
     }
 }
 
-template void jit_avx512_common_convolution_winograd_bwd_data_t::
-execute_backward_data<3>();
-template void jit_avx512_common_convolution_winograd_bwd_data_t::
-_execute_backward_data_W_S_G_D<3>();
-template void jit_avx512_common_convolution_winograd_bwd_data_t::
-_execute_backward_data_W_S_G_D_n<3>();
-template void jit_avx512_common_convolution_winograd_bwd_data_t::
-_execute_backward_data_W_SGDt<3>();
+#define TEMPLATE_INSTANT_WINOGRAD_BWD_DATA(alpha) \
+template void jit_avx512_common_convolution_winograd_bwd_data_t:: \
+execute_backward_data<alpha>(); \
+template void jit_avx512_common_convolution_winograd_bwd_data_t:: \
+_execute_backward_data_W_S_G_D<alpha>(); \
+template void jit_avx512_common_convolution_winograd_bwd_data_t:: \
+_execute_backward_data_W_S_G_D_n<alpha>(); \
+template void jit_avx512_common_convolution_winograd_bwd_data_t:: \
+_execute_backward_data_W_SGDt<alpha>();
 
-template void jit_avx512_common_convolution_winograd_bwd_data_t::
-execute_backward_data<4>();
-template void jit_avx512_common_convolution_winograd_bwd_data_t::
-_execute_backward_data_W_S_G_D<4>();
-template void jit_avx512_common_convolution_winograd_bwd_data_t::
-_execute_backward_data_W_S_G_D_n<4>();
-template void jit_avx512_common_convolution_winograd_bwd_data_t::
-_execute_backward_data_W_SGDt<4>();
-
-template void jit_avx512_common_convolution_winograd_bwd_data_t::
-execute_backward_data<5>();
-template void jit_avx512_common_convolution_winograd_bwd_data_t::
-_execute_backward_data_W_S_G_D<5>();
-template void jit_avx512_common_convolution_winograd_bwd_data_t::
-_execute_backward_data_W_S_G_D_n<5>();
-template void jit_avx512_common_convolution_winograd_bwd_data_t::
-_execute_backward_data_W_SGDt<5>();
-
-template void jit_avx512_common_convolution_winograd_bwd_data_t::
-execute_backward_data<6>();
-template void jit_avx512_common_convolution_winograd_bwd_data_t::
-_execute_backward_data_W_S_G_D<6>();
-template void jit_avx512_common_convolution_winograd_bwd_data_t::
-_execute_backward_data_W_S_G_D_n<6>();
-template void jit_avx512_common_convolution_winograd_bwd_data_t::
-_execute_backward_data_W_SGDt<6>();
-
-template void jit_avx512_common_convolution_winograd_bwd_data_t::
-execute_backward_data<7>();
-template void jit_avx512_common_convolution_winograd_bwd_data_t::
-_execute_backward_data_W_S_G_D<7>();
-template void jit_avx512_common_convolution_winograd_bwd_data_t::
-_execute_backward_data_W_S_G_D_n<7>();
-template void jit_avx512_common_convolution_winograd_bwd_data_t::
-_execute_backward_data_W_SGDt<7>();
-
-template void jit_avx512_common_convolution_winograd_bwd_data_t::
-execute_backward_data<8>();
-template void jit_avx512_common_convolution_winograd_bwd_data_t::
-_execute_backward_data_W_S_G_D<8>();
-template void jit_avx512_common_convolution_winograd_bwd_data_t::
-_execute_backward_data_W_S_G_D_n<8>();
-template void jit_avx512_common_convolution_winograd_bwd_data_t::
-_execute_backward_data_W_SGDt<8>();
+TEMPLATE_INSTANT_WINOGRAD_BWD_DATA(3)
+TEMPLATE_INSTANT_WINOGRAD_BWD_DATA(4)
+TEMPLATE_INSTANT_WINOGRAD_BWD_DATA(5)
+TEMPLATE_INSTANT_WINOGRAD_BWD_DATA(6)
+TEMPLATE_INSTANT_WINOGRAD_BWD_DATA(7)
+TEMPLATE_INSTANT_WINOGRAD_BWD_DATA(8)
 
 template <const int alpha>
 void jit_avx512_common_convolution_winograd_bwd_weights_t::
@@ -4914,83 +4798,26 @@ _execute_backward_weights_SDGt_W()
     }
 }
 
-template void jit_avx512_common_convolution_winograd_bwd_weights_t::
-execute_backward_weights<3>();
-template void jit_avx512_common_convolution_winograd_bwd_weights_t::
-_execute_backward_weights_S_D_G_W<3>();
-template void jit_avx512_common_convolution_winograd_bwd_weights_t::
-_execute_backward_weights_S_D_G_W_n<3>();
-template void jit_avx512_common_convolution_winograd_bwd_weights_t::
-_execute_backward_weights_S_D_Giot_W<3>();
-template void jit_avx512_common_convolution_winograd_bwd_weights_t::
-_execute_backward_weights_SDGtWo<3>();
-template void jit_avx512_common_convolution_winograd_bwd_weights_t::
-_execute_backward_weights_SDGt_W<3>();
+#define TEMPLATE_INSTANT_WINOGRAD_BWD_WEIGHTS(alpha) \
+template void jit_avx512_common_convolution_winograd_bwd_weights_t:: \
+execute_backward_weights<alpha>(); \
+template void jit_avx512_common_convolution_winograd_bwd_weights_t:: \
+_execute_backward_weights_S_D_G_W<alpha>(); \
+template void jit_avx512_common_convolution_winograd_bwd_weights_t:: \
+_execute_backward_weights_S_D_G_W_n<alpha>(); \
+template void jit_avx512_common_convolution_winograd_bwd_weights_t:: \
+_execute_backward_weights_S_D_Giot_W<alpha>(); \
+template void jit_avx512_common_convolution_winograd_bwd_weights_t:: \
+_execute_backward_weights_SDGtWo<alpha>(); \
+template void jit_avx512_common_convolution_winograd_bwd_weights_t:: \
+_execute_backward_weights_SDGt_W<alpha>();
 
-template void jit_avx512_common_convolution_winograd_bwd_weights_t::
-execute_backward_weights<4>();
-template void jit_avx512_common_convolution_winograd_bwd_weights_t::
-_execute_backward_weights_S_D_G_W<4>();
-template void jit_avx512_common_convolution_winograd_bwd_weights_t::
-_execute_backward_weights_S_D_G_W_n<4>();
-template void jit_avx512_common_convolution_winograd_bwd_weights_t::
-_execute_backward_weights_S_D_Giot_W<4>();
-template void jit_avx512_common_convolution_winograd_bwd_weights_t::
-_execute_backward_weights_SDGtWo<4>();
-template void jit_avx512_common_convolution_winograd_bwd_weights_t::
-_execute_backward_weights_SDGt_W<4>();
-
-template void jit_avx512_common_convolution_winograd_bwd_weights_t::
-execute_backward_weights<5>();
-template void jit_avx512_common_convolution_winograd_bwd_weights_t::
-_execute_backward_weights_S_D_G_W<5>();
-template void jit_avx512_common_convolution_winograd_bwd_weights_t::
-_execute_backward_weights_S_D_G_W_n<5>();
-template void jit_avx512_common_convolution_winograd_bwd_weights_t::
-_execute_backward_weights_S_D_Giot_W<5>();
-template void jit_avx512_common_convolution_winograd_bwd_weights_t::
-_execute_backward_weights_SDGtWo<5>();
-template void jit_avx512_common_convolution_winograd_bwd_weights_t::
-_execute_backward_weights_SDGt_W<5>();
-
-template void jit_avx512_common_convolution_winograd_bwd_weights_t::
-execute_backward_weights<6>();
-template void jit_avx512_common_convolution_winograd_bwd_weights_t::
-_execute_backward_weights_S_D_G_W<6>();
-template void jit_avx512_common_convolution_winograd_bwd_weights_t::
-_execute_backward_weights_S_D_G_W_n<6>();
-template void jit_avx512_common_convolution_winograd_bwd_weights_t::
-_execute_backward_weights_S_D_Giot_W<6>();
-template void jit_avx512_common_convolution_winograd_bwd_weights_t::
-_execute_backward_weights_SDGtWo<6>();
-template void jit_avx512_common_convolution_winograd_bwd_weights_t::
-_execute_backward_weights_SDGt_W<6>();
-
-template void jit_avx512_common_convolution_winograd_bwd_weights_t::
-execute_backward_weights<7>();
-template void jit_avx512_common_convolution_winograd_bwd_weights_t::
-_execute_backward_weights_S_D_G_W<7>();
-template void jit_avx512_common_convolution_winograd_bwd_weights_t::
-_execute_backward_weights_S_D_G_W_n<7>();
-template void jit_avx512_common_convolution_winograd_bwd_weights_t::
-_execute_backward_weights_S_D_Giot_W<7>();
-template void jit_avx512_common_convolution_winograd_bwd_weights_t::
-_execute_backward_weights_SDGtWo<7>();
-template void jit_avx512_common_convolution_winograd_bwd_weights_t::
-_execute_backward_weights_SDGt_W<7>();
-
-template void jit_avx512_common_convolution_winograd_bwd_weights_t::
-execute_backward_weights<8>();
-template void jit_avx512_common_convolution_winograd_bwd_weights_t::
-_execute_backward_weights_S_D_G_W<8>();
-template void jit_avx512_common_convolution_winograd_bwd_weights_t::
-_execute_backward_weights_S_D_G_W_n<8>();
-template void jit_avx512_common_convolution_winograd_bwd_weights_t::
-_execute_backward_weights_S_D_Giot_W<8>();
-template void jit_avx512_common_convolution_winograd_bwd_weights_t::
-_execute_backward_weights_SDGtWo<8>();
-template void jit_avx512_common_convolution_winograd_bwd_weights_t::
-_execute_backward_weights_SDGt_W<8>();
+TEMPLATE_INSTANT_WINOGRAD_BWD_WEIGHTS(3)
+TEMPLATE_INSTANT_WINOGRAD_BWD_WEIGHTS(4)
+TEMPLATE_INSTANT_WINOGRAD_BWD_WEIGHTS(5)
+TEMPLATE_INSTANT_WINOGRAD_BWD_WEIGHTS(6)
+TEMPLATE_INSTANT_WINOGRAD_BWD_WEIGHTS(7)
+TEMPLATE_INSTANT_WINOGRAD_BWD_WEIGHTS(8)
 
 }
 }
