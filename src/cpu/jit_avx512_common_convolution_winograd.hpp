@@ -337,6 +337,9 @@ struct _jit_avx512_common_convolution_winograd_fwd_t : public cpu_primitive_t {
         const auto &jcp = conf_.jcp_;
 
         switch (jcp.alpha) {
+        case 3:
+            execute_forward<3>();
+            break;
         case 4:
             execute_forward<4>();
             break;
@@ -345,6 +348,9 @@ struct _jit_avx512_common_convolution_winograd_fwd_t : public cpu_primitive_t {
             break;
         case 6:
             execute_forward<6>();
+            break;
+        case 7:
+            execute_forward<7>();
             break;
         case 8:
             execute_forward<8>();
@@ -448,6 +454,9 @@ struct jit_avx512_common_convolution_winograd_bwd_data_t
         const auto &jcp = conf_.jcp_;
         if (conf_.desc()->prop_kind == prop_kind::backward_data) {
             switch (jcp.alpha) {
+            case 3:
+                execute_backward_data<3>();
+                break;
             case 4:
                 execute_backward_data<4>();
                 break;
@@ -456,6 +465,9 @@ struct jit_avx512_common_convolution_winograd_bwd_data_t
                 break;
             case 6:
                 execute_backward_data<6>();
+                break;
+            case 7:
+                execute_backward_data<7>();
                 break;
             case 8:
                 execute_backward_data<8>();
@@ -560,6 +572,9 @@ struct jit_avx512_common_convolution_winograd_bwd_weights_t
         const auto &jcp = conf_.jcp_;
         if (conf_.desc()->prop_kind == prop_kind::backward_weights) {
             switch (jcp.alpha) {
+            case 3:
+                execute_backward_weights<3>();
+                break;
             case 4:
                 execute_backward_weights<4>();
                 break;
@@ -568,6 +583,9 @@ struct jit_avx512_common_convolution_winograd_bwd_weights_t
                 break;
             case 6:
                 execute_backward_weights<6>();
+                break;
+            case 7:
+                execute_backward_weights<7>();
                 break;
             case 8:
                 execute_backward_weights<8>();
