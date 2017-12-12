@@ -371,6 +371,100 @@ pragma_unroll
     }
 }
 
+void trans_I(float Iw[9][9][16], float I[9][9][16]) // F(7x7, 3x3)
+{
+    const float r13_2 = 13.0f / 2.0f;
+    const float r15_2 = 15.0f / 2.0f;
+    const float r169_16 = 169.0f / 16.0f;
+    const float r1_2 = 1.0f / 2.0f;
+    const float r205_16 = 205.0f / 16.0f;
+    const float r21_4 = 21.0f / 4.0f;
+    const float r273_16 = 273.0f / 16.0f;
+    const float r29_4 = 29.0f / 4.0f;
+    const float r29_8 = 29.0f / 8.0f;
+    const float r3_2 = 3.0f / 2.0f;
+    const float r49_16 = 49.0f / 16.0f;
+    const float r49_8 = 49.0f / 8.0f;
+    const float r61_4 = 61.0f / 4.0f;
+    const float r61_8 = 61.0f / 8.0f;
+    const float r63_8 = 63.0f / 8.0f;
+    const float r7_2 = 7.0f / 2.0f;
+    const float r9_16 = 9.0f / 16.0f;
+    const float r9_2 = 9.0f / 2.0f;
+    const float r9_4 = 9.0f / 4.0f;
+    const float r9_8 = 9.0f / 8.0f;
+
+    float T[9][9][16];
+    float t0[16];
+    float t1[16];
+    float t2[16];
+    float t3[16];
+    float t4[16];
+    float t5[16];
+    float t6[16];
+    float t7[16];
+
+#undef E
+#undef R
+#define E(x) I[x][i][v]
+#define R(x) T[x][i][v]
+pragma_unroll
+    for (int i = 0; i < 9; i++) {
+#pragma omp simd
+        for (int v = 0; v < 16; v++) {
+            t0[v] = -r9_4 * E(0) + r169_16 * E(2) - r13_2 * E(4) + E(6);
+            t1[v] = -r9_4 * E(1) + r169_16 * E(3) - r13_2 * E(5) + E(7);
+            t2[v] = -r9_8 * E(0) + r49_8 * E(2) - 7.0f * E(4) + 2.0f * E(6);
+            t3[v] = -r9_16 * E(1) + r49_16 * E(3) - r7_2 * E(5) + E(7);
+            t4[v] = -r9_2 * E(0) + r61_8 * E(2) - r29_8 * E(4) + r1_2 * E(6);
+            t5[v] = -9.0f * E(1) + r61_4 * E(3) - r29_4 * E(5) + E(7);
+            t6[v] = -r3_2 * E(0) + r63_8 * E(2) - r63_8 * E(4) + r3_2 * E(6);
+            t7[v] = -E(1) + r21_4 * E(3) - r21_4 * E(5) + E(7);
+
+            R(0) = t0[v] + t1[v];
+            R(1) = t1[v] - t0[v];
+            R(2) = t2[v] + t3[v];
+            R(3) = t3[v] - t2[v];
+            R(4) = t4[v] + t5[v];
+            R(5) = t5[v] - t4[v];
+            R(6) = t6[v] + t7[v];
+            R(7) = t7[v] - t6[v];
+            R(8) = r9_4 * E(0) - r205_16 * E(2) + r273_16 * E(4)
+                - r15_2 * E(6) + E(8);
+        }
+    }
+#undef E
+#undef R
+#define E(x) T[i][x][v]
+#define R(x) Iw[i][x][v]
+pragma_unroll
+    for (int i = 0; i < 9; i++) {
+#pragma omp simd
+        for (int v = 0; v < 16; v++) {
+            t0[v] = -r9_4 * E(0) + r169_16 * E(2) - r13_2 * E(4) + E(6);
+            t1[v] = -r9_4 * E(1) + r169_16 * E(3) - r13_2 * E(5) + E(7);
+            t2[v] = -r9_8 * E(0) + r49_8 * E(2) - 7.0f * E(4) + 2.0f * E(6);
+            t3[v] = -r9_16 * E(1) + r49_16 * E(3) - r7_2 * E(5) + E(7);
+            t4[v] = -r9_2 * E(0) + r61_8 * E(2) - r29_8 * E(4) + r1_2 * E(6);
+            t5[v] = -9.0f * E(1) + r61_4 * E(3) - r29_4 * E(5) + E(7);
+            t6[v] = -r3_2 * E(0) + r63_8 * E(2) - r63_8 * E(4) + r3_2 * E(6);
+            t7[v] = -E(1) + r21_4 * E(3) - r21_4 * E(5) + E(7);
+
+            R(0) = t0[v] + t1[v];
+            R(1) = t1[v] - t0[v];
+            R(2) = t2[v] + t3[v];
+            R(3) = t3[v] - t2[v];
+            R(4) = t4[v] + t5[v];
+            R(5) = t5[v] - t4[v];
+            R(6) = t6[v] + t7[v];
+            R(7) = t7[v] - t6[v];
+            R(8) = r9_4 * E(0) - r205_16 * E(2) + r273_16 * E(4)
+                - r15_2 * E(6) + E(8);
+        }
+    }
+}
+
+
 void trans_W(float Fw_[3][3][16][16], float F[3][3][16][16]) // F(1x1, 3x3)
 {
     const float rcp2 = 1.0f / 2.0f;
@@ -713,6 +807,90 @@ pragma_unroll
     }
 }
 
+void trans_W(float Fw_[9][9][16][16], float F[3][3][16][16]) // F(7x7, 3x3)
+{
+    const float r4_315 = 4.0f / 315.0f;
+    const float r8_315 = 8.0f / 315.0f;
+    const float r16_315 = 16.0f / 315.0f;
+    const float r2_45 = 2.0f / 45.0f;
+    const float r4_45 = 4.0f / 45.0f;
+    const float r8_45 = 8.0f / 45.0f;
+    const float r8_105 = 8.0f / 105.0f;
+    const float r4_35 = 4.0f / 35.0f;
+    const float r6_35 = 6.0f / 35.0f;
+    float Fw[9][16];
+    float T[9][3][16];
+    float t0[16];
+    float t1[16];
+    float t2[16];
+    float t3[16];
+    float t4[16];
+    float t5[16];
+    float t6[16];
+
+    for (int j = 0; j < 16; j++) {
+#undef E
+#undef R
+#define E(x) F[x][i][j][k]
+#define R(x) T[x][i][k]
+pragma_unroll
+        for (int i = 0; i < 3; i++) {
+#pragma omp simd
+            for (int k = 0; k < 16; k++) {
+                t0[k] = E(0) + E(2);
+                t1[k] = r4_315 * E(0) + r16_315 * E(2);
+                t2[k] = r8_315 * E(1);
+                t3[k] = r8_45 * E(0) + r2_45 * E(2);
+                t4[k] = r4_45 * E(1);
+                t5[k] = r8_105 * E(0) + r6_35 * E(2);
+                t6[k] = r4_35 * E(1);
+
+                R(0) = r8_45 * (t0[k] + E(1));
+                R(1) = r8_45 * (E(1) - t0[k]);
+                R(2) = t1[k] + t2[k];
+                R(3) = t2[k] - t1[k];
+                R(4) = -t3[k] - t4[k];
+                R(5) = t3[k] - t4[k];
+                R(6) = -t5[k] - t6[k];
+                R(7) = t5[k] - t6[k];
+                R(8) = E(2);
+            }
+        }
+#undef E
+#undef R
+#define E(x) T[i][x][k]
+#define R(x) Fw[x][k]
+pragma_unroll
+        for (int i = 0; i < 9; i++) {
+#pragma omp simd
+            for (int k = 0; k < 16; k++) {
+                t0[k] = E(0) + E(2);
+                t1[k] = r4_315 * E(0) + r16_315 * E(2);
+                t2[k] = r8_315 * E(1);
+                t3[k] = r8_45 * E(0) + r2_45 * E(2);
+                t4[k] = r4_45 * E(1);
+                t5[k] = r8_105 * E(0) + r6_35 * E(2);
+                t6[k] = r4_35 * E(1);
+
+                R(0) = r8_45 * (t0[k] + E(1));
+                R(1) = r8_45 * (E(1) - t0[k]);
+                R(2) = t1[k] + t2[k];
+                R(3) = t2[k] - t1[k];
+                R(4) = -t3[k] - t4[k];
+                R(5) = t3[k] - t4[k];
+                R(6) = -t5[k] - t6[k];
+                R(7) = t5[k] - t6[k];
+                R(8) = E(2);
+pragma_unroll
+                for (int l = 0; l < 9; l++) {
+                    Fw_[i][l][j][k] = Fw[l][k];
+                }
+            }
+        }
+    }
+}
+
+
 void trans_O(float Mw[3][3][16], float O[1][1][16]) // F(1x1, 3x3)
 {
     float T[1][3][16];
@@ -957,6 +1135,85 @@ pragma_unroll
     }
 }
 
+void trans_O(float Mw[9][9][16], float O[7][7][16]) // F(7x7, 3x3)
+{
+    const float r1_2 = 1.0f / 2.0f;
+    const float r3_2 = 3.0f / 2.0f;
+    const float r1_4 = 1.0f / 4.0f;
+    const float r9_4 = 9.0f / 4.0f;
+    const float r1_8 = 1.0f / 8.0f;
+    const float r27_8 = 27.0f / 8.0f;
+    const float r1_16 = 1.0f / 16.0f;
+    const float r81_16 = 81.0f / 16.0f;
+    const float r1_32 = 1.0f / 32.0f;
+    const float r243_32 = 243.0f / 32.0f;
+    const float r1_64 = 1.0f / 64.0f;
+    const float r729_64 = 729.0f / 64.0f;
+    float T[7][9][16];
+    float t0[16];
+    float t1[16];
+    float t2[16];
+    float t3[16];
+    float t4[16];
+    float t5[16];
+    float t6[16];
+    float t7[16];
+
+#undef E
+#undef R
+#define E(x) Mw[x][i][v]
+#define R(x) T[x][i][v]
+pragma_unroll
+    for (int i = 0; i < 9; i++) {
+#pragma omp simd
+        for (int v = 0; v < 16; v++) {
+            t0[v] = E(0) + E(1);
+            t1[v] = E(0) - E(1);
+            t2[v] = E(2) + E(3);
+            t3[v] = E(2) - E(3);
+            t4[v] = E(4) + E(5);
+            t5[v] = E(4) - E(5);
+            t6[v] = E(6) + E(7);
+            t7[v] = E(6) - E(7);
+
+            R(0) = t0[v] + t2[v] + t4[v] + t6[v];
+            R(1) = t1[v] + t3[v] * 2.0f + t5[v] * r1_2 + t7[v] * r3_2;
+            R(2) = t0[v] + t2[v] * 4.0f + t4[v] * r1_4 + t6[v] * r9_4;
+            R(3) = t1[v] + t3[v] * 8.0f + t5[v] * r1_8 + t7[v] * r27_8;
+            R(4) = t0[v] + t2[v] * 16.0f + t4[v] * r1_16 + t6[v] * r81_16;
+            R(5) = t1[v] + t3[v] * 32.0f + t5[v] * r1_32 + t7[v] * r243_32;
+            R(6) = t0[v] + t2[v] * 64.0f + t4[v] * r1_64 + t6[v] * r729_64 + E(8);
+        }
+    }
+#undef E
+#undef R
+#define E(x) T[i][x][v]
+#define R(x) O[i][x][v]
+pragma_unroll
+    for (int i = 0; i < 7; i++) {
+#pragma omp simd
+        for (int v = 0; v < 16; v++) {
+            t0[v] = E(0) + E(1);
+            t1[v] = E(0) - E(1);
+            t2[v] = E(2) + E(3);
+            t3[v] = E(2) - E(3);
+            t4[v] = E(4) + E(5);
+            t5[v] = E(4) - E(5);
+            t6[v] = E(6) + E(7);
+            t7[v] = E(6) - E(7);
+
+            R(0) = t0[v] + t2[v] + t4[v] + t6[v];
+            R(1) = t1[v] + t3[v] * 2.0f + t5[v] * r1_2 + t7[v] * r3_2;
+            R(2) = t0[v] + t2[v] * 4.0f + t4[v] * r1_4 + t6[v] * r9_4;
+            R(3) = t1[v] + t3[v] * 8.0f + t5[v] * r1_8 + t7[v] * r27_8;
+            R(4) = t0[v] + t2[v] * 16.0f + t4[v] * r1_16 + t6[v] * r81_16;
+            R(5) = t1[v] + t3[v] * 32.0f + t5[v] * r1_32 + t7[v] * r243_32;
+            R(6) = t0[v] + t2[v] * 64.0f + t4[v] * r1_64 + t6[v] * r729_64 + E(8);
+        }
+    }
+}
+
+
 void trans_W_3x3_4x4(float Fw[6][6][16], float F[4][6][16])
 {
     const float rcp3 = 1.0f / 3.0f;
@@ -1147,6 +1404,11 @@ void trans_I_wu(float Iw[7][7][16], float I[7][7][16]) // F(3x3, 5x5)
 }
 
 void trans_I_wu(float Iw[8][8][16], float I[8][8][16]) // F(3x3, 6x6)
+{
+    trans_I(Iw, I);
+}
+
+void trans_I_wu(float Iw[9][9][16], float I[9][9][16]) // F(3x3, 7x7)
 {
     trans_I(Iw, I);
 }
@@ -1444,6 +1706,93 @@ pragma_unroll
     }
 }
 
+void trans_W_wu(float Fw[9][9][16], float F[7][9][16]) // F(3x3, 7x7)
+{
+    const float r128_315 = 128.0f / 315.0f;
+    const float r16_315 = 16.0f / 315.0f;
+    const float r1_180 = 1.0f / 180.0f;
+    const float r1_360 = 1.0f / 360.0f;
+    const float r1_45 = 1.0f / 45.0f;
+    const float r1_90 = 1.0f / 90.0f;
+    const float r243_280 = 243.0f / 280.0f;
+    const float r256_315 = 256.0f / 315.0f;
+    const float r27_70 = 27.0f / 70.0f;
+    const float r2_45 = 2.0f / 45.0f;
+    const float r32_315 = 32.0f / 315.0f;
+    const float r4_315 = 4.0f / 315.0f;
+    const float r4_35 = 4.0f / 35.0f;
+    const float r4_45 = 4.0f / 45.0f;
+    const float r64_315 = 64.0f / 315.0f;
+    const float r6_35 = 6.0f / 35.0f;
+    const float r81_140 = 81.0f / 140.0f;
+    const float r8_105 = 8.0f / 105.0f;
+    const float r8_315 = 8.0f / 315.0f;
+    const float r8_45 = 8.0f / 45.0f;
+    const float r9_35 = 9.0f / 35.0f;
+
+    float T[9][7][16];
+    float t0[16];
+    float t1[16];
+    float t2[16];
+    float t3[16];
+    float t4[16];
+    float t5[16];
+
+#undef E
+#undef R
+#define E(x) F[x][i][v]
+#define R(x) T[x][i][v]
+pragma_unroll
+    for (int i = 0; i < 7; i++) {
+#pragma omp simd
+        for (int v = 0; v < 16; v++) {
+            t0[v] = r4_315 * E(0) + r16_315 * E(2) + r64_315 * E(4) + r256_315 * E(6);
+            t1[v] = r8_315 * E(1) + r32_315 * E(3) + r128_315 * E(5);
+            t2[v] = r8_45 * E(0) + r2_45 * E(2) + r1_90 * E(4) + r1_360 * E(6);
+            t3[v] = r4_45 * E(1) + r1_45 * E(3) + r1_180 * E(5);
+            t4[v] = r8_105 * E(0) + r6_35 * E(2) + r27_70 * E(4) + r243_280 * E(6);
+            t5[v] = r4_35 * E(1) + r9_35 * E(3) + r81_140 * E(5);
+
+            R(0) = r8_45 * (E(0) + E(1) + E(2) + E(3) + E(4) + E(5) + E(6));
+            R(1) = r8_45 * (-E(0) + E(1) - E(2) + E(3) - E(4) + E(5) - E(6));
+            R(2) = t0[v] + t1[v];
+            R(3) = t1[v] - t0[v];
+            R(4) = -t2[v] - t3[v];
+            R(5) = t2[v] - t3[v];
+            R(6) = -t4[v] - t5[v];
+            R(7) = t4[v] - t5[v];
+            R(8) = E(6);
+        }
+    }
+
+#undef E
+#undef R
+#define E(x) T[i][x][v]
+#define R(x) Fw[i][x][v]
+pragma_unroll
+    for (int i = 0; i < 9; i++) {
+#pragma omp simd
+        for (int v = 0; v < 16; v++) {
+            t0[v] = r4_315 * E(0) + r16_315 * E(2) + r64_315 * E(4) + r256_315 * E(6);
+            t1[v] = r8_315 * E(1) + r32_315 * E(3) + r128_315 * E(5);
+            t2[v] = r8_45 * E(0) + r2_45 * E(2) + r1_90 * E(4) + r1_360 * E(6);
+            t3[v] = r4_45 * E(1) + r1_45 * E(3) + r1_180 * E(5);
+            t4[v] = r8_105 * E(0) + r6_35 * E(2) + r27_70 * E(4) + r243_280 * E(6);
+            t5[v] = r4_35 * E(1) + r9_35 * E(3) + r81_140 * E(5);
+
+            R(0) = r8_45 * (E(0) + E(1) + E(2) + E(3) + E(4) + E(5) + E(6));
+            R(1) = r8_45 * (-E(0) + E(1) - E(2) + E(3) - E(4) + E(5) - E(6));
+            R(2) = t0[v] + t1[v];
+            R(3) = t1[v] - t0[v];
+            R(4) = -t2[v] - t3[v];
+            R(5) = t2[v] - t3[v];
+            R(6) = -t4[v] - t5[v];
+            R(7) = t4[v] - t5[v];
+            R(8) = E(6);
+        }
+    }
+}
+
 void trans_O_wu(float Mw[3][3][16][16], float M[3][3][16][16]) // F(3x3, 1x1)
 {
     float T[3][3][16];
@@ -1704,6 +2053,64 @@ pragma_unroll
                 R(1) = E(1) - E(2) + 2.0f * E(3) - 2.0f * E(4)
                     + 0.5f * E(5) - 0.5f * E(6);
                 R(2) = t0[v] + 4.0f * t1[v] + 0.25f * t2[v] + E(7);
+pragma_unroll
+                for (int k = 0; k < 3; k++) {
+                    M[i][k][j][v] = M_[k][v];
+                }
+            }
+        }
+    }
+}
+
+void trans_O_wu(float Mw[9][9][16][16], float M[3][3][16][16]) // F(3x3, 7x7)
+{
+    const float r1_2 = 1.0f / 2.0f;
+    const float r1_4 = 1.0f / 4.0f;
+    const float r3_2 = 3.0f / 2.0f;
+    const float r9_4 = 9.0f / 4.0f;
+
+    float T[3][9][16];
+    float t0[16];
+    float t1[16];
+    float t2[16];
+    float t3[16];
+    float M_[3][16];
+
+    for (int j = 0; j < 16; j++) {
+#undef E
+#undef R
+#define E(x) Mw[x][i][j][v]
+#define R(x) T[x][i][v]
+pragma_unroll
+        for (int i = 0; i < 9; i++) {
+#pragma omp simd
+            for (int v = 0; v < 16; v++) {
+                t0[v] = E(0) + E(1);
+                t1[v] = E(2) + E(3);
+                t2[v] = E(4) + E(5);
+                t3[v] = E(6) + E(7);
+                R(0) = t0[v] + t1[v] + t2[v] + t3[v];
+                R(1) = E(0) - E(1) + 2.0f * (E(2) - E(3))
+                    + r1_2 * (E(4) - E(5)) + r3_2 * (E(6) - E(7));
+                R(2) = t0[v] + 4.0f * t1[v] + r1_4 * t2[v] + r9_4 * t3[v] + E(8);
+            }
+        }
+#undef E
+#undef R
+#define E(x) T[i][x][v]
+#define R(x) M_[x][v]
+pragma_unroll
+        for (int i = 0; i < 3; i++) {
+#pragma omp simd
+            for (int v = 0; v < 16; v++) {
+                t0[v] = E(0) + E(1);
+                t1[v] = E(2) + E(3);
+                t2[v] = E(4) + E(5);
+                t3[v] = E(6) + E(7);
+                R(0) = t0[v] + t1[v] + t2[v] + t3[v];
+                R(1) = E(0) - E(1) + 2.0f * (E(2) - E(3))
+                    + r1_2 * (E(4) - E(5)) + r3_2 * (E(6) - E(7));
+                R(2) = t0[v] + 4.0f * t1[v] + r1_4 * t2[v] + r9_4 * t3[v] + E(8);
 pragma_unroll
                 for (int k = 0; k < 3; k++) {
                     M[i][k][j][v] = M_[k][v];
@@ -3437,6 +3844,7 @@ TEMPLATE_INSTANT_WINOGRAD_FWD(5)
 TEMPLATE_INSTANT_WINOGRAD_FWD(6)
 TEMPLATE_INSTANT_WINOGRAD_FWD(7)
 TEMPLATE_INSTANT_WINOGRAD_FWD(8)
+TEMPLATE_INSTANT_WINOGRAD_FWD(9)
 
 template <const int alpha>
 void jit_avx512_common_convolution_winograd_bwd_data_t::execute_backward_data()
@@ -3829,6 +4237,7 @@ TEMPLATE_INSTANT_WINOGRAD_BWD_DATA(5)
 TEMPLATE_INSTANT_WINOGRAD_BWD_DATA(6)
 TEMPLATE_INSTANT_WINOGRAD_BWD_DATA(7)
 TEMPLATE_INSTANT_WINOGRAD_BWD_DATA(8)
+TEMPLATE_INSTANT_WINOGRAD_BWD_DATA(9)
 
 template <const int alpha>
 void jit_avx512_common_convolution_winograd_bwd_weights_t::
@@ -4818,6 +5227,7 @@ TEMPLATE_INSTANT_WINOGRAD_BWD_WEIGHTS(5)
 TEMPLATE_INSTANT_WINOGRAD_BWD_WEIGHTS(6)
 TEMPLATE_INSTANT_WINOGRAD_BWD_WEIGHTS(7)
 TEMPLATE_INSTANT_WINOGRAD_BWD_WEIGHTS(8)
+TEMPLATE_INSTANT_WINOGRAD_BWD_WEIGHTS(9)
 
 }
 }
