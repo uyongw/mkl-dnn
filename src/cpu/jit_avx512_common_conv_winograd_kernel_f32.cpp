@@ -1379,15 +1379,6 @@ status_t set_wsched_WEI_SDGt_W(jit_conv_winograd_conf_t &jcp)
     return status::unimplemented;
 }
 
-status_t set_wsched_WEI_SDGit_W(jit_conv_winograd_conf_t &jcp)
-{
-    return status::unimplemented;
-
-    //jcp.sched_policy = WSCHED_WEI_D_SGit_W;
-    //printf("set sched policy WEI_D_SGit_W\n");
-    //return status::success;
-}
-
 bool __set_wsched_WEI_SDGtWo(jit_conv_winograd_conf_t &jcp,
         int min_tile_block_ur, int max_tile_block_ur,
         int (*get_thread_number)(jit_conv_winograd_conf_t &jcp,
@@ -1915,7 +1906,6 @@ status_t jit_avx512_common_conv_winograd_bwd_weights_kernel_f32::init_conf(
     jcp.sched_policy = WSCHED_INVALID;
     if ((res = set_wsched_WEI_SDGt_W(jcp))   == status::success ||
         (res = set_wsched_WEI_SDGtWo(jcp))  == status::success ||
-        (res = set_wsched_WEI_SDGit_W(jcp))  == status::success ||
         (res = set_wsched_WEI_S_D_Giot_W(jcp)) == status::success ||
         (res = set_wsched_WEI_S_D_G_W_n(jcp)) == status::success ||
         (res = set_wsched_WEI_S_D_G_W(jcp)) == status::success)
