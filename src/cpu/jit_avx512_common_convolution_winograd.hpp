@@ -599,6 +599,9 @@ struct jit_avx512_common_convolution_winograd_bwd_weights_t
             case 9:
                 execute_backward_weights<9>();
                 break;
+            case 10:
+                execute_backward_weights<10>();
+                break;
             default:
                 assert(!"invalid alpha");
                 break;
