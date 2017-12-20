@@ -330,7 +330,7 @@ void _jit_avx512_common_conv_winograd_data_kernel_f32::gemm_loop_generate(
 status_t _jit_avx512_common_conv_winograd_data_kernel_f32::init_conf_common(
         jit_conv_winograd_conf_t &jcp, const convolution_desc_t &cd,
         const memory_desc_wrapper &src_d, const memory_desc_wrapper &weights_d,
-        const memory_desc_wrapper &dst_d)
+        const memory_desc_wrapper &dst_d, bool prop_forward)
 {
 
     if (!mayiuse(avx512_common))
@@ -338,7 +338,7 @@ status_t _jit_avx512_common_conv_winograd_data_kernel_f32::init_conf_common(
 
     const bool with_groups = weights_d.ndims() == src_d.ndims() + 1;
     const int simd_w = 16;
-    jcp.alpha = 6; // TODO: param select
+    jcp.alpha = 6; // Default alpha
 
     jcp.ngroups = with_groups ? weights_d.dims()[0] : 1;
     jcp.mb = src_d.dims()[0];
@@ -362,6 +362,12 @@ status_t _jit_avx512_common_conv_winograd_data_kernel_f32::init_conf_common(
     jcp.iwp = jcp.iw + jcp.l_pad + jcp.r_pad;
     jcp.ohp = jcp.oh;
     jcp.owp = jcp.ow;
+
+    if ((prop_forward && jcp.ow % 7 == 0 && jcp.oh % 7 == 0
+                && jcp.ow * jcp.oh <= 35 * 35)
+            || (!prop_forward && jcp.iw % 7 == 0 && jcp.ih % 7 == 0
+                && jcp.iw * jcp.ih <= 35 * 35))
+        jcp.alpha = 9;
 
     // Winograd specific initialization
     const int tile_size = jcp.alpha - 2;
@@ -492,7 +498,7 @@ bool __set_wsched_DATA_W_SGDt(jit_conv_winograd_conf_t &jcp,
                         if (in_L1_range(gemm_size, C1, C1_max)) {
                             ic_block = jcp.ic / ic_simd_block / nb_ic;
                             oc_block = jcp.oc / oc_simd_block / nb_oc;
-                            printf("thread_size=%d, gemm_size=%d, thread_number=%d\n", thread_size, gemm_size, thread_number);
+                            printf("thread_size=%d, gemm_size=%d, thread_number=%d, alpha=%d\n", thread_size, gemm_size, thread_number, jcp.alpha);
                             set_params(jcp);
                             return true;
                         }
@@ -507,7 +513,7 @@ bool __set_wsched_DATA_W_SGDt(jit_conv_winograd_conf_t &jcp,
                         if (in_L1_range(gemm_size, C1, C1_max)) {
                             ic_block = jcp.ic / ic_simd_block / nb_ic;
                             oc_block = jcp.oc / oc_simd_block / nb_oc;
-                            printf("thread_size=%d, gemm_size=%d, thread_number=%d\n", thread_size, gemm_size, thread_number);
+                            printf("thread_size=%d, gemm_size=%d, thread_number=%d, alpha=%d\n", thread_size, gemm_size, thread_number, jcp.alpha);
                             set_params(jcp);
                             return true;
                         }
@@ -654,8 +660,8 @@ bool __set_wsched_DATA_W_S_G_D(jit_conv_winograd_conf_t &jcp,
                     oc_block = jcp.oc / oc_simd_block / nb_oc;
                     ic_block = jcp.ic / ic_simd_block / nb_ic;
                     set_params(jcp);
-                    printf("got thread_size=%d, thread_number=%d, gemm_size=%d\n",
-                            thread_size, thread_number, gemm_size);
+                    printf("got thread_size=%d, thread_number=%d, gemm_size=%d, alpha=%d\n",
+                            thread_size, thread_number, gemm_size, jcp.alpha);
                     return true;
                 }
             }
@@ -677,8 +683,8 @@ bool __set_wsched_DATA_W_S_G_D(jit_conv_winograd_conf_t &jcp,
                     oc_block = jcp.oc / oc_simd_block / nb_oc;
                     ic_block = jcp.ic / ic_simd_block / nb_ic;
                     set_params(jcp);
-                    printf("got thread_size=%d, thread_number=%d, gemm_size=%d\n",
-                            thread_size, thread_number, gemm_size);
+                    printf("got thread_size=%d, thread_number=%d, gemm_size=%d, alpha=%d\n",
+                            thread_size, thread_number, gemm_size, jcp.alpha);
                     return true;
                 }
             }
@@ -913,7 +919,7 @@ status_t jit_avx512_common_conv_winograd_fwd_kernel_f32::init_conf(
         const memory_desc_wrapper &dst_d, bool with_relu,
         double relu_negative_slope)
 {
-    status_t st = init_conf_common(jcp, cd, src_d, weights_d, dst_d);
+    status_t st = init_conf_common(jcp, cd, src_d, weights_d, dst_d, true);
 
     if (st != status::success)
         return st;
@@ -951,7 +957,7 @@ status_t jit_avx512_common_conv_winograd_bwd_data_kernel_f32::init_conf(
         const memory_desc_wrapper &weights_d,
         const memory_desc_wrapper &diff_dst_d)
 {
-    status_t st = init_conf_common(jcp, cd, diff_src_d, weights_d, diff_dst_d);
+    status_t st = init_conf_common(jcp, cd, diff_src_d, weights_d, diff_dst_d, false);
 
     if (st != status::success)
         return st;
@@ -1314,7 +1320,7 @@ bool __set_wsched_WEI_SDGt_W(jit_conv_winograd_conf_t &jcp,
                     if (in_L1_range(L1_reuse, C1, C1_max)) {
                         ic_block = jcp.ic / ic_simd_block / nb_ic;
                         oc_block = jcp.oc / oc_simd_block / nb_oc;
-                        printf("thread_number=%d, thread_size=%d, L1_reuse=%d, L2_reuse=%d\n", thread_number, thread_size, L1_reuse, L2_reuse);
+                        printf("thread_number=%d, thread_size=%d, L1_reuse=%d, L2_reuse=%d, alpha=%d\n", thread_number, thread_size, L1_reuse, L2_reuse, jcp.alpha);
                         set_params(jcp);
                         return true;
                     }
@@ -1433,7 +1439,7 @@ bool __set_wsched_WEI_SDGtWo(jit_conv_winograd_conf_t &jcp,
                     if (in_L1_range(L1_reuse, C1, C1_max)) {
                         ic_block = jcp.ic / ic_simd_block / nb_ic;
                         oc_block = jcp.oc / oc_simd_block / nb_oc;
-                        printf("thread_number=%d, thread_size=%d, L1_reuse=%d, L2_reuse=%d\n", thread_number, thread_size, L1_reuse, L2_reuse);
+                        printf("thread_number=%d, thread_size=%d, L1_reuse=%d, L2_reuse=%d, alpha=%d\n", thread_number, thread_size, L1_reuse, L2_reuse, jcp.alpha);
                         set_params(jcp);
                         return true;
                     }
@@ -1447,6 +1453,9 @@ bool __set_wsched_WEI_SDGtWo(jit_conv_winograd_conf_t &jcp,
 
 status_t set_wsched_WEI_SDGtWo(jit_conv_winograd_conf_t &jcp)
 {
+    if (jcp.oc < 64)
+        return status::unimplemented;
+
     auto get_thread_number = [](jit_conv_winograd_conf_t &jcp,
             int tile_block, int nb_oc)->int {
         return tile_block;
@@ -1553,7 +1562,7 @@ bool __set_wsched_WEI_S_D_Giot_W(jit_conv_winograd_conf_t &jcp,
                 oc_block = jcp.oc / oc_simd_block / nb_oc;
                 nb_tile_block_ur = jcp.ntiles / tile_block / tile_block_ur;
                 set_params(jcp);
-                printf("thread_number=%d, thread_size=%d, L1_reuse=%d, L2_reuse=%d, C2=%f\n", thread_number, thread_size, L1_reuse, L2_reuse, C2);
+                printf("thread_number=%d, thread_size=%d, L1_reuse=%d, L2_reuse=%d, C2=%f, alpha=%d\n", thread_number, thread_size, L1_reuse, L2_reuse, C2, jcp.alpha);
                 return true;
             }
         }}}
@@ -1564,6 +1573,9 @@ bool __set_wsched_WEI_S_D_Giot_W(jit_conv_winograd_conf_t &jcp,
 
 status_t set_wsched_WEI_S_D_Giot_W(jit_conv_winograd_conf_t &jcp)
 {
+    if (jcp.alpha >= 9)
+        return status::unimplemented;
+
     auto get_thread_number = [](jit_conv_winograd_conf_t &jcp,
             int tile_block, int nb_ic, int nb_oc)->int {
         return tile_block * nb_ic * nb_oc * jcp.alpha * jcp.alpha;
@@ -1663,8 +1675,8 @@ bool __set_wsched_WEI_S_D_G_W(jit_conv_winograd_conf_t &jcp,
                 oc_block = jcp.oc / oc_simd_block / nb_oc;
                 ic_block = jcp.ic / ic_simd_block / nb_ic;
                 set_params(jcp);
-                printf("thread_number=%d, thread_size=%d, L1_reuse=%d, L2_reuse=%d\n",
-                        thread_number, thread_size, L1_reuse, L2_reuse);
+                printf("thread_number=%d, thread_size=%d, L1_reuse=%d, L2_reuse=%d, alpha=%d\n",
+                        thread_number, thread_size, L1_reuse, L2_reuse, jcp.alpha);
                 return true;
             }
         }}}
@@ -1810,7 +1822,7 @@ status_t jit_avx512_common_conv_winograd_bwd_weights_kernel_f32::init_conf(
 
     const bool with_groups = diff_weights_d.ndims() == src_d.ndims() + 1;
     const int simd_w = 16;
-    jcp.alpha = 6; // TODO: param select
+    jcp.alpha = 5; // Default alpha
 
     jcp.ngroups = with_groups ? diff_weights_d.dims()[0] : 1;
     jcp.mb = src_d.dims()[0];
@@ -1837,6 +1849,12 @@ status_t jit_avx512_common_conv_winograd_bwd_weights_kernel_f32::init_conf(
     jcp.with_bias = (cd.diff_bias_desc.format != memory_format::undef);
 
     jcp.ver = mayiuse(avx512_mic_4ops) ? ver_4fma : ver_fma;
+
+    if (jcp.ow % 8 == 0 && jcp.oh % 8 == 0 && jcp.ow * jcp.oh <= 56 * 56
+            && jcp.ic * jcp.oc > 128 * 128)
+        jcp.alpha = 10;
+    if (jcp.ow % 7 == 0 && jcp.oh % 7 == 0 && jcp.ow * jcp.oh <= 35 * 35)
+        jcp.alpha = 9;
 
     // Winograd specific initialization
     const int tile_size = jcp.alpha - 2;
@@ -1904,8 +1922,8 @@ status_t jit_avx512_common_conv_winograd_bwd_weights_kernel_f32::init_conf(
 
     status_t res;
     jcp.sched_policy = WSCHED_INVALID;
-    if ((res = set_wsched_WEI_SDGt_W(jcp))   == status::success ||
-        (res = set_wsched_WEI_SDGtWo(jcp))  == status::success ||
+    if ((res = set_wsched_WEI_SDGtWo(jcp))  == status::success ||
+        (res = set_wsched_WEI_SDGt_W(jcp))   == status::success ||
         (res = set_wsched_WEI_S_D_Giot_W(jcp)) == status::success ||
         (res = set_wsched_WEI_S_D_G_W_n(jcp)) == status::success ||
         (res = set_wsched_WEI_S_D_G_W(jcp)) == status::success)

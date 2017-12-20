@@ -47,7 +47,7 @@ struct _jit_avx512_common_conv_winograd_data_kernel_f32 : public jit_generator {
     static status_t init_conf_common(jit_conv_winograd_conf_t &jcp,
             const convolution_desc_t &cd, const memory_desc_wrapper &src_d,
             const memory_desc_wrapper &weights_d,
-            const memory_desc_wrapper &dst_d);
+            const memory_desc_wrapper &dst_d, bool prop_forward);
 
     static status_t init_conf_kernel(
             jit_conv_winograd_conf_t &jcp, int dimM, int dimN, int dimK,
