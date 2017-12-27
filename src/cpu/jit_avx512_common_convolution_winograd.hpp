@@ -200,9 +200,9 @@ inline void allocate_winograd_workspace(const jit_conv_winograd_conf_t &jcp,
     case WSCHED_WEI_SDGtWo:
         up_size = nthreads * jcp.alpha * jcp.alpha
             * jcp.oc_block * jcp.oc_simd_block * jcp.ic * sizeof(float);
-        vp_size = jcp.alpha * jcp.alpha
-            * (jcp.itiles * jcp.jtiles + jcp.tile_4fma_padding)
-            * jcp.ic * jcp.mb * sizeof(float);
+        vp_size = nthreads * jcp.alpha * jcp.alpha
+            * (jcp.nb_tile_block_ur * jcp.tile_block_ur + jcp.tile_4fma_padding)
+            * jcp.ic * jcp.tile_4fma * sizeof(float);
         mp_size = nthreads * jcp.alpha * jcp.alpha
             * (jcp.nb_tile_block_ur * jcp.tile_block_ur + jcp.tile_4fma_padding)
             * jcp.oc_simd_block * jcp.oc_block * jcp.tile_4fma * sizeof(float);
