@@ -707,6 +707,9 @@ status_t set_wsched_DATA_W_S_G_D_n(jit_conv_winograd_conf_t &jcp, bool prop_forw
     int mb = jcp.mb, ntiles = jcp.ntiles;
     int ic = jcp.ic, oc = jcp.oc;
     int nb_tg = get_num_processors(); // # of sockets
+    if (omp_get_max_threads() % nb_tg != 0) {
+        return status::unimplemented;
+    }
 
     if (prop_forward) { // FWD
         auto get_thread_size = [](jit_conv_winograd_conf_t &jcp,
@@ -820,7 +823,7 @@ status_t set_wsched_DATA_W_S_G_D(jit_conv_winograd_conf_t &jcp, bool prop_forwar
         };
         auto get_thread_number = [](jit_conv_winograd_conf_t &jcp,
                 int tile_block, int nb_ic, int nb_oc) {
-            return tile_block * nb_oc;
+            return tile_block * nb_oc * jcp.alpha * jcp.alpha;
         };
 
         if (__set_wsched_DATA_W_S_G_D(jcp, true, 12, jcp.nb_reg,
@@ -849,7 +852,7 @@ status_t set_wsched_DATA_W_S_G_D(jit_conv_winograd_conf_t &jcp, bool prop_forwar
         };
         auto get_thread_number = [](jit_conv_winograd_conf_t &jcp,
                 int tile_block, int nb_ic, int nb_oc) {
-            return tile_block * nb_ic;
+            return tile_block * nb_ic * jcp.alpha * jcp.alpha;
         };
 
         if (__set_wsched_DATA_W_S_G_D(jcp, false, 12, jcp.nb_reg,
@@ -1769,6 +1772,9 @@ status_t set_wsched_WEI_S_D_G_W_n(jit_conv_winograd_conf_t &jcp)
     int mb = jcp.mb, ntiles = jcp.ntiles;
     int ic = jcp.ic, oc = jcp.oc;
     int nb_tg = get_num_processors(); // # of sockets
+    if (omp_get_max_threads() % nb_tg != 0) {
+        return status::unimplemented;
+    }
 
     if (jcp.oc >= jcp.ntiles)
         tg_o = nb_tg;
