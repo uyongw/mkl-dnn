@@ -154,7 +154,8 @@ protected:
             CHECK(memory_desc_init_by_tag(dst_md, nc));
         if (weights_md.format_kind == format_kind::any) {
             CHECK(memory_desc_init_by_tag(weights_md,
-                        utils::pick(ndims() - 2, oi, oiw, oihw, oidhw)));
+                        //utils::pick(ndims() - 2, oi, oiw, oihw, oidhw)));
+                        utils::pick(ndims() - 2, io, oiw, ihwo, oidhw)));
         }
         if (bias_md && bias_md->format_kind == format_kind::any)
             CHECK(memory_desc_init_by_tag(*bias_md, x));

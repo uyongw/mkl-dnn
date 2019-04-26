@@ -38,14 +38,20 @@ inline bool is_1d(const prb_t *p) {
     return !is_3d(p) && p->ih == 1;
 }
 
+inline bool is_0d(const prb_t *p) {
+    return !is_3d(p) && p->ih == 1 && p->iw == 1;
+}
+
 inline int init_pd(const prb_t *p, mkldnn_inner_product_desc_t &ipd,
         mkldnn_primitive_desc_t &ippd, res_t *r) {
     mkldnn_memory_desc_t src_d, wei_d, bia_d, dst_d;
 
-    int ndims = is_3d(p) ? 5 : is_1d(p) ? 3 : 4;
+    int ndims = is_3d(p) ? 5 : is_0d(p) ? 2 : is_1d(p) ? 3 : 4;
+    mkldnn_dims_t src_0d_dims = {p->mb, p->ic};
     mkldnn_dims_t src_1d_dims = {p->mb, p->ic, p->iw};
     mkldnn_dims_t src_2d_dims = {p->mb, p->ic, p->ih, p->iw};
     mkldnn_dims_t src_3d_dims = {p->mb, p->ic, p->id, p->ih, p->iw};
+    mkldnn_dims_t wei_0d_dims = {p->oc, p->ic};
     mkldnn_dims_t wei_1d_dims = {p->oc, p->ic, p->iw};
     mkldnn_dims_t wei_2d_dims = {p->oc, p->ic, p->ih, p->iw};
     mkldnn_dims_t wei_3d_dims = {p->oc, p->ic, p->id, p->ih, p->iw};
@@ -53,10 +59,10 @@ inline int init_pd(const prb_t *p, mkldnn_inner_product_desc_t &ipd,
     mkldnn_dims_t dst_dims = {p->mb, p->oc};
 
     DNN_SAFE(mkldnn_memory_desc_init_by_tag(&src_d, ndims,
-        is_3d(p) ? src_3d_dims : is_1d(p) ? src_1d_dims : src_2d_dims,
+        is_3d(p) ? src_3d_dims : is_0d(p) ? src_0d_dims : is_1d(p) ? src_1d_dims : src_2d_dims,
         p->cfg[SRC].dt, mkldnn_format_tag_any), WARN);
     DNN_SAFE(mkldnn_memory_desc_init_by_tag(&wei_d, ndims,
-        is_3d(p) ? wei_3d_dims : is_1d(p) ? wei_1d_dims : wei_2d_dims,
+        is_3d(p) ? wei_3d_dims : is_0d(p) ? wei_0d_dims : is_1d(p) ? wei_1d_dims : wei_2d_dims,
         p->cfg[WEI].dt, mkldnn_format_tag_any), WARN);
     DNN_SAFE(mkldnn_memory_desc_init_by_tag(&bia_d, 1, bia_dims, p->cfg[BIA].dt, mkldnn_format_tag_any), WARN);
     DNN_SAFE(mkldnn_memory_desc_init_by_tag(&dst_d, 2, dst_dims, p->cfg[DST].dt, mkldnn_format_tag_any), WARN);
@@ -182,7 +188,7 @@ inline int compare_dat(const prb_t *p, data_kind_t kind, dnn_mem_t &mem_dt,
 
 int fill_src(const prb_t *p, dnn_mem_t &mem_dt, dnn_mem_t &mem_fp, res_t *r) {
     dnn_mem_t mem_00(mem_dt.md_, mkldnn_f32,
-            is_3d(p) ? mkldnn_ncdhw : is_1d(p) ? mkldnn_ncw : mkldnn_nchw,
+            is_3d(p) ? mkldnn_ncdhw : is_0d(p) ? mkldnn_nc : is_1d(p) ? mkldnn_ncw : mkldnn_nchw,
             engine_ref);
 
     const auto &c = p->cfg[SRC];
@@ -207,7 +213,7 @@ int fill_src(const prb_t *p, dnn_mem_t &mem_dt, dnn_mem_t &mem_fp, res_t *r) {
 
 int fill_wei(const prb_t *p, dnn_mem_t &mem_dt, dnn_mem_t &mem_fp, res_t *r) {
     dnn_mem_t mem_00(mem_dt.md_, mkldnn_f32,
-            is_3d(p) ? mkldnn_oidhw : is_1d(p) ? mkldnn_oiw : mkldnn_oihw,
+            is_3d(p) ? mkldnn_oidhw : is_0d(p) ? mkldnn_oi : is_1d(p) ? mkldnn_oiw : mkldnn_oihw,
             engine_ref);
 
     const auto &c = p->cfg[WEI];
@@ -299,8 +305,8 @@ int doit(const prb_t *p, res_t *r) {
             ? dnn_mem_t(bia_dt_d, p->cfg[BIA].dt, engine_tgt)
             : dnn_mem_t();
 
-    auto src_tag = is_3d(p) ? mkldnn_ncdhw : is_1d(p) ? mkldnn_ncw : mkldnn_nchw;
-    auto wei_tag = is_3d(p) ? mkldnn_oidhw : is_1d(p) ? mkldnn_oiw : mkldnn_oihw;
+    auto src_tag = is_3d(p) ? mkldnn_ncdhw : is_0d(p) ? mkldnn_nc : is_1d(p) ? mkldnn_ncw : mkldnn_nchw;
+    auto wei_tag = is_3d(p) ? mkldnn_oidhw : is_0d(p) ? mkldnn_oi : is_1d(p) ? mkldnn_oiw : mkldnn_oihw;
     dnn_mem_t src_fp(src_dt_d, fp, src_tag, engine_ref);
     dnn_mem_t wei_fp(wei_dt_d, fp, wei_tag, engine_ref);
     dnn_mem_t dst_fp(dst_dt_d, fp, mkldnn_nc, engine_ref);
