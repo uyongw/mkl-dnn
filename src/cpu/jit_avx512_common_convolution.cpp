@@ -164,6 +164,18 @@ void jit_avx512_common_convolution_fwd_t<src_type, wei_type,
 template <data_type_t src_type, data_type_t wei_type, data_type_t dst_type>
 void jit_avx512_common_convolution_fwd_t<src_type, wei_type,
         dst_type>::execute_forward_1d(const exec_ctx_t &ctx) const {
+    const auto &jcp = pd()->jcp_;
+    if (jcp.src_plain_ldc) {
+        assert(jcp.dst_plain_ldc);
+        execute_forward_1d_plain_ldc(ctx);
+    } else {
+        execute_forward_1d_blocked(ctx);
+    }
+}
+
+template <data_type_t src_type, data_type_t wei_type, data_type_t dst_type>
+void jit_avx512_common_convolution_fwd_t<src_type, wei_type,
+        dst_type>::execute_forward_1d_blocked(const exec_ctx_t &ctx) const {
     auto src = CTX_IN_MEM(const src_data_t *, DNNL_ARG_SRC);
     auto weights = CTX_IN_MEM(const wei_data_t *, DNNL_ARG_WEIGHTS);
     auto bias = CTX_IN_MEM(const dst_data_t *, DNNL_ARG_BIAS);
@@ -253,7 +265,108 @@ void jit_avx512_common_convolution_fwd_t<src_type, wei_type,
 
 template <data_type_t src_type, data_type_t wei_type, data_type_t dst_type>
 void jit_avx512_common_convolution_fwd_t<src_type, wei_type,
+        dst_type>::execute_forward_1d_plain_ldc(const exec_ctx_t &ctx) const {
+    auto src = CTX_IN_MEM(const src_data_t *, DNNL_ARG_SRC);
+    auto weights = CTX_IN_MEM(const wei_data_t *, DNNL_ARG_WEIGHTS);
+    auto bias = CTX_IN_MEM(const dst_data_t *, DNNL_ARG_BIAS);
+    auto dst = CTX_OUT_MEM(dst_data_t *, DNNL_ARG_DST);
+
+    const memory_desc_wrapper src_d(pd()->src_md());
+    const memory_desc_wrapper dst_d(pd()->dst_md());
+    const memory_desc_wrapper weights_d(pd()->weights_md(0));
+
+    const auto &jcp = pd()->jcp_;
+    assert(jcp.nb_oc % jcp.nb_oc_blocking == 0);
+
+    int oc_chunks = jcp.nb_oc / jcp.nb_oc_blocking;
+    int work_amount = jcp.mb * jcp.ngroups * oc_chunks * jcp.nb_ow;
+
+    int nthr;
+    if (jcp.aligned_threads)
+        nthr = jcp.aligned_threads;
+    else
+        nthr = dnnl_get_max_threads();
+
+    parallel(nthr, [&](const int ithr, const int nthr) {
+        int start {0}, end {0}, start_copy;
+        balance211(work_amount, nthr, ithr, start, end);
+        start_copy = start;
+
+        auto par_conv = jit_conv_call_s();
+
+        for (int icb_l2 = 0; icb_l2 < jcp.nb_ic; icb_l2 += jcp.nb_ic_L2) {
+            start = start_copy;
+            int n {0}, g {0}, occ {0}, owb {0};
+
+            if (jcp.loop_order == loop_cwgn) {
+                int dummy {0};
+                nd_iterator_init(start, occ, oc_chunks, owb, jcp.nb_ow, g,
+                        jcp.ngroups, n, jcp.mb, dummy, 1);
+            } else if (jcp.loop_order == loop_gncw) {
+                int dummy {0};
+                nd_iterator_init(start, g, jcp.ngroups, n, jcp.mb, occ,
+                        oc_chunks, owb, jcp.nb_ow, dummy, 1);
+            } else {
+                assert(!"unsupported loop order");
+            }
+
+            while (start < end) {
+                int ocb = occ * jcp.nb_oc_blocking;
+                int g_ocb = g * jcp.nb_oc + ocb;
+                int g_oc = g_ocb * jcp.oc_block;
+                int g_icb = g * jcp.nb_ic * jcp.nonblk_group_off;
+
+                int ow_s = owb * jcp.ow_block;
+                int iw_s = ow_s * jcp.stride_w;
+                auto bias_p = bias ? bias + g_oc : nullptr;
+                auto dst_p = dst + dst_d.blk_off(n, g_ocb * jcp.oc_block, ow_s);
+
+                for (int icb = icb_l2;
+                        icb < min(jcp.nb_ic, icb_l2 + jcp.nb_ic_L2); ++icb) {
+                    auto src_p = src + src_d.blk_off(
+                         n, (g_icb + icb) * jcp.ic_block, iw_s);
+                    auto wht_p = weights + (jcp.wei_plain_ldo
+                         ? wht_blk_off(weights_d, g, ocb * jcp.oc_block,
+                                       icb * jcp.ic_block)
+                         : wht_blk_off(weights_d, g, ocb, icb));
+
+                    jit_conv_ker_pipeline_ow_thr(kernel_->jit_ker, par_conv,
+                            src_p, dst_p, wht_p, bias_p, icb, 1, owb);
+                }
+                if (jcp.loop_order == loop_cwgn) {
+                    int dummy {0};
+                    nd_iterator_jump(start, end, occ, oc_chunks, owb, jcp.nb_ow,
+                            g, jcp.ngroups, n, jcp.mb, dummy, 1);
+                } else if (jcp.loop_order == loop_gncw) {
+                    int dummy {0};
+                    nd_iterator_jump(start, end, g, jcp.ngroups, n, jcp.mb, occ,
+                            oc_chunks, owb, jcp.nb_ow, dummy, 1);
+                } else {
+                    assert(!"unsupported loop order");
+                }
+            }
+        }
+
+        jit_conv_ker_pipeline_ow_thr(
+                kernel_->jit_ker, par_conv, src, dst, weights, bias, 0, 0, 0);
+    });
+}
+
+template <data_type_t src_type, data_type_t wei_type, data_type_t dst_type>
+void jit_avx512_common_convolution_fwd_t<src_type, wei_type,
         dst_type>::execute_forward_2d(const exec_ctx_t &ctx) const {
+    const auto &jcp = pd()->jcp_;
+    if (jcp.src_plain_ldc) {
+        assert(jcp.dst_plain_ldc);
+        execute_forward_2d_plain_ldc(ctx);
+    } else {
+        execute_forward_2d_blocked(ctx);
+    }
+}
+
+template <data_type_t src_type, data_type_t wei_type, data_type_t dst_type>
+void jit_avx512_common_convolution_fwd_t<src_type, wei_type,
+        dst_type>::execute_forward_2d_blocked(const exec_ctx_t &ctx) const {
     auto src = CTX_IN_MEM(const src_data_t *, DNNL_ARG_SRC);
     auto weights = CTX_IN_MEM(const wei_data_t *, DNNL_ARG_WEIGHTS);
     auto bias = CTX_IN_MEM(const dst_data_t *, DNNL_ARG_BIAS);
@@ -376,7 +489,132 @@ void jit_avx512_common_convolution_fwd_t<src_type, wei_type,
 
 template <data_type_t src_type, data_type_t wei_type, data_type_t dst_type>
 void jit_avx512_common_convolution_fwd_t<src_type, wei_type,
+        dst_type>::execute_forward_2d_plain_ldc(const exec_ctx_t &ctx) const {
+    auto src = CTX_IN_MEM(const src_data_t *, DNNL_ARG_SRC);
+    auto weights = CTX_IN_MEM(const wei_data_t *, DNNL_ARG_WEIGHTS);
+    auto bias = CTX_IN_MEM(const dst_data_t *, DNNL_ARG_BIAS);
+    auto dst = CTX_OUT_MEM(dst_data_t *, DNNL_ARG_DST);
+
+    const memory_desc_wrapper src_d(pd()->src_md());
+    const memory_desc_wrapper dst_d(pd()->dst_md());
+    const memory_desc_wrapper weights_d(pd()->weights_md(0));
+
+    const auto &jcp = pd()->jcp_;
+    assert(jcp.nb_oc % jcp.nb_oc_blocking == 0);
+
+    int oc_chunks = jcp.nb_oc / jcp.nb_oc_blocking;
+    int work_amount = jcp.mb * jcp.ngroups * oc_chunks * jcp.oh * jcp.nb_ow;
+
+    int nthr;
+    if (jcp.aligned_threads)
+        nthr = jcp.aligned_threads;
+    else
+        nthr = dnnl_get_max_threads();
+
+    parallel(nthr, [&](const int ithr, const int nthr) {
+        int start {0}, end {0}, start_copy;
+        balance211(work_amount, nthr, ithr, start, end);
+        start_copy = start;
+
+        auto par_conv = jit_conv_call_s();
+        size_t src_h_stride = src_d.blk_off(0, 0, 1);
+        size_t wht_h_stride = wht_blk_off(weights_d, 0, 0, 0, 1);
+
+        for (int icb_l2 = 0; icb_l2 < jcp.nb_ic; icb_l2 += jcp.nb_ic_L2) {
+            start = start_copy;
+            int n {0}, g {0}, occ {0}, oh_s {0}, owb {0};
+
+            if (jcp.loop_order == loop_cwgn)
+                nd_iterator_init(start, occ, oc_chunks, owb, jcp.nb_ow, g,
+                        jcp.ngroups, n, jcp.mb, oh_s, jcp.oh);
+            else if (jcp.loop_order == loop_gncw)
+                nd_iterator_init(start, g, jcp.ngroups, n, jcp.mb, occ,
+                        oc_chunks, owb, jcp.nb_ow, oh_s, jcp.oh);
+            else
+                assert(!"unsupported loop order");
+
+            while (start < end) {
+                int ocb = occ * jcp.nb_oc_blocking;
+                int g_ocb = g * jcp.nb_oc + ocb;
+                int g_oc = g_ocb * jcp.oc_block;
+                int g_icb = g * jcp.nb_ic * jcp.nonblk_group_off;
+
+                int work_rem = end - start;
+
+                int ow_s = owb * jcp.ow_block;
+                int iw_s = ow_s * jcp.stride_w;
+                int oh_e = oh_s + work_rem > jcp.oh ? jcp.oh : oh_s + work_rem;
+                auto bias_p = bias ? bias + g_oc : nullptr;
+
+                for (int oh_b = oh_s; oh_b < oh_e; oh_b += jcp.h_blocking) {
+                    int ih_b = -jcp.t_pad + oh_b * jcp.stride_h;
+
+                    for (int icb = icb_l2;
+                         icb < min(jcp.nb_ic, icb_l2 + jcp.nb_ic_L2); ++icb) {
+                        auto wht_p = weights + (jcp.wei_plain_ldo
+                             ? wht_blk_off(weights_d, g, ocb * jcp.oc_block,
+                                           icb * jcp.ic_block)
+                             : wht_blk_off(weights_d, g, ocb, icb));
+
+                        for (int oj = oh_b, ij = ih_b;
+                             oj < min(oh_e, oh_b + jcp.h_blocking);
+                             ++oj, ij += jcp.stride_h) {
+                            int dilate_h = jcp.dilate_h + 1;
+                            int i_t_overflow = div_up(max(0, -ij), dilate_h);
+                            int i_b_overflow = div_up(
+                                    max(0, ij - jcp.ih
+                                        + (jcp.kh - 1) * dilate_h + 1),
+                                    dilate_h);
+                            int kh_padding = nstl::max(
+                                    0, jcp.kh - i_t_overflow - i_b_overflow);
+
+                            auto src_p = src + src_d.blk_off(
+                                     n, (g_icb + icb) * jcp.ic_block, ij, iw_s);
+                            auto dst_p = dst + dst_d.blk_off(
+                                     n, g_ocb * jcp.oc_block, oj, ow_s);
+
+                            auto aux_src = src_p
+                                    + i_t_overflow * dilate_h * src_h_stride;
+                            auto aux_wht = wht_p + i_t_overflow * wht_h_stride;
+
+                            jit_conv_ker_pipeline_ow_thr(kernel_->jit_ker,
+                                    par_conv, aux_src, dst_p, aux_wht, bias_p,
+                                    icb, kh_padding, owb);
+                        }
+                    }
+                }
+
+                if (jcp.loop_order == loop_cwgn)
+                    nd_iterator_jump(start, end, occ, oc_chunks, owb, jcp.nb_ow,
+                            g, jcp.ngroups, n, jcp.mb, oh_s, jcp.oh);
+                else if (jcp.loop_order == loop_gncw)
+                    nd_iterator_jump(start, end, g, jcp.ngroups, n, jcp.mb, occ,
+                            oc_chunks, owb, jcp.nb_ow, oh_s, jcp.oh);
+                else
+                    assert(!"unsupported loop order");
+            }
+        }
+
+        jit_conv_ker_pipeline_ow_thr(
+                kernel_->jit_ker, par_conv, src, dst, weights, bias, 0, 0, 0);
+    });
+}
+
+template <data_type_t src_type, data_type_t wei_type, data_type_t dst_type>
+void jit_avx512_common_convolution_fwd_t<src_type, wei_type,
         dst_type>::execute_forward_3d(const exec_ctx_t &ctx) const {
+    const auto &jcp = pd()->jcp_;
+    if (jcp.src_plain_ldc) {
+        assert(jcp.dst_plain_ldc);
+        execute_forward_3d_plain_ldc(ctx);
+    } else {
+        execute_forward_3d_blocked(ctx);
+    }
+}
+
+template <data_type_t src_type, data_type_t wei_type, data_type_t dst_type>
+void jit_avx512_common_convolution_fwd_t<src_type, wei_type,
+        dst_type>::execute_forward_3d_blocked(const exec_ctx_t &ctx) const {
     auto src = CTX_IN_MEM(const src_data_t *, DNNL_ARG_SRC);
     auto weights = CTX_IN_MEM(const wei_data_t *, DNNL_ARG_WEIGHTS);
     auto bias = CTX_IN_MEM(const dst_data_t *, DNNL_ARG_BIAS);
@@ -498,6 +736,123 @@ void jit_avx512_common_convolution_fwd_t<src_type, wei_type,
         // on the last iteration of loop above. Only valid pointers make sense
         // here as call parameters to avoid execution of prefetch instructions
         // with nullptr, other parameters are not used in real jit call here
+        jit_conv_3d_ker_pipeline(
+                kernel_->jit_ker, par_conv, src, dst, weights, bias, 0, 0, 0);
+    });
+}
+
+template <data_type_t src_type, data_type_t wei_type, data_type_t dst_type>
+void jit_avx512_common_convolution_fwd_t<src_type, wei_type,
+        dst_type>::execute_forward_3d_plain_ldc(const exec_ctx_t &ctx) const {
+    auto src = CTX_IN_MEM(const src_data_t *, DNNL_ARG_SRC);
+    auto weights = CTX_IN_MEM(const wei_data_t *, DNNL_ARG_WEIGHTS);
+    auto bias = CTX_IN_MEM(const dst_data_t *, DNNL_ARG_BIAS);
+    auto dst = CTX_OUT_MEM(dst_data_t *, DNNL_ARG_DST);
+
+    const memory_desc_wrapper src_d(pd()->src_md());
+    const memory_desc_wrapper dst_d(pd()->dst_md());
+    const memory_desc_wrapper weights_d(pd()->weights_md(0));
+    const memory_desc_wrapper bias_d(pd()->weights_md(1));
+
+    const auto &jcp = pd()->jcp_;
+    assert(jcp.nb_oc % jcp.nb_oc_blocking == 0);
+
+    parallel(0, [&](const int ithr, const int nthr) {
+        int oc_chunks = jcp.nb_oc / jcp.nb_oc_blocking;
+        int start {0}, end {0}, start_copy;
+        int work_amount = jcp.mb * jcp.ngroups * oc_chunks * jcp.od * jcp.oh
+                * jcp.nb_ow;
+        balance211(work_amount, nthr, ithr, start, end);
+        start_copy = start;
+
+        auto par_conv = jit_conv_call_s();
+        size_t src_d_stride = src_d.blk_off(0, 0, 1);
+        size_t src_h_stride = src_d.blk_off(0, 0, 0, 1);
+        size_t wht_d_stride = wht_blk_off(weights_d, 0, 0, 0, 1);
+        size_t wht_h_stride = wht_blk_off(weights_d, 0, 0, 0, 0, 1);
+
+        for (int icb_l2 = 0; icb_l2 < jcp.nb_ic; icb_l2 += jcp.nb_ic_L2) {
+            start = start_copy;
+            int n {0}, g {0}, occ {0}, oh_s {0}, od_s {0}, owb {0};
+
+            if (jcp.loop_order == loop_cwgn)
+                nd_iterator_init(start, occ, oc_chunks, owb, jcp.nb_ow, g,
+                        jcp.ngroups, n, jcp.mb, od_s, jcp.od, oh_s, jcp.oh);
+            else if (jcp.loop_order == loop_gncw)
+                nd_iterator_init(start, g, jcp.ngroups, n, jcp.mb, occ,
+                        oc_chunks, owb, jcp.nb_ow, od_s, jcp.od, oh_s, jcp.oh);
+            else
+                assert(!"unsupported loop order");
+
+            while (start < end) {
+                int ocb = occ * jcp.nb_oc_blocking;
+                int g_ocb = g * jcp.nb_oc + ocb;
+                int g_oc = g_ocb * jcp.oc_block;
+                int g_icb = g * jcp.nb_ic * jcp.nonblk_group_off;
+
+                int work_rem = end - start;
+                int ih_s = -jcp.t_pad + oh_s * jcp.stride_h;
+                int ow_s = owb * jcp.ow_block;
+                int iw_s = ow_s * jcp.stride_w;
+                int oh_e = oh_s + work_rem > jcp.oh ? jcp.oh : oh_s + work_rem;
+
+                int id_s = -jcp.f_pad + od_s * jcp.stride_d;
+
+                int dilate_d = jcp.dilate_d + 1;
+                int d_t_overflow = div_up(max(0, -id_s), dilate_d);
+                int d_b_overflow = div_up(
+                        max(0, id_s - jcp.id + (jcp.kd - 1) * dilate_d + 1),
+                        dilate_d);
+                int kd_padding
+                        = nstl::max(0, jcp.kd - d_t_overflow - d_b_overflow);
+
+                auto bias_p = bias ? bias + bias_d.blk_off(g_oc) : 0;
+
+                for (int icb = icb_l2;
+                        icb < min(jcp.nb_ic, icb_l2 + jcp.nb_ic_L2); ++icb) {
+                    auto wht_p = weights
+                        + (jcp.wei_plain_ldo
+                           ? wht_blk_off(weights_d, g, ocb * jcp.oc_block,
+                                         icb * jcp.ic_block)
+                           : wht_blk_off(weights_d, g, ocb, icb))
+                        + d_t_overflow * wht_d_stride;
+
+                    for (int oj = oh_s, ij = ih_s; oj < oh_e;
+                            ++oj, ij += jcp.stride_h) {
+                        int dilate_h = jcp.dilate_h + 1;
+                        int i_t_overflow = div_up(max(0, -ij), dilate_h);
+                        int i_b_overflow = div_up(
+                                max(0, ij - jcp.ih + (jcp.kh - 1) * dilate_h+1),
+                                dilate_h);
+                        int kh_padding = nstl::max(
+                                0, jcp.kh - i_t_overflow - i_b_overflow);
+                        auto src_p = src + src_d.blk_off(
+                            n, (g_icb + icb) * jcp.ic_block, id_s, ij, iw_s)
+                            + d_t_overflow * dilate_d * src_d_stride;
+                        auto dst_p = dst + dst_d.blk_off(
+                            n, g_ocb * jcp.oc_block, od_s, oj, ow_s);
+
+                        jit_conv_3d_ker_pipeline_ow_thr(kernel_->jit_ker,
+                                par_conv,
+                                src_p + i_t_overflow * dilate_h * src_h_stride,
+                                dst_p, wht_p + i_t_overflow * wht_h_stride,
+                                bias_p, icb, kh_padding, kd_padding, owb);
+                    }
+                }
+
+                if (jcp.loop_order == loop_cwgn)
+                    nd_iterator_jump(start, end, occ, oc_chunks, owb, jcp.nb_ow,
+                            g, jcp.ngroups, n, jcp.mb, od_s, jcp.od, oh_s,
+                            jcp.oh);
+                else if (jcp.loop_order == loop_gncw)
+                    nd_iterator_jump(start, end, g, jcp.ngroups, n, jcp.mb, occ,
+                            oc_chunks, owb, jcp.nb_ow, od_s, jcp.od, oh_s,
+                            jcp.oh);
+                else
+                    assert(!"unsupported loop order");
+            }
+        }
+
         jit_conv_3d_ker_pipeline(
                 kernel_->jit_ker, par_conv, src, dst, weights, bias, 0, 0, 0);
     });

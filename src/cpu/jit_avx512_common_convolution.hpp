@@ -101,6 +101,16 @@ private:
     void execute_forward_1d(const exec_ctx_t &ctx) const;
     void execute_forward_2d(const exec_ctx_t &ctx) const;
     void execute_forward_3d(const exec_ctx_t &ctx) const;
+
+    // blocked: nC[dh]w[16|8|4]c
+    // plain_ldc: plain with leading dimsion c: n[dh]wc
+    void execute_forward_1d_blocked(const exec_ctx_t &ctx) const;
+    void execute_forward_1d_plain_ldc(const exec_ctx_t &ctx) const;
+    void execute_forward_2d_blocked(const exec_ctx_t &ctx) const;
+    void execute_forward_2d_plain_ldc(const exec_ctx_t &ctx) const;
+    void execute_forward_3d_blocked(const exec_ctx_t &ctx) const;
+    void execute_forward_3d_plain_ldc(const exec_ctx_t &ctx) const;
+
     const pd_t *pd() const { return (const pd_t *)primitive_impl_t::pd(); }
 
     jit_avx512_common_conv_fwd_kernel *kernel_;

@@ -138,13 +138,21 @@ private:
     void generate();
 
     inline size_t get_output_offset(int oi, int n_oc_block) {
-        return (size_t)jcp.typesize_out
-                * ((size_t)n_oc_block * jcp.oh * jcp.ow * jcp.od + oi)
-                * jcp.oc_block;
+        return jcp.dst_plain_ldc
+                ? (size_t)jcp.typesize_out
+                  * ((size_t)n_oc_block * jcp.oc_block
+                     + oi * jcp.ngroups * jcp.oc)
+                : (size_t)jcp.typesize_out
+                  * ((size_t)n_oc_block * jcp.oh * jcp.ow * jcp.od + oi)
+                  * jcp.oc_block;
     }
 
     inline size_t get_input_offset(int ki, int ic, int oi, int pad_l) {
-        size_t iw_str = !jcp.is_1stconv ? jcp.ic_block : 1;
+        size_t iw_str = !jcp.is_1stconv
+                      ? jcp.src_plain_ldc
+                        ? jcp.ngroups * jcp.ic
+                        : jcp.ic_block
+                      : 1;
         size_t ic_str = !jcp.is_1stconv ? 1 : (size_t)jcp.iw * jcp.ih * jcp.id;
         return (size_t)jcp.typesize_in
                 * ((size_t)(ki * (jcp.dilate_w + 1) + oi * jcp.stride_w - pad_l)
@@ -154,10 +162,17 @@ private:
 
     inline int get_kernel_offset(
             int ki, int ic, int n_oc_block, int ker_number) {
-        return jcp.typesize_in * jcp.oc_block
-                * (n_oc_block * jcp.nb_ic * jcp.ic_block * jcp.kh * jcp.kw
-                                * jcp.kd
-                        + (ic + ker_number) + ki * jcp.ic_block);
+        // Note: ic overflows to kw
+        ki = ki + (ic + ker_number) / jcp.simd_w;
+        ic = (ic + ker_number) % jcp.simd_w;
+        return jcp.wei_plain_ldo
+                ? (jcp.typesize_in
+                   * (n_oc_block * jcp.oc_block
+                      + ki * jcp.ic * jcp.ngroups * jcp.oc
+                      + ic * jcp.ngroups * jcp.oc))
+                : (jcp.typesize_in * jcp.oc_block
+                   * (n_oc_block * jcp.nb_ic * jcp.ic_block * jcp.kh * jcp.kw
+                      * jcp.kd + ic + ki * jcp.ic_block));
     }
 
     inline int get_ow_start(int ki, int pad_l) {

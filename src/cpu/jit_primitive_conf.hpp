@@ -99,6 +99,8 @@ struct jit_conv_conf_t {
     int stride_d, stride_h, stride_w;
     int dilate_d, dilate_h, dilate_w;
     format_tag_t src_tag, wei_tag, dst_tag; // temporary workaround
+    bool src_plain_ldc, dst_plain_ldc, wei_plain_ldo;/* src/dst/wei: plain with
+                                                        leading dimension c/o */
     bool with_bias;
     bool with_sum;
     bool with_eltwise;
